@@ -1,13 +1,13 @@
 ## 🔥 Issues
 <!-- [여기서부터 주석]
 
-    - 관련된 issue 번호를 작성해주세요. (단, 아래 경우를 고려해서 큰 따옴표 안의 내용을 작성하면 됩니다.!)
+    - 관련된 issue 티켓과 링크를 작성해주세요. 
     
-      1) PR merge 된 후, 해당 issue 가 자동으로 "close" 되기 원한다면?
-          => "- close #n" 
-       
-      2) PR merge 된 이후에도, 해당 issue 와 연관된 작업이 아직 남아있다면?
-          => "- #n "
+      ex) 
+        * issue: [NAILCASE-100001](https://nailcase.atlassian.net/browse/NAILCASE-100001)
+        sub-issues:
+          - [NAILCASE-100002](https://nailcase.atlassian.net/browse/NAILCASE-100002)
+          - [NAILCASE-100003](https://nailcase.atlassian.net/browse/NAILCASE-100003)
 
     
 [여기까지 주석] -->
