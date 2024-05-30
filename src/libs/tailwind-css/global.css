@@ -14,24 +14,4 @@
 		max-width: 1200px;
 		margin: 0 auto;
 	}
-	button {
-		@apply bg-BGblue01 text-pb100;
-		border-radius: 12px;
-		padding: 12px 24px;
-		border: none;
-	}
-	.btnBlue {
-		@apply bg-pb100 text-white;
-	}
-	.btnGray {
-		@apply bg-gray10 text-gray50;
-	}
-	.btnWhite {
-		@apply bg-white text-gray50 border-gray30;
-		border: solid;
-	}
-	p {
-		border-radius: 26.75px;
-		text-align: center;
-	}
 }
