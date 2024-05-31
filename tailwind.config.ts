@@ -1,9 +1,19 @@
-import { COLORS, FONT_STYLES } from "./src/libs/tailwind-css/styles"
+import { COLORS, fontStyle, fontWeight } from "./src/config/tailwind"
 
 const config = {
 	content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				...COLORS,
+			},
+			fontSize: {
+				...fontStyle,
+			},
+		},
+		fontWeight: {
+			...fontWeight,
+		},
 	},
 	plugins: [],
 }
