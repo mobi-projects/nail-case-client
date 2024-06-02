@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	html,
+	body {
+		@apply w-full max-w-[1530px] mx-0  my-auto p-0;
+	}
+	h1 {
+		@apply text-Title01;
+	}
+	h2 {
+		@apply text-Headline01;
+	}
+	h3 {
+		@apply text-Body01;
+	}
+	h4 {
+		@apply text-Caption01;
+	}
+	button {
+		@apply text-PB100 rounded-[12px] h-[54px] w-[118px] bg-BGblue01;
+	}
+}
