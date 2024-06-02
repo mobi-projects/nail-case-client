@@ -1,5 +1,10 @@
 {
-	"root": true,
-	"parser": "@typescript-eslint/parser",
-	"extends": ["next/core-web-vitals", "next", "prettier"]
+ "root": true,
+ "parser": "@typescript-eslint/parser",
+ "extends": [
+  "next/core-web-vitals",
+  "next",
+  "prettier",
+  "plugin:storybook/recommended"
+ ]
 }
