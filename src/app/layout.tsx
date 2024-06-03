@@ -1,8 +1,27 @@
 import "../config/tailwind/global.css"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 
-const inter = Inter({ subsets: ["latin"] })
+const suit = localFont({
+	src: [
+		{
+			path: "../../public/font/SUIT-Light.ttf",
+			weight: "300",
+		},
+		{
+			path: "../../public/font/SUIT-Regular.ttf",
+			weight: "400",
+		},
+		{
+			path: "../../public/font/SUIT-SemiBold.ttf",
+			weight: "600",
+		},
+		{
+			path: "../../public/font/SUIT-ExtraBold.ttf",
+			weight: "800",
+		},
+	],
+})
 
 export const metadata: Metadata = {
 	title: "오늘네일",
@@ -16,7 +35,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="kr">
-			<body className={inter.className}>{children}</body>
+			<body className={suit.className}>{children}</body>
 		</html>
 	)
 }
