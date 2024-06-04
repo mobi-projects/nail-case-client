@@ -5,7 +5,7 @@
 @layer base {
 	html,
 	body {
-		@apply w-full max-w-[1530px] mx-0  my-auto p-0;
+		@apply m-0 p-0;
 	}
 	h1 {
 		@apply text-Title01;
@@ -20,6 +20,6 @@
 		@apply text-Caption01;
 	}
 	button {
-		@apply text-PB100 rounded-[12px] h-[54px] w-[118px] bg-BGblue01;
+		@apply h-[54px] w-[118px] rounded-[12px] bg-BGblue01 text-PB100;
 	}
 }
