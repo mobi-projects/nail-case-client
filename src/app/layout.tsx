@@ -35,7 +35,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="kr">
-			<body className={suit.className}>{children}</body>
+			<body className={`${suit.className} mx-auto w-full max-w-[1536px]`}>
+				<main className="mx-auto flex w-[1200px] justify-center">
+					{children}
+				</main>
+			</body>
 		</html>
 	)
 }
