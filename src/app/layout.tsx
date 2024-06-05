@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
-import "../config/tailwind/global.css"
 
 import { TanstackQueryProvider } from "@/config/tanstack-query"
+import "../config/tailwind/global.css"
 
 const suit = localFont({
 	src: [
