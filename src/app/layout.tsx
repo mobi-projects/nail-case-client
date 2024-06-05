@@ -1,6 +1,8 @@
-import "../config/tailwind/global.css"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import "../config/tailwind/global.css"
+
+import { TanstackQueryProvider } from "@/config/tanstack-query"
 
 const suit = localFont({
 	src: [
@@ -35,7 +37,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="kr">
-			<body className={suit.className}>{children}</body>
+			<body className={suit.className}>
+				<TanstackQueryProvider>{children}</TanstackQueryProvider>
+			</body>
 		</html>
 	)
 }
