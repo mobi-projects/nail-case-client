@@ -35,7 +35,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="kr">
-			<body className={suit.className}>{children}</body>
+			<body className={suit.className}>
+				<div className="flex w-dvw justify-center">
+					<main className="w-[1200px] text-wrap break-all">{children}</main>
+				</div>
+			</body>
 		</html>
 	)
 }
