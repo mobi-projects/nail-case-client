@@ -1,30 +1,55 @@
 "use client"
 
-import type { VariantProps } from "class-variance-authority"
 import { cva } from "class-variance-authority"
-import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
-import { type ButtonHTMLAttributes, type PropsWithChildren } from "react"
-
-const MAX_BUTTON_NUMBER = 5
+import type { Dispatch, SetStateAction } from "react"
 
 type NTPaginationPT = {
-	totalPage: number
-}
-type ArrowButtonPT = {
-	direction: "left" | "right"
+	totPage: number
+	perPage: number
 	curPage: number
+	pageArr: number[]
+	isFirstPages: boolean
+	isLastPages: boolean
+	setCurPage: Dispatch<SetStateAction<number>>
 }
-type PageButtonPT = ButtonHTMLAttributes<HTMLButtonElement> &
-	PropsWithChildren &
-	VariantProps<typeof PageButtonVariants>
+/**
+ * @param totPage 전체 페이지 수
+ * @param curPage 현재 페이지
+ * @param pageArr 페이지 번호 배열
+ * @param isFirstPages pageArr 에 첫 페이지가 포함되어있는지 여부
+ * @param isLastPages pageArr 에 마지막 페이지가 포함되어있는지 여부
+ * @param setCurPage 클릭한 페이지 번호를 입력받아, 페이지를 이동하는 상태변경함수
+ */
+export default function NTPagination({
+	totPage,
+	perPage,
+	curPage,
+	pageArr,
+	isFirstPages,
+	isLastPages,
+	setCurPage,
+}: NTPaginationPT) {
+	return (
+		<div className="align-center flex h-fit w-full justify-center gap-[2px]">
+			{!isFirstPages && <LeftArrow {...{ curPage, setCurPage, perPage }} />}
+			<PageButtonList {...{ totPage, pageArr, curPage, setCurPage }} />
+			{!isLastPages && <RightArrow {...{ curPage, setCurPage, perPage }} />}
+		</div>
+	)
+}
+NTPagination.displayName = "NTPagination"
 
-const PageButtonVariants = cva(
-	"flex h-[30px] w-[31px] items-center justify-center rounded-[3px] text-Body02 text-Gray30 bg-transparent",
+type PageButtonListPT = Pick<
+	NTPaginationPT,
+	"curPage" | "pageArr" | "setCurPage"
+>
+const PaginationButtonVariants = cva(
+	"flex h-[30px] w-[31px] items-center justify-center rounded-[3px] text-Body02",
 	{
 		variants: {
 			isActive: {
 				true: "text-white bg-PB100",
+				false: "bg-transparent text-Gray30",
 			},
 		},
 		defaultVariants: {
@@ -32,73 +57,50 @@ const PageButtonVariants = cva(
 		},
 	},
 )
-
-export default function NTPagination({ totalPage }: NTPaginationPT) {
-	const params = useSearchParams()
-	const curPage = parseInt(params.get("curPage") ?? "1") as number
-	const frontNumber = getFrontNumber(curPage)
-	const backNumber = getBackNumber(frontNumber)
-	const pages = new Array(MAX_BUTTON_NUMBER).fill(frontNumber)
-
+function PageButtonList({ pageArr, curPage, setCurPage }: PageButtonListPT) {
 	return (
-		<div className="align-center flex h-fit w-full justify-center gap-[2px]">
-			{isPrintingLeftArrow(frontNumber) && (
-				<ArrowButton direction="left" curPage={curPage} />
-			)}
-
-			{pages.map((_, idx) => {
-				const page = frontNumber + idx
-				if (page > totalPage) return
+		<>
+			{pageArr.map((page) => {
 				return (
-					<PageButton key={idx} isActive={page == curPage}>
+					<button
+						key={page}
+						className={PaginationButtonVariants({ isActive: page === curPage })}
+						onClick={() => {
+							setCurPage(page)
+						}}
+					>
 						{page}
-					</PageButton>
+					</button>
 				)
 			})}
-
-			{isPrintingRightArrow(backNumber, totalPage) && (
-				<ArrowButton direction="right" curPage={curPage} />
-			)}
-		</div>
+		</>
 	)
 }
-NTPagination.displayName = "NTPagination"
 
-function PageButton({ children: page, isActive }: PageButtonPT) {
-	const pathname = usePathname()
+type ArrowPT = Pick<NTPaginationPT, "curPage" | "setCurPage" | "perPage">
+function LeftArrow({ curPage, perPage, setCurPage }: ArrowPT) {
 	return (
-		<Link
-			className={PageButtonVariants({ isActive })}
-			href={{
-				pathname,
-				query: { curPage: page as string },
+		<button
+			className={PaginationButtonVariants()}
+			onClick={() => {
+				const nextBack = Math.floor((curPage - 1) / perPage) * perPage
+				setCurPage(nextBack)
 			}}
 		>
-			{page}
-		</Link>
+			＜
+		</button>
 	)
 }
-function ArrowButton({ direction, curPage }: ArrowButtonPT) {
-	const arrow = isLeftArrow(direction) ? "＜" : "＞"
-	const to = isLeftArrow(direction) ? curPage - 1 : curPage + 1
+function RightArrow({ curPage, perPage, setCurPage }: ArrowPT) {
 	return (
-		<Link
-			className={PageButtonVariants()}
-			href={{
-				query: { curPage: to.toString() },
+		<button
+			className={PaginationButtonVariants()}
+			onClick={() => {
+				const nextFront = Math.floor((curPage - 1) / perPage + 1) * perPage + 1
+				setCurPage(nextFront)
 			}}
 		>
-			{arrow}
-		</Link>
+			＞
+		</button>
 	)
 }
-
-const getFrontNumber = (curPage: number) =>
-	Math.floor((curPage - 1) / MAX_BUTTON_NUMBER) * MAX_BUTTON_NUMBER + 1
-const getBackNumber = (frontNumber: number) =>
-	frontNumber + MAX_BUTTON_NUMBER - 1
-const isPrintingLeftArrow = (frontNumber: number) =>
-	frontNumber !== 1 && frontNumber % MAX_BUTTON_NUMBER == 1
-const isPrintingRightArrow = (backNumber: number, totalPage: number) =>
-	backNumber < totalPage
-const isLeftArrow = (directtion: "left" | "right") => directtion === "left"
