@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { getShopInfo } from "@/api"
 import { QUERY_SHOP_INFO } from "@/constant"
+import { getShopInfo } from "@/util/api"
 
 export const useShopInfo = () => {
 	const { data: shopInfo } = useQuery({
