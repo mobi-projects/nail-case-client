@@ -19,7 +19,5 @@
 	h4 {
 		@apply text-Caption01;
 	}
-	button {
-		@apply text-PB100 rounded-[12px] h-[54px] w-[118px] bg-BGblue01;
-	}
+
 }
