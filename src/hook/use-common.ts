@@ -24,7 +24,6 @@ export const usePulldown = (itemArr: Array<string>) => {
 		onClickWrapper,
 		onClickTrigger,
 		onClickItems,
-		setOptionArr,
 		optionArr,
 	}
 }
