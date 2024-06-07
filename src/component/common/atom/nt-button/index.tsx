@@ -1,6 +1,7 @@
-import { cva, VariantProps } from "class-variance-authority"
-import { ButtonHTMLAttributes } from "react"
-import NTIcon, { ICON_DATA } from "../../nt-icon"
+import { cva, type VariantProps } from "class-variance-authority"
+import type { ButtonHTMLAttributes } from "react"
+
+import NTIcon, { type ICON_DATA } from "../../nt-icon"
 
 const ButtonVariants = cva(
 	"flex items-center justify-center drop-shadow border",
