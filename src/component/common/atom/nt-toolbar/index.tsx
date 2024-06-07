@@ -9,7 +9,7 @@ type NTToolbarPT = {
 	onClick?: () => void
 }
 
-const TollbarVariants = cva("flex justify-center m-0 p-0", {
+const TollbarVariants = cva("flex justify-center m-0 p-0 cursor-pointer", {
 	variants: {
 		position: {
 			top: "items-end  w-[81.5px] h-[38px] hover:text-Gray50 text-Body01  text-Black",
@@ -24,7 +24,7 @@ const TollbarVariants = cva("flex justify-center m-0 p-0", {
 			large: "text-Title03",
 		},
 		active: {
-			true: "",
+			true: "pointer-events-none",
 			false: "",
 		},
 	},
