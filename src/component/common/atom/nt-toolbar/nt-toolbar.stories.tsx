@@ -34,7 +34,7 @@ export const TopDefault: Story = {
 		position: "top",
 		topStyle: "default",
 		active: true,
-		children: 3,
+		children: 1,
 	},
 }
 
@@ -43,6 +43,7 @@ export const TopLight: Story = {
 		position: "top",
 		topStyle: "light",
 		active: true,
+		children: 2,
 	},
 }
 
@@ -51,6 +52,7 @@ export const BottomSmall: Story = {
 		position: "bottom",
 		bottomTextSize: "small",
 		active: false,
+		children: 3,
 	},
 }
 
@@ -60,5 +62,6 @@ export const BottomLarge: Story = {
 		bottomTextSize: "small",
 		active: true,
 		topStyle: "default",
+		children: 4,
 	},
 }
