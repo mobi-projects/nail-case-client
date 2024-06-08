@@ -1,12 +1,13 @@
 import { cva } from "class-variance-authority"
+import type { ReactNode } from "react"
 
-type NTToolbarPT = {
+type NTToolbarSinglePT = {
 	children: React.ReactNode
-	active: boolean
+	select: boolean
 	position: "top" | "bottom"
 	topStyle?: "default" | "light"
 	bottomTextSize?: "small" | "large"
-	onClick?: () => void
+	isSelected: VoidFunction
 }
 
 const TollbarVariants = cva("flex justify-center m-0 p-0 cursor-pointer", {
@@ -23,7 +24,7 @@ const TollbarVariants = cva("flex justify-center m-0 p-0 cursor-pointer", {
 			small: "text-Body01",
 			large: "text-Title03",
 		},
-		active: {
+		select: {
 			true: "pointer-events-none",
 			false: "",
 		},
@@ -36,42 +37,76 @@ const TollbarVariants = cva("flex justify-center m-0 p-0 cursor-pointer", {
 		{
 			position: "top",
 			topStyle: "default",
-			active: true,
+			select: true,
 			className: "text-PB100 border-t-2",
 		},
 		{
 			position: "top",
 			topStyle: "light",
-			active: true,
+			select: true,
 			className: "text-PB80 border-t-2",
 		},
 		{
 			position: "bottom",
-			active: true,
+			select: true,
 			className: "border-b-2 text-PB100 border-PB100",
 		},
 	],
 })
 
-export default function NTToolbar({
+function NTToolbarSingle({
 	children,
 	position,
 	topStyle,
 	bottomTextSize,
-	active,
-	onClick,
-}: NTToolbarPT) {
+	select,
+	isSelected,
+}: NTToolbarSinglePT) {
 	return (
 		<div
 			className={TollbarVariants({
 				position,
 				topStyle,
 				bottomTextSize,
-				active,
+				select,
 			})}
-			onClick={onClick}
+			onClick={isSelected}
 		>
 			{children}
+		</div>
+	)
+}
+type NTToolbarPT = Omit<
+	NTToolbarSinglePT,
+	"children" | "select" | "isSelected"
+> & {
+	arr: ReactNode[]
+	selected: number | null
+	isSelected: (idx: number) => void
+}
+
+export default function NTToolbar({
+	arr,
+	position,
+	topStyle,
+	bottomTextSize,
+	selected,
+	isSelected,
+}: NTToolbarPT) {
+	return (
+		<div>
+			{arr.map((children, idx) => (
+				<NTToolbarSingle
+					key={idx}
+					position={position}
+					topStyle={topStyle}
+					bottomTextSize={bottomTextSize}
+					select={selected === idx}
+					isSelected={() => isSelected(idx)}
+				>
+					{children}
+				</NTToolbarSingle>
+			))}
 		</div>
 	)
 }
