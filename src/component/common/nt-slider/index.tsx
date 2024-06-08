@@ -3,7 +3,7 @@ import * as React from "react"
 
 import { cn } from "@/config/tailwind/util"
 
-type TSlider = {
+type SliderPT = {
 	upperLimit: number
 	curValue: number
 	onCurValueChange?: (value: number) => void
@@ -11,7 +11,7 @@ type TSlider = {
 
 const Slider = React.forwardRef<
 	React.ElementRef<typeof SliderPrimitive.Root>,
-	React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> & TSlider
+	React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> & SliderPT
 >(({ upperLimit, curValue, onCurValueChange, className, ...props }, ref) => {
 	if (props.disabled) curValue = 0
 	const halfNumber = Number(upperLimit / 2)
