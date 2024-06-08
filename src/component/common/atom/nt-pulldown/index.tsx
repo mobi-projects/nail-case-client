@@ -19,9 +19,11 @@ type NTPulldownTriggerPT = {
 type NTPulldownItemsPT = {
 	optionArr: Array<string>
 	clickCallback: (option: number) => void
+	isOpen: boolean
 }
 type NTArrowPT = {
 	isOpen: boolean
+	className?: string
 }
 /**
  * @description - usePulldown(initialArr) 의 return값들을 props로전달
@@ -49,15 +51,24 @@ export default function NTPulldown({
 				optionArr={optionArr}
 			/>
 			{isOpen && (
-				<NTPulldownItems optionArr={optionArr} clickCallback={onClickItems} />
+				<NTPulldownItems
+					optionArr={optionArr}
+					clickCallback={onClickItems}
+					isOpen={isOpen}
+				/>
 			)}
 		</div>
 	)
 }
 
-function NTArrow({ isOpen }: NTArrowPT) {
-	const arrowDirection = isOpen ? "expandUpLight" : "expandDownLight"
-	return <NTIcon icon={arrowDirection} className="h-5 w-5 text-Gray70" />
+function NTArrow({ isOpen, className }: NTArrowPT) {
+	const arrowDirection = isOpen ? "check" : "expandDownLight"
+	return (
+		<NTIcon
+			icon={arrowDirection}
+			className={cn("h-5 w-5 text-Gray70", isOpen && "text-Gray30", className)}
+		/>
+	)
 }
 
 function NTPulldownTrigger({
@@ -68,18 +79,25 @@ function NTPulldownTrigger({
 	return (
 		<button
 			className={cn(
-				"flex w-full items-center justify-between bg-transparent px-6 py-[10px]",
-				isOpen && "rounded-t-[14px] hover:bg-Gray10",
+				"group flex w-full items-center justify-between bg-transparent px-6 py-[10px]",
+				isOpen && "rounded-t-[14px]",
 			)}
 			onClick={() => clickCallback()}
 		>
 			<div className="text-Body01 text-Gray70">{optionArr[0]}</div>
-			<NTArrow isOpen={isOpen} />
+			<NTArrow
+				isOpen={isOpen}
+				className={cn("", isOpen && "group-hover:text-Gray100")}
+			/>
 		</button>
 	)
 }
 
-function NTPulldownItems({ optionArr, clickCallback }: NTPulldownItemsPT) {
+function NTPulldownItems({
+	optionArr,
+	clickCallback,
+	isOpen,
+}: NTPulldownItemsPT) {
 	const itemArrExcludeFirst = getItemArrExcludeFirst(optionArr)
 	return (
 		<div className="h-fit w-full">
@@ -87,16 +105,17 @@ function NTPulldownItems({ optionArr, clickCallback }: NTPulldownItemsPT) {
 				<div
 					key={idx}
 					className={cn(
-						"hover:bg-Gray10",
+						"group",
 						isLastItem(itemArrExcludeFirst.length, idx) && "rounded-b-[14px]",
 					)}
 				>
 					<hr className="w-full bg-Gray10" />
 					<div
-						className="flex h-fit w-full items-center justify-start px-6 py-[10px] text-Body01 text-Gray70"
+						className="flex h-fit w-full items-center justify-between px-6 py-[10px] text-Body01 text-Gray70"
 						onMouseDown={() => clickCallback(idx)}
 					>
 						{item}
+						<NTArrow isOpen={isOpen} className="group-hover:text-Gray100" />
 					</div>
 				</div>
 			))}
