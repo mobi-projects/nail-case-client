@@ -10,18 +10,20 @@ const meta: Meta<typeof NTToolbar> = {
 	component: NTToolbar,
 	argTypes: {
 		position: {
-			control: false,
+			control: "inline-radio",
+			options: ["top", "bottom"],
 		},
 		topStyle: {
-			control: false,
+			control: "inline-radio",
+			options: ["default", "light"],
 		},
 		bottomTextSize: {
-			control: false,
+			control: "inline-radio",
+			options: ["small", "large"],
 		},
-		active: {
-			control: "boolean",
+		selected: {
+			control: "number",
 		},
-		onClick: { action: "clicked" },
 	},
 }
 
@@ -33,35 +35,9 @@ export const TopDefault: Story = {
 	args: {
 		position: "top",
 		topStyle: "default",
-		active: true,
-		children: 1,
-	},
-}
-
-export const TopLight: Story = {
-	args: {
-		position: "top",
-		topStyle: "light",
-		active: true,
-		children: 2,
-	},
-}
-
-export const BottomSmall: Story = {
-	args: {
-		position: "bottom",
 		bottomTextSize: "small",
-		active: false,
-		children: 3,
-	},
-}
-
-export const BottomLarge: Story = {
-	args: {
-		position: "top",
-		bottomTextSize: "small",
-		active: true,
-		topStyle: "default",
-		children: 4,
+		selected: 1,
+		isSelected: (index: number) => console.log(`Selected index: ${index}`),
+		arr: ["Button 1", "Button 2", "Button 3"],
 	},
 }
