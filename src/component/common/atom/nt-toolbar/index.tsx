@@ -1,5 +1,4 @@
 import { cva } from "class-variance-authority"
-import type { ReactNode } from "react"
 
 type NTToolbarSinglePT = {
 	children: React.ReactNode
@@ -80,7 +79,7 @@ type NTToolbarPT = Omit<
 	NTToolbarSinglePT,
 	"children" | "select" | "isSelected"
 > & {
-	arr: ReactNode[]
+	arr: Array<string>
 	selected: number | null
 	isSelected: (idx: number) => void
 }
