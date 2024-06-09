@@ -94,7 +94,7 @@ export default function NTToolbar({
 	isSelected,
 }: NTToolbarPT) {
 	return (
-		<div className="flex h-[full] w-[full] gap-x-[20px]">
+		<div className="flex h-full w-full gap-x-[20px]">
 			{arr.map((children, idx) => (
 				<NTToolbarSingle
 					key={idx}
