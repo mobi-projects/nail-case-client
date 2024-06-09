@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from "@storybook/react"
 import React from "react"
 
-import type { LabelProps } from "."
+import type { NTEventPT } from "."
 import { NTEvent } from "."
 
 const meta: Meta = {
@@ -34,7 +34,7 @@ const meta: Meta = {
 
 export default meta
 
-const Template: StoryFn<LabelProps> = (args) => <NTEvent {...args} />
+const Template: StoryFn<NTEventPT> = (args) => <NTEvent {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {

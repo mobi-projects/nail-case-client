@@ -23,12 +23,12 @@ const LabelVariants = cva(
 	},
 )
 
-export type LabelProps = VariantProps<typeof LabelVariants> & {
+export type NTEventPT = VariantProps<typeof LabelVariants> & {
 	children?: React.ReactNode
 	className?: string
 }
 
-export const NTEvent: React.FC<LabelProps> = ({
+export const NTEvent: React.FC<NTEventPT> = ({
 	variant,
 	className,
 	children,
