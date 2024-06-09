@@ -22,12 +22,14 @@ const TimeSwitchVariants = cva(
 export type TimeSwitchProps = ButtonHTMLAttributes<HTMLButtonElement> &
 	VariantProps<typeof TimeSwitchVariants> & {
 		children?: React.ReactNode
+		onClick?: () => void
 	}
 
 export const NTTimeSwitch: React.FC<TimeSwitchProps> = ({
 	variant,
 	className,
 	children,
+	onClick,
 	...props
 }) => {
 	return (
@@ -37,6 +39,7 @@ export const NTTimeSwitch: React.FC<TimeSwitchProps> = ({
 				className,
 				"whitespace-nowrap",
 			)}
+			onClick={onClick}
 			{...props}
 		>
 			{children}
