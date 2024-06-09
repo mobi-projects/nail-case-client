@@ -49,13 +49,13 @@ const DisabledVariants = cva(
 	},
 )
 
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+export type NTButtonPT = ButtonHTMLAttributes<HTMLButtonElement> &
 	VariantProps<typeof ButtonVariants> & {
 		children?: React.ReactNode
 		icon?: keyof typeof ICON_DATA
 	}
 
-export const NTButton: React.FC<ButtonProps> = ({
+export const NTButton: React.FC<NTButtonPT> = ({
 	variant,
 	size,
 	children,
