@@ -2,7 +2,7 @@ import type { VariantProps } from "class-variance-authority"
 import { cva } from "class-variance-authority"
 
 const NameBoxVarants = cva(
-	"w-[63px] bg- h-[28px] rounded-[8px]  text-Callout text-Gray100 flex items-center justify-center font-SemiBold",
+	"w-[63px] h-[28px] rounded-[8px]  text-Callout text-Gray100 flex items-center justify-center font-SemiBold",
 	{
 		variants: {
 			bgColor: {
