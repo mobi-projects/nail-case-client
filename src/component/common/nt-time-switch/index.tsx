@@ -19,13 +19,13 @@ const TimeSwitchVariants = cva(
 	},
 )
 
-export type TimeSwitchProps = ButtonHTMLAttributes<HTMLButtonElement> &
+export type NTTimeSwitchPT = ButtonHTMLAttributes<HTMLButtonElement> &
 	VariantProps<typeof TimeSwitchVariants> & {
 		children?: React.ReactNode
 		onClick?: () => void
 	}
 
-export const NTTimeSwitch: React.FC<TimeSwitchProps> = ({
+export const NTTimeSwitch: React.FC<NTTimeSwitchPT> = ({
 	variant,
 	className,
 	children,

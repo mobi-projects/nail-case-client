@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from "@storybook/react"
 import React from "react"
 
-import type { TimeSwitchProps } from "."
+import type { NTTimeSwitchPT } from "."
 import { NTTimeSwitch } from "."
 
 const meta: Meta = {
@@ -23,7 +23,7 @@ const meta: Meta = {
 
 export default meta
 
-const Template: StoryFn<TimeSwitchProps> = (args) => <NTTimeSwitch {...args} />
+const Template: StoryFn<NTTimeSwitchPT> = (args) => <NTTimeSwitch {...args} />
 
 export const Active = Template.bind({})
 Active.args = {
