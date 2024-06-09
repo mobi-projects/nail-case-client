@@ -1,11 +1,11 @@
 import type { Meta, StoryFn } from "@storybook/react"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 import type { ToggleSwitchProps } from "."
 import ToggleSwitch from "."
 
 const meta: Meta = {
-	title: "COMPONENT/common/toggle-switch",
+	title: "COMPONENT/common/nt-toggle-switch",
 	parameters: {
 		layout: "centered",
 	},
@@ -29,6 +29,10 @@ const Template: StoryFn<ToggleSwitchProps> = (args) => {
 		setChecked(!checked)
 		args.onChange()
 	}
+
+	useEffect(() => {
+		setChecked(args.checked)
+	}, [args.checked])
 
 	return <ToggleSwitch checked={checked} onChange={handleChange} />
 }
