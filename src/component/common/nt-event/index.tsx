@@ -41,6 +41,7 @@ export const NTEvent: React.FC<LabelProps> = ({
 					variant,
 				}),
 				className,
+				"overflow-hidden whitespace-nowrap",
 			)}
 			{...props}
 		>
