@@ -27,7 +27,7 @@ const meta: Meta<typeof NTButton> = {
 		},
 		icon: {
 			control: "inline-radio",
-			options: Object.keys(ICON_DATA),
+			options: [undefined, ...Object.keys(ICON_DATA)],
 		},
 	},
 }
