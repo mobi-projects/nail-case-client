@@ -22,7 +22,7 @@ export default function NTIcon({ className, icon }: NTIconPT) {
 	)
 }
 
-const ICON_DATA = {
+export const ICON_DATA = {
 	expandDownLight: "lets-icons:expand-down-light",
 	expandUpLight: "lets-icons:expand-up-light",
 	expandRightLight: "lets-icons:expand-right-light",
