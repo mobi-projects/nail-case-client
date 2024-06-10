@@ -6,8 +6,8 @@ const NameBoxVarants = cva(
 	{
 		variants: {
 			bgColor: {
-				blue: "bg-BGblue02",
-				yellow: "bg-PY50",
+				BGblue: "bg-BGblue02",
+				PY: "bg-PY50",
 				gray: "bg-Gray20",
 			},
 		},
