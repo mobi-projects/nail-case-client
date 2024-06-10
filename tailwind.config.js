@@ -4,6 +4,7 @@ const config = {
 	content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
 	theme: {
 		extend: {
+			backgroundColor: ["group-disabled"],
 			colors: {
 				...COLORS,
 			},
@@ -15,7 +16,15 @@ const config = {
 			...fontWeight,
 		},
 	},
-	plugins: [],
+	plugins: [
+		function ({ addVariant, e }) {
+			addVariant("group-disabled", ({ modifySelectors, separator }) => {
+				modifySelectors(({ className }) => {
+					return `.group:disabled .${e(`group-disabled${separator}${className}`)}`
+				})
+			})
+		},
+	],
 }
 
 export default config
