@@ -22,7 +22,7 @@ export default function NTIcon({ className, icon }: NTIconPT) {
 	)
 }
 
-const ICON_DATA = {
+export const ICON_DATA = {
 	expandDownLight: "lets-icons:expand-down-light",
 	expandUpLight: "lets-icons:expand-up-light",
 	expandRightLight: "lets-icons:expand-right-light",
@@ -51,4 +51,5 @@ const ICON_DATA = {
 	phoneLight: "lets-icons:phone-light",
 	flagAltLight: "lets-icons:flag-alt-light",
 	star: "lets-icons:star-light",
+	search: "iconamoon:search-thin",
 } as const
