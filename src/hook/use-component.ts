@@ -1,5 +1,7 @@
 import { useState } from "react"
-
+/**
+ * @param itemArr - pulldown의 옵션목록을 Array<string>타입으로 입력.
+ */
 export const usePulldown = (itemArr: Array<string>) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [optionArr, setOptionArr] = useState<typeof itemArr>(itemArr)
@@ -26,4 +28,21 @@ export const usePulldown = (itemArr: Array<string>) => {
 		onClickItems,
 		optionArr,
 	}
+}
+
+/**
+ * @param initialOptionList - option 목록을 Array<string>타입형태로 입력
+ */
+export const useOption = (initialOptionList: Array<string>) => {
+	const optionArr = initialOptionList
+	const [checkedOption, setCheckedOption] = useState<Array<string>>([])
+
+	const onClickOption = (option: string) => {
+		setCheckedOption((prevList) => {
+			return prevList.includes(option)
+				? prevList.filter((item) => item !== option)
+				: [...prevList, option]
+		})
+	}
+	return { onClickOption, checkedOption, optionArr }
 }
