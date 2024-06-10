@@ -1,1 +1,1 @@
-export type TSpecialty = "nail" | "padi" | "eyebrow"
+export type TSpecialty = "NAIL" | "PADI" | "EYEBROW"

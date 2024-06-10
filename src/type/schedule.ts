@@ -1,6 +1,7 @@
 import type { TNTTime } from "."
 export type TSchedule = {
-	id: string
+	id: number
+	reservationId: number
 	startTime: TNTTime
 	endTime: TNTTime
 }
