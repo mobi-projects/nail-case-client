@@ -24,13 +24,14 @@ export const COLORS = {
 	PY60: "#F7FB98",
 	PY50: "#F8FCA9",
 	BGblue01: "#F6FAFC",
+	BGblue02: "#EFFAFF",
 } as const
 
 export const fontWeight = {
 	Light: 300,
 	Regular: 400,
 	SemiBold: 600,
-	Bold: 800,
+	Bold: 700,
 } as const
 
 export const fontStyle = {
@@ -66,7 +67,7 @@ export const fontStyle = {
 	Headline01: [
 		"20px",
 		{
-			fontWeight: 800,
+			fontWeight: 700,
 			lineHeight: "30px",
 		},
 	],
