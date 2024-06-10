@@ -40,6 +40,7 @@ const meta: Meta<typeof NTIcon> = {
 				"phoneLight",
 				"flagAltLight",
 				"star",
+				"serach",
 			],
 		},
 	},
@@ -174,7 +175,7 @@ export const PhoneLight: Story = {
 		icon: "phoneLight",
 	},
 }
-export const flagAltLight: Story = {
+export const FlagAltLight: Story = {
 	args: {
 		icon: "flagAltLight",
 	},
@@ -182,5 +183,10 @@ export const flagAltLight: Story = {
 export const Star: Story = {
 	args: {
 		icon: "star",
+	},
+}
+export const Search: Story = {
+	args: {
+		icon: "search",
 	},
 }

@@ -51,4 +51,5 @@ export const ICON_DATA = {
 	phoneLight: "lets-icons:phone-light",
 	flagAltLight: "lets-icons:flag-alt-light",
 	star: "lets-icons:star-light",
+	search: "iconamoon:search-thin",
 } as const
