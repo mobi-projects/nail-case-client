@@ -29,7 +29,6 @@ export const usePulldown = (itemArr: Array<string>) => {
 		optionArr,
 	}
 }
-
 /**
  * @param initialOptionList - option 목록을 Array<string>타입형태로 입력
  */
