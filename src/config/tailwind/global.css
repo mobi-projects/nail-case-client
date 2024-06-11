@@ -5,7 +5,7 @@
 @layer base {
 	html,
 	body {
-		@apply w-full max-w-[1530px] mx-0  my-auto p-0;
+		@apply mx-0 my-auto w-full max-w-[1530px] p-0;
 	}
 	h1 {
 		@apply text-Title01;
@@ -19,5 +19,4 @@
 	h4 {
 		@apply text-Caption01;
 	}
-
 }
