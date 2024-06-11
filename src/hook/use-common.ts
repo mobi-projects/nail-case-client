@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { QUERY_SHOP_INFO } from "@/constant"
-import { getShopInfo } from "@/util/api"
+import { QUERY_POST_ARR, QUERY_SHOP_INFO } from "@/constant"
+import { getPostArr, getShopInfo } from "@/util/api"
 
 export const useShopInfo = () => {
 	const { data: shopInfo } = useQuery({
@@ -9,4 +9,11 @@ export const useShopInfo = () => {
 		queryFn: getShopInfo,
 	})
 	return { shopInfo }
+}
+export const usePostArr = () => {
+	const { data: postArr } = useQuery({
+		queryKey: [QUERY_POST_ARR],
+		queryFn: getPostArr,
+	})
+	return { postArr }
 }
