@@ -1,34 +1,39 @@
-"use client"
-
 import { cva } from "class-variance-authority"
-import { useState } from "react"
 
 import { cn } from "@/config/tailwind"
 
 type NTOptionPT = {
 	optionArr: Array<string>
-	clickCallback?: VoidFunction
+	checkedOption: Array<string>
+	onClickOption?: (item: string) => void
 	size?: "large" | "medium"
 	disabled?: boolean
 }
-type NTOptionSinglePT = Omit<NTOptionPT, "optionArr"> & {
+
+type NTOptionSinglePT = Omit<NTOptionPT, "optionArr" | "checkedOption"> & {
+	isClicked?: boolean
 	children: string
+	onClickOption: () => void
 }
 
 export default function NTOption({
 	optionArr,
-	clickCallback,
 	size,
 	disabled,
+	checkedOption,
+	onClickOption,
 }: NTOptionPT) {
 	return (
 		<div className="flex gap-x-2">
 			{optionArr.map((option, idx) => (
 				<NTOptionSingle
 					key={idx}
-					clickCallback={clickCallback}
 					size={size}
 					disabled={disabled}
+					isClicked={checkedOption.includes(option)}
+					onClickOption={() => {
+						if (onClickOption) onClickOption(option)
+					}}
 				>
 					{option}
 				</NTOptionSingle>
@@ -37,13 +42,13 @@ export default function NTOption({
 	)
 }
 
-const NTOptionButtonVaraints = cva(
-	"group flex h-fit w-fit cursor-pointer items-center justify-center px-6 disabled:bg-Gray10",
+const NTOptionButtonVariants = cva(
+	"group flex h-fit w-fit cursor-pointer items-center justify-center px-6 disabled:bg-Gray10 disabled:cursor-default",
 	{
 		variants: {
 			size: {
-				large: "text-Headline02  rounded-[26px] py-3",
-				medium: "text-Body01 rounded-[35px] py-[10px]",
+				large: "text-Headline02 font-Regular rounded-[26px] py-3",
+				medium: "text-Body01 font-SemiBold rounded-[35px] py-[10px]",
 			},
 		},
 		defaultVariants: {
@@ -52,11 +57,11 @@ const NTOptionButtonVaraints = cva(
 	},
 )
 
-const NTOptionSpanVaraints = cva("", {
+const NTOptionSpanVariants = cva("", {
 	variants: {
 		size: {
-			large: " group-disabled:text-Gray50",
-			medium: "  group-disabled:text-Gray70",
+			large: " group-disabled:text-Gray50 ",
+			medium: " group-disabled:text-Gray70",
 		},
 	},
 	defaultVariants: {
@@ -68,27 +73,21 @@ function NTOptionSingle({
 	children,
 	disabled,
 	size,
-	clickCallback,
+	isClicked,
+	onClickOption,
 }: NTOptionSinglePT) {
-	const [isClicked, setIsClicked] = useState(false)
-
 	return (
 		<button
-			onClick={() => {
-				if (!disabled) {
-					setIsClicked((prev) => !prev)
-					if (clickCallback) clickCallback()
-				}
-			}}
+			onClick={onClickOption}
 			disabled={disabled}
 			className={cn(
-				NTOptionButtonVaraints({ size }),
+				NTOptionButtonVariants({ size }),
 				isClicked ? "bg-PB100" : "bg-BGblue01",
 			)}
 		>
 			<span
 				className={cn(
-					NTOptionSpanVaraints({ size }),
+					NTOptionSpanVariants({ size }),
 					isClicked ? "text-White" : "text-PB100",
 				)}
 			>
