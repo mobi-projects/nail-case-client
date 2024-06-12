@@ -2,7 +2,7 @@
 
 import type { TDayDivision, TNTTime } from "@/type"
 
-/** "timestamp"를 "NT시간제"로 변환 */
+/** TNTTime 를 timestamp 로 변환 */
 export const transToTimestamp = (from: TNTTime): number => {
 	const { year, month, day, hour, minute, division } = from
 	let convertedHour = hour
@@ -11,7 +11,7 @@ export const transToTimestamp = (from: TNTTime): number => {
 	const date = new Date(year, month - 1, day, convertedHour, minute)
 	return date.getTime()
 }
-/** "NT시간제"를 "timestamp"로 변환 */
+/** timestamp 를 TNTTime 로 변환 */
 export const transToNTTime = (from: number): TNTTime => {
 	const date = new Date(from)
 	const year = date.getFullYear()
