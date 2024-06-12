@@ -15,9 +15,9 @@ const ButtonVariants = cva(
 					"bg-white text-PB100 hover:text-PB80 active:bg-PB80 active:text-White",
 			},
 			size: {
-				large: `w-[144px] h-[62px] rounded-[14px] px-[20px] py-[16px] text-Title03`,
-				medium: `w-[127px] h-[56px] rounded-[12px] px-[18px] py-[12px] text-Headline01`,
-				small: `w-[110px] h-[50px] rounded-[11px] px-[14px] py-[12px] text-Body01`,
+				large: `rounded-[14px] px-[20px] py-[16px] text-Title03`,
+				medium: `rounded-[12px] px-[18px] py-[12px] text-Headline01`,
+				small: `rounded-[11px] px-[14px] py-[12px] text-Body01`,
 			},
 		},
 		defaultVariants: {
@@ -28,7 +28,7 @@ const ButtonVariants = cva(
 )
 
 const DisabledVariants = cva(
-	"flex items-center justify-center drop-shadow border",
+	"flex items-center justify-center drop-shadow border w-fit h-fit",
 	{
 		variants: {
 			variant: {
@@ -37,9 +37,9 @@ const DisabledVariants = cva(
 				tertiary: "bg-Gray20 text-Gray50",
 			},
 			size: {
-				large: `w-[144px] h-[62px] rounded-[14px] px-[20px] py-[16px] text-Title03`,
-				medium: `w-[127px] h-[56px] rounded-[12px] px-[18px] py-[12px] text-Headline01`,
-				small: `w-[110px] h-[50px] rounded-[11px] px-[14px] py-[12px] text-Body01`,
+				large: `rounded-[14px] px-[20px] py-[16px] text-Title03`,
+				medium: `rounded-[12px] px-[18px] py-[12px] text-Headline01`,
+				small: `rounded-[11px] px-[14px] py-[12px] text-Body01`,
 			},
 		},
 		defaultVariants: {
@@ -60,7 +60,7 @@ export const NTButton: React.FC<NTButtonPT> = ({
 	size,
 	children,
 	icon,
-	disabled = true,
+	disabled = false,
 	...props
 }) => {
 	const classes = disabled
@@ -69,7 +69,7 @@ export const NTButton: React.FC<NTButtonPT> = ({
 
 	return (
 		<button className={classes} disabled={disabled} {...props}>
-			<span className="mr-[6px] whitespace-nowrap">{children}</span>
+			<span className="mr-[6px]">{children}</span>
 			{icon && <NTIcon icon={icon} className="w-[28px]" />}
 		</button>
 	)
