@@ -9,6 +9,8 @@ import type {
 	TShopInfo,
 	TUser,
 } from "@/type"
+import type { TComment } from "@/type/comment"
+import type { TPost, TPostCategory } from "@/type/post"
 import type {
 	TEssentialForm,
 	TNailCondition,
@@ -37,6 +39,39 @@ export const createShopInfo = (): TShopInfo => {
 }
 export const createReservationArr = (): TReservation[] =>
 	getFakeObjArr(getRandomNumber(10), createReservation)
+
+export const createPostArr = (): TPost[] =>
+	getFakeObjArr(getRandomNumber(15), createPost)
+
+const createPost = (): TPost => {
+	const commentArr: TComment[] = getFakeObjArr(
+		getRandomNumber(50),
+		createComment,
+	)
+	const post: TPost = {
+		id: faker.number.int(),
+		category: pickRandomOneOfArr<TPostCategory>(["NEWS", "NOTICE"]),
+		srcArr: getFakeObjArr(getRandomNumber(5), faker.image.url),
+		title: faker.lorem.sentence({ min: 2, max: 6 }),
+		content: faker.lorem.paragraphs({ min: 1, max: 10 }),
+		likes: faker.number.int(),
+		views: faker.number.int(),
+		comments: commentArr.length,
+		commentArr,
+		createdAt: createNTTime(),
+	}
+	return post
+}
+
+const createComment = (): TComment => {
+	const comment: TComment = {
+		id: faker.number.int(),
+		user: createUser(),
+		likes: faker.number.int(),
+		content: faker.lorem.paragraphs({ min: 1, max: 3 }),
+	}
+	return comment
+}
 
 const createNTTime = (): TNTTime => {
 	const current = new Date()
