@@ -8,6 +8,7 @@ type NTOptionPT = {
 	onClickOption?: (item: string) => void
 	size?: "large" | "medium"
 	disabled?: boolean
+	itemsPerRow?: number
 }
 
 type NTOptionSinglePT = Omit<NTOptionPT, "optionArr" | "checkedOption"> & {
@@ -22,21 +23,32 @@ export default function NTOption({
 	disabled,
 	checkedOption,
 	onClickOption,
+	itemsPerRow = 2,
 }: NTOptionPT) {
+	const rows = []
+	for (let i = 0; i < optionArr.length; i += itemsPerRow) {
+		rows.push(optionArr.slice(i, i + itemsPerRow))
+	}
+
 	return (
-		<div className="flex gap-x-2">
-			{optionArr.map((option, idx) => (
-				<NTOptionSingle
-					key={idx}
-					size={size}
-					disabled={disabled}
-					isClicked={checkedOption.includes(option)}
-					onClickOption={() => {
-						if (onClickOption) onClickOption(option)
-					}}
-				>
-					{option}
-				</NTOptionSingle>
+		<div className="flex flex-col gap-y-2">
+			{rows.map((row, rowIndex) => (
+				<div key={rowIndex} className="flex gap-x-2">
+					{row.map((option, idx) => (
+						<NTOptionSingle
+							key={idx}
+							size={size}
+							disabled={disabled}
+							isClicked={checkedOption.includes(option)}
+							onClickOption={() => {
+								if (onClickOption) onClickOption(option)
+								console.log(option)
+							}}
+						>
+							{option}
+						</NTOptionSingle>
+					))}
+				</div>
 			))}
 		</div>
 	)
