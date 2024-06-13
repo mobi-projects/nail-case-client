@@ -1,5 +1,5 @@
 "use client"
-//지워질예정
+
 import { useRef } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
@@ -14,18 +14,14 @@ export default function Header() {
 			<div className="flex w-full max-w-[1200px] flex-col">
 				<NTLogo />
 				<div className="flex w-full justify-between gap-[70px] pb-[18px]">
-					<div>
-						<div
-						//NTPullDown pr 수정시 지워질예정
-						></div>
-					</div>
+					<div
+					//NTPullDown pr 수정시 지워질예정d
+					></div>
 					<div className="flex h-fit w-full justify-between">
-						<div>
-							<NTSearchfield size="large" ref={searchInputRef} />
-						</div>
+						<NTSearchfield size="large" ref={searchInputRef} />
 						<div className="flex gap-[12px]">
 							<div className="flex items-center">
-								<NTIcon className="text-Gray90" icon="bellLight"></NTIcon>
+								<NTIcon className="text-Gray90" icon="bellLight" />
 							</div>
 							<div className="h-[50px] w-[50px] rounded-full bg-Gray20"></div>
 						</div>
