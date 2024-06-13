@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
+import TabBar from "@/component/custom/home/tab-bar"
 import { TanstackQueryProvider } from "@/config/tanstack-query"
 import "../config/tailwind/global.css"
 
@@ -39,7 +40,8 @@ export default function RootLayout({
 		<html lang="kr">
 			<body className={suit.className}>
 				<TanstackQueryProvider>
-					<div className="flex w-dvw justify-center">
+					<div className="it flex w-dvw flex-col items-center justify-center">
+						<TabBar />
 						<main className="w-[1200px] text-wrap break-all">{children}</main>
 					</div>
 				</TanstackQueryProvider>
