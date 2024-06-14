@@ -14,7 +14,7 @@ type NTOptionPT = {
 type NTOptionSinglePT = Omit<NTOptionPT, "optionArr" | "checkedOption"> & {
 	isClicked?: boolean
 	children: string
-	onClickOption: () => void
+	onClickOption?: () => void
 }
 
 export default function NTOption({
@@ -40,10 +40,9 @@ export default function NTOption({
 							size={size}
 							disabled={disabled}
 							isClicked={checkedOption.includes(option)}
-							onClickOption={() => {
-								if (onClickOption) onClickOption(option)
-								console.log(option)
-							}}
+							onClickOption={
+								onClickOption ? () => onClickOption(option) : undefined
+							}
 						>
 							{option}
 						</NTOptionSingle>
@@ -95,6 +94,9 @@ function NTOptionSingle({
 			className={cn(
 				NTOptionButtonVariants({ size }),
 				isClicked ? "bg-PB100" : "bg-BGblue01",
+				typeof onClickOption !== "undefined"
+					? "cursor-pointer"
+					: "cursor-default",
 			)}
 		>
 			<span
