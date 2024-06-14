@@ -1,4 +1,4 @@
-type TDayDivision = "PM" | "AM"
+export type TDayDivision = "PM" | "AM"
 
 export type TNTTime = {
 	year: number
