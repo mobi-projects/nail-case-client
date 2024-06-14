@@ -12,8 +12,10 @@ export const getShopInfo = async () => {
 	const response = await tmpFetch<TShopInfo>(createShopInfo()) // TODO: fetching 함수 교체 필요
 	return response
 }
-export const getReservationArr = async () => {
-	const response = await tmpFetch<TReservation[]>(createReservationArr()) // TODO: fetching 함수 교체 필요
+export const getReservationArr = async (from: number, to: number) => {
+	const response = await tmpFetch<TReservation[]>(
+		createReservationArr(from, to),
+	) // TODO: fetching 함수 교체 필요
 	return response
 }
 export const getPostArr = async () => {
