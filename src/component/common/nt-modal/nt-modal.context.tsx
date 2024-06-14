@@ -36,7 +36,7 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
 		<ModalContext.Provider value={{ onOpen, onClose }}>
 			{children}
 			{propsArr.map((attribute, idx) => (
-				<NTModal key={idx} {...{ attribute }} onClose={onClose}>
+				<NTModal key={idx} {...attribute} onClose={onClose}>
 					{attribute.children}
 				</NTModal>
 			))}
