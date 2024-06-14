@@ -4,7 +4,7 @@ import type { ButtonHTMLAttributes } from "react"
 import NTIcon, { type ICON_DATA } from "../../nt-icon"
 
 const ButtonVariants = cva(
-	"flex items-center justify-center drop-shadow border",
+	"flex items-center justify-center drop-shadow border w-fit h-fit",
 	{
 		variants: {
 			variant: {
@@ -15,9 +15,9 @@ const ButtonVariants = cva(
 					"bg-white text-PB100 hover:text-PB80 active:bg-PB80 active:text-White",
 			},
 			size: {
-				large: `rounded-[14px] px-[20px] py-[16px] text-Title03`,
-				medium: `rounded-[12px] px-[18px] py-[12px] text-Headline01`,
-				small: `rounded-[11px] px-[14px] py-[12px] text-Body01`,
+				large: "rounded-[14px] px-[20px] py-[16px] text-Title03",
+				medium: "rounded-[12px] px-[18px] py-[12px] text-Headline01",
+				small: "rounded-[11px] px-[14px] py-[12px] text-Body01",
 			},
 		},
 		defaultVariants: {
@@ -37,9 +37,9 @@ const DisabledVariants = cva(
 				tertiary: "bg-Gray20 text-Gray50",
 			},
 			size: {
-				large: `rounded-[14px] px-[20px] py-[16px] text-Title03`,
-				medium: `rounded-[12px] px-[18px] py-[12px] text-Headline01`,
-				small: `rounded-[11px] px-[14px] py-[12px] text-Body01`,
+				large: "rounded-[14px] px-[20px] py-[16px] text-Title03",
+				medium: "rounded-[12px] px-[18px] py-[12px] text-Headline01",
+				small: "rounded-[11px] px-[14px] py-[12px] text-Body01",
 			},
 		},
 		defaultVariants: {
