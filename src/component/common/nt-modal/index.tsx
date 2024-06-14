@@ -44,7 +44,7 @@ export default function NTModal({ size, children, onClose }: NTModalPT) {
 }
 
 const ModalHeaderVariants = cva(
-	"w-full h-[58px] order-first flex flex-col justify-between text-Gray90",
+	"w-full h-[58px] order-first flex flex-col justify-start text-Gray90",
 	{
 		variants: {
 			size: {
@@ -68,7 +68,6 @@ export function NTModalHeader({ size, align, children }: NTModalHeaderPT) {
 	return (
 		<header className={cn(ModalHeaderVariants({ size, align }))}>
 			{children}
-			<NTModalDivider weight="bold" color="dark" size="big" />
 		</header>
 	)
 }
@@ -86,10 +85,10 @@ const ModalDividerVariants = cva("w-full flex justify-center", {
 	variants: {
 		size: {
 			small: "",
-			big: "scale-x-[200%]",
+			big: "absolute scale-x-[200%]",
 		},
 		weight: {
-			thin: "h-[1px]",
+			thin: "h-[1.5px]",
 			bold: "h-[2px]",
 		},
 		color: {
@@ -109,23 +108,15 @@ export function NTModalDivider({
 	color,
 }: VariantProps<typeof ModalDividerVariants>) {
 	return (
-		<div className={cn(ModalDividerVariants({ weight }), "relative w-full")}>
-			<div
-				className={cn(
-					ModalDividerVariants({ size, color, weight }),
-					"absolute w-full",
-				)}
-			/>
+		<div className={ModalDividerVariants({ weight })}>
+			<div className={cn(ModalDividerVariants({ size, color, weight }))} />
 		</div>
 	)
 }
 export function NTModalFooter({ children }: PropsWithChildren) {
 	return (
-		<div className="order-last">
-			<NTModalDivider size="big" weight="bold" color="dark" />
-			<div className="flex h-[149px] items-center justify-center">
-				{children}
-			</div>
+		<div className="mt-auto flex h-[149px] items-center justify-center">
+			{children}
 		</div>
 	)
 }
