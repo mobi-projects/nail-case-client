@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
+import { ModalProvider } from "@/component/common/nt-modal/nt-modal.context"
 import { TanstackQueryProvider } from "@/config/tanstack-query"
 import "../config/tailwind/global.css"
 
@@ -37,13 +38,15 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="kr">
-			<body className={suit.className}>
-				<TanstackQueryProvider>
-					<div className="flex w-dvw justify-center">
-						<main className="w-[1200px] text-wrap break-all">{children}</main>
-					</div>
-				</TanstackQueryProvider>
-			</body>
+			<TanstackQueryProvider>
+				<ModalProvider>
+					<body className={suit.className}>
+						<div className="flex w-dvw justify-center">
+							<main className="w-[1200px] text-wrap break-all">{children}</main>
+						</div>
+					</body>
+				</ModalProvider>
+			</TanstackQueryProvider>
 		</html>
 	)
 }
