@@ -37,7 +37,9 @@ const ReservationConfirmedCard: React.FC<ReservationCardPT> = ({ icon }) => {
 					<Image
 						src={EnableIcon}
 						alt="Enable Icon"
-						className="cursor: pointer h-[56px] w-[56px]"
+						width={56}
+						height={56}
+						className="cursor-pointer"
 					/>
 				</div>
 				<div className="text-LargeTitle font-Bold text-PB100">{`${filteredData.length}건`}</div>
