@@ -12,14 +12,18 @@ export default function Home() {
 				<NTButton
 					variant={"primary"}
 					size={"medium"}
-					onClick={() => router.push("/manager")}
+					onClick={() =>
+						router.push("https://nail-case-client.vercel.app/manager")
+					}
 				>
 					관리자 페이지
 				</NTButton>
 				<NTButton
 					variant={"primary"}
 					size={"medium"}
-					onClick={() => router.push("/home")}
+					onClick={() =>
+						router.push("https://nail-case-client.vercel.app/home")
+					}
 				>
 					사용자 페이지
 				</NTButton>
