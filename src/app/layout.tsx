@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 
 import { ModalProvider } from "@/component/common/nt-modal/nt-modal.context"
-import Header from "@/component/custom/home/header"
 import { TanstackQueryProvider } from "@/config/tanstack-query"
 
 import "../config/tailwind/global.css"
