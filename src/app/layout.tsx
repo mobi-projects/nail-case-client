@@ -42,7 +42,7 @@ export default function RootLayout({
 			<body className={suit.className}>
 				<TanstackQueryProvider>
 					<ModalProvider>
-						<div className="flex w-dvw justify-center">
+						<div className="flex w-full justify-center">
 							<main className="w-[1200px] text-wrap break-all">{children}</main>
 						</div>
 					</ModalProvider>

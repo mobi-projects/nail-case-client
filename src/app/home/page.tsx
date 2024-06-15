@@ -206,7 +206,7 @@ function ProcedureDetail() {
 	} = useOption(["손톱 보수 필요", "A/S 필요", "상처 있음", "교정 필요"])
 
 	return (
-		<>
+		<div className="h-fit">
 			<NTModalHeader size="big" align="left">
 				세부 시술 내용
 			</NTModalHeader>
@@ -250,6 +250,6 @@ function ProcedureDetail() {
 			<NTModalFooter>
 				<NTButton onClick={onClose}>좋아요</NTButton>
 			</NTModalFooter>
-		</>
+		</div>
 	)
 }
