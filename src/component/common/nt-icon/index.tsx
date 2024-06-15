@@ -28,7 +28,9 @@ export const ICON_DATA = {
 	expandDownLight: "lets-icons:expand-down-light",
 	expandUpLight: "lets-icons:expand-up-light",
 	expandRightLight: "lets-icons:expand-right-light",
+	expandRight: "lets-icons:expand-right",
 	expandLeftLight: "lets-icons:expand-left-light",
+	expandLeft: "lets-icons:expand-left",
 	check: "material-symbols-light:check-rounded",
 	checkRingLight: "lets-icons:check-ring-light",
 	addRoundLight: "lets-icons:add-round-light",
@@ -55,4 +57,5 @@ export const ICON_DATA = {
 	star: "lets-icons:star-light",
 	search: "iconamoon:search-thin",
 	delete: "lets-icons:close-round",
+	dot: "mid:dot",
 } as const

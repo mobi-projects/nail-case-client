@@ -5,7 +5,7 @@
 @layer base {
 	html,
 	body {
-		@apply mx-0 my-auto w-full max-w-[1530px] p-0;
+		@apply m-0 p-0;
 	}
 	h1 {
 		@apply text-Title01;

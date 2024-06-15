@@ -5,7 +5,9 @@ import {
 	QUERY_RESERVATION_ARR,
 	QUERY_SHOP_INFO,
 } from "@/constant"
+import type { TNTTime } from "@/type"
 import { getPostArr, getReservationArr, getShopInfo } from "@/util/api"
+import { transToTimestamp } from "@/util/common/transform"
 
 export const useShopInfo = () => {
 	const { data: shopInfo } = useQuery({
@@ -21,10 +23,18 @@ export const usePostArr = () => {
 	})
 	return { postArr }
 }
-export const useReservationArr = () => {
+type UseReservationArrPT = {
+	from: TNTTime
+	to: TNTTime
+}
+export const useReservationArr = ({ from, to }: UseReservationArrPT) => {
 	const { data: reservationArr } = useQuery({
 		queryKey: [QUERY_RESERVATION_ARR],
-		queryFn: getReservationArr,
+		queryFn: () => {
+			const timeStampFrom = transToTimestamp(from)
+			const timestampTo = transToTimestamp(to)
+			return getReservationArr(timeStampFrom, timestampTo)
+		},
 	})
 	return { reservationArr }
 }
