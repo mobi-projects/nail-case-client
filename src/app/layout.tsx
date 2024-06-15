@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 	description: "네일샵 예약 / 관리 서비스",
 }
 
-export default function RootLayout({
+export default function LootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode
@@ -39,7 +39,7 @@ export default function RootLayout({
 		<html lang="kr">
 			<body className={suit.className}>
 				<TanstackQueryProvider>
-					<div className="flex w-dvw justify-center">
+					<div className="flex w-dvw flex-col justify-center">
 						<main className="w-[1200px] text-wrap break-all">{children}</main>
 					</div>
 				</TanstackQueryProvider>
