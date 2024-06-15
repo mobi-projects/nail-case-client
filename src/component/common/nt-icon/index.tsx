@@ -10,15 +10,17 @@ type TIconData = {
 }
 type NTIconPT = HTMLAttributes<HTMLElement> & TIconData
 
-export default function NTIcon({ className, icon }: NTIconPT) {
+export default function NTIcon({ className, icon, ...props }: NTIconPT) {
 	return (
-		<Icon
-			icon={ICON_DATA[icon]}
-			className={cn(
-				"m-0 inline-block h-[36px] w-[36px] p-0 text-[length:inherit] text-inherit",
-				className,
-			)}
-		/>
+		<div className="h-fit w-fit" {...props}>
+			<Icon
+				icon={ICON_DATA[icon]}
+				className={cn(
+					"m-0 inline-block h-[36px] w-[36px] p-0 text-[length:inherit] text-inherit",
+					className,
+				)}
+			/>
+		</div>
 	)
 }
 
@@ -26,7 +28,9 @@ export const ICON_DATA = {
 	expandDownLight: "lets-icons:expand-down-light",
 	expandUpLight: "lets-icons:expand-up-light",
 	expandRightLight: "lets-icons:expand-right-light",
+	expandRight: "lets-icons:expand-right",
 	expandLeftLight: "lets-icons:expand-left-light",
+	expandLeft: "lets-icons:expand-left",
 	check: "material-symbols-light:check-rounded",
 	checkRingLight: "lets-icons:check-ring-light",
 	addRoundLight: "lets-icons:add-round-light",
@@ -52,4 +56,6 @@ export const ICON_DATA = {
 	flagAltLight: "lets-icons:flag-alt-light",
 	star: "lets-icons:star-light",
 	search: "iconamoon:search-thin",
+	delete: "lets-icons:close-round",
+	dot: "mid:dot",
 } as const

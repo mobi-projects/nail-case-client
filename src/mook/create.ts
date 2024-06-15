@@ -17,6 +17,7 @@ import type {
 	TReservation,
 	TReservationStatus,
 } from "@/type/reservation"
+import { transToNTTime } from "@/util/common/transform"
 
 export const createShopInfo = (): TShopInfo => {
 	const shopInfo: TShopInfo = {
@@ -37,8 +38,11 @@ export const createShopInfo = (): TShopInfo => {
 	}
 	return shopInfo
 }
-export const createReservationArr = (): TReservation[] =>
-	getFakeObjArr(getRandomNumber(10), createReservation)
+export const createReservationArr = (
+	from: number,
+	to: number,
+): TReservation[] =>
+	getFakeObjArr(getRandomNumber(10), () => createReservation(from, to))
 
 export const createPostArr = (): TPost[] =>
 	getFakeObjArr(getRandomNumber(15), createPost)
@@ -72,18 +76,15 @@ const createComment = (): TComment => {
 	}
 	return comment
 }
+const createTimeStamp = (from: number, to: number): number =>
+	new Date(faker.date.between({ from, to })).getTime()
 
-const createNTTime = (): TNTTime => {
-	const current = new Date()
-	const ntTime: TNTTime = {
-		year: current.getFullYear(),
-		month: current.getMonth() + 1,
-		day: current.getDate(),
-		hour: current.getHours(),
-		minute: current.getMinutes(),
-		division: current.getHours() > 12 ? "PM" : "AM",
-	}
-	return ntTime
+const createNTTime = (
+	from: number = Date.now(),
+	to: number = Date.now() + 6 * 60 * 60 * 1000,
+): TNTTime => {
+	const timestamp = createTimeStamp(from, to)
+	return transToNTTime(timestamp)
 }
 const createOperating = (): TOperating => {
 	const operating = {
@@ -93,12 +94,15 @@ const createOperating = (): TOperating => {
 	}
 	return operating
 }
-const createSchedule = (): TSchedule => {
+const createSchedule = (
+	from: number = Date.now(),
+	to: number = Date.now() + 6 * 60 * 60 * 1000,
+): TSchedule => {
 	const schedule: TSchedule = {
 		id: faker.number.int(),
 		reservationId: faker.number.int(),
-		startTime: createNTTime(),
-		endTime: createNTTime(),
+		startTime: createNTTime(from, to),
+		endTime: createNTTime(from, to),
 	}
 	return schedule
 }
@@ -163,7 +167,10 @@ const createStatus = (): TReservationStatus => {
 	const randomIdx = getRandomNumber(statusArr.length - 1)
 	return statusArr[randomIdx]
 }
-const createReservation = (): TReservation => {
+const createReservation = (
+	from: number = Date.now(),
+	to: number = Date.now() + 6 * 60 * 60 * 1000,
+): TReservation => {
 	const companion = getRandomNumber(2) // 동반자 수
 	const totConsumer = companion + 1 // 방문 고객수 = 동반자 수 + 예약자 본인
 	const reservation: TReservation = {
@@ -171,7 +178,7 @@ const createReservation = (): TReservation => {
 		status: createStatus(),
 		artistArr: getFakeObjArr(totConsumer, createArtist),
 		customer: createUser(),
-		schedule: createSchedule(),
+		schedule: createSchedule(from, to),
 		companion: getRandomNumber(3),
 		essentialDetailArr: getFakeObjArr(totConsumer, createEssentialForm),
 		customDetailArr: [],
