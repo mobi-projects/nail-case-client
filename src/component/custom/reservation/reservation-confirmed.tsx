@@ -6,6 +6,7 @@ import React from "react"
 import type { ICON_DATA } from "@/component/common/nt-icon"
 import NTIcon from "@/component/common/nt-icon"
 import { useReservationArr } from "@/hook/use-common"
+import { getAllDay } from "@/util/common/time"
 
 import EnableIcon from "../../../../public/asset/enabled.png"
 
@@ -13,7 +14,7 @@ type ReservationCardPT = {
 	icon?: keyof typeof ICON_DATA
 }
 const ReservationConfirmedCard: React.FC<ReservationCardPT> = ({ icon }) => {
-	const { reservationArr } = useReservationArr()
+	const { reservationArr } = useReservationArr(getAllDay())
 
 	const filteredData =
 		reservationArr?.filter((item) => item.status === "APPROVAL") || []
