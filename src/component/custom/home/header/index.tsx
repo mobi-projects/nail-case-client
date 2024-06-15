@@ -14,9 +14,7 @@ export default function Header() {
 			<div className="flex w-full max-w-[1200px] flex-col">
 				<NTLogo />
 				<div className="flex w-full justify-between gap-[70px] pb-[18px]">
-					<div
-					//NTPullDown pr 수정시 지워질예정d
-					></div>
+					<div className="h-fit w-fit bg-red-200 px-10 py-3">Dropdown</div>
 					<div className="flex h-fit w-full justify-between">
 						<NTSearchfield size="large" ref={searchInputRef} />
 						<div className="flex gap-[12px]">

@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
-import Header from "@/component/custom/home/header"
 import { TanstackQueryProvider } from "@/config/tanstack-query"
 import "../config/tailwind/global.css"
 
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
 	description: "네일샵 예약 / 관리 서비스",
 }
 
-export default function RootLayout({
+export default function LootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode
@@ -41,7 +40,6 @@ export default function RootLayout({
 			<body className={suit.className}>
 				<TanstackQueryProvider>
 					<div className="flex w-dvw flex-col justify-center">
-						<Header />
 						<main className="w-[1200px] text-wrap break-all">{children}</main>
 					</div>
 				</TanstackQueryProvider>
