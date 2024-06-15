@@ -4,6 +4,13 @@ import { NTButton } from "@/component/common/atom/nt-button"
 // import { NTButton } from "@/component/common/atom/nt-button"
 import NTToolbar from "@/component/common/atom/nt-toolbar"
 import NTIcon from "@/component/common/nt-icon"
+import {
+	NTModalContent,
+	NTModalDivider,
+	NTModalFooter,
+	NTModalHeader,
+} from "@/component/common/nt-modal"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTOption from "@/component/common/nt-option"
 import Calendar from "@/component/custom/home/calender"
 import { useOption, useToolbar } from "@/hook/use-component"
@@ -50,6 +57,8 @@ function ReserVationSection() {
 		onClickOption: onClickOption3,
 		optionArr: optionArr3,
 	} = useOption(["1인", "2인 동반"])
+	const { onOpen } = useModal()
+
 	return (
 		<div className="h-full w-full pt-6">
 			<h2 className="text-Title03 font-SemiBold text-Gray100">에약 일시</h2>
@@ -58,7 +67,17 @@ function ReserVationSection() {
 					<div className="mx-auto h-fit w-full">
 						<Calendar />
 					</div>
-					<NTButton size={"large"} variant={"tertiary"} className="w-full">
+					<NTButton
+						onClick={() => {
+							onOpen({
+								size: "big",
+								children: <ProcedureDetail />,
+							})
+						}}
+						size={"large"}
+						variant={"tertiary"}
+						className="w-full"
+					>
 						예약하기
 					</NTButton>
 				</div>
@@ -160,5 +179,77 @@ function ShopPostCard() {
 				<p className="text-Callout text-Gray30">좋아요50 , 댓글50</p>
 			</div>
 		</div>
+	)
+}
+
+function ProcedureDetail() {
+	const { onClose } = useModal()
+	const {
+		checkedOption: checkedProcedureOptionArr,
+		onClickOption: onClickProcedureOption,
+		optionArr: procedureOptionArr,
+	} = useOption(["이달의 아트", "케어", "원 컬러", "사진 등록"])
+	const {
+		checkedOption: checkedRemovingOption,
+		onClickOption: onClickRemovingOption,
+		optionArr: removingOptionArr,
+	} = useOption(["자샵 제거 필요", "타샵 제거 필요", "제거 필요 없음"])
+	const {
+		checkedOption: checkedExtensionOptionArr,
+		onClickOption: onClickExtensionOption,
+		optionArr: extensionOptionArr,
+	} = useOption(["연장 필요", "연장 필요 없음"])
+	const {
+		checkedOption: checkedNailConditionArr,
+		onClickOption: onClickNailCondition,
+		optionArr: nailConditionArr,
+	} = useOption(["손톱 보수 필요", "A/S 필요", "상처 있음", "교정 필요"])
+
+	return (
+		<>
+			<NTModalHeader size="big" align="left">
+				세부 시술 내용
+			</NTModalHeader>
+			<NTModalDivider color="dark" weight="bold" />
+			<NTModalContent className="flex flex-col gap-4 p-4">
+				<p className="text-Headline02">시술 내용</p>
+				<NTOption
+					size="large"
+					optionArr={procedureOptionArr}
+					onClickOption={onClickProcedureOption}
+					checkedOption={checkedProcedureOptionArr}
+				/>
+				<NTModalDivider />
+
+				<p className="text-Headline02">네일 제거 유무</p>
+				<NTOption
+					size="large"
+					optionArr={removingOptionArr}
+					onClickOption={onClickRemovingOption}
+					checkedOption={checkedRemovingOption}
+				/>
+				<NTModalDivider />
+
+				<p className="text-Headline02">연장 유무</p>
+				<NTOption
+					size="large"
+					optionArr={extensionOptionArr}
+					onClickOption={onClickExtensionOption}
+					checkedOption={checkedExtensionOptionArr}
+				/>
+				<NTModalDivider />
+				<p className="text-Headline02">컨디션</p>
+				<NTOption
+					size="large"
+					optionArr={nailConditionArr}
+					onClickOption={onClickNailCondition}
+					checkedOption={checkedNailConditionArr}
+				/>
+			</NTModalContent>
+			<NTModalDivider color="dark" weight="bold" size="big" />
+			<NTModalFooter>
+				<NTButton onClick={onClose}>좋아요</NTButton>
+			</NTModalFooter>
+		</>
 	)
 }

@@ -7,12 +7,12 @@ import { cn } from "@/config/tailwind"
 import NTIcon from "../nt-icon"
 
 const ModalVariants = cva(
-	"relative py-[27px] rounded-[26px] bg-White overflow-x-hidden",
+	"relative py-[27px] rounded-[26px] bg-White overflow-hidden",
 	{
 		variants: {
 			size: {
-				small: "h-[659px] w-[486px] max-h-[659px] px-[28px]",
-				big: "h-fit min-h-[786px] max-h-[984px] w-[996px] px-[52px]",
+				small: "h-[494.25px] w-[486px] max-h-[494.25px] px-[28px]",
+				big: "h-fit min-h-[687.75px] max-h-[837px] w-[996px] px-[52px]",
 			},
 		},
 		defaultVariants: {
@@ -29,7 +29,7 @@ type NTModalPT = VariantProps<typeof ModalVariants> &
 export default function NTModal({ size, children, onClose }: NTModalPT) {
 	return (
 		<div
-			className="fixed z-50 flex h-full w-full items-center justify-center bg-Black/50"
+			className="fixed top-0 z-[10000] flex h-full w-full items-center justify-center bg-Black/50"
 			onClick={(e) => {
 				e.preventDefault
 				e.stopPropagation
@@ -76,7 +76,7 @@ export function NTModalContent({
 	className,
 }: PropsWithChildren & HTMLAttributes<HTMLDivElement>) {
 	return (
-		<div className={cn("h-fit w-full overflow-x-hidden", className)}>
+		<div className={cn("max-h-80% h-fit w-full overflow-x-hidden", className)}>
 			{children}
 		</div>
 	)
