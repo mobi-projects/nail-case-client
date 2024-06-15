@@ -1,3 +1,4 @@
+"use client"
 import { cva } from "class-variance-authority"
 
 type NTToolbarSinglePT = {
@@ -93,7 +94,7 @@ export default function NTToolbar({
 	isSelected,
 }: NTToolbarPT) {
 	return (
-		<div className="flex h-full w-full gap-x-[20px]">
+		<div className="flex h-full w-fit gap-x-[20px]">
 			{arr.map((children, idx) => (
 				<NTToolbarSingle
 					key={idx}

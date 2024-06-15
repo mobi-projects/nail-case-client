@@ -11,7 +11,7 @@ type NTSearchfieldPT = {
 }
 
 const SearchfieldVariants = cva(
-	"group flex h-[50px] items-center rounded-[6px] border-[1.6px] px-[12px] focus-within:border-[2px] focus-within:hover:border-PB100",
+	"group flex h-[50px] max-w-full items-center rounded-[6px] border-[1.6px] px-[12px] focus-within:border-[2px] focus-within:hover:border-PB100",
 	{
 		variants: {
 			size: {
