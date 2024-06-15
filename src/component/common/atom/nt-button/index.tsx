@@ -1,6 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import type { ButtonHTMLAttributes } from "react"
 
+import { cn } from "@/config/tailwind"
+
 import NTIcon, { type ICON_DATA } from "../../nt-icon"
 
 const ButtonVariants = cva(
@@ -8,33 +10,12 @@ const ButtonVariants = cva(
 	{
 		variants: {
 			variant: {
-				primary: "bg-PB100 text-White hover:bg-PB80 active:bg-Gray80",
+				primary:
+					"bg-PB100 text-White hover:bg-PB80 active:bg-Gray80 disabled:bg-Gray10 disabled:text-Gray60 disabled:border-Gray20 ",
 				secondary:
-					"bg-BGblue01 text-PB100 hover:bg-BGblue02 active:bg-BGblue01 active:border-PB100 active:border-[1.6px]",
+					"bg-BGblue01 text-PB100 hover:bg-BGblue02 active:bg-BGblue01 active:border-PB100 active:border-[1.6px] disabled:bg-BGblue01 disabled:text-PB50",
 				tertiary:
-					"bg-white text-PB100 hover:text-PB80 active:bg-PB80 active:text-White",
-			},
-			size: {
-				large: `w-[144px] h-[62px] rounded-[14px] px-[20px] py-[16px] text-Title03`,
-				medium: `w-[127px] h-[56px] rounded-[12px] px-[18px] py-[12px] text-Headline01`,
-				small: `w-[110px] h-[50px] rounded-[11px] px-[14px] py-[12px] text-Body01`,
-			},
-		},
-		defaultVariants: {
-			variant: "primary",
-			size: "medium",
-		},
-	},
-)
-
-const DisabledVariants = cva(
-	"flex items-center justify-center drop-shadow border",
-	{
-		variants: {
-			variant: {
-				primary: "bg-Gray10 text-Gray60 border-Gray20",
-				secondary: "bg-BGblue01 text-PB50",
-				tertiary: "bg-Gray20 text-Gray50",
+					"bg-white text-PB100 hover:text-PB80 active:bg-PB80 active:text-White disabled:bg-Gray20 disabled:text-Gray50",
 			},
 			size: {
 				large: `w-[144px] h-[62px] rounded-[14px] px-[20px] py-[16px] text-Title03`,
@@ -60,15 +41,15 @@ export const NTButton: React.FC<NTButtonPT> = ({
 	size,
 	children,
 	icon,
-	disabled = true,
+	disabled,
 	...props
 }) => {
-	const classes = disabled
-		? DisabledVariants({ variant, size })
-		: ButtonVariants({ variant, size })
-
 	return (
-		<button className={classes} disabled={disabled} {...props}>
+		<button
+			className={cn(ButtonVariants({ variant, size }), props.className)}
+			disabled={disabled}
+			{...props}
+		>
 			<span className="mr-[6px] whitespace-nowrap">{children}</span>
 			{icon && <NTIcon icon={icon} className="w-[28px]" />}
 		</button>
