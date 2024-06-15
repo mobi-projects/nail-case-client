@@ -10,6 +10,7 @@ import NTOption from "@/component/common/nt-option"
 import { useReservationArr } from "@/hook/use-common"
 import { useOption } from "@/hook/use-component"
 import type { TNTTime } from "@/type"
+import { getAllDay } from "@/util/common/time"
 
 type ReservationCardPT = {
 	icon?: keyof typeof ICON_DATA
@@ -22,7 +23,7 @@ const ReservationPendingCard: React.FC<ReservationCardPT> = ({ icon }) => {
 		"타샵 제거 있음",
 	])
 
-	const { reservationArr } = useReservationArr()
+	const { reservationArr } = useReservationArr(getAllDay())
 
 	const filteredData =
 		reservationArr?.filter((item) => item.status === "WAITING") || []
