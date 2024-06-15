@@ -12,14 +12,14 @@ export default function Home() {
 				<NTButton
 					variant={"primary"}
 					size={"medium"}
-					onClick={() => router.push("http://localhost:3000/manager")}
+					onClick={() => router.push("/manager")}
 				>
 					관리자 페이지
 				</NTButton>
 				<NTButton
 					variant={"primary"}
 					size={"medium"}
-					onClick={() => router.push("http://localhost:3000/home")}
+					onClick={() => router.push("/home")}
 				>
 					사용자 페이지
 				</NTButton>
