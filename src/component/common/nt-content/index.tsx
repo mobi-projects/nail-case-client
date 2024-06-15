@@ -1,8 +1,11 @@
 import { cva } from "class-variance-authority"
 
+import { cn } from "@/config/tailwind"
+
 type NTContentPT = {
 	mode?: "day" | "dark"
 	children: string | number
+	className?: string
 }
 
 const ContentVaraints = cva(
@@ -18,9 +21,9 @@ const ContentVaraints = cva(
 	},
 )
 
-export default function NTContent({ children, mode }: NTContentPT) {
+export default function NTContent({ children, mode, className }: NTContentPT) {
 	return (
-		<div className={ContentVaraints({ mode })}>
+		<div className={cn(ContentVaraints({ mode }), className)}>
 			<span>{children}</span>
 		</div>
 	)
