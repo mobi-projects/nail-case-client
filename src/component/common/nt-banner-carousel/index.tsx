@@ -1,5 +1,6 @@
 "use client"
 
+import { cva } from "class-variance-authority"
 import type { EmblaCarouselType } from "embla-carousel"
 import useEmblaCarousel, {
 	type UseEmblaCarouselType,
@@ -22,10 +23,12 @@ import type { TShopInfo } from "@/type"
 type BannerCarouselPT = {
 	handleCarousel: (api?: EmblaCarouselType) => void
 	children: ReactNode
+	type: "user" | "manager"
 }
 type BannerImagePT = {
 	shopInfo: TShopInfo
 	idx: number
+	type: "user" | "manager"
 }
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -52,6 +55,7 @@ type CarouselContextProps = {
 export default function BannerCarousel({
 	handleCarousel,
 	children,
+	type,
 }: BannerCarouselPT) {
 	const { shopInfo } = useShopInfo()
 	if (!shopInfo) return <div>Loading Banner...</div>
@@ -68,7 +72,7 @@ export default function BannerCarousel({
 				<CarouselContent>
 					{Array.from({ length: carouselTotal }).map((_, idx) => (
 						<CarouselItem key={idx} className="relative h-fit w-fit">
-							<BannerImage idx={idx} shopInfo={shopInfo} />
+							<BannerImage idx={idx} shopInfo={shopInfo} type={type} />
 						</CarouselItem>
 					))}
 				</CarouselContent>
@@ -77,10 +81,21 @@ export default function BannerCarousel({
 		</div>
 	)
 }
-function BannerImage({ shopInfo, idx }: BannerImagePT) {
+function BannerImage({ shopInfo, idx, type }: BannerImagePT) {
 	const { srcArr } = shopInfo
+	const BannerVariants = cva(
+		"relative -z-20  w-full bg-gradient-to-r from-Gray100 to-White",
+		{
+			variants: {
+				type: {
+					user: "h-[30rem]",
+					manager: " h-[24rem]",
+				},
+			},
+		},
+	)
 	return (
-		<div className="relative -z-20 h-[380px] w-full bg-gradient-to-r from-Gray100 to-White">
+		<div className={BannerVariants({ type })}>
 			<Image
 				src={srcArr[idx]}
 				alt="매장정보"

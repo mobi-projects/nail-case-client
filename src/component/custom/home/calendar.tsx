@@ -1,9 +1,10 @@
+"use client"
 import dayjs from "dayjs"
 import React, { useState } from "react"
 
 import { cn } from "@/config/tailwind"
 
-import NTIcon from "../../../common/nt-icon"
+import NTIcon from "../../common/nt-icon"
 
 const generateDate = (month = dayjs().month(), year = dayjs().year()) => {
 	const firstDateOfMonth = dayjs().year(year).month(month).startOf("month")
