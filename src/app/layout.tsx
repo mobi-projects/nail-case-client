@@ -1,7 +1,10 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
+import { ModalProvider } from "@/component/common/nt-modal/nt-modal.context"
 import { TanstackQueryProvider } from "@/config/tanstack-query"
+
+import Header from "@/component/custom/home/header"
 import "../config/tailwind/global.css"
 
 const suit = localFont({
@@ -30,7 +33,7 @@ export const metadata: Metadata = {
 	description: "네일샵 예약 / 관리 서비스",
 }
 
-export default function LootLayout({
+export default function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode
@@ -39,7 +42,17 @@ export default function LootLayout({
 		<html lang="kr">
 			<body className={suit.className}>
 				<TanstackQueryProvider>
+					<ModalProvider>
+						<div className="flex w-dvw justify-center">
+							<main className="w-[1200px] text-wrap break-all">{children}</main>
+						</div>
+					</ModalProvider>
+				</TanstackQueryProvider>
+			</body>
+			<body className={suit.className}>
+				<TanstackQueryProvider>
 					<div className="flex w-dvw flex-col justify-center">
+						<Header />
 						<main className="w-[1200px] text-wrap break-all">{children}</main>
 					</div>
 				</TanstackQueryProvider>

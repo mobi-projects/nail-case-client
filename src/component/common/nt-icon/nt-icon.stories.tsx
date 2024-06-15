@@ -41,6 +41,7 @@ const meta: Meta<typeof NTIcon> = {
 				"flagAltLight",
 				"star",
 				"serach",
+				"delete",
 			],
 		},
 	},
@@ -188,5 +189,10 @@ export const Star: Story = {
 export const Search: Story = {
 	args: {
 		icon: "search",
+	},
+}
+export const Delete: Story = {
+	args: {
+		icon: "delete",
 	},
 }
