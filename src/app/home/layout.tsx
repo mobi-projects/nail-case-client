@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import "../../config/tailwind/global.css"
+import ShopShowCase from "@/component/custom/home/shop-showcase"
 
 export const metadata: Metadata = {
 	title: "오늘네일",
@@ -13,15 +14,9 @@ export default function HomeLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<div className="flex w-dvw flex-col justify-center">
+		<div className="flex w-full flex-col justify-center">
 			<ShopShowCase />
-			<div className="flex h-full w-full justify-center">
-				<main className="w-[1200px] text-wrap break-all">{children}</main>
-			</div>
+			{children}
 		</div>
 	)
-}
-
-function ShopShowCase() {
-	return <div className="h-[30rem] w-full bg-red-200">ShopShowCase</div>
 }
