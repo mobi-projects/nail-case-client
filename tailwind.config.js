@@ -1,4 +1,4 @@
-import { COLORS, fontStyle, fontWeight } from "./src/config/tailwind"
+import { BoxShadow, COLORS, fontStyle, fontWeight } from "./src/config/tailwind"
 
 const config = {
 	content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
@@ -10,6 +10,9 @@ const config = {
 			},
 			fontSize: {
 				...fontStyle,
+			},
+			boxShadow: {
+				...BoxShadow,
 			},
 		},
 		fontWeight: {
