@@ -21,6 +21,7 @@ const ButtonVariants = cva(
 				large: `w-[144px] h-[62px] rounded-[14px] px-[20px] py-[16px] text-Title03`,
 				medium: `w-[127px] h-[56px] rounded-[12px] px-[18px] py-[12px] text-Headline01`,
 				small: `w-[110px] h-[50px] rounded-[11px] px-[14px] py-[12px] text-Body01`,
+				exSmall: `w-[91px] h-[56px] rounded-[12px] px-[11px] py-[12px] text-Headline01  font-Bold`,
 			},
 		},
 		defaultVariants: {
@@ -50,8 +51,8 @@ export const NTButton: React.FC<NTButtonPT> = ({
 			disabled={disabled}
 			{...props}
 		>
-			<span className="mr-[6px] whitespace-nowrap">{children}</span>
-			{icon && <NTIcon icon={icon} className="w-[28px]" />}
+			<span className="whitespace-nowrap">{children}</span>
+			{icon && <NTIcon icon={icon} className="ml-[6px] w-[28px]" />}
 		</button>
 	)
 }

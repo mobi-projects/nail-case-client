@@ -10,6 +10,7 @@ export const COLORS = {
 	Gray30: "#C6C6C6",
 	Gray20: "#E0E0E0",
 	Gray10: "#F4F4F4",
+	Gray08: "#BDBDBD",
 	White: "#FFFFFF",
 	PB100: "#02ADF2",
 	PB90: "#1BB5F3",
@@ -119,4 +120,11 @@ export const fontStyle = {
 			lineHeight: "16px",
 		},
 	],
+} as const
+export const BoxShadow = {
+	customCardPB: "1px 1.7px 8.52px 0px rgba(128, 214, 248, 0.7)",
+	customGray60: "2.99px 2.99px 14.34px 0 rgba(224, 224, 224, 0.6)",
+	customGray70: "2.99px 2.99px 14.34px 0 rgba(224, 224, 224, 0.7)",
+	customGray80: "2.99px 2.99px 13px 0 rgba(224, 224, 224, 0.8)",
+	customGray: "1px 1.7px 8.52px 0px rgba(224, 224, 224)",
 } as const
