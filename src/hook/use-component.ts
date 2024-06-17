@@ -66,7 +66,7 @@ export const useBanner = () => {
 }
 export const useToolbar = (arr: Array<string>) => {
 	const toolbarArr = arr
-	const [isSelected, setIsSelected] = useState(1)
+	const [isSelected, setIsSelected] = useState(0)
 	const hadleSelected = (idx: number) => {
 		setIsSelected(idx)
 	}
