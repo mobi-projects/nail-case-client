@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 import "../../config/tailwind/global.css"
-import ShopShowCase from "@/component/custom/home/shop-showcase"
+import ShopShowCase from "@/component/custom/home/layout"
 
 export const metadata: Metadata = {
 	title: "오늘네일",
