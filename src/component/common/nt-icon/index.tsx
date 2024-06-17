@@ -58,4 +58,7 @@ export const ICON_DATA = {
 	search: "iconamoon:search-thin",
 	delete: "lets-icons:close-round",
 	dot: "mid:dot",
+	back: "ep:back",
+	home: "system-uicons:home-alt",
+	share: "heroicons-solid:share",
 } as const
