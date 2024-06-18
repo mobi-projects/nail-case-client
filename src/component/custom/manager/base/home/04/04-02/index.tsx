@@ -34,7 +34,7 @@ export default function SubCard({
 			<div className="text-Headline02 font-Regular text-PB100">
 				{createdAt.year + "." + createdAt.month + "." + createdAt.day}
 			</div>
-			<div className="font-Medium mt-[5px] truncate text-Headline01 text-Gray90">
+			<div className="mt-[5px] truncate text-Headline01 font-Medium text-Gray90">
 				{title}
 			</div>
 			<div className="text-Callout font-SemiBold text-Gray30">
