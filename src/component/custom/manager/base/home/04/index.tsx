@@ -43,8 +43,10 @@ export default function CardList({ postArr }: CardListPT) {
 					<NTButton size="large">소식 작성하기</NTButton>
 				</div>
 			</div>
-			<div className="flex h-fit w-[1200px] items-center overflow-y-hidden overflow-x-scroll">
-				<MainCard content={firstPost.content} srcArr={firstPost.srcArr} />
+			<div className="flex h-fit w-full items-center justify-start gap-[24px] overflow-y-hidden overflow-x-scroll">
+				<div className="flex-shrink-0">
+					<MainCard content={firstPost.content} srcArr={firstPost.srcArr} />
+				</div>
 				{otherPostArr.map((post, idx) => {
 					return (
 						<SubCard
