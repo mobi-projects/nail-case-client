@@ -2,17 +2,20 @@
 
 import BannerCarousel from "@/component/common/nt-banner-carousel"
 import NTContent from "@/component/common/nt-content"
-import { NoticeCard } from "@/component/custom/post/notice-card"
+import CardList from "@/component/custom/manager/base/home/04"
 import ReservationConfirmedCard from "@/component/custom/reservation/reservation-confirmed"
 import ReservationPendingCard from "@/component/custom/reservation/reservation-pending"
 import { useShopInfo } from "@/hook/use-common"
 import { useBanner } from "@/hook/use-component"
+import { createPostArr } from "@/mook"
 import type { TShopInfo } from "@/type"
 
 export default function Home() {
 	const { carouselIdx, handleCarousel } = useBanner()
 	const { shopInfo } = useShopInfo()
+	const postArr = createPostArr()
 	if (!shopInfo) return <h1>Banner Image..</h1>
+
 	return (
 		<div className="flex flex-col gap-10 p-3">
 			<div className="h-[380px] w-full">
@@ -33,7 +36,7 @@ export default function Home() {
 
 			<HomeDivider />
 
-			<CardList />
+			<CardList postArr={postArr} />
 		</div>
 	)
 }
@@ -93,38 +96,6 @@ function HomeDivider() {
 	return (
 		<div className="relative h-[12px] w-full bg-White">
 			<div className="absolute left-0 h-full w-full scale-[200%] border-y-2 border-[#80D6F8]/40 bg-White" />
-		</div>
-	)
-}
-
-function CardList() {
-	const itemArr = Array.from({ length: 16 })
-	return (
-		<div className="flex h-fit w-[1200px] items-center overflow-y-hidden overflow-x-scroll">
-			{itemArr.map((item, idx) => {
-				return (
-					<NoticeCard
-						key={idx}
-						id={0}
-						category={"NEWS"}
-						srcArr={[]}
-						title={""}
-						content={""}
-						likes={0}
-						views={0}
-						comments={0}
-						createdAt={{
-							year: 0,
-							month: 0,
-							day: 0,
-							hour: 0,
-							minute: 0,
-							division: "PM",
-						}}
-						commentArr={[]}
-					/>
-				)
-			})}
 		</div>
 	)
 }
