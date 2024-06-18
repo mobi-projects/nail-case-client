@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import "../../config/tailwind/global.css"
+import ShopShowCase from "@/component/custom/home/[shop-detail]/layout"
 
 export const metadata: Metadata = {
 	title: "오늘네일",
@@ -12,5 +12,10 @@ export default function HomeLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	return <div className="flex w-full flex-col justify-center">{children}</div>
+	return (
+		<div>
+			<ShopShowCase />
+			{children}
+		</div>
+	)
 }
