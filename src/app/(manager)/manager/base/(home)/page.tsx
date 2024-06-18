@@ -2,6 +2,7 @@
 
 import BannerCarousel from "@/component/common/nt-banner-carousel"
 import NTContent from "@/component/common/nt-content"
+import ReservationForm from "@/component/custom/manager/base/home/03"
 import { NoticeCard } from "@/component/custom/post/notice-card"
 import ReservationConfirmedCard from "@/component/custom/reservation/reservation-confirmed"
 import ReservationPendingCard from "@/component/custom/reservation/reservation-pending"
@@ -28,7 +29,7 @@ export default function Home() {
 			<div className="flex flex-col gap-[20px]">
 				<p className="block text-Title03">오늘 하루 예약 일정을 살펴볼게요.</p>
 				<_TodaysReservationSummary />
-				<_ReservationDetailArr />
+				<ReservationForm />
 			</div>
 
 			<HomeDivider />
@@ -80,12 +81,6 @@ function _TodaysReservationSummary() {
 			<ReservationPendingCard />
 			<ReservationConfirmedCard />
 		</div>
-	)
-}
-
-function _ReservationDetailArr() {
-	return (
-		<div className="h-[646.39px] w-full rounded-[26px] bg-red-300 shadow-[#E0E0E0]" />
 	)
 }
 
