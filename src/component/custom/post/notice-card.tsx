@@ -3,7 +3,8 @@ import React from "react"
 
 import type { TPost } from "@/type/post"
 
-export const NoticeCard: React.FC<TPost> = ({ content, srcArr }) => {
+type NoticeCardPT = Pick<TPost, "content" | "srcArr">
+export default function NoticeCard({ content, srcArr }: NoticeCardPT) {
 	return (
 		<div className="mr-[20px] min-w-[384px]">
 			<div className="flex h-[260px] w-[384px] flex-col items-center rounded-[26px] border py-[25px] drop-shadow">
@@ -18,8 +19,7 @@ export const NoticeCard: React.FC<TPost> = ({ content, srcArr }) => {
 							alt="Notice Image"
 							width={320}
 							height={96}
-							style={{ height: "96px" }}
-							className="mt-[10px] rounded-[6px]"
+							className="mt-[10px] h-[96px] rounded-[6px]"
 						/>
 					)}
 				</div>
