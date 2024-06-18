@@ -2,17 +2,17 @@ import Image from "next/image"
 import React from "react"
 
 import type { TPost } from "@/type/post"
-type PostCardPT = Pick<
+type SubCardPT = Pick<
 	TPost,
 	"createdAt" | "title" | "likes" | "srcArr" | "comments"
 >
-export default function PostCard({
+export default function SubCard({
 	createdAt,
 	title,
 	likes,
 	srcArr,
 	comments,
-}: PostCardPT) {
+}: SubCardPT) {
 	return (
 		<div className="mr-[20px] h-[253.49px] w-[282px]">
 			<div

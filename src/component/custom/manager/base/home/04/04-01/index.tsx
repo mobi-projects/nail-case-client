@@ -3,8 +3,8 @@ import React from "react"
 
 import type { TPost } from "@/type/post"
 
-type NoticeCardPT = Pick<TPost, "content" | "srcArr">
-export default function NoticeCard({ content, srcArr }: NoticeCardPT) {
+type MainCardPT = Pick<TPost, "content" | "srcArr">
+export default function MainCard({ content, srcArr }: MainCardPT) {
 	return (
 		<div className="mr-[20px] min-w-[384px]">
 			<div className="flex h-[260px] w-[384px] flex-col items-center rounded-[26px] border py-[25px] drop-shadow">
