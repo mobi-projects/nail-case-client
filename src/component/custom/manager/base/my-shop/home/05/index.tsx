@@ -17,11 +17,11 @@ export default function Manager_Base_MyShop_Home_05() {
 	)
 }
 
-type postPT = {
+type PostPT = {
 	post: TPost
 }
 
-function Manager_Base_MyShop_Home_05_01({ post }: postPT) {
+function Manager_Base_MyShop_Home_05_01({ post }: PostPT) {
 	return (
 		<div className="mb-[20px] flex h-[260px] w-full items-center rounded-[26px] border px-[40px] drop-shadow">
 			<Image
