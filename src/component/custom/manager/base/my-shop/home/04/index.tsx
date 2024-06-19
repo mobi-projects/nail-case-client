@@ -42,8 +42,8 @@ function Manager_Base_MyShop_Home_04_01() {
 				className="mb-[10px] w-[20px] cursor-pointer text-PB100"
 			/>
 			{categories.map((category, index) => (
-				<div key={index} className="mb-[25px]">
-					<div className="mb-[10px] text-Headline02 text-Gray80">
+				<div key={index} className="py-[10px]">
+					<div className="pb-[5px] text-Headline02 text-Gray80">
 						{category.title}
 					</div>
 					<NTOption
@@ -53,7 +53,7 @@ function Manager_Base_MyShop_Home_04_01() {
 						itemsPerRow={4}
 					/>
 					{index < categories.length - 1 && (
-						<div className="mt-[15px] border-t-[1.5px] border-Gray10"></div>
+						<div className="mt-[25px] border-t-[0.5px] border-Gray10" />
 					)}
 				</div>
 			))}
