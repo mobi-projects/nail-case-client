@@ -53,7 +53,7 @@ function Manager_Base_MyShop_Home_04_01() {
 						itemsPerRow={4}
 					/>
 					{index < categories.length - 1 && (
-						<div className="mt-[15px] border-[1px] border-b-Gray10"></div>
+						<div className="mt-[15px] border-t-[1.5px] border-Gray10"></div>
 					)}
 				</div>
 			))}
