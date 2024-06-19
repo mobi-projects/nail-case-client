@@ -56,7 +56,7 @@ function Manager_Base_MyShop_Home_04_02() {
 					/>
 					{index === 0 && (
 						<div className="mt-[20px]">
-							<Slider upperLimit={10} curValue={0} />
+							<Slider upperLimit={10} curValue={0} disabled />
 						</div>
 					)}
 					{index < categories.length - 1 && (
