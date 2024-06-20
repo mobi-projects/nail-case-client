@@ -16,7 +16,7 @@ function ManagerMyShopReviewTotal() {
 }
 function Manager_Base_MyShop_Review_01_02() {
 	return (
-		<div className="flex h-[240px] w-full items-center justify-between border-[5px] border-green-300 py-[40px]">
+		<div className="mb-[5px] flex h-[240px] w-full items-center justify-between gap-[24px] rounded-[26px] bg-BGblue01 px-[4px] py-[40px]">
 			<Manager_Base_MyShop_Review_01_02_01 />
 			<Manager_Base_MyShop_Review_01_02_02 />
 		</div>
