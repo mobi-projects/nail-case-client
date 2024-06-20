@@ -9,9 +9,9 @@ const EventDetailVariants = cva(
 	{
 		variants: {
 			variant: {
-				PB: "bg-BGblue02 active:border-PB50   ",
-				PY: "bg-PY50 bg-opacity-60 active:border-PY100   ",
-				Gray: "bg-Gray10 active:border-Gray50  ",
+				PB: "bg-BGblue02 border-PB50   ",
+				PY: "bg-PY50 bg-opacity-60 border-PY100   ",
+				Gray: "bg-Gray10 border-Gray50  ",
 				Plus: "border-[1.5px] border-dashed",
 			},
 		},
@@ -24,14 +24,16 @@ export type NTEventDetailPT = {
 	className?: string
 	name?: string
 	add?: boolean
+	isClicked?: boolean
 }
 
 export default function NTEventDetail({
 	variant,
+	add = true,
 	className,
 	children,
 	name,
-	add = true,
+	isClicked,
 	...props
 }: NTEventDetailPT) {
 	return (
@@ -39,7 +41,8 @@ export default function NTEventDetail({
 			className={cn(
 				EventDetailVariants({ variant }),
 				className,
-				add ? "gap-[8px]" : "gap-[12px] active:border",
+				add ? "gap-[8px]" : "gap-[12px]",
+				isClicked ? "border" : "border-none",
 			)}
 			{...props}
 		>
