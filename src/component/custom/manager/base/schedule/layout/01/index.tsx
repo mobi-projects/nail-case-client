@@ -1,14 +1,17 @@
+"use client"
 import dayjs from "dayjs"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
+import NTPulldown from "@/component/common/nt-pulldown"
+import { usePulldown } from "@/hook/use-component"
 
 export default function ScheduleLayout() {
 	return (
 		<div className="grid w-full grid-rows-[70px_76px_62px] items-center border-t-[1px] border-t-Gray10">
 			<p className="text-Title03 font-SemiBold">일정</p>
 			<ScheduleController />
-			<Manager_Base_Schedule_Layout_01_02 />
+			<ScheduleInfo />
 		</div>
 	)
 }
@@ -38,6 +41,36 @@ function ScheduleController() {
 		</div>
 	)
 }
-function Manager_Base_Schedule_Layout_01_02() {
-	return <div className="h-full w-full border-[5px] border-green-300" />
+function ScheduleInfo() {
+	const { isOpen, onClickItems, onClickTrigger, onClickWrapper, optionArr } =
+		usePulldown(["시술"])
+	return (
+		<div className="flex h-full w-full items-center justify-between border-y-[1px] border-y-PB50/40">
+			<div className="flex h-full items-center pl-7">
+				<div className="flex h-fit items-end gap-x-2">
+					<p className="text-Headline02 font-SemiBold text-Gray100">총 시술</p>
+					<p className="text-Headline01 text-PB100">136 건</p>
+				</div>
+				<NTIcon icon="dot" className="flex h-fit w-7 items-end text-Gray40" />
+				<div className="flex h-fit items-end gap-x-2">
+					<p className="text-Headline02 text-Gray100">예약 대기</p>
+					<p className="text-Headline01 text-PB100">3 건</p>
+				</div>
+				<NTIcon icon="dot" className="flex h-fit w-7 items-end text-Gray40" />
+				<div className="flex h-fit items-end gap-x-2">
+					<p className="text-Headline02 text-Gray100">예약 확정</p>
+					<p className="text-Headline01 text-PB100">22 건</p>
+				</div>
+			</div>
+			<NTPulldown
+				{...{
+					isOpen,
+					onClickItems,
+					onClickTrigger,
+					onClickWrapper,
+					optionArr,
+				}}
+			/>
+		</div>
+	)
 }

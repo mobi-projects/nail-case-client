@@ -57,6 +57,6 @@ export const ICON_DATA = {
 	star: "lets-icons:star-light",
 	search: "iconamoon:search-thin",
 	delete: "lets-icons:close-round",
-	dot: "mid:dot",
+	dot: "bi:dot",
 	pencil: "octicon:pencil-24",
 } as const
