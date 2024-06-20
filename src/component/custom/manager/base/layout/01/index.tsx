@@ -1,7 +1,9 @@
+"use clinet"
 import Image from "next/image"
 import { useRef } from "react"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
+import NTIcon from "@/component/common/nt-icon"
 import NTSearchfield from "@/component/common/nt-searchfield"
 
 export default function ManagerLayout() {
@@ -20,7 +22,7 @@ function ManagerLayoutCatalog() {
 		<div className="flex h-[51px] w-full items-center justify-between">
 			<ManagerLayoutPullDown />
 			<ManagerLayoutSearchfield />
-			<Manager_Base_Layout_01_01_03 />
+			<ManagerLayoutSubCatalog />
 		</div>
 	)
 }
@@ -37,8 +39,13 @@ function ManagerLayoutSearchfield() {
 		</div>
 	)
 }
-function Manager_Base_Layout_01_01_03() {
-	return <div className="flex h-full w-full border-[5px] border-blue-500" />
+function ManagerLayoutSubCatalog() {
+	return (
+		<div className="flex w-[236px] items-center justify-end gap-[12px] pr-[21px]">
+			<NTIcon className="text-Gray90" icon="bellLight" />
+			<div className="h-[50px] w-[50px] rounded-full bg-Gray20"></div>
+		</div>
+	)
 }
 function Manager_Base_Layout_01_02() {
 	return (
