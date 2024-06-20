@@ -15,7 +15,6 @@ const EventDetailVariants = cva(
 				Plus: "border-[1.5px] border-dashed",
 			},
 		},
-		defaultVariants: { variant: "Plus" },
 	},
 )
 
@@ -24,7 +23,7 @@ export type NTEventDetailPT = {
 	children?: React.ReactNode
 	className?: string
 	name?: string
-	add: boolean
+	add?: boolean
 }
 
 export default function NTEventDetail({
@@ -32,7 +31,7 @@ export default function NTEventDetail({
 	className,
 	children,
 	name,
-	add,
+	add = true,
 	...props
 }: NTEventDetailPT) {
 	return (
