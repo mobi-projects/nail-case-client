@@ -9,7 +9,7 @@ import NTSearchfield from "@/component/common/nt-searchfield"
 export default function ManagerLayout() {
 	return (
 		<div className="flex h-fit w-full flex-col gap-[8.5px] pb-[14px] pt-[68px]">
-			<Image src={NTLogo} alt="brand-logo" width={134} height={38} />
+			<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 			<div className="flex h-fit w-full flex-col gap-[16.5px]">
 				<ManagerLayoutCatalog />
 				<Manager_Base_Layout_01_02 />
