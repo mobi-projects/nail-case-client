@@ -1,6 +1,8 @@
 import Image from "next/image"
+import { useRef } from "react"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
+import NTSearchfield from "@/component/common/nt-searchfield"
 
 export default function ManagerLayout() {
 	return (
@@ -17,7 +19,7 @@ function ManagerLayoutCatalog() {
 	return (
 		<div className="flex h-[51px] w-full items-center justify-between">
 			<ManagerLayoutPullDown />
-			<Manager_Base_Layout_01_01_02 />
+			<ManagerLayoutSearchfield />
 			<Manager_Base_Layout_01_01_03 />
 		</div>
 	)
@@ -27,8 +29,13 @@ function ManagerLayoutPullDown() {
 		<div className="h-[45px] w-[134px] bg-Gray10 text-Gray100">pull down</div>
 	)
 }
-function Manager_Base_Layout_01_01_02() {
-	return <div className="flex h-full w-full border-[5px] border-blue-500" />
+function ManagerLayoutSearchfield() {
+	const searchInputRef = useRef<HTMLInputElement>(null)
+	return (
+		<div className="mx-[70px] h-full w-[690px]">
+			<NTSearchfield size="large" ref={searchInputRef} />
+		</div>
+	)
 }
 function Manager_Base_Layout_01_01_03() {
 	return <div className="flex h-full w-full border-[5px] border-blue-500" />
