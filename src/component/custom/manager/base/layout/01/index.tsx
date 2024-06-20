@@ -2,28 +2,30 @@ import Image from "next/image"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
 
-export default function Manager_Base_Layout_01() {
+export default function ManagerLayout() {
 	return (
-		<div className="flex h-fit w-full flex-col gap-[20px] border-[5px] border-orange-300 pb-[14px] pt-[68px]">
+		<div className="flex h-fit w-full flex-col gap-[8.5px] pb-[14px] pt-[68px]">
 			<Image src={NTLogo} alt="brand-logo" width={134} height={38} />
-			<div className="flex h-fit w-full flex-col gap-[18px]">
-				<Manager_Base_Layout_01_01 />
+			<div className="flex h-fit w-full flex-col gap-[16.5px]">
+				<ManagerLayoutCatalog />
 				<Manager_Base_Layout_01_02 />
 			</div>
 		</div>
 	)
 }
-function Manager_Base_Layout_01_01() {
+function ManagerLayoutCatalog() {
 	return (
-		<div className="grid h-[51px] w-full grid-cols-[200px_1fr_200px] items-center border-[5px] border-green-300">
-			<Manager_Base_Layout_01_01_01 />
+		<div className="flex h-[51px] w-full items-center justify-between">
+			<ManagerLayoutPullDown />
 			<Manager_Base_Layout_01_01_02 />
 			<Manager_Base_Layout_01_01_03 />
 		</div>
 	)
 }
-function Manager_Base_Layout_01_01_01() {
-	return <div className="flex h-full w-full border-[5px] border-blue-500" />
+function ManagerLayoutPullDown() {
+	return (
+		<div className="h-[45px] w-[134px] bg-Gray10 text-Gray100">pull down</div>
+	)
 }
 function Manager_Base_Layout_01_01_02() {
 	return <div className="flex h-full w-full border-[5px] border-blue-500" />
