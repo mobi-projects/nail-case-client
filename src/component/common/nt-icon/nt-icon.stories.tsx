@@ -103,7 +103,7 @@ export const EditLight: Story = {
 }
 export const SettingLineLight: Story = {
 	args: {
-		icon: "settingLineLight",
+		icon: "setting",
 	},
 }
 export const CalendarLight: Story = {
