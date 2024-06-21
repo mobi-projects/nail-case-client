@@ -4,6 +4,11 @@ import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
 import { useOption } from "@/hook/use-component"
 
+type CategoryOptionsPT = {
+	title: string
+	options: string[]
+}
+
 export default function Manager_Base_MyShop_Home_04() {
 	return (
 		<div className="flex justify-between pb-[30px]">
@@ -12,6 +17,7 @@ export default function Manager_Base_MyShop_Home_04() {
 		</div>
 	)
 }
+
 function Manager_Base_MyShop_Home_04_01() {
 	const categories = [
 		{
@@ -32,9 +38,6 @@ function Manager_Base_MyShop_Home_04_01() {
 		},
 	]
 
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const optionsData = categories.map((category) => useOption(category.options))
-
 	return (
 		<div className="flex h-[586px] w-[690px] flex-col justify-center rounded-[26px] border px-[25px] drop-shadow">
 			<NTIcon
@@ -43,15 +46,7 @@ function Manager_Base_MyShop_Home_04_01() {
 			/>
 			{categories.map((category, index) => (
 				<div key={index} className="py-[10px]">
-					<div className="pb-[5px] text-Headline02 text-Gray80">
-						{category.title}
-					</div>
-					<NTOption
-						onClickOption={optionsData[index].onClickOption}
-						optionArr={optionsData[index].optionArr}
-						checkedOption={optionsData[index].checkedOption}
-						itemsPerRow={4}
-					/>
+					<CategoryOptions title={category.title} options={category.options} />
 					{index < categories.length - 1 && (
 						<div className="mt-[25px] border-t-[0.5px] border-Gray10" />
 					)}
@@ -60,6 +55,23 @@ function Manager_Base_MyShop_Home_04_01() {
 		</div>
 	)
 }
+
+function CategoryOptions({ title, options }: CategoryOptionsPT) {
+	const { onClickOption, optionArr, checkedOption } = useOption(options)
+
+	return (
+		<>
+			<div className="pb-[5px] text-Headline02 text-Gray80">{title}</div>
+			<NTOption
+				onClickOption={onClickOption}
+				optionArr={optionArr}
+				checkedOption={checkedOption}
+				itemsPerRow={4}
+			/>
+		</>
+	)
+}
+
 function Manager_Base_MyShop_Home_04_02() {
 	return <div />
 }
