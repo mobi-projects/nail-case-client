@@ -4,7 +4,7 @@ import {
 	createReservationArr,
 	createShopInfo,
 	tmpFetch,
-} from "@/mook"
+} from "@/mock"
 import type { TShopInfo } from "@/type"
 import type { TPost } from "@/type/post"
 import type { TReservation, TReservationV2 } from "@/type/reservation"
