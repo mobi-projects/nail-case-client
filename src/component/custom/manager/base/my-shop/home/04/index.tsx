@@ -12,9 +12,11 @@ export default function Manager_Base_MyShop_Home_04() {
 		</div>
 	)
 }
+
 function Manager_Base_MyShop_Home_04_01() {
 	return <div />
 }
+
 function Manager_Base_MyShop_Home_04_02() {
 	const categories = [
 		{
@@ -35,35 +37,53 @@ function Manager_Base_MyShop_Home_04_02() {
 		},
 	]
 
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const optionsData = categories.map((category) => useOption(category.options))
-
 	return (
 		<div className="flex h-[586px] w-[486px] flex-col justify-center rounded-[26px] border px-[25px] drop-shadow">
 			<div className="mt-[20px] flex justify-end"></div>
 			{categories.map((category, index) => (
 				<div key={index} className="mb-[15px]">
-					{index === 0 && <div className="mt-[10px]"></div>}
-					<div className="mb-[10px] text-Headline02 text-Gray70">
-						{category.title}
-					</div>
-					<NTOption
-						disabled
-						onClickOption={optionsData[index].onClickOption}
-						optionArr={optionsData[index].optionArr}
-						checkedOption={optionsData[index].checkedOption}
-						itemsPerRow={4}
+					<RightCategoryOptions
+						title={category.title}
+						options={category.options}
+						showSlider={index === 0}
 					/>
-					{index === 0 && (
-						<div className="mt-[20px]">
-							<Slider upperLimit={10} curValue={0} disabled />
-						</div>
-					)}
 					{index < categories.length - 1 && (
 						<div className="mt-[15px] border-t-[1.5px] border-Gray10"></div>
 					)}
 				</div>
 			))}
 		</div>
+	)
+}
+
+type CategoryOptionsPT = {
+	title: string
+	options: string[]
+	showSlider?: boolean
+}
+
+function RightCategoryOptions({
+	title,
+	options,
+	showSlider,
+}: CategoryOptionsPT) {
+	const { onClickOption, optionArr, checkedOption } = useOption(options)
+
+	return (
+		<>
+			<div className="mb-[10px] text-Headline02 text-Gray70">{title}</div>
+			<NTOption
+				disabled
+				onClickOption={onClickOption}
+				optionArr={optionArr}
+				checkedOption={checkedOption}
+				itemsPerRow={4}
+			/>
+			{showSlider && (
+				<div className="mt-[20px]">
+					<Slider upperLimit={10} curValue={0} disabled />
+				</div>
+			)}
+		</>
 	)
 }
