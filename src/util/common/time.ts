@@ -1,6 +1,7 @@
 /* 시간관련 함수 관리 */
 
 import type { TNTTime } from "@/type"
+import type { DayOfWeek } from "@/type/union-option/day-of-week"
 
 import { transToNTTime, transToTimestamp } from "./transform"
 
@@ -104,3 +105,40 @@ export const getMonthLast = (when: TNTTime): TNTTime => {
 /** 당 해&월, 첫째 날(1일) 의 하루 전 을 반환*/
 export const getLastDayOfMonth = (year: number, month: number) =>
 	new Date(year, month + 1, 0).getDate()
+
+/** 한국 기준, "현재 시각" 을 타임스탬프 로 반환 */
+export const getNow = (): number => {
+	const now = new Date()
+	const utc = getUTC(now)
+	return getKoreanStamp(utc)
+}
+/** 입력(타입스탬프)으로부터 "연도" 반환 */
+export const getYearFromStamp = (timestamp: number): number => {
+	const date = new Date(timestamp)
+	return date.getFullYear()
+}
+/** 입력(타입스탬프)으로부터 "월" 반환 */
+export const getMonthFromStamp = (timestamp: number): number => {
+	const date = new Date(timestamp)
+	return date.getMonth() + 1
+}
+/** 입력(타입스탬프)으로부터 "일" 반환 */
+export const getDateFromStamp = (timestamp: number): number => {
+	const date = new Date(timestamp)
+	return date.getDate() + 1
+}
+/** 입력(타입스탬프)으로부터 "요일" 반환 */
+export const getDayOfWeekFromStamp = (timestamp: number): DayOfWeek => {
+	const dayNames: DayOfWeek[] = ["일", "월", "화", "수", "목", "금", "토"]
+	const date = new Date(timestamp)
+	return dayNames[date.getDay()]
+}
+/** UTC 기준 -> 한국 기준, 타입스탬프 반환 */
+const getKoreanStamp = (timestamp: number): number => {
+	const korTimeDiff = 9 * 60 * 60 * 1000
+	return timestamp + korTimeDiff
+}
+/** 주어진 날짜의 UTC 타임스탬프 반환 */
+const getUTC = (date: Date): number => {
+	return date.getTime() + date.getTimezoneOffset() * 60 * 1000
+}
