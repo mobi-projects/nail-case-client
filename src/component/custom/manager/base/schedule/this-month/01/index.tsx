@@ -11,7 +11,7 @@ export default function MonthlySchedule() {
 	const [today] = useState(currentDate)
 
 	return (
-		<div className="h-fit w-full rounded-[28px]">
+		<div className="h-fit w-full rounded-[28px] bg-White drop-shadow-[2.99px_2.99px_14.34px_rgba(224,224,224,0.6)]">
 			<div className="grid h-[106px] w-full grid-cols-7 divide-x-[0.3px]">
 				{days.map((day, idx) => {
 					return (
