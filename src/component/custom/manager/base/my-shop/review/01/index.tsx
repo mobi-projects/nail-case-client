@@ -17,7 +17,7 @@ function ReivewScore() {
 	return (
 		<div className="mb-[5px] flex h-[240px] w-full items-center justify-between gap-[24px] rounded-[26px] bg-BGblue01 px-[4px] py-[40px]">
 			<ReviewTotalScore />
-			<Manager_Base_MyShop_Review_01_02_02 />
+			<ReviewGraphScore />
 		</div>
 	)
 }
@@ -39,6 +39,55 @@ function ReviewTotalScore() {
 		</div>
 	)
 }
-function Manager_Base_MyShop_Review_01_02_02() {
-	return <div className="h-full w-full border-[5px] border-blue-300" />
+type TReview = {
+	[key: number]: number
+}
+function ReviewGraphScore() {
+	const reviewer: Array<TReview> = [
+		{ 5: 228 },
+		{ 4: 75 },
+		{ 3: 16 },
+		{ 2: 1 },
+		{ 1: 2 },
+	]
+	const totalReviewer = reviewer.reduce((acc, curr) => {
+		const score = Number(Object.keys(curr)[0])
+		const count = curr[score]
+		return acc + count
+	}, 0)
+	return (
+		<div className="flex h-full w-full flex-col items-center justify-center border-l-2 border-Gray20 px-[77px]">
+			<div className="flex w-full flex-col justify-start gap-[12px]">
+				{reviewer.map((item, index) => {
+					const score = Number(Object.keys(item)[0])
+					const count = item[score]
+					const widthPercentage = (count / totalReviewer) * 100
+					return (
+						<div
+							className="flex items-center justify-start gap-[24px] text-Body02 font-SemiBold text-Gray50 active:text-PB100"
+							key={index}
+						>
+							<span>{score} 점</span>
+							<ReviewGraph widthPercentage={widthPercentage} />
+							<span>{count}</span>
+						</div>
+					)
+				})}
+			</div>
+		</div>
+	)
+}
+
+type ReviewGraphPT = {
+	widthPercentage: number
+}
+function ReviewGraph({ widthPercentage }: ReviewGraphPT) {
+	return (
+		<div className="h-[10px] w-[340px] rounded-[23px] bg-gray-200">
+			<div
+				className={"h-full rounded-[23px] bg-PB100"}
+				style={{ width: `${widthPercentage}%` }}
+			/>
+		</div>
+	)
 }
