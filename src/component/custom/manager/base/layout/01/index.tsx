@@ -36,13 +36,13 @@ function Manager_Base_Layout_01_01_03() {
 }
 function ManagerLayoutToolbar() {
 	return (
-		<div className="relative flex w-full flex-col">
-			<hr className="absolute left-0 right-0 top-0 z-0 border border-Gray20" />
-			<Divider />
+		<div className="flex w-full flex-col">
+			<hr className="absolute left-0 z-[-10] w-full border border-Gray10" />
+			<Toolbar />
 		</div>
 	)
 }
-function Divider() {
+function Toolbar() {
 	const { hadleSelected, isSelected, toolbarArr } = useToolbar([
 		"홈",
 		"일정",
@@ -50,14 +50,12 @@ function Divider() {
 		"내샵",
 	])
 	return (
-		<div className="z-10 w-full">
-			<NTToolbar
-				isSelected={hadleSelected}
-				selected={isSelected}
-				arr={toolbarArr}
-				position="top"
-				topStyle="default"
-			/>
-		</div>
+		<NTToolbar
+			isSelected={hadleSelected}
+			selected={isSelected}
+			arr={toolbarArr}
+			position="top"
+			topStyle="default"
+		/>
 	)
 }
