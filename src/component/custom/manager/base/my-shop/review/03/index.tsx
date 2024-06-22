@@ -36,7 +36,7 @@ function Manager_Base_MyShop_Review_03_01_03() {
 }
 function ReivewCommentImgae() {
 	return (
-		<div className="h-[164.85px] w-[180px] rounded-[26px] border drop-shadow"></div>
+		<div className="h-[164.85px] w-[180px] rounded-[26px] shadow-customGray80"></div>
 	)
 }
 //사진 들어가면 border삭제 예정 또한 div > image변경예정
