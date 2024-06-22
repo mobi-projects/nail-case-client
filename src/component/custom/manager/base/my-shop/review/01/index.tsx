@@ -8,7 +8,7 @@ export default function Manager_Base_MyShop_Review_01() {
 }
 function ManagerMyShopReviewTotal() {
 	return (
-		<div className="gap-[7px] text-Title03 font-SemiBold">
+		<div className="flex gap-[7px] text-Title03 font-SemiBold">
 			<span>리뷰</span>
 			<span className="text-PB100">N</span>
 		</div>
