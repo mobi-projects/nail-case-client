@@ -1,4 +1,4 @@
-import Manager_Base_Layout_01 from "@/component/custom/manager/base/layout/01"
+import ManagerLayout from "@/component/custom/manager/base/layout/01"
 
 export default function ManagerBaseLayout({
 	children,
@@ -7,7 +7,7 @@ export default function ManagerBaseLayout({
 }>) {
 	return (
 		<div className="w-full pb-[42px]">
-			<Manager_Base_Layout_01 />
+			<ManagerLayout />
 			{children}
 		</div>
 	)
