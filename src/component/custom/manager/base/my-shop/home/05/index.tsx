@@ -5,13 +5,13 @@ import Image from "next/image"
 import { usePostArr } from "@/hook/use-common"
 import type { TPost } from "@/type/post"
 
-export default function Manager_Base_MyShop_Home_05() {
+export default function NoticeBoard() {
 	const { postArr } = usePostArr()
 
 	return (
 		<div className="flex flex-col">
 			{postArr?.map((post, idx) => {
-				return <Manager_Base_MyShop_Home_05_01 post={post} key={idx} />
+				return <NoticeCard post={post} key={idx} />
 			})}
 		</div>
 	)
@@ -21,7 +21,7 @@ type PostPT = {
 	post: TPost
 }
 
-function Manager_Base_MyShop_Home_05_01({ post }: PostPT) {
+function NoticeCard({ post }: PostPT) {
 	return (
 		<div className="mb-[20px] flex h-[260px] w-full items-center rounded-[26px] border px-[40px] drop-shadow">
 			<Image
