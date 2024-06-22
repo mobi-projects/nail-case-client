@@ -9,16 +9,16 @@ type CategoryOptionsPT = {
 	options: string[]
 }
 
-export default function Manager_Base_MyShop_Home_04() {
+export default function RequiredReservationInfo() {
 	return (
 		<div className="flex justify-between pb-[30px]">
-			<Manager_Base_MyShop_Home_04_01 />
-			<Manager_Base_MyShop_Home_04_02 />
+			<LeftInfo />
+			<RightInfo />
 		</div>
 	)
 }
 
-function Manager_Base_MyShop_Home_04_01() {
+function LeftInfo() {
 	const categories = [
 		{
 			title: "시술 내용",
@@ -46,7 +46,10 @@ function Manager_Base_MyShop_Home_04_01() {
 			/>
 			{categories.map((category, index) => (
 				<div key={index} className="py-[10px]">
-					<CategoryOptions title={category.title} options={category.options} />
+					<LeftCategoryOptions
+						title={category.title}
+						options={category.options}
+					/>
 					{index < categories.length - 1 && (
 						<div className="mt-[25px] border-t-[0.5px] border-Gray10" />
 					)}
@@ -56,7 +59,7 @@ function Manager_Base_MyShop_Home_04_01() {
 	)
 }
 
-function CategoryOptions({ title, options }: CategoryOptionsPT) {
+function LeftCategoryOptions({ title, options }: CategoryOptionsPT) {
 	const { onClickOption, optionArr, checkedOption } = useOption(options)
 
 	return (
@@ -72,6 +75,6 @@ function CategoryOptions({ title, options }: CategoryOptionsPT) {
 	)
 }
 
-function Manager_Base_MyShop_Home_04_02() {
+function RightInfo() {
 	return <div />
 }
