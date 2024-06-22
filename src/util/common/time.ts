@@ -125,7 +125,7 @@ export const getMonthFromStamp = (timestamp: number): number => {
 /** 입력(타입스탬프)으로부터 "일" 반환 */
 export const getDateFromStamp = (timestamp: number): number => {
 	const date = new Date(timestamp)
-	return date.getDate() + 1
+	return date.getDate()
 }
 /** 입력(타입스탬프)으로부터 "요일" 반환 */
 export const getDayOfWeekFromStamp = (timestamp: number): DayOfWeek => {
