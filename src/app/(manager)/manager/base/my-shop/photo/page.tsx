@@ -5,12 +5,8 @@ export default function ManagerBaseMyShopPhoto() {
 	return (
 		<div className="flex w-full flex-col gap-[20px] pt-[20px]">
 			<Manager_Base_MyShop_Photo_01 />
-			<Divider />
+			<hr className="h-[1.5px] w-full bg-Gray10" />
 			<Manager_Base_MyShop_Photo_02 />
 		</div>
 	)
-}
-
-function Divider() {
-	return <div className="h-[1.5px] w-full bg-Gray20" />
 }
