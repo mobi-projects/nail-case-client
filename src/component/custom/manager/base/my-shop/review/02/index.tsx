@@ -1,11 +1,14 @@
 "use client"
 import { useState } from "react"
 
+import NTPulldown from "@/component/common/nt-pulldown"
+import { usePulldown } from "@/hook/use-component"
+
 export default function ReviewTitleheader() {
 	return (
 		<div className="flex h-[50px] w-full items-center justify-between">
 			<ReviewTitleList />
-			<Manager_Base_MyShop_Review_02_02 />
+			<ReviewPulldownList />
 		</div>
 	)
 }
@@ -31,6 +34,14 @@ function ReviewTitleList() {
 		</div>
 	)
 }
-function Manager_Base_MyShop_Review_02_02() {
-	return <div className="h-full w-full border-[5px] border-green-300" />
+function ReviewPulldownList() {
+	const pulldown1 = usePulldown(["별점", "제목", "태그"])
+	const pulldown2 = usePulldown(["필터", "5", "4", "3", "2", "1"])
+
+	return (
+		<div className="flex h-[44px] w-full justify-end gap-[20px]">
+			<NTPulldown {...pulldown1} />
+			<NTPulldown {...pulldown2} />
+		</div>
+	)
 }
