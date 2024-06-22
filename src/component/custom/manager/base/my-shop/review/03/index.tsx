@@ -17,7 +17,7 @@ export default function ReviewList() {
 }
 function ReviewListItem() {
 	return (
-		<div className="my-[24px] flex w-full flex-col gap-[21px]">
+		<div className="my-[24px] flex w-full flex-col gap-[18px]">
 			<ReviewerInfo />
 			<Manager_Base_MyShop_Review_03_01_02 />
 			<Manager_Base_MyShop_Review_03_01_03 />
