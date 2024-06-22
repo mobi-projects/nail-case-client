@@ -27,12 +27,8 @@ function ReviewTotalScore() {
 	return (
 		<div className="flex h-full w-full items-center justify-center gap-[26px]">
 			<div className="flex gap-[14px]">
-				{reviewTotalPoint.map((index) => (
-					<NTIcon
-						icon="starFull"
-						className="text-PB100 opacity-25"
-						key={index}
-					/>
+				{reviewTotalPoint.map((idx) => (
+					<NTIcon icon="starFull" className="text-PB100 opacity-25" key={idx} />
 				))}
 			</div>
 			<div className="text-LargeTitle font-Bold">{reviewCurrentPoint}</div>
@@ -58,14 +54,14 @@ function ReviewGraphScore() {
 	return (
 		<div className="flex h-full w-full flex-col items-center justify-center border-l-2 border-Gray20 px-[77px]">
 			<div className="flex w-full flex-col justify-start gap-[12px]">
-				{reviewer.map((item, index) => {
+				{reviewer.map((item, idx) => {
 					const score = Number(Object.keys(item)[0])
 					const count = item[score]
 					const widthPercentage = (count / totalReviewer) * 100
 					return (
 						<div
 							className="flex items-center justify-start gap-[24px] text-Body02 font-SemiBold text-Gray50 active:text-PB100"
-							key={index}
+							key={idx}
 						>
 							<span>{score} 점</span>
 							<ReviewGraph widthPercentage={widthPercentage} />
