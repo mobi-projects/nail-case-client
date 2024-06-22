@@ -4,20 +4,25 @@ import {
 	NTModalFooter,
 	NTModalHeader,
 } from "@/component/common/nt-modal"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTSearchfield from "@/component/common/nt-searchfield"
 
 export default function EditIntroduction() {
+	const { onClose } = useModal()
+	const onClickSavingButton = () => {
+		onClose()
+	}
 	return (
 		<div className="flex h-full w-full flex-col gap-2">
 			<NTModalHeader>소개글</NTModalHeader>
 
 			<NTModalContent className="flex h-fit flex-col gap-[28px]">
 				<NTSearchfield />
-				<TextArea tags={["#qdsfa", "#sdfsfd"]} />
+				<TextArea tags={["#네일맛집", "#주차가능"]} />
 			</NTModalContent>
 
 			<NTModalFooter className="h-fit">
-				<NTButton>저장하기</NTButton>
+				<NTButton onClick={onClickSavingButton}>저장하기</NTButton>
 			</NTModalFooter>
 		</div>
 	)
