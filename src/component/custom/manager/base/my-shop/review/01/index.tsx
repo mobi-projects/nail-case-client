@@ -28,7 +28,7 @@ function ReviewTotalScore() {
 		<div className="flex h-full w-full items-center justify-center gap-[26px]">
 			<div className="flex gap-[14px]">
 				{reviewTotalPoint.map((idx) => (
-					<NTIcon icon="starFull" className="text-PB100 opacity-25" key={idx} />
+					<NTIcon icon="starFull" className="text-PB100" key={idx} />
 				))}
 			</div>
 			<div className="text-LargeTitle font-Bold">{reviewCurrentPoint}</div>

@@ -55,7 +55,7 @@ export const ICON_DATA = {
 	phoneLight: "lets-icons:phone-light",
 	flagAltLight: "lets-icons:flag-alt-light",
 	star: "lets-icons:star-light",
-	starFull: "lets-icons:star-fill",
+	starFull: "weui:star-filled",
 	search: "iconamoon:search-thin",
 	delete: "lets-icons:close-round",
 	dot: "mid:dot",
