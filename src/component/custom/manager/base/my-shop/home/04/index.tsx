@@ -4,20 +4,20 @@ import NTOption from "@/component/common/nt-option"
 import Slider from "@/component/common/nt-slider"
 import { useOption } from "@/hook/use-component"
 
-export default function Manager_Base_MyShop_Home_04() {
+export default function RequiredReservationInfo() {
 	return (
 		<div className="flex justify-between pb-[30px]">
-			<Manager_Base_MyShop_Home_04_01 />
-			<Manager_Base_MyShop_Home_04_02 />
+			<LeftInfo />
+			<RightInfo />
 		</div>
 	)
 }
 
-function Manager_Base_MyShop_Home_04_01() {
+function LeftInfo() {
 	return <div />
 }
 
-function Manager_Base_MyShop_Home_04_02() {
+function RightInfo() {
 	const categories = [
 		{
 			title: "커스텀",
