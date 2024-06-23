@@ -28,23 +28,37 @@ export type TCustomForm = {
 	// TODO: 추후작성
 }
 
-/* ---------V2 --------- */
-export type TReservationV2 = {
-	reservationId: number // 예약 고유번호
-	reservationDetailList: Array<TReservationDetailV2> // 예약 상세
+/* Request */
+
+/* Response */
+export type TResGetListReservation = {
+	reservationId: number
+	reservationDetailList: Array<{
+		reservationDetailId: number
+		nailArtistId: number
+		remove: TRemoveOption
+		extend: boolean
+		status: TReservationStatus
+		startTime: number
+		endTime: number
+		conditionList: Array<{
+			conditionId: number
+			option: TNailCondition
+			createdAt: number
+			modifiedAt: number
+			createdBy: string
+			modifiedBy: string
+		}>
+		treatmentList: Array<{
+			option: TNailTreatment
+			imageId: number
+			imageUrl: string
+			createdAt: number
+			modifiedAt: number
+			createdBy: string
+			modifiedBy: string
+		}>
+	}>
 	createAt: number
-	modifiedAt: number
-}
-export type TReservationDetailV2 = {
-	reservationDetailId: number // 예약 상세 고유번호
-	nailArtistId: number // 아티스트 고유번호, TODO: 아티스트 이름으로 변경해야 합니다.
-	remove: TRemoveOption // 네일 제거 옵션
-	extend: boolean // 연장 유무
-	status: TReservationStatus // 예약 상태
-	startTime: number // 시술 시작 시간
-	endTime: number // 시술 종료 시간
-	conditionList: Array<TNailCondition> // 손톱 상태 목록
-	treatmentList: Array<TNailTreatment> // 시술 목록
-	createdAt: number
 	modifiedAt: number
 }

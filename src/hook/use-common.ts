@@ -6,12 +6,8 @@ import {
 	QUERY_SHOP_INFO,
 } from "@/constant"
 import type { TNTTime } from "@/type"
-import {
-	getListReservation,
-	getPostArr,
-	getReservationArr,
-	getShopInfo,
-} from "@/util/api"
+import { getPostArr, getReservationArr, getShopInfo } from "@/util/api"
+import { getListReservation } from "@/util/api/reservation-controller"
 import { transToTimestamp } from "@/util/common/transform"
 
 export const useShopInfo = () => {
