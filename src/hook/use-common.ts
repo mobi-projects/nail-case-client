@@ -7,7 +7,6 @@ import {
 } from "@/constant"
 import type { TNTTime } from "@/type"
 import { getPostArr, getReservationArr, getShopInfo } from "@/util/api"
-import { getListReservation } from "@/util/api/reservation-controller"
 import { transToTimestamp } from "@/util/common/transform"
 
 export const useShopInfo = () => {
@@ -38,16 +37,4 @@ export const useReservationArr = ({ from, to }: UseReservationArrPT) => {
 		},
 	})
 	return { reservationArr }
-}
-/** 예약 목록조회 */
-export const useListReservationQuery = (
-	shopId: number,
-	startTime: number,
-	endTime: number,
-) => {
-	const { data: reservationArr, ...rest } = useQuery({
-		queryKey: ["reservation-arr", shopId, startTime, endTime],
-		queryFn: async () => await getListReservation(shopId, startTime, endTime),
-	})
-	return { reservationArr, ...rest }
 }
