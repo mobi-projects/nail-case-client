@@ -3,8 +3,10 @@ import Image from "next/image"
 import { useRef } from "react"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
+import NTToolbar from "@/component/common/atom/nt-toolbar"
 import NTIcon from "@/component/common/nt-icon"
 import NTSearchfield from "@/component/common/nt-searchfield"
+import { useToolbar } from "@/hook/use-component"
 
 export default function ManagerLayout() {
 	return (
@@ -12,7 +14,7 @@ export default function ManagerLayout() {
 			<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 			<div className="flex h-fit w-full flex-col gap-[16.5px]">
 				<ManagerLayoutCatalog />
-				<Manager_Base_Layout_01_02 />
+				<ManagerLayoutToolbar />
 			</div>
 		</div>
 	)
@@ -47,13 +49,28 @@ function ManagerLayoutSubCatalog() {
 		</div>
 	)
 }
-function Manager_Base_Layout_01_02() {
+function ManagerLayoutToolbar() {
 	return (
-		<div className="flex h-[38px] w-full border-[5px] border-green-300">
-			<Divider />
+		<div className="flex w-full flex-col">
+			<hr className="absolute left-0 z-[-10] w-full border border-Gray10" />
+			<Toolbar />
 		</div>
 	)
 }
-function Divider() {
-	return <div className="absolute left-0 h-[1px] w-full bg-Gray10" />
+function Toolbar() {
+	const { hadleSelected, isSelected, toolbarArr } = useToolbar([
+		"홈",
+		"일정",
+		"채팅",
+		"내샵",
+	])
+	return (
+		<NTToolbar
+			isSelected={hadleSelected}
+			selected={isSelected}
+			arr={toolbarArr}
+			position="top"
+			topStyle="default"
+		/>
+	)
 }
