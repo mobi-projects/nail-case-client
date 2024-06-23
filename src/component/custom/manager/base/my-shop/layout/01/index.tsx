@@ -1,9 +1,10 @@
 "use client"
+import NTToolbar from "@/component/common/atom/nt-toolbar"
 import BannerCarousel from "@/component/common/nt-banner-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import { useShopInfo } from "@/hook/use-common"
-import { useBanner } from "@/hook/use-component"
+import { useBanner, useToolbar } from "@/hook/use-component"
 import type { TShopInfo } from "@/type"
 
 type BannerItemPT = { shopInfo: TShopInfo }
@@ -12,7 +13,7 @@ export default function ManagerMyShopLayout() {
 	return (
 		<div className="h-fit w-full">
 			<MyShopBanner />
-			<Manager_Base_MyShop_Layout_01_02 />
+			<MyShopToolbar />
 		</div>
 	)
 }
@@ -79,6 +80,24 @@ function BannerDesciption({ shopInfo }: BannerItemPT) {
 	)
 }
 
-function Manager_Base_MyShop_Layout_01_02() {
-	return <div className="h-[44px] w-full border-[5px] border-green-300" />
+function MyShopToolbar() {
+	const { hadleSelected, isSelected, toolbarArr } = useToolbar([
+		"홈",
+		"소식",
+		"사진",
+		"리뷰",
+		"통계",
+	])
+	return (
+		<div className="relative flex h-fit items-center justify-center pt-[20px] text-[18px] font-SemiBold">
+			<NTToolbar
+				isSelected={hadleSelected}
+				selected={isSelected}
+				arr={toolbarArr}
+				position="bottom"
+				bottomTextSize="small"
+			/>
+			<hr className="absolute bottom-[0.25px] -z-10 w-full border bg-Gray20" />
+		</div>
+	)
 }

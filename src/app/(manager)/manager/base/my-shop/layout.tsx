@@ -8,11 +8,7 @@ export default function ManagerBaseMyShopLayout({
 	return (
 		<div className="flex w-full flex-col">
 			<ManagerMyShopLayout />
-			<Divider />
 			{children}
 		</div>
 	)
-}
-function Divider() {
-	return <div className="h-[1.5px] w-full bg-Gray20" />
 }
