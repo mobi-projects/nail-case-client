@@ -1,7 +1,7 @@
 import Manager_Base_MyShop_Review_01 from "@/component/custom/manager/base/my-shop/review/01"
 import Manager_Base_MyShop_Review_02 from "@/component/custom/manager/base/my-shop/review/02"
 import Manager_Base_MyShop_Review_03 from "@/component/custom/manager/base/my-shop/review/03"
-import Manager_Base_MyShop_Review_04 from "@/component/custom/manager/base/my-shop/review/04"
+import ReviewPagination from "@/component/custom/manager/base/my-shop/review/04"
 
 export default function Review() {
 	return (
@@ -13,7 +13,7 @@ export default function Review() {
 				<Divider />
 			</div>
 			<Manager_Base_MyShop_Review_03 />
-			<Manager_Base_MyShop_Review_04 />
+			<ReviewPagination />
 		</div>
 	)
 }
