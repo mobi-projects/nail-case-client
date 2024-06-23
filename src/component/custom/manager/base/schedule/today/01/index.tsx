@@ -124,7 +124,7 @@ export default function DayScheDule() {
 	const currentTime = dayjs()
 
 	return (
-		<div className="flex h-fit w-full flex-col rounded-[26px] border">
+		<div className="flex h-fit w-full flex-col rounded-[26px] border shadow-customGray60">
 			<div className="flex flex-col">
 				{reservation.map((slot, index) => (
 					<DayScheduleTime key={index} slot={slot} currentTime={currentTime} />
@@ -203,7 +203,7 @@ function DayScheduleTask({ slot, duration }: DayScheduleTaskPT) {
 
 	return (
 		<div
-			className={`flex w-[792px] items-center rounded-[20px] border h-[${height}px]`}
+			className={`flex w-[792px] items-center rounded-[20px] border h-[${height}px] shadow-customGray60`}
 		>
 			<div
 				className={`mr-[15px] border-r-[2px] border-Gray20 pl-[20px] pr-[40px] h-[${subHeight}px]`}
