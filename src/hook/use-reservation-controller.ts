@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { LIST_RESERVATION_QUERY } from "@/constant"
+import { LIST_RESERVATION_QUERY, VIEW_RESERVATION_QUERY } from "@/constant"
 import type { TReqBodyPostRegisterReservation } from "@/type"
 import {
 	getListReservation,
+	getViewReservation,
 	postRegisterReservation,
 } from "@/util/api/reservation-controller"
 
@@ -12,13 +13,12 @@ export const useListReservationQuery = (
 	shopId: number,
 	startTime: number,
 	endTime: number,
-) => {
-	const { data: reservationArr, ...rest } = useQuery({
+) =>
+	useQuery({
 		queryKey: [LIST_RESERVATION_QUERY, shopId, startTime, endTime],
 		queryFn: async () => await getListReservation(shopId, startTime, endTime),
 	})
-	return { reservationArr, ...rest }
-}
+
 /** 예약 등록 */
 export const useRegisterReservationMutation = (shopId: number) => {
 	const queryClient = useQueryClient()
@@ -32,3 +32,12 @@ export const useRegisterReservationMutation = (shopId: number) => {
 	})
 	return { register, ...rest }
 }
+/** 예약 상세 조회 */
+export const useViewReservationQuery = (
+	shopId: number,
+	reservationId: number,
+) =>
+	useQuery({
+		queryKey: [VIEW_RESERVATION_QUERY],
+		queryFn: async () => await getViewReservation(shopId, reservationId),
+	})

@@ -2,6 +2,7 @@ import { axiosInstance } from "@/config/axios"
 import type {
 	TReqBodyPostRegisterReservation,
 	TResGetListReservation,
+	TResGetViewReservation,
 	TResPostRegisterReservation,
 } from "@/type"
 import type { TResponseData } from "@/type/response"
@@ -33,6 +34,16 @@ export const postRegisterReservation = async (
 	const response = await axiosInstance().post(
 		`/shops/${shopId}/reservations`,
 		reqBody,
+	)
+	return response.data
+}
+/** [GET] 예약 상세 조회 api 호출 */
+export const getViewReservation = async (
+	shopId: number,
+	reservationId: number,
+): Promise<TResponseData<TResGetViewReservation, "data">> => {
+	const response = await axiosInstance().get(
+		`/shops/${shopId}/reservations/${reservationId}`,
 	)
 	return response.data
 }

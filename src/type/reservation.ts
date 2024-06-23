@@ -116,3 +116,36 @@ export type TResPostRegisterReservation = {
 	createdAt: number
 	modifiedAt: number
 }
+export type TResGetViewReservation = {
+	reservationId: number
+	reservationDetailList: Array<{
+		reservationDetailId: number
+		nailArtistId: number
+		remove: TRemoveOption
+		extend: boolean
+		status: TReservationStatus
+		startTime: number
+		endTime: number
+		conditionList: Array<{
+			conditionId: number
+			option: TNailCondition
+			createdAt: number
+			modifiedAt: number
+			createdBy: string
+			modifiedBy: string
+		}>
+		treatmentList: Array<{
+			option: TNailTreatment
+			imageId: number
+			imageUrl: string
+			createdAt: number
+			modifiedAt: number
+			createdBy: string
+			modifiedBy: string
+		}>
+		createdAt: number
+		modifiedAt: number
+	}>
+	createdAt: number
+	modifiedAt: number
+}
