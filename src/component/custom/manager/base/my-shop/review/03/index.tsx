@@ -1,35 +1,79 @@
 import { NTButton } from "@/component/common/atom/nt-button"
-
+import NTIcon from "@/component/common/nt-icon"
 export default function Manager_Base_MyShop_Review_03() {
 	const imageSrc = [false, true, false, true, false]
 	//윗부분 삭제예정 예시 보여드릴려고
 	return (
-		<div className="mt-[18px] flex w-full flex-col gap-[25px] border-[5px] border-orange-300">
-			<Manager_Base_MyShop_Review_03_01 imageSrc={imageSrc[0]} />
-			<Manager_Base_MyShop_Review_03_01 imageSrc={imageSrc[1]} />
-			<Manager_Base_MyShop_Review_03_01 imageSrc={imageSrc[2]} />
-			<Manager_Base_MyShop_Review_03_01 imageSrc={imageSrc[3]} />
-			<Manager_Base_MyShop_Review_03_01 imageSrc={imageSrc[4]} />
+		<div className="mt-[18px] flex w-full flex-col">
+			<ReviewListItem imageSrc={imageSrc[0]} />
+      	<hr />
+			<ReviewListItem imageSrc={imageSrc[1]} />
+      	<hr />
+			<ReviewListItem imageSrc={imageSrc[2]} />
+      	<hr />
+			<ReviewListItem imageSrc={imageSrc[3]} />
+      	<hr />
+			<ReviewListItem imageSrc={imageSrc[4]} />
 		</div>
 	)
 }
 type imgaeSrcPT = {
 	imageSrc: boolean
 }
-function Manager_Base_MyShop_Review_03_01({ imageSrc }: imgaeSrcPT) {
+function ReviewListItem({ imageSrc }: imgaeSrcPT) {
 	return (
-		<div className="flex w-full flex-col gap-[16px] border-[5px] border-green-300">
-			<Manager_Base_MyShop_Review_03_01_01 />
-			<Manager_Base_MyShop_Review_03_01_02 />
+		<div className="my-[24px] flex w-full flex-col gap-[18px]">
+			<ReviewerInfo />
+				<ReviewerTag />
 			<ReivewCommentGroup imageSrc={imageSrc} />
+
 		</div>
 	)
 }
-function Manager_Base_MyShop_Review_03_01_01() {
-	return <div className="h-[60px] w-full border-[5px] border-blue-300"></div>
+function ReviewerInfo() {
+	const starGrade = [true, true, true, true, false]
+	//윗부분 삭제 예정
+	return (
+		<div className="flex h-[60px] w-full flex-col gap-[8px]">
+			<div className="text-Headline01 font-Bold text-Gray80">닉네임</div>
+			<div className="flex gap-[7px]">
+				<div className="flex gap-[6px]">
+					{starGrade.map((star, idx) => (
+						<NTIcon
+							icon="starFull"
+							key={idx}
+							className={`flex h-[18px] w-[18px] text-center ${star ? "text-PB100" : "text-Gray20"}`}
+						></NTIcon>
+					))}
+				</div>
+				<div className="text-Callout font-SemiBold text-Gray50">
+					<span> 3번째 방문 </span>
+					<span className="h-[4px] w-[4px]">﹒</span>
+					<span>5월 24일 방문</span>
+				</div>
+			</div>
+		</div>
+	)
 }
-function Manager_Base_MyShop_Review_03_01_02() {
-	return <div className="h-[60px] w-full border-[5px] border-blue-300"></div>
+function ReviewerTag() {
+	const tagList = [
+		"이달의 아트",
+		"동반 2인",
+		"타샵 제거 있음",
+		" 1인 연장 필요",
+	]
+	return (
+		<div className="flex h-[60px] w-full gap-[10px] pt-[3px]">
+			{tagList.map((tag, idx) => (
+				<div
+					key={idx}
+					className="h-fit w-fit rounded-[20.34px] bg-BGblue01 px-[18px] py-[12px] text-Body02 text-PB100"
+				>
+					{tag}
+				</div>
+			))}
+		</div>
+	)
 }
 function ReivewCommentGroup({ imageSrc }: imgaeSrcPT) {
 	return (

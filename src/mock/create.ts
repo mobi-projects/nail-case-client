@@ -11,12 +11,9 @@ import type {
 } from "@/type"
 import type { TComment } from "@/type/comment"
 import type { TPost, TPostCategory } from "@/type/post"
-import type {
-	TEssentialForm,
-	TNailCondition,
-	TReservation,
-	TReservationStatus,
-} from "@/type/reservation"
+import type { TEssentialForm, TReservation } from "@/type/reservation"
+import type { TNailCondition } from "@/type/union-option/nail-condition"
+import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 import { transToNTTime } from "@/util/common/transform"
 
 export const createShopInfo = (): TShopInfo => {
@@ -150,7 +147,7 @@ const createNailConditionArr = (): TNailCondition[] => {
 const createEssentialForm = () => {
 	const essentialForm: TEssentialForm = {
 		reservationDate: createNTTime(),
-		treatment: pickRandomOneOfArr(["AOM", "CARE", "ONE", "PICTURE"]),
+		treatment: pickRandomOneOfArr(["AOM", "CARE", "ONE", "MEMBER_IMAGE"]),
 		removalReq: pickRandomOneOfArr(["IN-SHOP", "ELSE-WHERE", "NO-NEED"]),
 		extensionReq: getRandomBoolean(),
 		conditionArr: createNailConditionArr(),
@@ -159,8 +156,8 @@ const createEssentialForm = () => {
 }
 const createStatus = (): TReservationStatus => {
 	const statusArr: TReservationStatus[] = [
-		"WAITING",
-		"APPROVAL",
+		"PENDING",
+		"CONFIRMED",
 		"CANCELED",
 		"REJECTED",
 	]
