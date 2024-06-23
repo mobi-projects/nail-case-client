@@ -25,13 +25,13 @@ export const useListReservationQuery = (
 
 /** 예약 등록 */
 type RegisterReservationPT = {
-	reservationArr: TReqBodyPostRegisterReservation
+	newReservation: TReqBodyPostRegisterReservation
 }
 export const useRegisterReservationMutation = (shopId: number) => {
 	const queryClient = useQueryClient()
 	const { mutateAsync: registerReservation, ...rest } = useMutation({
-		mutationFn: async ({ reservationArr }: RegisterReservationPT) =>
-			await postRegisterReservation(shopId, reservationArr),
+		mutationFn: async ({ newReservation }: RegisterReservationPT) =>
+			await postRegisterReservation(shopId, newReservation),
 		onSuccess: () =>
 			queryClient.invalidateQueries({
 				queryKey: [LIST_RESERVATION_QUERY, shopId],
