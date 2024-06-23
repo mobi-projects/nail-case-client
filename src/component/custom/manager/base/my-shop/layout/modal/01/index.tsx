@@ -37,12 +37,12 @@ function TextArea({ tags = [] }: TextAreaPT) {
 		<div className="relative flex h-[200px] w-full flex-col gap-[10px] rounded-[22px] border-[1.6px] border-Gray30 bg-White p-[20px] pt-[10px] outline-none">
 			<div className="flex h-fit w-full flex-wrap gap-[5px] text-nowrap">
 				{tags.map((tag, idx) => (
-					<p key={idx} className="text-Title02 text-Gray90">
+					<p key={idx} className="text-[18px] font-SemiBold text-Gray90">
 						{tag}
 					</p>
 				))}
 			</div>
-			<textarea className="h-[70%] w-full resize-none text-Body01 text-Gray90 focus-visible:outline-none" />
+			<textarea className="h-[70%] w-full resize-none text-[18px] font-Light text-Gray90 focus-visible:outline-none" />
 			<TextCounter length={10} />
 		</div>
 	)
