@@ -38,11 +38,6 @@ type DayScheduleOptionsPT = {
 	optionArr: string[]
 }
 
-type DayScheduleButtonPT = {
-	slot: Slot
-	currentTime: Dayjs
-}
-
 export default function DayScheDule() {
 	const reservation: Slot[] = [
 		{
@@ -246,7 +241,7 @@ function DayScheduleOptions({ optionArr }: DayScheduleOptionsPT) {
 	)
 }
 
-function DayScheduleButton({ slot, currentTime }: DayScheduleButtonPT) {
+function DayScheduleButton({ slot, currentTime }: DayScheduleTimePT) {
 	const startTime = dayjs().hour(slot.firstTime).minute(0)
 	const endTime = dayjs().hour(slot.endTime).minute(0)
 	const isCurrent =
