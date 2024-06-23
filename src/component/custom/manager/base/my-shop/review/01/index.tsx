@@ -63,7 +63,7 @@ function ReviewGraphScore() {
 							className="flex items-center justify-start gap-[24px] text-Body02 font-SemiBold text-Gray50 active:text-PB100"
 							key={idx}
 						>
-							<span>{score} 점</span>
+							<span className="w-6">{score}점</span>
 							<ReviewGraph widthPercentage={widthPercentage} />
 							<span>{count}</span>
 						</div>
