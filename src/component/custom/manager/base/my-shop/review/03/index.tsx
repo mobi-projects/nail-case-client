@@ -10,10 +10,12 @@ export default function Manager_Base_MyShop_Review_03() {
 			<ReviewListItem imageSrc={imageSrc[1]} />
       	<hr />
 			<ReviewListItem imageSrc={imageSrc[2]} />
+      	<ManagerResponse />
       	<hr />
 			<ReviewListItem imageSrc={imageSrc[3]} />
       	<hr />
 			<ReviewListItem imageSrc={imageSrc[4]} />
+      <ManagerResponse />
 		</div>
 	)
 }
@@ -115,6 +117,33 @@ function ReivewComment() {
 			건 우리만 아니까 If you’re sober I’ll feel fine 그대가 취하지 않았다면 난
 			괜찮을 거예요 Oh oh oh oh (give it to me) 오 오 오 오 (신호를 줘요) Oh oh
 			oh oh (give it to me) 오 오 오 오 (내가 알 수 있도록) Oh oh oh o
+		</div>
+	)
+}
+function ManagerResponse() {
+	return (
+		<div className="flex h-fit min-h-[178.98px] w-full justify-between rounded-[26px] pt-[18.5px] shadow-customGray60">
+			<div className="ml-[36px] flex flex-col gap-[18px] pt-[6px]">
+				<div className="flex items-center gap-[12px]">
+					<div className="text-Headline02 font-SemiBold text-Gray80">
+						모비네일 원장 모비
+					</div>
+					<div className="flex text-Callout text-Gray50">이번주</div>
+				</div>
+				<div className="line-clamp-5 text-Title03 font-Regular text-Gray80">
+					다음에 오시면 더 잘해드릴게요
+					<br />
+					리뷰 남겨주셔서 감사합니다 ㅎㅎ
+				</div>
+			</div>
+			<div className="mr-[21px] flex flex-col gap-[16px]">
+				<NTButton variant="secondary" size="large">
+					수정하기
+				</NTButton>
+				<NTButton variant="secondary" size="large">
+					삭제하기
+				</NTButton>
+			</div>
 		</div>
 	)
 }
