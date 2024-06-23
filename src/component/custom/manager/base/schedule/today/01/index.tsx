@@ -143,8 +143,7 @@ function DayScheduleTime({ slot, currentTime }: DayScheduleTimePT) {
 
 	return (
 		<div
-			className="flex w-full items-center border-b-[2px] border-Gray10"
-			style={{ height: `${boxHeight}px` }}
+			className={`flex w-full items-center border-b-[2px] border-Gray10 h-[${boxHeight}px]`}
 		>
 			<DayScheduleDash slot={slot} />
 			<DayScheduleTask slot={slot} duration={duration} />
@@ -204,12 +203,10 @@ function DayScheduleTask({ slot, duration }: DayScheduleTaskPT) {
 
 	return (
 		<div
-			className="flex w-[792px] items-center rounded-[20px] border"
-			style={{ height: `${height}px` }}
+			className={`flex w-[792px] items-center rounded-[20px] border h-[${height}px]`}
 		>
 			<div
-				className="mr-[15px] border-r-[2px] border-Gray20 pl-[20px] pr-[40px]"
-				style={{ height: `${subHeight}px` }}
+				className={`mr-[15px] border-r-[2px] border-Gray20 pl-[20px] pr-[40px] h-[${subHeight}px]`}
 			>
 				<div className="text-Headline02 text-Gray90">
 					{period} {formattedFirstTime}시
