@@ -1,6 +1,6 @@
 import Manager_Base_MyShop_Home_03 from "@/component/custom/manager/base/my-shop/home/03"
-import Manager_Base_MyShop_Home_04 from "@/component/custom/manager/base/my-shop/home/04"
-import Manager_Base_MyShop_Home_05 from "@/component/custom/manager/base/my-shop/home/05"
+import RequiredReservationInfo from "@/component/custom/manager/base/my-shop/home/04"
+import NoticeBoard from "@/component/custom/manager/base/my-shop/home/05"
 
 export default function Home() {
 	return (
@@ -12,7 +12,7 @@ export default function Home() {
 			<Divider />
 			<div className="flex flex-col gap-[20px] pt-[20px]">
 				<p className="text-Title03">필수 예약 사항</p>
-				<Manager_Base_MyShop_Home_04 />
+				<RequiredReservationInfo />
 			</div>
 			<Divider />
 			<div className="flex flex-col gap-[20px] pt-[20px]">
@@ -20,7 +20,7 @@ export default function Home() {
 					<p className="text-Title03">공지</p>
 					<p className="text-Headline02 text-Gray40">전체보기</p>
 				</div>
-				<Manager_Base_MyShop_Home_05 />
+				<NoticeBoard />
 			</div>
 		</div>
 	)
