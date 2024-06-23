@@ -1,5 +1,5 @@
 import Manager_Base_MyShop_Review_01 from "@/component/custom/manager/base/my-shop/review/01"
-import Manager_Base_MyShop_Review_02 from "@/component/custom/manager/base/my-shop/review/02"
+import ReviewTitleheader from "@/component/custom/manager/base/my-shop/review/02"
 import Manager_Base_MyShop_Review_03 from "@/component/custom/manager/base/my-shop/review/03"
 import ReviewPagination from "@/component/custom/manager/base/my-shop/review/04"
 
@@ -9,7 +9,7 @@ export default function Review() {
 			<Manager_Base_MyShop_Review_01 />
 			<div className="mt-[24px] flex h-[72px] w-full flex-col justify-between">
 				<Divider />
-				<Manager_Base_MyShop_Review_02 />
+				<ReviewTitleheader />
 				<Divider />
 			</div>
 			<Manager_Base_MyShop_Review_03 />
