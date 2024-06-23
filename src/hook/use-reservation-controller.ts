@@ -1,10 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { LIST_RESERVATION_QUERY, VIEW_RESERVATION_QUERY } from "@/constant"
-import type { TReqBodyPostRegisterReservation } from "@/type"
+import type {
+	TReqBodyPostRegisterReservation,
+	TReqBodyUpdateReservation,
+} from "@/type"
 import {
 	getListReservation,
 	getViewReservation,
+	patchUpdateReservation,
 	postRegisterReservation,
 } from "@/util/api/reservation-controller"
 
@@ -20,17 +24,20 @@ export const useListReservationQuery = (
 	})
 
 /** 예약 등록 */
+type RegisterReservationPT = {
+	reservationArr: TReqBodyPostRegisterReservation
+}
 export const useRegisterReservationMutation = (shopId: number) => {
 	const queryClient = useQueryClient()
-	const { mutateAsync: register, ...rest } = useMutation({
-		mutationFn: async (reservationArr: TReqBodyPostRegisterReservation) =>
+	const { mutateAsync: registerReservation, ...rest } = useMutation({
+		mutationFn: async ({ reservationArr }: RegisterReservationPT) =>
 			await postRegisterReservation(shopId, reservationArr),
 		onSuccess: () =>
 			queryClient.invalidateQueries({
 				queryKey: [LIST_RESERVATION_QUERY, shopId],
 			}),
 	})
-	return { register, ...rest }
+	return { registerReservation, ...rest }
 }
 /** 예약 상세 조회 */
 export const useViewReservationQuery = (
@@ -41,3 +48,21 @@ export const useViewReservationQuery = (
 		queryKey: [VIEW_RESERVATION_QUERY],
 		queryFn: async () => await getViewReservation(shopId, reservationId),
 	})
+
+/** 예약 수정 */
+type UpdateReservationPT = {
+	reservationId: number
+	updated: TReqBodyUpdateReservation
+}
+export const useUpdateReservationMutation = (shopId: number) => {
+	const queryClient = useQueryClient()
+	const { mutateAsync: updateReservation, ...rest } = useMutation({
+		mutationFn: async ({ reservationId, updated }: UpdateReservationPT) =>
+			await patchUpdateReservation(shopId, reservationId, updated),
+		onSuccess: () =>
+			queryClient.invalidateQueries({
+				queryKey: [LIST_RESERVATION_QUERY, shopId],
+			}),
+	})
+	return { updateReservation, ...rest }
+}
