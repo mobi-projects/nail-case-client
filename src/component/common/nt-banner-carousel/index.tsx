@@ -89,7 +89,7 @@ function BannerImage({ shopInfo, idx, type }: BannerImagePT) {
 			variants: {
 				type: {
 					user: "h-[30rem]",
-					manager: " h-[24rem]",
+					manager: " h-[432.47px]",
 				},
 			},
 		},
