@@ -37,7 +37,7 @@ export const ICON_DATA = {
 	closeRoundLight: "lets-icons:close-round-light",
 	commentLight: "lets-icons:comment-light",
 	editLight: "lets-icons:edit-light",
-	settingLineLight: "lets-icons:setting-line-light",
+	setting: "ep:setting",
 	calendarLight: "lets-icons:calendar-light",
 	homeLight: "lets-icons:home-light",
 	creditCardLight: "lets-icons:credit-card-light",
@@ -57,5 +57,6 @@ export const ICON_DATA = {
 	star: "lets-icons:star-light",
 	search: "iconamoon:search-thin",
 	delete: "lets-icons:close-round",
-	dot: "mid:dot",
+	dot: "bi:dot",
+	pencil: "octicon:pencil-24",
 } as const
