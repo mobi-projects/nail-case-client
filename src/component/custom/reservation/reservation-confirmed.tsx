@@ -17,7 +17,7 @@ const ReservationConfirmedCard: React.FC<ReservationCardPT> = ({ icon }) => {
 	const { reservationArr } = useReservationArr(getAllDay())
 
 	const filteredData =
-		reservationArr?.filter((item) => item.status === "APPROVAL") || []
+		reservationArr?.filter((item) => item.status === "CONFIRMED") || []
 
 	return (
 		<div className="relative flex h-[240px] w-[384px] items-center justify-between rounded-[26px] bg-Gray90 drop-shadow">
