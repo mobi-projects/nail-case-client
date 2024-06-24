@@ -4,16 +4,16 @@ export default function ReviewList() {
 	const imageSrc = [false, true, false, true, false]
 	//윗부분 삭제예정 예시 보여드릴려고
 	return (
-		<div className="mt-[18px] flex w-full flex-col">
+		<div className="flex w-full flex-col">
 			<ReviewListItem imageSrc={imageSrc[0]} />
-			<hr />
+			<hr className="border-t-[1.5px] border-Gray20" />
 			<ReviewListItem imageSrc={imageSrc[1]} />
-			<hr />
+			<hr className="border-t-[1.5px] border-Gray20" />
 			<ReviewListItem imageSrc={imageSrc[2]} />
 			<ManagerResponse />
-			<hr />
+			<hr className="border-t-[1.5px] border-Gray20" />
 			<ReviewListItem imageSrc={imageSrc[3]} />
-			<hr />
+			<hr className="border-t-[1.5px] border-Gray20" />
 			<ReviewListItem imageSrc={imageSrc[4]} />
 			<ManagerResponse />
 		</div>
@@ -121,7 +121,7 @@ function ReivewComment() {
 }
 function ManagerResponse() {
 	return (
-		<div className="flex h-fit min-h-[178.98px] w-full justify-between rounded-[26px] pt-[18.5px] shadow-customGray60">
+		<div className="mb-[27px] flex h-fit min-h-[178.98px] w-full justify-between rounded-[26px] pt-[18.5px] shadow-customGray60">
 			<div className="ml-[36px] flex flex-col gap-[18px] pt-[6px]">
 				<div className="flex items-center gap-[12px]">
 					<div className="text-Headline02 font-SemiBold text-Gray80">
