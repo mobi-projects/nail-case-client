@@ -1,14 +1,7 @@
-<<<<<<< design/manager-base-schedule-this-week
-import Manager_Base_MyShop_Review_01 from "@/component/custom/manager/base/my-shop/review/01"
-import ReviewTitleheader from "@/component/custom/manager/base/my-shop/review/02"
-import ReviewList from "@/component/custom/manager/base/my-shop/review/03"
-import Manager_Base_MyShop_Review_04 from "@/component/custom/manager/base/my-shop/review/04"
-=======
 import ReviewTotalGrade from "@/component/custom/manager/base/my-shop/review/01"
 import ReviewTitleheader from "@/component/custom/manager/base/my-shop/review/02"
 import ReviewList from "@/component/custom/manager/base/my-shop/review/03"
 import ReviewPagination from "@/component/custom/manager/base/my-shop/review/04"
->>>>>>> main
 
 export default function Review() {
 	return (

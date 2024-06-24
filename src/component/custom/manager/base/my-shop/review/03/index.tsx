@@ -6,16 +6,6 @@ export default function ReviewList() {
 	return (
 		<div className="flex w-full flex-col">
 			<ReviewListItem imageSrc={imageSrc[0]} />
-<<<<<<< design/manager-base-schedule-this-week
-			<hr />
-			<ReviewListItem imageSrc={imageSrc[1]} />
-			<hr />
-			<ReviewListItem imageSrc={imageSrc[2]} />
-			<ManagerResponse />
-			<hr />
-			<ReviewListItem imageSrc={imageSrc[3]} />
-			<hr />
-=======
 			<hr className="border-t-[1.5px] border-Gray20" />
 			<ReviewListItem imageSrc={imageSrc[1]} />
 			<hr className="border-t-[1.5px] border-Gray20" />
@@ -24,7 +14,6 @@ export default function ReviewList() {
 			<hr className="border-t-[1.5px] border-Gray20" />
 			<ReviewListItem imageSrc={imageSrc[3]} />
 			<hr className="border-t-[1.5px] border-Gray20" />
->>>>>>> main
 			<ReviewListItem imageSrc={imageSrc[4]} />
 			<ManagerResponse />
 		</div>
