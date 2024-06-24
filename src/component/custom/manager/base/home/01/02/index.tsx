@@ -8,7 +8,7 @@ import NTIcon from "@/component/common/nt-icon"
 import { useReservationArr } from "@/hook/use-common"
 import { getAllDay } from "@/util/common/time"
 
-import EnableIcon from "../../../../public/asset/enabled.png"
+import EnableIcon from "../../../../../../../../public/asset/enabled.png"
 
 type ReservationCardPT = {
 	icon?: keyof typeof ICON_DATA
