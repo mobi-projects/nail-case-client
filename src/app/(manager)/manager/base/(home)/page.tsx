@@ -1,6 +1,6 @@
 import Manager_Base_Home_01 from "@/component/custom/manager/base/home/01"
 import Manager_Base_Home_02 from "@/component/custom/manager/base/home/02"
-import Manager_Base_Home_03 from "@/component/custom/manager/base/home/03"
+import CardListForm from "@/component/custom/manager/base/home/03"
 
 export default function ManagerBaseHome() {
 	return (
@@ -13,7 +13,7 @@ export default function ManagerBaseHome() {
 			</div>
 			<Manager_Base_Home_02 />
 			<Divider />
-			<Manager_Base_Home_03 />
+			<CardListForm />
 		</div>
 	)
 }
