@@ -3,9 +3,12 @@ import NTToolbar from "@/component/common/atom/nt-toolbar"
 import BannerCarousel from "@/component/common/nt-banner-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { useShopInfo } from "@/hook/use-common"
 import { useBanner, useToolbar } from "@/hook/use-component"
 import type { TShopInfo } from "@/type"
+
+import EditIntroduction from "../modal/01"
 
 type BannerItemPT = { shopInfo: TShopInfo }
 
@@ -20,8 +23,17 @@ export default function ManagerMyShopLayout() {
 function MyShopBanner() {
 	const { handleCarousel, carouselIdx } = useBanner()
 	const { shopInfo } = useShopInfo()
+	const { onOpen } = useModal()
 	if (!shopInfo)
 		return <div className="h-[432.47px] w-full">Loading Banner....</div>
+
+	const onClickPencil = () => {
+		onOpen({
+			size: "small",
+			children: <EditIntroduction />,
+		})
+	}
+
 	return (
 		<div className="h-[432.47px] w-full">
 			<BannerCarousel type="manager" handleCarousel={handleCarousel}>
@@ -39,6 +51,7 @@ function MyShopBanner() {
 				<NTIcon
 					icon="pencil"
 					className="absolute right-12 top-[280px] h-6 w-6 text-White"
+					onClick={onClickPencil}
 				/>
 				<BannerHeader shopInfo={shopInfo} />
 				<BannerDesciption shopInfo={shopInfo} />
