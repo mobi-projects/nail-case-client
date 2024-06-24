@@ -1,9 +1,6 @@
 import Manager_Base_MyShop_Review_01 from "@/component/custom/manager/base/my-shop/review/01"
-import Manager_Base_MyShop_Review_02 from "@/component/custom/manager/base/my-shop/review/02"
-import ReviewList from "@/component/custom/manager/base/my-shop/review/03"
 import ReviewTitleheader from "@/component/custom/manager/base/my-shop/review/02"
-import Manager_Base_MyShop_Review_03 from "@/component/custom/manager/base/my-shop/review/03"
-
+import ReviewList from "@/component/custom/manager/base/my-shop/review/03"
 import Manager_Base_MyShop_Review_04 from "@/component/custom/manager/base/my-shop/review/04"
 
 export default function Review() {
