@@ -1,6 +1,6 @@
 import NTIcon from "@/component/common/nt-icon"
 
-export default function Manager_Base_MyShop_Review_01() {
+export default function ReviewTotalGrade() {
 	return (
 		<div className="flex w-full flex-col gap-[20px] py-[18px]">
 			<ManagerMyShopReviewTotal />
