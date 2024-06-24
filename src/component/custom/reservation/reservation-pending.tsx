@@ -26,7 +26,7 @@ const ReservationPendingCard: React.FC<ReservationCardPT> = ({ icon }) => {
 	const { reservationArr } = useReservationArr(getAllDay())
 
 	const filteredData =
-		reservationArr?.filter((item) => item.status === "WAITING") || []
+		reservationArr?.filter((item) => item.status === "PENDING") || []
 
 	const getFormattedDate = (startTime: TNTTime) => {
 		const days = ["일", "월", "화", "수", "목", "금", "토"]
