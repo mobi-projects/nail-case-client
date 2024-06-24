@@ -2,7 +2,8 @@
 
 import BannerCarousel from "@/component/common/nt-banner-carousel"
 import NTContent from "@/component/common/nt-content"
-import ReservationPanelForm from "@/component/custom/manager/base/home/02"
+import ReservationPanelForm from "@/component/custom/manager/base/home/01"
+import ReservationForm from "@/component/custom/manager/base/home/02"
 import { NoticeCard } from "@/component/custom/post/notice-card"
 import { useShopInfo } from "@/hook/use-common"
 import { useBanner } from "@/hook/use-component"
@@ -27,7 +28,7 @@ export default function Home() {
 			<div className="flex flex-col gap-5">
 				<p className="block text-Title03">오늘 하루 예약 일정을 살펴볼게요.</p>
 				<ReservationPanelForm />
-				<_ReservationDetailArr />
+				<ReservationForm />
 			</div>
 
 			<HomeDivider />
@@ -70,12 +71,6 @@ function BannerDesciption({ shopInfo }: BannerItemPT) {
 				{overview}
 			</p>
 		</div>
-	)
-}
-
-function _ReservationDetailArr() {
-	return (
-		<div className="h-[646.39px] w-full rounded-[26px] bg-red-300 shadow-[#E0E0E0]" />
 	)
 }
 
