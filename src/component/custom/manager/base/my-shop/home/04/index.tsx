@@ -116,7 +116,6 @@ function RightInfo() {
 	)
 }
 
-
 function RightCategoryOptions({
 	title,
 	options,

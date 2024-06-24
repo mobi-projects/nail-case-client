@@ -6,16 +6,16 @@ export default function Manager_Base_MyShop_Review_03() {
 	return (
 		<div className="mt-[18px] flex w-full flex-col">
 			<ReviewListItem imageSrc={imageSrc[0]} />
-      	<hr />
+			<hr />
 			<ReviewListItem imageSrc={imageSrc[1]} />
-      	<hr />
+			<hr />
 			<ReviewListItem imageSrc={imageSrc[2]} />
-      	<ManagerResponse />
-      	<hr />
+			<ManagerResponse />
+			<hr />
 			<ReviewListItem imageSrc={imageSrc[3]} />
-      	<hr />
+			<hr />
 			<ReviewListItem imageSrc={imageSrc[4]} />
-      <ManagerResponse />
+			<ManagerResponse />
 		</div>
 	)
 }
@@ -26,9 +26,8 @@ function ReviewListItem({ imageSrc }: imgaeSrcPT) {
 	return (
 		<div className="my-[24px] flex w-full flex-col gap-[18px]">
 			<ReviewerInfo />
-				<ReviewerTag />
+			<ReviewerTag />
 			<ReivewCommentGroup imageSrc={imageSrc} />
-
 		</div>
 	)
 }
@@ -81,9 +80,9 @@ function ReivewCommentGroup({ imageSrc }: imgaeSrcPT) {
 	return (
 		<div className="flex h-fit min-h-[30px] w-full items-end justify-between pr-[21px]">
 			{imageSrc ? (
-				<div className=" flex w-full gap-[36px]">
+				<div className="flex w-full gap-[36px]">
 					<ReivewCommentImgae />
-				<ReivewComment />
+					<ReivewComment />
 				</div>
 			) : (
 				<div className="line-clamp-5 h-fit w-[576px]">
