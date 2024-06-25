@@ -38,7 +38,7 @@ function ReservationTimeList() {
 						<div className="flex h-[127px] w-full items-center justify-between gap-[26.5px] px-[27px]">
 							<ReservationTimeGap />
 							<ReservationTagList time={time} idx={idx} />
-							<ReservationBtnList idx={idx} />
+							<ReservationButtonList idx={idx} />
 						</div>
 						<hr className="border border-Gray10" />
 					</div>
@@ -100,7 +100,7 @@ function ReservationTagList({ time, idx }: ReservationTimeListPT) {
 		</div>
 	)
 }
-function ReservationBtnList({ idx }: ReservationTimeListPT) {
+function ReservationButtonList({ idx }: ReservationTimeListPT) {
 	return (
 		<div className="ml-auto flex gap-[22px]">
 			{idx === 0 && (
