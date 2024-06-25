@@ -58,7 +58,7 @@ export const ICON_DATA = {
 	starFull: "weui:star-filled",
 	search: "iconamoon:search-thin",
 	delete: "lets-icons:close-round",
-	dot: "bi:dot",
+	dot: "mdi:dot",
 	pencil: "octicon:pencil-24",
 	arrowUp: "ph:arrow-up",
 } as const
