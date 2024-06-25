@@ -1,22 +1,27 @@
 "use client"
 
-import { useState } from "react"
+import Image from "next/image"
+import React, { useEffect, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
-import MainCard from "@/component/custom/post/mainCard"
-import SubCard from "@/component/custom/post/subCard"
 import { createPostArr } from "@/mock"
 import type { TPost } from "@/type/post"
 
 export default function CardListForm() {
+	const [isClient, setIsClient] = useState(false)
+
+	useEffect(() => {
+		setIsClient(true)
+	}, [])
+	if (!isClient) {
+		return null
+	}
+
 	const postArr = createPostArr()
 	return (
-		<div className="h-[430px] w-full">
-			<div className="absolute left-0 flex h-fit w-full flex-col gap-[40px] overflow-x-hidden border-[5px] border-orange-300">
-				<div className="ml-[calc(50%-600px)] h-fit w-full">
-					<CardList postArr={postArr} />
-				</div>
-				<Manger_Base_Home_03_02 />
+		<div className="h-[430px] w-full pt-[6.5px]">
+			<div className="absolute left-0 ml-[calc(50%-600px)] flex h-fit w-full flex-col overflow-x-hidden">
+				<CardList postArr={postArr} />
 			</div>
 		</div>
 	)
@@ -36,8 +41,8 @@ function CardList({ postArr }: CardListPT) {
 		setIsSelected(idx)
 	}
 	return (
-		<div className="flex flex-col gap-[18px] pb-[100px]">
-			<div>
+		<div className="flex flex-col gap-[30px]">
+			<div className="flex flex-col gap-[8px]">
 				<div className="text-Title03 font-SemiBold text-Gray100">
 					내 샵 소식을 전달해요
 				</div>
@@ -56,26 +61,85 @@ function CardList({ postArr }: CardListPT) {
 					<NTButton size="large">소식 작성하기</NTButton>
 				</div>
 			</div>
-			<div className="flex h-fit w-full items-center justify-start gap-[24px] overflow-y-hidden overflow-x-scroll">
+			<div className="scrollbar-custom flex h-fit w-full items-center justify-start gap-[24px] overflow-y-hidden overflow-x-scroll pb-[42px] pt-[10px]">
 				<div className="flex-shrink-0">
 					<MainCard content={firstPost.content} srcArr={firstPost.srcArr} />
 				</div>
 				{otherPostArr.map((post, idx) => {
 					return (
-						<SubCard
-							key={idx}
-							createdAt={post.createdAt}
-							title={post.title}
-							likes={post.likes}
-							comments={post.comments}
-							srcArr={post.srcArr}
-						/>
+						<div key={idx} className="flex-shrink-0">
+							<SubCard
+								createdAt={post.createdAt}
+								title={post.title}
+								likes={post.likes}
+								comments={post.comments}
+								srcArr={post.srcArr}
+							/>
+						</div>
 					)
 				})}
+				<div className="h-full w-[282px] flex-shrink-0 bg-White"></div>
 			</div>
 		</div>
 	)
 }
-function Manger_Base_Home_03_02() {
-	return <div className="h-[18px] w-full border-[5px] border-green-300" />
+type MainCardPT = Pick<TPost, "content" | "srcArr">
+function MainCard({ content, srcArr }: MainCardPT) {
+	return (
+		<div className="flex h-[260px] w-[384px] flex-shrink-0 flex-col items-center justify-center rounded-[26px] bg-White py-[4px] shadow-customGray60">
+			<div className="mt-[1px] py-[6px] text-Headline02 font-Regular text-PB100">
+				NOTICE
+			</div>
+			<hr className="w-full border border-Gray20"></hr>
+			<div className="mt-[15px] flex h-[96px] w-[320px] justify-center">
+				{srcArr && srcArr[0] && (
+					<Image
+						src={srcArr[0]}
+						alt="Notice Image"
+						width={320}
+						height={96}
+						className="h-[96px] rounded-[6px]"
+					/>
+				)}
+			</div>
+			<div className="my-[21px] line-clamp-2 h-[56px] w-[293px] text-Headline02 font-Regular">
+				{content}
+			</div>
+		</div>
+	)
+}
+type SubCardPT = Pick<
+	TPost,
+	"createdAt" | "title" | "likes" | "srcArr" | "comments"
+>
+function SubCard({ createdAt, title, likes, srcArr, comments }: SubCardPT) {
+	return (
+		<div className="h-[253.49px] w-[282px]">
+			<div
+				className={
+					"mb-[9px] flex h-[168px] w-[282px] items-center justify-center rounded-[24px]"
+				}
+			>
+				{srcArr && (
+					<Image
+						src={srcArr[0]}
+						alt="Notice Image"
+						width={282}
+						height={168}
+						className="h-[168px] rounded-[24px]"
+					/>
+				)}
+			</div>
+
+			<div className="text-Headline02 font-Regular text-PB100">
+				{createdAt.year + "." + createdAt.month + "." + createdAt.day}
+			</div>
+			<div className="mt-[5px] truncate text-Headline01 font-Medium text-Gray90">
+				{title}
+			</div>
+			<div className="text-Callout font-SemiBold text-Gray30">
+				좋아요 {likes} · 댓글 {comments}
+			</div>
+		</div>
+	)
 }
