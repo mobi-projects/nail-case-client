@@ -1,7 +1,7 @@
 import Customer_Shop_01 from "@/component/custom/customer/shop/01"
 import ReservationSchedule from "@/component/custom/customer/shop/02"
 import CustomerNaviBar from "@/component/custom/customer/shop/03"
-import Customer_Shop_04 from "@/component/custom/customer/shop/04"
+import ShopInfoCardList from "@/component/custom/customer/shop/04"
 import Customer_Shop_05 from "@/component/custom/customer/shop/05"
 
 type CustomerShopPT = {
@@ -20,7 +20,7 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 					<ReservationSchedule />
 				</div>
 				<CustomerNaviBar />
-				<Customer_Shop_04 />
+				<ShopInfoCardList />
 				<div className="flex w-full flex-col gap-[20px]">
 					<p className="text-Title02">네일샵 공지</p>
 					<Customer_Shop_05 />
