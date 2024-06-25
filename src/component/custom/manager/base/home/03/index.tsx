@@ -20,7 +20,7 @@ export default function CardListForm() {
 	const postArr = createPostArr()
 	return (
 		<div className="h-[430px] w-full pt-[6.5px]">
-			<div className="absolute left-0 ml-[calc(50%-600px)] flex h-fit w-full flex-col overflow-x-hidden">
+			<div className="flex h-fit w-full flex-col overflow-x-hidden">
 				<CardList postArr={postArr} />
 			</div>
 		</div>

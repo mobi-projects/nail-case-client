@@ -4,7 +4,7 @@ import CardListForm from "@/component/custom/manager/base/home/03"
 
 export default function ManagerBaseHome() {
 	return (
-		<div className="flex flex-col gap-[35px]">
+		<div className="flex flex-col gap-[35px] pb-[42px]">
 			<div className="flex flex-col gap-[20px]">
 				<p className="text-Title03 text-Gray100">
 					오늘 하루 예약 일정을 살펴볼게요.
