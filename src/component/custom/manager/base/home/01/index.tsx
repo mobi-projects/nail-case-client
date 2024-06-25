@@ -1,53 +1,114 @@
-export default function Manager_Base_Home_01() {
+"use client"
+
+import { NTButton } from "@/component/common/atom/nt-button"
+import NTContent from "@/component/common/nt-content"
+import NTIcon from "@/component/common/nt-icon"
+import NTOption from "@/component/common/nt-option"
+import { useOption } from "@/hook/use-component"
+
+export default function ReservationCard() {
 	return (
-		<div className="flex h-[240px] w-full justify-between gap-[24px] border-[5px] border-orange-300">
-			<Manager_Base_Home_01_01 />
-			<Manager_Base_Home_01_02 />
+		<div className="flex h-[240px] w-full justify-between gap-[24px]">
+			<WatingCard />
+			<ConfirmedCard />
 		</div>
 	)
 }
 
-function Manager_Base_Home_01_01() {
+function WatingCard() {
 	return (
-		<div className="flex h-full w-[792px] border-[5px] border-green-300 p-[24px]">
-			<Manager_Base_Home_01_01_01 />
-			<Manager_Base_Home_01_01_02 />
+		<div className="flex h-[240px] w-[792px] rounded-[26px] bg-White px-[5px] py-[19.5px] shadow-customGray60">
+			<WatingTotalCard />
+			<WatingDetailCard />
 		</div>
-	)
-}
-function Manager_Base_Home_01_01_01() {
-	return <div className="flex h-full w-[200px] border-[5px] border-blue-300" />
-}
-function Manager_Base_Home_01_01_02() {
-	return (
-		<div className="flex h-full w-full flex-col border-[5px] border-blue-300">
-			<Manager_Base_Home_01_01_02_01 />
-			<Manager_Base_Home_01_01_02_02 />
-		</div>
-	)
-}
-function Manager_Base_Home_01_01_02_01() {
-	return (
-		<div className="flex h-[50px] w-full flex-col border-[5px] border-purple-300" />
-	)
-}
-function Manager_Base_Home_01_01_02_02() {
-	return (
-		<div className="flex h-full w-full flex-col border-[5px] border-purple-300" />
 	)
 }
 
-function Manager_Base_Home_01_02() {
+function WatingTotalCard() {
 	return (
-		<div className="flex h-full w-[384px] flex-col justify-between border-[5px] border-green-300 p-[24px]">
-			<Manager_Base_Home_01_02_01 />
-			<Manager_Base_Home_01_02_02 />
+		<div className="flex w-[239px] flex-col gap-[92px] border-r-[2px] border-Gray10 px-[28px] pb-[5.5px] pt-[5px]">
+			<div className="flex gap-[15px] pr-[2px]">
+				<NTIcon icon="deskAltLight" className="h-[46px] w-[46px] text-PB100" />
+				<div>
+					<div className="text-Title02 font-Bold">예약대기</div>
+					<div className="text-Body01 text-Gray40">모비네일 한남점</div>
+				</div>
+			</div>
+			<div className="pl-[10px] text-LargeTitle font-Bold text-PB100">2건</div>
 		</div>
 	)
 }
-function Manager_Base_Home_01_02_01() {
-	return <div className="flex h-[58px] w-full border-[5px] border-blue-300" />
+function WatingDetailCard() {
+	return (
+		<div className="flex h-full w-[542px] flex-col items-center px-[21px]">
+			<DetailDate />
+			<hr className="w-full" />
+			<DetailTagList />
+		</div>
+	)
 }
-function Manager_Base_Home_01_02_02() {
-	return <div className="flex h-[58px] w-full border-[5px] border-blue-300" />
+function DetailDate() {
+	return (
+		<div className="flex h-full w-full justify-between pb-[6.5px] pl-[15px] pr-[1px]">
+			<div className="text-Title03 text-Gray70">5월 29일 (수) 오후1시</div>
+			<NTContent mode="day">1/2</NTContent>
+		</div>
+	)
+}
+function DetailTagList() {
+	const { onClickOption, checkedOption, optionArr } = useOption([
+		"이달의 아트",
+		"연장 필요",
+		"타샵 제거 있음",
+	])
+	return (
+		<div className="flex w-full justify-between pl-[4px] pr-[1px] pt-[13px]">
+			<NTOption
+				optionArr={optionArr}
+				checkedOption={checkedOption}
+				onClickOption={onClickOption}
+				size="large"
+				itemsPerRow={2}
+			/>
+			<div className="flex items-end">
+				<NTButton icon="check">예약 확정</NTButton>
+			</div>
+		</div>
+	)
+}
+
+function ConfirmedCard() {
+	return (
+		<div className="relative flex h-[240px] w-[384px] flex-col justify-between rounded-[26px] bg-Gray90 px-[22.5px] py-[25px] shadow-customGray60">
+			<ConfirmedCardHeader />
+			<TotalConfirmed />
+		</div>
+	)
+}
+function ConfirmedCardHeader() {
+	return (
+		<div className="flex justify-between gap-[96.5px] pl-[7.5px]">
+			<div className="flex gap-[18px]">
+				<NTIcon
+					icon="deskAltLight"
+					className="mt-[2px] h-[46px] w-[46px] text-White"
+				/>
+				<div>
+					<div className="text-Title02 font-Bold text-White">예약확정</div>
+					<div className="text-Body01 text-Gray50">모비네일 한남점</div>
+				</div>
+			</div>
+			<div className="flex h-[56px] w-[56px] items-center justify-center rounded-full bg-PB100">
+				<NTIcon
+					icon="arrowUp"
+					className="h-[40px] w-[40px] rotate-45 transform text-White"
+				/>
+			</div>
+		</div>
+	)
+}
+function TotalConfirmed() {
+	return (
+		<div className="pl-[4px] text-LargeTitle font-Bold text-PB100">8건</div>
+	)
 }
