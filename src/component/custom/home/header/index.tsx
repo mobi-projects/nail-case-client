@@ -5,17 +5,10 @@ import { useRef } from "react"
 import NTIcon from "@/component/common/nt-icon"
 import NTLogo from "@/component/common/nt-logo"
 import NTSearchfield from "@/component/common/nt-searchfield"
-import NTToolbar from "@/component/common/nt-toolbar"
-import { useToolbar } from "@/hook/use-component"
 
 export default function Header() {
 	const searchInputRef = useRef<HTMLInputElement>(null)
-	const { hadleSelected, isSelected, toolbarArr } = useToolbar([
-		"홈",
-		"일정",
-		"채팅",
-		"내샵",
-	])
+
 	return (
 		<div className="flex flex-col items-center justify-center pt-[68px]">
 			<div className="flex w-full max-w-[1200px] flex-col">
@@ -34,14 +27,7 @@ export default function Header() {
 						</div>
 					</div>
 				</div>
-				<div className="w-full border-t-[1.5px] border-t-Gray20">
-					<NTToolbar
-						isSelected={hadleSelected}
-						selected={isSelected}
-						arr={toolbarArr}
-						position="top"
-					/>
-				</div>
+				<div className="w-full border-t-[1.5px] border-t-Gray20"></div>
 			</div>
 		</div>
 	)

@@ -1,5 +1,3 @@
-export const MANAGER_BASE = "some"
-
 export const MANAGER_BASE_HOME = "/manager/base"
 
 export const MANAGER_BASE_SCHEDULE_THIS_MONTH = "/manager/base/schedule"

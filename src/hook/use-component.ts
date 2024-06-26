@@ -64,11 +64,3 @@ export const useBanner = () => {
 
 	return { carouselIdx, handleCarousel }
 }
-export const useToolbar = (arr: Array<string>) => {
-	const toolbarArr = arr
-	const [isSelected, setIsSelected] = useState(0)
-	const hadleSelected = (idx: number) => {
-		setIsSelected(idx)
-	}
-	return { toolbarArr, isSelected, hadleSelected }
-}
