@@ -1,12 +1,18 @@
 "use client"
 import Image from "next/image"
+import { usePathname, useRouter } from "next/navigation"
 import { useRef } from "react"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
-import NTToolbar from "@/component/common/atom/nt-toolbar"
 import NTIcon from "@/component/common/nt-icon"
 import NTSearchfield from "@/component/common/nt-searchfield"
-import { useToolbar } from "@/hook/use-component"
+import NTToolbar from "@/component/common/nt-toolbar"
+import { MANAGER_BASE_MYSHOP_HOME } from "@/constant/routing-path"
+import {
+	LABEL_LIST_FOR_MANAGER_BASE_TOOLBAR,
+	PATH_LIST_FOR_MANAGER_BASE_MYSHOP,
+	PATH_LIST_FOR_MANAGER_BASE_TOOLBAR,
+} from "@/constant/toolbar-list"
 
 export default function ManagerBaseHeader() {
 	return (
@@ -14,7 +20,7 @@ export default function ManagerBaseHeader() {
 			<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 			<div className="flex h-fit w-full flex-col gap-[16.5px]">
 				<ManagerLayoutCatalog />
-				<ManagerLayoutToolbar />
+				<ManagerBaseToolbar />
 			</div>
 		</div>
 	)
@@ -49,28 +55,33 @@ function ManagerLayoutSubCatalog() {
 		</div>
 	)
 }
-function ManagerLayoutToolbar() {
+function ManagerBaseToolbar() {
+	const pathName = usePathname()
+	const router = useRouter()
+	const focusedIdx = getFocusedIdx(
+		pathName,
+		[...PATH_LIST_FOR_MANAGER_BASE_TOOLBAR],
+		[...PATH_LIST_FOR_MANAGER_BASE_MYSHOP],
+	)
+	const onClickTool = (idx: number) =>
+		router.push(PATH_LIST_FOR_MANAGER_BASE_TOOLBAR[idx])
 	return (
 		<div className="flex w-full flex-col">
 			<hr className="absolute left-0 z-[-10] w-full border border-Gray10" />
-			<Toolbar />
+			<NTToolbar
+				toolList={[...LABEL_LIST_FOR_MANAGER_BASE_TOOLBAR]}
+				focusedIdx={focusedIdx}
+				position="top"
+				onClickTool={onClickTool}
+			/>
 		</div>
 	)
 }
-function Toolbar() {
-	const { hadleSelected, isSelected, toolbarArr } = useToolbar([
-		"홈",
-		"일정",
-		"채팅",
-		"내샵",
-	])
-	return (
-		<NTToolbar
-			isSelected={hadleSelected}
-			selected={isSelected}
-			arr={toolbarArr}
-			position="top"
-			topStyle="default"
-		/>
-	)
+const getFocusedIdx = (
+	pathName: string,
+	toolPathArr: string[],
+	subPathArr: string[],
+) => {
+	if (subPathArr.includes(pathName)) pathName = MANAGER_BASE_MYSHOP_HOME
+	return toolPathArr.findIndex((toolPath) => toolPath === pathName)
 }

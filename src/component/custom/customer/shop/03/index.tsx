@@ -1,5 +1,5 @@
 "use client"
-import NTToolbar from "@/component/common/atom/nt-toolbar"
+import NTToolbar from "@/component/common/nt-toolbar"
 import { useToolbar } from "@/hook/use-component"
 
 export default function CustomerNaviBar() {

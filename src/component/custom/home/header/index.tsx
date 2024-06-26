@@ -2,10 +2,10 @@
 
 import { useRef } from "react"
 
-import NTToolbar from "@/component/common/atom/nt-toolbar"
 import NTIcon from "@/component/common/nt-icon"
 import NTLogo from "@/component/common/nt-logo"
 import NTSearchfield from "@/component/common/nt-searchfield"
+import NTToolbar from "@/component/common/nt-toolbar"
 import { useToolbar } from "@/hook/use-component"
 
 export default function Header() {

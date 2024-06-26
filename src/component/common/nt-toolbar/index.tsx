@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority"
 import { cn } from "@/config/tailwind"
 
 const toolbarVariants = cva(
-	"flex h-full w-fit min-w-[70px] flex-nowrap justify-center gap-[42px] border-transparent px-[2px] text-Gray50 hover:text-PB50 focus:text-PB100 focus-visible:outline-none",
+	"flex h-full w-fit min-w-[70px] cursor-pointer flex-nowrap justify-center gap-[42px] border-transparent px-[2px] text-Gray50 hover:text-PB50 focus:text-PB100 focus-visible:outline-none",
 	{
 		variants: {
 			size: {
