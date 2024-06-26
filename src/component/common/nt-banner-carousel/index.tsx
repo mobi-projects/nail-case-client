@@ -23,12 +23,12 @@ import type { TShopInfo } from "@/type"
 type BannerCarouselPT = {
 	handleCarousel: (api?: EmblaCarouselType) => void
 	children: ReactNode
-	type: "user" | "manager"
+	type: "user" | "manager" | "managerBase"
 }
 type BannerImagePT = {
 	shopInfo: TShopInfo
 	idx: number
-	type: "user" | "manager"
+	type: "user" | "manager" | "managerBase"
 }
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -90,6 +90,7 @@ function BannerImage({ shopInfo, idx, type }: BannerImagePT) {
 				type: {
 					user: "h-[30rem]",
 					manager: " h-[432.47px]",
+					managerBase: "h-[380px]",
 				},
 			},
 		},
