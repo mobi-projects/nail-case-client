@@ -99,10 +99,7 @@ function ConfirmedCardHeader() {
 				</div>
 			</div>
 			<div className="flex h-[56px] w-[56px] items-center justify-center rounded-full bg-PB100">
-				<NTIcon
-					icon="arrowUp"
-					className="h-[40px] w-[40px] rotate-45 transform text-White"
-				/>
+				<NTIcon icon="arrowUp" className="h-[40px] w-[40px] text-White" />
 			</div>
 		</div>
 	)
