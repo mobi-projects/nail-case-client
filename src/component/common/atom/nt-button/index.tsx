@@ -23,10 +23,16 @@ const ButtonVariants = cva(
 				small: `w-[110px] h-[50px] rounded-[11px] px-[14px] py-[12px] text-Body01`,
 				exSmall: `w-[91px] h-[56px] rounded-[12px] px-[11px] py-[12px] text-Headline01  font-Bold`,
 			},
+			flexible: {
+				none: "",
+				fit: "w-fit",
+				full: "w-full",
+			},
 		},
 		defaultVariants: {
 			variant: "primary",
 			size: "medium",
+			flexible: "none",
 		},
 	},
 )
@@ -43,11 +49,15 @@ export const NTButton: React.FC<NTButtonPT> = ({
 	children,
 	icon,
 	disabled,
+	flexible,
 	...props
 }) => {
 	return (
 		<button
-			className={cn(ButtonVariants({ variant, size }), props.className)}
+			className={cn(
+				ButtonVariants({ variant, size, flexible }),
+				props.className,
+			)}
 			disabled={disabled}
 			{...props}
 		>

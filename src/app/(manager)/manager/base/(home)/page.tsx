@@ -1,6 +1,6 @@
 import HomeBanner from "@/component/custom/manager/base/home/00"
 import Manager_Base_Home_01 from "@/component/custom/manager/base/home/01"
-import Manager_Base_Home_02 from "@/component/custom/manager/base/home/02"
+import ReservationForm from "@/component/custom/manager/base/home/02"
 import Manager_Base_Home_03 from "@/component/custom/manager/base/home/03"
 
 export default function ManagerBaseHome() {
@@ -13,7 +13,7 @@ export default function ManagerBaseHome() {
 				</p>
 				<Manager_Base_Home_01 />
 			</div>
-			<Manager_Base_Home_02 />
+			<ReservationForm />
 			<Divider />
 			<Manager_Base_Home_03 />
 		</div>
