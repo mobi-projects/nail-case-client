@@ -77,7 +77,7 @@ export type TResGetSearchShop = {
 		tags: Array<string>
 		images: [] // [TODO] 추후 수정, 타입 미확인
 	}>
-	number: number // 이거 무엇?
+	number: number
 	sort: Array<{
 		direction: string
 		nullHandling: string
