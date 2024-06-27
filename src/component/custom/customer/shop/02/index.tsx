@@ -189,16 +189,17 @@ function CalenderBody({
 				)
 				return (
 					<th
-						className="flex h-full w-full items-center justify-center shadow-none drop-shadow-none transition-all hover:scale-150"
+						className="flex h-full w-full items-center justify-center shadow-none drop-shadow-none"
 						key={stamp}
 					>
 						<p
 							className={cn(
-								"flex h-[30px] w-[34px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Gray100 shadow-none drop-shadow-none",
+								"flex h-[30px] w-[34px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Gray100 shadow-none drop-shadow-none transition-all hover:scale-150",
 								isToday && "text-PB100",
 								isNextMonth && "text-Gray60",
 								isReserved && "bg-PY100",
-								isPrevDay && "bg-White text-Gray40",
+								isPrevDay &&
+									"cursor-default bg-White text-Gray40 hover:scale-100",
 							)}
 						>
 							{getDateFromStamp(stamp)}
