@@ -7,8 +7,8 @@ import NTIcon from "@/component/common/nt-icon"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTToolbar from "@/component/common/nt-toolbar"
 import {
-	LABEL_LIST_FOR_MANAGER_BASE_MYSHOP,
-	PATH_LIST_FOR_MANAGER_BASE_MYSHOP,
+	LABEL_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
+	PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
 } from "@/constant/toolbar-list"
 import { useShopInfo } from "@/hook/use-common"
 import { useBanner } from "@/hook/use-component"
@@ -102,15 +102,15 @@ function BannerDesciption({ shopInfo }: BannerItemPT) {
 function MyShopToolbar() {
 	const pathName = usePathname()
 	const router = useRouter()
-	const focusedIdx = PATH_LIST_FOR_MANAGER_BASE_MYSHOP.findIndex(
+	const focusedIdx = PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR.findIndex(
 		(toolPath) => toolPath === pathName,
 	)
 	const onClickTool = (idx: number) =>
-		router.push(PATH_LIST_FOR_MANAGER_BASE_MYSHOP[idx])
+		router.push(PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR[idx])
 	return (
 		<div className="relative flex h-fit items-center justify-center pt-[20px] text-[18px] font-SemiBold">
 			<NTToolbar
-				toolList={[...LABEL_LIST_FOR_MANAGER_BASE_MYSHOP]}
+				toolList={[...LABEL_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR]}
 				focusedIdx={focusedIdx}
 				onClickTool={onClickTool}
 			/>

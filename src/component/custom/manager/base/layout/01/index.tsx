@@ -10,7 +10,7 @@ import NTToolbar from "@/component/common/nt-toolbar"
 import { MANAGER_BASE_MYSHOP_HOME } from "@/constant/routing-path"
 import {
 	LABEL_LIST_FOR_MANAGER_BASE_TOOLBAR,
-	PATH_LIST_FOR_MANAGER_BASE_MYSHOP,
+	PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
 	PATH_LIST_FOR_MANAGER_BASE_TOOLBAR,
 } from "@/constant/toolbar-list"
 
@@ -61,7 +61,7 @@ function ManagerBaseToolbar() {
 	const focusedIdx = getFocusedIdx(
 		pathName,
 		[...PATH_LIST_FOR_MANAGER_BASE_TOOLBAR],
-		[...PATH_LIST_FOR_MANAGER_BASE_MYSHOP],
+		[...PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR],
 	)
 	const onClickTool = (idx: number) =>
 		router.push(PATH_LIST_FOR_MANAGER_BASE_TOOLBAR[idx])
