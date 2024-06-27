@@ -60,4 +60,5 @@ export const ICON_DATA = {
 	delete: "lets-icons:close-round",
 	dot: "mdi:dot",
 	pencil: "octicon:pencil-24",
+	arrowUp: "uit:arrow-up-right",
 } as const
