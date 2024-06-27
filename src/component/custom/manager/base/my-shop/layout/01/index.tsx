@@ -1,11 +1,17 @@
 "use client"
-import NTToolbar from "@/component/common/atom/nt-toolbar"
+import { usePathname, useRouter } from "next/navigation"
+
 import BannerCarousel from "@/component/common/nt-banner-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
+import NTToolbar from "@/component/common/nt-toolbar"
+import {
+	LABEL_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
+	PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
+} from "@/constant/toolbar-list"
 import { useShopInfo } from "@/hook/use-common"
-import { useBanner, useToolbar } from "@/hook/use-component"
+import { useBanner } from "@/hook/use-component"
 import type { TShopInfo } from "@/type"
 
 import EditIntroduction from "../modal/01"
@@ -94,21 +100,19 @@ function BannerDesciption({ shopInfo }: BannerItemPT) {
 }
 
 function MyShopToolbar() {
-	const { hadleSelected, isSelected, toolbarArr } = useToolbar([
-		"홈",
-		"소식",
-		"사진",
-		"리뷰",
-		"통계",
-	])
+	const pathName = usePathname()
+	const router = useRouter()
+	const focusedIdx = PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR.findIndex(
+		(toolPath) => toolPath === pathName,
+	)
+	const onClickTool = (idx: number) =>
+		router.push(PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR[idx])
 	return (
 		<div className="relative flex h-fit items-center justify-center pt-[20px] text-[18px] font-SemiBold">
 			<NTToolbar
-				isSelected={hadleSelected}
-				selected={isSelected}
-				arr={toolbarArr}
-				position="bottom"
-				bottomTextSize="small"
+				toolList={[...LABEL_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR]}
+				focusedIdx={focusedIdx}
+				onClickTool={onClickTool}
 			/>
 			<hr className="absolute bottom-[0.25px] -z-10 w-full border bg-Gray20" />
 		</div>
