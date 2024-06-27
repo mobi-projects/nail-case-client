@@ -9,22 +9,22 @@ import { useOption } from "@/hook/use-component"
 export default function ReservationCard() {
 	return (
 		<div className="flex h-[240px] w-full justify-between gap-[24px]">
-			<WatingCard />
+			<WaitingCard />
 			<ConfirmedCard />
 		</div>
 	)
 }
 
-function WatingCard() {
+function WaitingCard() {
 	return (
 		<div className="flex h-[240px] w-[792px] rounded-[26px] bg-White px-[5px] py-[19.5px] shadow-customGray60">
-			<WatingTotalCard />
-			<WatingDetailCard />
+			<WaitingTotalCard />
+			<WaitingDetailCard />
 		</div>
 	)
 }
 
-function WatingTotalCard() {
+function WaitingTotalCard() {
 	return (
 		<div className="flex w-[239px] flex-col gap-[92px] border-r-[2px] border-Gray10 px-[28px] pb-[5.5px] pt-[5px]">
 			<div className="flex gap-[15px] pr-[2px]">
@@ -38,7 +38,7 @@ function WatingTotalCard() {
 		</div>
 	)
 }
-function WatingDetailCard() {
+function WaitingDetailCard() {
 	return (
 		<div className="flex h-full w-[542px] flex-col items-center px-[21px]">
 			<DetailDate />
