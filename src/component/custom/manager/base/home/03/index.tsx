@@ -58,7 +58,9 @@ function CardList({ postArr }: CardListPT) {
 							</div>
 						))}
 					</div>
-					<NTButton size="large">소식 작성하기</NTButton>
+					<NTButton size="large" flexible="fit">
+						소식 작성하기
+					</NTButton>
 				</div>
 			</div>
 			<div className="scrollbar-custom flex h-fit w-full items-center justify-start gap-[24px] overflow-y-hidden overflow-x-scroll pb-[42px] pt-[10px]">

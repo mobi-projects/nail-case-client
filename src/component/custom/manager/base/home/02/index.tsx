@@ -80,7 +80,7 @@ type ReservationTimeListPT = {
 }
 function ReservationTagList({ time, idx }: ReservationTimeListPT) {
 	const tag = ["이달의 아트 ", "동반2인", "타샵 제거 있음", "1인 연장 필요"]
-	const { checkedOption, onClickOption, optionArr } = useOption(tag)
+	const { checkedOption, optionArr } = useOption(tag)
 	return (
 		<div
 			className={ReservationFormVariants({
@@ -91,10 +91,7 @@ function ReservationTagList({ time, idx }: ReservationTimeListPT) {
 				<div className="text-Headline02 text-Gray90">{time}</div>
 			</div>
 			<div className="w-full pl-[34px]">
-				<NTOption
-					itemsPerRow={4}
-					{...{ checkedOption, optionArr, onClickOption }}
-				/>
+				<NTOption itemsPerRow={4} {...{ checkedOption, optionArr }} />
 			</div>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
 		</div>
@@ -104,21 +101,21 @@ function ReservationButtonList({ idx }: ReservationTimeListPT) {
 	return (
 		<div className="ml-auto flex gap-[22px]">
 			{idx === 0 && (
-				<NTButton variant="primary" disabled size="medium">
+				<NTButton variant="primary" disabled size="medium" flexible="fit">
 					시술중
 				</NTButton>
 			)}
 			{idx === 1 && (
-				<NTButton variant="primary" size="medium">
+				<NTButton variant="primary" size="medium" flexible="fit">
 					채팅하기
 				</NTButton>
 			)}
 			{idx > 1 && (
 				<>
-					<NTButton variant="secondary" size="medium">
+					<NTButton variant="secondary" size="medium" flexible="fit">
 						변경하기
 					</NTButton>
-					<NTButton variant="primary" size="medium">
+					<NTButton variant="primary" size="medium" flexible="fit">
 						채팅하기
 					</NTButton>
 				</>

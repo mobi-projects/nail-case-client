@@ -71,7 +71,9 @@ function DetailTagList() {
 				itemsPerRow={2}
 			/>
 			<div className="flex items-end">
-				<NTButton icon="check">예약 확정</NTButton>
+				<NTButton icon="check" flexible="fit">
+					예약 확정
+				</NTButton>
 			</div>
 		</div>
 	)
