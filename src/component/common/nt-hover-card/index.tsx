@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 
 import { cn } from "@/config/tailwind"
 
@@ -15,27 +15,21 @@ export default function NTHoverCard({
 	contants,
 }: NTHoverCardPT) {
 	const [isExpanded, setIsExpanded] = useState(false)
-	const cardRef = useRef<HTMLDivElement | null>(null)
-	const handleClick = () => {
+
+	const handleMouseEnter = () => {
 		setIsExpanded(true)
 	}
-	const handleOutsideClick = (event: MouseEvent) => {
-		if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
-			setIsExpanded(false)
-		}
+	const handleMouseLeave = () => {
+		setIsExpanded(false)
 	}
-	useEffect(() => {
-		if (isExpanded) {
-			document.addEventListener("mousedown", handleOutsideClick)
-		} else {
-			document.removeEventListener("mousedown", handleOutsideClick)
-		}
-	}, [isExpanded])
+
 	return (
-		<div className="relative">
-			<div onClick={handleClick} className="cursor-pointer" ref={cardRef}>
-				{children}
-			</div>
+		<div
+			className="relative"
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+		>
+			<div className="cursor-pointer">{children}</div>
 			{isExpanded && (
 				<div
 					className={cn(
