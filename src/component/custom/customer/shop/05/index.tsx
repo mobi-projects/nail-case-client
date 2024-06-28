@@ -19,7 +19,7 @@ export default function PostCardList() {
 	/** [TODO] 👇 추후에 삭제 : 게시글 목록 조회 */
 	const postMockDataArr = Array.from({ length: 10 }, (_, idx) => ({
 		id: idx,
-		title: faker.lorem.sentence({ min: 2, max: 30 }),
+		title: faker.lorem.sentence({ min: 2, max: 300 }),
 		imgSrc: faker.image.url(),
 		likes: faker.number.int({ min: 0, max: 1000 }),
 		comments: faker.number.int({ min: 0, max: 1000 }),
@@ -83,7 +83,7 @@ function CreateAt({ createAt }: Partial<TPostCard>) {
 }
 function Title({ title }: Partial<TPostCard>) {
 	return (
-		<p className="text-overflow-2 h-[63px] w-full overflow-hidden text-ellipsis text-wrap break-keep text-Body01 leading-8 text-Gray80">
+		<p className="text-overflow-2 line-clamp-2 h-[63px] w-full overflow-hidden text-wrap break-keep text-Body01 leading-8 text-Gray80">
 			{title!}
 		</p>
 	)
