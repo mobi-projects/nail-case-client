@@ -35,13 +35,23 @@ function ReviewTitleList() {
 	)
 }
 function ReviewPulldownList() {
-	const pulldown1 = usePulldown(["별점", "제목", "태그"])
-	const pulldown2 = usePulldown(["필터", "5", "4", "3", "2", "1"])
+	const pulldownStarRate = usePulldown()
+	const pulldownFillter = usePulldown()
 
 	return (
 		<div className="flex h-[44px] w-full justify-end gap-[20px]">
-			<NTPulldown {...pulldown1} />
-			<NTPulldown {...pulldown2} />
+			<NTPulldown
+				{...pulldownStarRate}
+				optionArr={["제목", "태그"]}
+				placeholder="별점"
+				description="선택해주세요"
+			/>
+			<NTPulldown
+				{...pulldownFillter}
+				optionArr={["5점", "4점", "3점", "2점", "1점"]}
+				placeholder="필터"
+				description="선택해주세요"
+			/>
 		</div>
 	)
 }

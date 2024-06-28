@@ -1,35 +1,43 @@
 import type { EmblaCarouselType } from "embla-carousel"
-import { useState } from "react"
-/**
- * @param itemArr - pulldown의 옵션목록을 Array<string>타입으로 입력.
- */
-export const usePulldown = (itemArr: Array<string>) => {
-	const [isOpen, setIsOpen] = useState(false)
-	const [optionArr, setOptionArr] = useState<typeof itemArr>(itemArr)
+import { useCallback, useEffect, useRef, useState } from "react"
 
+export const usePulldown = () => {
+	const [isOpen, setIsOpen] = useState(false)
+	const [clickedOption, setClickedOption] = useState("")
+	const boxRef = useRef<HTMLDivElement>(null)
 	const onClickTrigger = () => {
 		setIsOpen((prev) => !prev)
 	}
-	const onClickItems = (idx: number) => {
-		setOptionArr((prev) => {
-			const newArr = [...prev]
-			newArr[0] = prev[idx + 1]
-			newArr[idx + 1] = prev[0]
-			return newArr
-		})
-	}
-	const onClickWrapper = () => {
+	const onClickItems = (item: string) => {
+		setClickedOption(item)
 		setIsOpen(false)
 	}
+	const onClickWrapper = useCallback(() => {
+		setIsOpen(false)
+	}, [setIsOpen])
 
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (boxRef.current && !boxRef.current.contains(event.target as Node)) {
+				onClickWrapper()
+			}
+		}
+
+		document.addEventListener("mousedown", handleClickOutside)
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside)
+		}
+	}, [boxRef, onClickWrapper])
 	return {
 		isOpen,
 		onClickWrapper,
 		onClickTrigger,
 		onClickItems,
-		optionArr,
+		clickedOption,
+		boxRef,
 	}
 }
+
 /**
  * @param initialOptionList - option 목록을 Array<string>타입형태로 입력
  */
