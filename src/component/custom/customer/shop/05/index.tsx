@@ -43,7 +43,7 @@ export default function PostCardList() {
 
 function PostCard({ title, imgSrc, likes, comments, createAt }: TPostCard) {
 	return (
-		<div className="grid h-[160px] w-full grid-cols-[233px_1fr] gap-[24px] rounded-[26px] px-[25px] py-[20px] shadow-[2.99px_2.99px_14.34px_0px_rgba(224,224,224,0.6)]">
+		<div className="grid h-[160px] w-full cursor-pointer grid-cols-[233px_1fr] gap-[24px] rounded-[26px] px-[25px] py-[20px] shadow-[2.99px_2.99px_14.34px_0px_rgba(224,224,224,0.6)] transition-all hover:scale-105">
 			<PostThumbnail {...{ imgSrc }} />
 			<PostSummary {...{ title, likes, comments, createAt }} />
 		</div>
