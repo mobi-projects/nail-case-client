@@ -1,7 +1,6 @@
 "use client"
 
 import { NTButton } from "@/component/common/atom/nt-button"
-import NTToolbar from "@/component/common/atom/nt-toolbar"
 import NTIcon from "@/component/common/nt-icon"
 import {
 	NTModalContent,
@@ -12,27 +11,14 @@ import {
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTOption from "@/component/common/nt-option"
 import Calendar from "@/component/custom/home/calendar"
-import { useOption, useToolbar } from "@/hook/use-component"
+import { useOption } from "@/hook/use-component"
 
 export default function HomeUser() {
-	const { hadleSelected, isSelected, toolbarArr } = useToolbar([
-		"홈",
-		"디자인",
-		"소식",
-		"리뷰",
-	])
 	return (
 		<div>
 			<ReserVationSection />
 			<div className="h-full w-full">
-				<div className="flex w-full items-center justify-center border-b-[1px] border-b-Gray20">
-					<NTToolbar
-						arr={toolbarArr}
-						isSelected={hadleSelected}
-						selected={isSelected}
-						position="bottom"
-					/>
-				</div>
+				<div className="flex w-full items-center justify-center border-b-[1px] border-b-Gray20"></div>
 				<InfoSection />
 			</div>
 		</div>

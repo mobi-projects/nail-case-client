@@ -1,130 +1,137 @@
-"use client"
+import React, { useEffect, useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
 
 type NTPulldownPT = {
+	placeholder: string
+	description?: string | undefined
 	optionArr: Array<string>
 	isOpen: boolean
+	clickedOption: string
+	boxRef: React.RefObject<HTMLDivElement>
 	onClickWrapper: VoidFunction
 	onClickTrigger: VoidFunction
-	onClickItems: (idx: number) => void
+	onClickItems: (item: string) => void
 }
 type NTPulldownTriggerPT = {
+	placeholder: string
 	isOpen: boolean
-	optionArr: Array<string>
 	clickCallback: VoidFunction
 }
 type NTPulldownItemsPT = {
+	description?: string | undefined
 	optionArr: Array<string>
-	clickCallback: (option: number) => void
-	isOpen: boolean
+	clickCallback: (option: string) => void
+	clickedOption: string
+	isVisible: boolean
 }
-type NTArrowPT = {
-	isOpen: boolean
-	className?: string
-}
-/**
- * @description - usePulldown(initialArr) 의 return값들을 props로전달
- */
+
 export default function NTPulldown({
+	description,
+	placeholder,
 	optionArr,
 	isOpen,
+	clickedOption,
 	onClickItems,
 	onClickTrigger,
 	onClickWrapper,
+	boxRef,
 }: NTPulldownPT) {
+	const [isVisible, setIsVisible] = useState(isOpen)
+
+	useEffect(() => {
+		if (isOpen) {
+			setIsVisible(true)
+		} else {
+			const timer = setTimeout(() => setIsVisible(false), 500)
+			return () => clearTimeout(timer)
+		}
+	}, [isOpen])
+
 	return (
-		<div
-			className={cn(
-				"w-[151px] cursor-pointer border-[0.5px] border-Gray40 hover:border-transparent hover:bg-Gray10",
-				isOpen
-					? "rounded-[14px] hover:border-[0.5px] hover:border-Gray40 hover:bg-transparent"
-					: "rounded-[35px]",
-			)}
-			onBlur={onClickWrapper}
-		>
+		<div className="relative h-fit w-fit" onBlur={onClickWrapper} ref={boxRef}>
 			<NTPulldownTrigger
+				placeholder={placeholder}
 				isOpen={isOpen}
 				clickCallback={onClickTrigger}
-				optionArr={optionArr}
 			/>
-			{isOpen && (
+
+			{isVisible && (
 				<NTPulldownItems
+					description={description}
 					optionArr={optionArr}
 					clickCallback={onClickItems}
-					isOpen={isOpen}
+					clickedOption={clickedOption}
+					isVisible={isOpen}
 				/>
 			)}
 		</div>
 	)
 }
 
-function NTArrow({ isOpen, className }: NTArrowPT) {
-	const arrowDirection = isOpen ? "check" : "expandDownLight"
-	return (
-		<NTIcon
-			icon={arrowDirection}
-			className={cn("h-5 w-5 text-Gray70", isOpen && "text-Gray30", className)}
-		/>
-	)
-}
-
 function NTPulldownTrigger({
+	placeholder,
 	isOpen,
-	optionArr,
 	clickCallback,
 }: NTPulldownTriggerPT) {
 	return (
-		<button
-			className={cn(
-				"group flex w-full items-center justify-between bg-transparent px-6 py-[10px]",
-				isOpen && "rounded-t-[14px]",
-			)}
+		<div
+			className={
+				"flex h-fit w-fit items-center justify-center gap-x-[8px] rounded-[35px] border-[0.5px] border-Gray40 px-6 py-[10px] hover:border-transparent hover:bg-Gray10"
+			}
 			onClick={() => clickCallback()}
 		>
-			<div className="text-Body01 text-Gray70">{optionArr[0]}</div>
-			<NTArrow
-				isOpen={isOpen}
-				className={cn("", isOpen && "group-hover:text-Gray100")}
+			<div className="text-Body01 text-Gray70">{placeholder}</div>
+			<NTIcon
+				icon="expandDownLight"
+				className={cn(
+					"h-6 w-6 text-Gray70 transition-all duration-75",
+					isOpen ? "-rotate-180" : "",
+				)}
 			/>
-		</button>
-	)
-}
-
-function NTPulldownItems({
-	optionArr,
-	clickCallback,
-	isOpen,
-}: NTPulldownItemsPT) {
-	const itemArrExcludeFirst = getItemArrExcludeFirst(optionArr)
-	return (
-		<div className="h-fit w-full">
-			{itemArrExcludeFirst.map((item, idx) => (
-				<div
-					key={idx}
-					className={cn(
-						"group",
-						isLastItem(itemArrExcludeFirst.length, idx) && "rounded-b-[14px]",
-					)}
-				>
-					<hr className="w-full bg-Gray10" />
-					<div
-						className="flex h-fit w-full items-center justify-between px-6 py-[10px] text-Body01 text-Gray70"
-						onMouseDown={() => clickCallback(idx)}
-					>
-						{item}
-						<NTArrow isOpen={isOpen} className="group-hover:text-Gray100" />
-					</div>
-				</div>
-			))}
 		</div>
 	)
 }
 
-const isLastItem = (length: number, idx: number): boolean => {
-	return idx + 1 === length ? true : false
-}
-const getItemArrExcludeFirst = (arr: Array<string>) => {
-	return arr.slice(1)
+function NTPulldownItems({
+	description,
+	optionArr,
+	clickCallback,
+	clickedOption,
+	isVisible,
+}: NTPulldownItemsPT) {
+	return (
+		<div
+			className={cn(
+				"absolute left-1/2 top-full z-10 mt-2 w-[15rem] -translate-x-1/2 transform overflow-hidden rounded-[14px] border-[0.5px] border-Gray40 bg-white shadow-lg transition-all duration-500 ease-in-out",
+				isVisible ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0",
+			)}
+		>
+			<div className="h-fit w-full">
+				<div className="h-fit w-full px-3 py-[13px] text-Body01 font-SemiBold text-Black">
+					{description}
+				</div>
+				{optionArr.map((item, idx) => (
+					<div
+						className={cn(
+							"flex h-fit w-full cursor-pointer items-center justify-between border-t-[1.5px] border-t-Gray10 px-6 py-[10px] transition-all duration-100 hover:bg-Gray10",
+							idx === optionArr.length - 1 && "rounded-b-[14px]",
+						)}
+						onMouseDown={() => clickCallback(item)}
+						key={idx}
+					>
+						<p className="text-Body02 text-Gray70">{item}</p>
+						<NTIcon
+							icon="check"
+							className={cn(
+								"h-6 w-6",
+								clickedOption === optionArr[idx] ? "opacity-100" : "opacity-0",
+							)}
+						/>
+					</div>
+				))}
+			</div>
+		</div>
+	)
 }
