@@ -113,9 +113,16 @@ export function NTModalDivider({
 		</div>
 	)
 }
-export function NTModalFooter({ children }: PropsWithChildren) {
+
+type NTModalFooterPT = { className?: string } & PropsWithChildren
+export function NTModalFooter({ children, className }: NTModalFooterPT) {
 	return (
-		<div className="mt-auto flex h-[149px] items-center justify-center">
+		<div
+			className={cn(
+				"mt-auto flex h-[149px] items-center justify-center",
+				className,
+			)}
+		>
 			{children}
 		</div>
 	)

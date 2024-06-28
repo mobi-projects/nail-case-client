@@ -1,7 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer utilities {
+	.scrollbar-custom::-webkit-scrollbar {
+		height: 18px;
+		width: 0px;
+	}
 
+	.scrollbar-custom::-webkit-scrollbar-track {
+		background: white;
+		padding: 6px;
+	}
+
+	.scrollbar-custom::-webkit-scrollbar-thumb {
+		background: #80d6f8;
+		border-radius: 10px;
+		border: 6px solid white; /* 바 주위의 흰색 여백 */
+	}
+
+	.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+		background: #4a4a4a;
+	}
+}
 @layer base {
 	html,
 	body {

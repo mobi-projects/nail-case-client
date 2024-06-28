@@ -42,8 +42,7 @@ function ScheduleController() {
 	)
 }
 function ScheduleInfo() {
-	const { isOpen, onClickItems, onClickTrigger, onClickWrapper, optionArr } =
-		usePulldown(["시술"])
+	const pulldownSchedule = usePulldown()
 	return (
 		<div className="flex h-full w-full items-center justify-between border-y-[1px] border-y-PB50/40">
 			<div className="flex h-full items-center pl-7">
@@ -69,13 +68,10 @@ function ScheduleInfo() {
 				</div>
 			</div>
 			<NTPulldown
-				{...{
-					isOpen,
-					onClickItems,
-					onClickTrigger,
-					onClickWrapper,
-					optionArr,
-				}}
+				description="시술 건수를 선택해주세요"
+				optionArr={["3건이하", "4건 이상 6건 이하", "7건 이상"]}
+				placeholder="시술"
+				{...pulldownSchedule}
 			/>
 		</div>
 	)

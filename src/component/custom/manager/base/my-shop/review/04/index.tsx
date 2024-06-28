@@ -1,5 +1,10 @@
-export default function Manager_Base_MyShop_Review_04() {
+"use client"
+import Pagination from "@/component/common/nt-pagination"
+
+export default function ReviewPagination() {
 	return (
-		<div className="flex h-[40px] w-full justify-center border-[5px] border-orange-300" />
+		<div className="mt-[35px] flex w-full justify-center">
+			<Pagination curPage={1} totPage={6} perPage={5} />
+		</div>
 	)
 }
