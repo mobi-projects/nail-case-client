@@ -4,14 +4,17 @@ import { cn } from "@/config/tailwind"
 
 type NTOptionPT = {
 	optionArr: Array<string>
-	checkedOption: Array<string>
+	checkedOption?: Array<string>
 	onClickOption?: (item: string) => void
 	size?: "large" | "medium"
 	disabled?: boolean
-	itemsPerRow?: number
+	gap?: string
 }
 
-type NTOptionSinglePT = Omit<NTOptionPT, "optionArr" | "checkedOption"> & {
+type NTOptionSinglePT = Omit<
+	NTOptionPT,
+	"optionArr" | "checkedOption" | "gap"
+> & {
 	isClicked?: boolean
 	children: string
 	onClickOption?: () => void
@@ -23,38 +26,29 @@ export default function NTOption({
 	disabled,
 	checkedOption,
 	onClickOption,
-	itemsPerRow = 2,
+	gap,
 }: NTOptionPT) {
-	const rows = []
-	for (let i = 0; i < optionArr.length; i += itemsPerRow) {
-		rows.push(optionArr.slice(i, i + itemsPerRow))
-	}
-
 	return (
-		<div className="flex flex-col gap-y-2">
-			{rows.map((row, rowIndex) => (
-				<div key={rowIndex} className="flex gap-x-2">
-					{row.map((option, idx) => (
-						<NTOptionSingle
-							key={idx}
-							size={size}
-							disabled={disabled}
-							isClicked={checkedOption.includes(option)}
-							onClickOption={
-								onClickOption ? () => onClickOption(option) : undefined
-							}
-						>
-							{option}
-						</NTOptionSingle>
-					))}
-				</div>
+		<div className={cn("flex", gap)}>
+			{optionArr.map((option, idx) => (
+				<NTOptionSingle
+					key={idx}
+					size={size}
+					disabled={disabled}
+					isClicked={checkedOption?.includes(option)}
+					onClickOption={
+						onClickOption ? () => onClickOption(option) : undefined
+					}
+				>
+					{option}
+				</NTOptionSingle>
 			))}
 		</div>
 	)
 }
 
 const NTOptionButtonVariants = cva(
-	"group flex h-fit w-fit cursor-pointer items-center justify-center px-6 disabled:bg-Gray10 disabled:cursor-default",
+	"group flex h-fit w-fit cursor-pointer items-center justify-center px-6 disabled:bg-Gray10 disabled:cursor-default min-w-[80px] ",
 	{
 		variants: {
 			size: {

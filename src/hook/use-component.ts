@@ -39,9 +39,9 @@ export const usePulldown = () => {
 }
 
 /**
- * @param initialOptionList - option 목록을 Array<string>타입형태로 입력
+ * @param initialOptionList - option 목록을 Array<Array<string>>타입형태로 입력
  */
-export const useOption = (initialOptionList: Array<string>) => {
+export const useOption = (initialOptionList: Array<Array<string>>) => {
 	const optionArr = initialOptionList
 	const [checkedOption, setCheckedOption] = useState<Array<string>>([])
 
