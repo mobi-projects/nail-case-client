@@ -34,9 +34,9 @@ const mockData = [
 
 function ShopInfoCard({ title, body }: { title: string; body: string }) {
 	return (
-		<div className="flex h-full w-[282px] flex-col gap-[15px] rounded-[26px] bg-White px-[23px] py-[20px] drop-shadow">
+		<div className="flex h-full w-[282px] flex-col gap-[15px] rounded-[26px] bg-White px-[23px] py-[20px] drop-shadow-[2.99px_2.99px_13px_rgba(224,224,224,0.8)]">
 			<ShopInfoCardHeader>{title}</ShopInfoCardHeader>
-			<hr />
+			<hr className="border-Gray20" />
 			<ShopInfoCardBody>{body}</ShopInfoCardBody>
 		</div>
 	)

@@ -63,8 +63,8 @@ export const FileUploader: React.FC = () => {
 								<Image
 									src={URL.createObjectURL(file)}
 									alt={`thumbnail-${idx}`}
-									layout="fill"
-									objectFit="cover"
+									fill
+									priority
 									className="rounded-[7px] border-[0.5px] border-Gray30"
 								/>
 								<div
