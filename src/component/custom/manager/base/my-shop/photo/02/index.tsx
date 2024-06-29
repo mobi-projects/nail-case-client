@@ -13,12 +13,16 @@ export default function PreviewImages() {
 
 function PreviewController() {
 	const { checkedOption, onClickOption, optionArr } = useOption([
-		"업체 사진",
-		"이용자 사진",
+		["업체 사진", "이용자 사진"],
 	])
 	return (
 		<div className="flex h-[96px] items-center justify-between pr-7">
-			<NTOption {...{ checkedOption, optionArr, onClickOption }} />
+			<NTOption
+				checkedOption={checkedOption}
+				onClickOption={onClickOption}
+				gap="gap-x-4"
+				optionArr={optionArr[0]}
+			/>
 			<span className="pt-6 text-Body02 font-SemiBold text-Gray30">
 				전체보기
 			</span>
