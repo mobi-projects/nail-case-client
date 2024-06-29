@@ -3,7 +3,6 @@
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
 import Slider from "@/component/common/nt-slider"
-import { useOption } from "@/hook/use-component"
 
 type CategoryOptionsPT = {
 	title: string
@@ -41,7 +40,7 @@ function LeftInfo() {
 	]
 
 	return (
-		<div className="flex h-[586px] w-[690px] flex-col justify-center rounded-[26px] border px-[25px] drop-shadow">
+		<div className="flex h-[586px] w-[690px] flex-col justify-center rounded-[26px] bg-White px-[25px] drop-shadow-[2.99px_2.99px_14.34px_rgba(224,224,224,0.7)]">
 			<NTIcon
 				icon="sortArrowLight"
 				className="mb-[10px] w-[20px] cursor-pointer text-PB100"
@@ -62,18 +61,11 @@ function LeftInfo() {
 }
 
 function LeftCategoryOptions({ title, options }: CategoryOptionsPT) {
-	const { onClickOption, optionArr, checkedOption } = useOption(options)
-
 	return (
-		<>
+		<div>
 			<div className="pb-[5px] text-Headline02 text-Gray80">{title}</div>
-			<NTOption
-				onClickOption={onClickOption}
-				optionArr={optionArr}
-				checkedOption={checkedOption}
-				itemsPerRow={4}
-			/>
-		</>
+			<NTOption optionArr={options} gap="gap-x-4" />
+		</div>
 	)
 }
 
@@ -98,7 +90,7 @@ function RightInfo() {
 	]
 
 	return (
-		<div className="flex h-[586px] w-[486px] flex-col justify-center rounded-[26px] border px-[25px] drop-shadow">
+		<div className="flex h-[586px] w-[486px] flex-col justify-center rounded-[26px] bg-White px-[25px] drop-shadow-[2.99px_2.99px_14.34px_rgba(224,224,224,0.7)]">
 			<div className="mt-[20px] flex justify-end"></div>
 			{categories.map((category, index) => (
 				<div key={index} className="mb-[15px]">
@@ -121,18 +113,10 @@ function RightCategoryOptions({
 	options,
 	showSlider,
 }: CategoryOptionsPT) {
-	const { onClickOption, optionArr, checkedOption } = useOption(options)
-
 	return (
 		<>
 			<div className="mb-[10px] text-Headline02 text-Gray70">{title}</div>
-			<NTOption
-				disabled
-				onClickOption={onClickOption}
-				optionArr={optionArr}
-				checkedOption={checkedOption}
-				itemsPerRow={4}
-			/>
+			<NTOption optionArr={options} disabled gap="gap-x-2" />
 			{showSlider && (
 				<div className="mt-[20px]">
 					<Slider upperLimit={10} curValue={0} disabled />
