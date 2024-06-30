@@ -1,38 +1,35 @@
 import { NTButton } from "@/component/common/atom/nt-button"
 import {
-	NTModalContent,
-	NTModalFooter,
-	NTModalHeader,
+	ModalBody,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
 } from "@/component/common/nt-modal"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTSearchfield from "@/component/common/nt-searchfield"
 
 export default function EditIntroduction() {
-	const { onClose } = useModal()
-	const onClickSavingButton = () => {
-		onClose()
+	const { onCloseModal } = useModal()
+	const onClickSaving = () => {
+		onCloseModal()
 	}
 	return (
-		<div className="flex h-full w-full flex-col gap-2">
-			<NTModalHeader>소개글</NTModalHeader>
-
-			<NTModalContent className="flex h-fit flex-col gap-[28px]">
+		<ModalContent className="gap-[50px]">
+			<ModalHeader className="flex items-center justify-center">
+				<p className="text-Body01 text-Gray90">소개글</p>
+			</ModalHeader>
+			<ModalBody className="flex flex-col gap-[27px]">
 				<NTSearchfield />
 				<TextArea tags={["#네일맛집", "#주차가능"]} />
-			</NTModalContent>
-
-			<NTModalFooter className="h-fit">
-				<NTButton onClick={onClickSavingButton}>저장하기</NTButton>
-			</NTModalFooter>
-		</div>
+			</ModalBody>
+			<ModalFooter className="flex h-fit w-full items-center justify-center">
+				<NTButton onClick={onClickSaving}>저장하기</NTButton>
+			</ModalFooter>
+		</ModalContent>
 	)
 }
 
-type TextAreaPT = {
-	tags?: string[]
-}
-
-function TextArea({ tags = [] }: TextAreaPT) {
+function TextArea({ tags = [] }: { tags?: string[] }) {
 	return (
 		<div className="relative flex h-[200px] w-full flex-col gap-[10px] rounded-[22px] border-[1.6px] border-Gray30 bg-White p-[20px] pt-[10px] outline-none">
 			<div className="flex h-fit w-full flex-wrap gap-[5px] text-nowrap">
@@ -42,7 +39,7 @@ function TextArea({ tags = [] }: TextAreaPT) {
 					</p>
 				))}
 			</div>
-			<textarea className="h-[70%] w-full resize-none text-[18px] font-Light text-Gray90 focus-visible:outline-none" />
+			<textarea className="scrollbar-custom h-[70%] w-full resize-none text-[18px] font-Light text-Gray90 focus-visible:outline-none" />
 			<TextCounter length={10} />
 		</div>
 	)
