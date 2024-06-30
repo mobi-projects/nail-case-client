@@ -4,9 +4,9 @@ import { useOption } from "@/hook/use-component"
 
 export default function PreviewImages() {
 	return (
-		<div className="flex h-[480px] flex-col justify-between border-[5px] border-orange-300">
+		<div className="flex h-fit flex-col">
 			<PreviewController />
-			<Manager_Base_MyShop_Photo_02_02 />
+			<PreviewImageList />
 		</div>
 	)
 }
@@ -30,6 +30,21 @@ function PreviewController() {
 	)
 }
 
-function Manager_Base_MyShop_Photo_02_02() {
-	return <div className="flex h-[384px] w-full border-[5px] border-green-300" />
+function PreviewImageList() {
+	return (
+		<div className="flex h-full w-full gap-x-4 overflow-x-scroll pb-10">
+			<PreviewImageBox />
+			<PreviewImageBox />
+			<PreviewImageBox />
+			<PreviewImageBox />
+			<PreviewImageBox />
+			<PreviewImageBox />
+		</div>
+	)
+}
+
+function PreviewImageBox() {
+	return (
+		<div className="h-[384px] min-w-[384px] rounded-[26px] bg-White drop-shadow-[2.99px_2.99px_13px_rgba(224,224,224,0.8)]" />
+	)
 }
