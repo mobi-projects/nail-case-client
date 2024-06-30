@@ -1,12 +1,20 @@
-"use client"
-
 import { useState } from "react"
 
 import { NTButton } from "../atom/nt-button"
 
-const ToastMessage = () => {
+type ToastMessagePT = {
+	title: string
+	time: string
+	tags: string[]
+}
+
+export const ToastMessage: React.FC<ToastMessagePT> = ({
+	title,
+	time,
+	tags,
+}) => {
 	const [isClicked, setIsClicked] = useState(false)
-	const tag = ["케어", "사진 등록", "타샵 제거 필요"]
+
 	const handleChange = () => {
 		setIsClicked((prev) => !prev)
 	}
@@ -22,18 +30,14 @@ const ToastMessage = () => {
 		>
 			<div className="flex items-center justify-between">
 				<div>
-					<p className="text-Headline02 text-PB100">
-						새로운 예약이 등록되었습니다.
-					</p>
-					<p className="text-[16px] font-SemiBold text-Gray70">
-						6월 27일 (목요일) 오후 1:00-2:00
-					</p>
+					<p className="text-Headline02 text-PB100">{title}</p>
+					<p className="text-[16px] font-SemiBold text-Gray70">{time}</p>
 				</div>
 				<NTButton onClick={handleButtonClick}>예약 확정</NTButton>
 			</div>
 			{isClicked && (
 				<div className="flex items-center justify-between pt-[5px]">
-					<div className="text-Body02 text-Gray70">{tag.join(", ")}</div>
+					<div className="text-Body02 text-Gray70">{tags.join(", ")}</div>
 					<NTButton variant="tertiary" onClick={handleButtonClick}>
 						예약 관리
 					</NTButton>
@@ -42,5 +46,3 @@ const ToastMessage = () => {
 		</div>
 	)
 }
-
-export default ToastMessage
