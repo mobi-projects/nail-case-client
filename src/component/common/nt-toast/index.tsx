@@ -18,10 +18,10 @@ const ToastMessage = () => {
 	return (
 		<div
 			onClick={handleChange}
-			className="h-fit w-[450px] rounded-[14px] bg-White px-[20px] py-[20px] drop-shadow-[2.48px_2.48px_12.41px_rgba(224,224,224,1)]"
+			className="h-fit w-[450px] rounded-[14px] bg-White px-[20px] py-[20px] shadow-customGray60"
 		>
 			<div className="flex items-center justify-between">
-				<div className=" ">
+				<div>
 					<p className="text-Headline02 text-PB100">
 						새로운 예약이 등록되었습니다.
 					</p>
