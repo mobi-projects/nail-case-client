@@ -127,7 +127,7 @@ function Calendar() {
 					className="h-6 w-6 cursor-pointer text-Gray30 transition-all hover:scale-105"
 					onClick={onClickPrevButton}
 				/>
-				<p className="font-Semibold text-Headline02 text-[18px]">
+				<p className="font-Semibold w-[120px] text-center text-Headline02 text-[18px]">
 					{paddedFocusedYear} 년 {paddedFocusedMonth} 월
 				</p>
 				<NTIcon
