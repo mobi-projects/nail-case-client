@@ -64,7 +64,7 @@ function LeftCategoryOptions({ title, options }: CategoryOptionsPT) {
 	return (
 		<div>
 			<div className="pb-[5px] text-Headline02 text-Gray80">{title}</div>
-			<NTOption optionArr={options} gap="gap-x-4" />
+			<NTOption optionArr={options} gap={4} />
 		</div>
 	)
 }
@@ -116,7 +116,7 @@ function RightCategoryOptions({
 	return (
 		<>
 			<div className="mb-[10px] text-Headline02 text-Gray70">{title}</div>
-			<NTOption optionArr={options} disabled gap="gap-x-2" />
+			<NTOption optionArr={options} disabled gap={2} />
 			{showSlider && (
 				<div className="mt-[20px]">
 					<Slider upperLimit={10} curValue={0} disabled />

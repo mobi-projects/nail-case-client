@@ -95,7 +95,7 @@ function ReservationTagList({ time, idx }: ReservationTimeListPT) {
 						"타샵 제거 있음",
 						"1인 연장 필요",
 					]}
-					gap="gap-x-4"
+					gap={4}
 				/>
 			</div>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />

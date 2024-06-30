@@ -229,7 +229,7 @@ function DayScheduleTask({ slot, duration }: DayScheduleTaskPT) {
 }
 
 function DayScheduleOptions({ optionArr }: DayScheduleOptionsPT) {
-	return <NTOption optionArr={optionArr} gap="gap-x-2" />
+	return <NTOption optionArr={optionArr} gap={2} />
 }
 
 function DayScheduleButton({ slot, currentTime }: DayScheduleTimePT) {

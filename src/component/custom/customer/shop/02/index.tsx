@@ -71,20 +71,20 @@ function ReservationCheckBody() {
 				optionArr={optionArr[0]}
 				checkedOption={checkedOption}
 				onClickOption={onClickOption}
-				gap="gap-x-3"
+				gap={3}
 			/>
 			<NTOption
 				optionArr={optionArr[1]}
 				checkedOption={checkedOption}
 				onClickOption={onClickOption}
-				gap="gap-x-3"
+				gap={3}
 			/>
 			<hr className="border-BGblue02" />
 			<NTOption
 				optionArr={optionArr[2]}
 				checkedOption={checkedOption}
 				onClickOption={onClickOption}
-				gap="gap-x-4"
+				gap={4}
 			/>
 			<p className="text-[16px] font-Regular text-Gray50">
 				2인 동반 선택시에는 두 타임 예약 부탁드립니다 :)

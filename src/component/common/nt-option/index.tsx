@@ -8,7 +8,7 @@ type NTOptionPT = {
 	onClickOption?: (item: string) => void
 	size?: "large" | "medium"
 	disabled?: boolean
-	gap?: string
+	gap?: number
 }
 
 type NTOptionSinglePT = Omit<
@@ -29,7 +29,7 @@ export default function NTOption({
 	gap,
 }: NTOptionPT) {
 	return (
-		<div className={cn("flex", gap)}>
+		<div className={`flex gap-x-${gap}`}>
 			{optionArr.map((option, idx) => (
 				<NTOptionSingle
 					key={idx}

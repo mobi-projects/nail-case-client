@@ -20,7 +20,7 @@ function PreviewController() {
 			<NTOption
 				checkedOption={checkedOption}
 				onClickOption={onClickOption}
-				gap="gap-x-4"
+				gap={4}
 				optionArr={optionArr[0]}
 			/>
 			<span className="pt-6 text-Body02 font-SemiBold text-Gray30">
