@@ -1,33 +1,125 @@
 "use client"
 import { cva } from "class-variance-authority"
+import { useEffect, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
 import { useOption } from "@/hook/use-component"
+import {
+	getDayOfWeekFromStamp,
+	getThisDate,
+	getThisMonth,
+	getThisYear,
+} from "@/util/common"
 
 export default function ReservationForm() {
+	const [dateInfo, setDateInfo] = useState({
+		year: getThisYear(),
+		month: getThisMonth() - 1,
+		date: getThisDate(),
+	})
+	const [startTime, setStartTime] = useState(
+		new Date(dateInfo.year, dateInfo.month, dateInfo.date, 0, 0, 0),
+	)
+	const [lastTime, setLastTime] = useState(
+		new Date(dateInfo.year, dateInfo.month, dateInfo.date, 23, 59, 59),
+	)
+
+	// console.log(startTime.getTime())
+	useEffect(() => {
+		const updatedStartTime = new Date(
+			dateInfo.year,
+			dateInfo.month,
+			dateInfo.date,
+			0,
+			0,
+			0,
+		)
+		const updatedLastTime = new Date(
+			dateInfo.year,
+			dateInfo.month,
+			dateInfo.date,
+			23,
+			59,
+			59,
+		)
+		setStartTime(updatedStartTime)
+		setLastTime(updatedLastTime)
+	}, [dateInfo])
+
 	return (
 		<div className="mb-[9px] h-[646px] rounded-[26px] shadow-customGray60">
-			<ReservationFormHeader />
+			<ReservationFormHeader
+				dateInfo={dateInfo}
+				setDateInfo={setDateInfo}
+				dayOfWeek={getDayOfWeekFromStamp(lastTime.getTime())}
+			/>
 			<hr className="border-Gray20" />
-			<ReservationTimeList />
+			<ReservationTimeList startTime={startTime} lastTime={lastTime} />
 			<ReservationFormFooter />
 		</div>
 	)
 }
 
-function ReservationFormHeader() {
+type ReservationFormHeaderPT = {
+	dateInfo: {
+		year: number
+		month: number
+		date: number
+	}
+	setDateInfo: React.Dispatch<
+		React.SetStateAction<{
+			year: number
+			month: number
+			date: number
+		}>
+	>
+	dayOfWeek: string
+}
+
+function ReservationFormHeader({
+	dateInfo,
+	setDateInfo,
+	dayOfWeek,
+}: ReservationFormHeaderPT) {
+	const handlePrevDay = () => {
+		const newDate = new Date(dateInfo.year, dateInfo.month, dateInfo.date - 1)
+		setDateInfo({
+			year: newDate.getFullYear(),
+			month: newDate.getMonth(),
+			date: newDate.getDate(),
+		})
+	}
+	const handleNextDay = () => {
+		const newDate = new Date(dateInfo.year, dateInfo.month, dateInfo.date + 1)
+		setDateInfo({
+			year: newDate.getFullYear(),
+			month: newDate.getMonth(),
+			date: newDate.getDate(),
+		})
+	}
 	return (
 		<div className="flex h-[69px] items-center justify-center pb-[3px]">
-			<NTIcon icon="expandLeftLight" className="text-Gray08"></NTIcon>
-			<div className="text-Headline02 text-Gray50">5월 29일 (수)</div>
-			<NTIcon icon="expandRightLight" className="text-Gray08"></NTIcon>
+			<NTIcon
+				icon="expandLeftLight"
+				className="cursor-pointer text-Gray08"
+				onClick={handlePrevDay}
+			/>
+			<div className="text-Headline02 text-Gray50">{`${dateInfo.month + 1}월 ${dateInfo.date}일 (${dayOfWeek})`}</div>
+			<NTIcon
+				icon="expandRightLight"
+				className="cursor-pointer text-Gray08"
+				onClick={handleNextDay}
+			/>
 		</div>
 	)
 }
-
-function ReservationTimeList() {
+type ReservationTimeListPT = {
+	startTime: Date
+	lastTime: Date
+}
+function ReservationTimeList({ startTime, lastTime }: ReservationTimeListPT) {
 	const time = ["오전11", "오후3", "오후4", "오후5", "오후6"]
 
 	return (
@@ -36,7 +128,7 @@ function ReservationTimeList() {
 				return (
 					<div key={idx}>
 						<div className="flex h-[127px] w-full items-center justify-between gap-[26.5px] px-[27px]">
-							<ReservationTimeGap />
+							<ReservationTimeGap startTime={startTime} endTime={lastTime} />
 							<ReservationTagList time={time} idx={idx} />
 							<ReservationButtonList idx={idx} />
 						</div>
@@ -47,24 +139,34 @@ function ReservationTimeList() {
 		</div>
 	)
 }
-function ReservationTimeGap() {
+type ReservationTimeGapPT = {
+	startTime: Date
+	endTime: Date
+}
+function ReservationTimeGap({ startTime, endTime }: ReservationTimeGapPT) {
+	const startHour = startTime.getHours()
+	const endHour = endTime.getHours()
+	const timeRange = []
+	for (let hour = startHour; hour <= endHour; hour++) {
+		timeRange.push(hour)
+	}
+	console.log(startHour)
 	return (
 		<ul className="flex w-[20px] flex-col gap-[2px]">
-			<li className="text-center text-Headline02 font-Regular text-Gray40">
-				11
-			</li>
-			<li className="text-center text-Headline02 font-Regular text-Gray40">
-				12
-			</li>
-			<li className="text-center text-Headline02 font-Regular text-Gray40">
-				13
-			</li>
+			{timeRange.map((data, idx) => (
+				<li
+					className="w-full whitespace-nowrap text-center text-Headline02 font-Regular text-Gray40"
+					key={idx}
+				>
+					{data}
+				</li>
+			))}
 		</ul>
 	)
 }
 
 const ReservationFormVariants = cva(
-	"flex rounded-[20px] w-full max-w-[798.5px] h-[86px] items-center justify-between pl-[26px] pr-[17.5px]",
+	"flex rounded-[20px] w-full max-w-[798.5px] h-[86px] items-center justify-between p-[18px] ",
 	{
 		variants: {
 			colorEffect: {
@@ -74,11 +176,11 @@ const ReservationFormVariants = cva(
 		},
 	},
 )
-type ReservationTimeListPT = {
+type ReservationTagListPT = {
 	time?: string
 	idx: number
 }
-function ReservationTagList({ time, idx }: ReservationTimeListPT) {
+function ReservationTagList({ time, idx }: ReservationTagListPT) {
 	const tag = ["이달의 아트 ", "동반2인", "타샵 제거 있음", "1인 연장 필요"]
 	const { checkedOption, optionArr } = useOption(tag)
 	return (
@@ -97,7 +199,10 @@ function ReservationTagList({ time, idx }: ReservationTimeListPT) {
 		</div>
 	)
 }
-function ReservationButtonList({ idx }: ReservationTimeListPT) {
+type ReservationButtonListPT = {
+	idx: number
+}
+function ReservationButtonList({ idx }: ReservationButtonListPT) {
 	return (
 		<div className="ml-auto flex gap-[22px]">
 			{idx === 0 && (
