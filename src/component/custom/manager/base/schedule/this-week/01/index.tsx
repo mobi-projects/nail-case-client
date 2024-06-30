@@ -23,10 +23,10 @@ export default function ManagerBaseScheduleThisWeekTask() {
 		<div className="flex h-fit w-full flex-col py-[10px]">
 			<ManagerScheduleTime startHour={startHour} />
 			<div className="flex flex-col gap-[15px]">
-				{Array.from({ length: 6 }).map((_, index) => (
+				{Array.from({ length: 6 }).map((_, idx) => (
 					<ManagerScheduleThisWeek
-						key={index}
-						index={index}
+						key={idx}
+						idx={idx}
 						startHour={startHour}
 						incrementHour={incrementHour}
 						incremented={incremented}
@@ -70,21 +70,21 @@ function ManagerScheduleTime({ startHour }: ManagerScheduleTimePT) {
 }
 
 type ManagerScheduleThisWeekPT = {
-	index: number
+	idx: number
 	startHour: number
 	incrementHour: () => void
 	incremented: boolean
 }
 
 function ManagerScheduleThisWeek({
-	index,
+	idx,
 	startHour,
 	incrementHour,
 	incremented,
 }: ManagerScheduleThisWeekPT) {
 	const today = dayjs()
 	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
-	const day = week[index]
+	const day = week[idx]
 	const isToday = day.isSame(today, "day")
 
 	return (
@@ -93,8 +93,8 @@ function ManagerScheduleThisWeek({
 				isToday ? "border-PB100" : "border-Gray50"
 			}`}
 		>
-			<ManagerScheduleDay index={index} isToday={isToday} />
-			<ManagerScheduleTask index={index} startHour={startHour} />
+			<ManagerScheduleDay idx={idx} isToday={isToday} />
+			<ManagerScheduleTask idx={idx} startHour={startHour} />
 			<ManagerScheduleMoreTask
 				onClick={incrementHour}
 				incremented={incremented}
@@ -104,16 +104,16 @@ function ManagerScheduleThisWeek({
 }
 
 type ManagerScheduleDayPT = {
-	index: number
+	idx: number
 	isToday: boolean
 }
 
-function ManagerScheduleDay({ index, isToday }: ManagerScheduleDayPT) {
+function ManagerScheduleDay({ idx, isToday }: ManagerScheduleDayPT) {
 	const today = dayjs()
 	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
 	const daysOfWeek = ["월", "화", "수", "목", "금", "토"]
 
-	const day = week[index]
+	const day = week[idx]
 
 	return (
 		<div className="ml-[10px] flex h-[131.27px] w-[100px] flex-col justify-between border-r-[2px] border-Gray10">
@@ -123,7 +123,7 @@ function ManagerScheduleDay({ index, isToday }: ManagerScheduleDayPT) {
 						isToday ? "text-PB100" : "text-Gray100"
 					}`}
 				>
-					{daysOfWeek[index]}
+					{daysOfWeek[idx]}
 				</div>
 				<div
 					className={`text-Body02 ${isToday ? "text-PB100" : "text-Gray40"}`}
@@ -284,14 +284,14 @@ const reservationData = [
 ]
 
 type ManagerScheduleTaskPT = {
-	index: number
+	idx: number
 	startHour: number
 }
 
-function ManagerScheduleTask({ index, startHour }: ManagerScheduleTaskPT) {
+function ManagerScheduleTask({ idx, startHour }: ManagerScheduleTaskPT) {
 	const today = dayjs()
 	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
-	const day = week[index]
+	const day = week[idx]
 
 	const dailyReservations = reservationData
 		.flat()
