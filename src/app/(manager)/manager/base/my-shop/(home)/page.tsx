@@ -9,12 +9,12 @@ export default function Home() {
 				<p className="text-Title03">내 샵 정보</p>
 				<MyShopInfo />
 			</div>
-			<Divider />
+			<hr className="h-[1.5px] w-full border-Gray10" />
 			<div className="flex flex-col gap-[20px] pt-[20px]">
 				<p className="text-Title03">필수 예약 사항</p>
 				<RequiredReservationInfo />
 			</div>
-			<Divider />
+			<hr className="h-[1.5px] w-full border-Gray10" />
 			<div className="flex flex-col gap-[20px] pt-[20px]">
 				<div className="h-hit flex w-full items-center justify-between">
 					<p className="text-Title03">공지</p>
@@ -24,8 +24,4 @@ export default function Home() {
 			</div>
 		</div>
 	)
-}
-
-function Divider() {
-	return <div className="h-[1.5px] w-full bg-Gray20" />
 }

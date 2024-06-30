@@ -4,7 +4,6 @@ import { cva } from "class-variance-authority"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
-import { useOption } from "@/hook/use-component"
 
 export default function ReservationForm() {
 	return (
@@ -79,8 +78,6 @@ type ReservationTimeListPT = {
 	idx: number
 }
 function ReservationTagList({ time, idx }: ReservationTimeListPT) {
-	const tag = ["이달의 아트 ", "동반2인", "타샵 제거 있음", "1인 연장 필요"]
-	const { checkedOption, optionArr } = useOption(tag)
 	return (
 		<div
 			className={ReservationFormVariants({
@@ -91,7 +88,15 @@ function ReservationTagList({ time, idx }: ReservationTimeListPT) {
 				<div className="text-Headline02 text-Gray90">{time}</div>
 			</div>
 			<div className="w-full pl-[34px]">
-				<NTOption itemsPerRow={4} {...{ checkedOption, optionArr }} />
+				<NTOption
+					optionArr={[
+						"이달의 아트 ",
+						"동반2인",
+						"타샵 제거 있음",
+						"1인 연장 필요",
+					]}
+					gap={4}
+				/>
 			</div>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
 		</div>

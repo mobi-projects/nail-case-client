@@ -4,7 +4,6 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
-import { useOption } from "@/hook/use-component"
 
 export default function ReservationCard() {
 	return (
@@ -40,7 +39,7 @@ function WaitingTotalCard() {
 }
 function WaitingDetailCard() {
 	return (
-		<div className="flex h-full w-[542px] flex-col items-center px-[21px]">
+		<div className="flex h-full w-[542px] flex-col px-[21px]">
 			<DetailDate />
 			<hr className="w-full" />
 			<DetailTagList />
@@ -49,27 +48,19 @@ function WaitingDetailCard() {
 }
 function DetailDate() {
 	return (
-		<div className="flex h-full w-full justify-between pb-[6.5px] pl-[15px] pr-[1px]">
+		<div className="flex w-full justify-between pb-4 pl-[15px] pr-[1px]">
 			<div className="text-Title03 text-Gray70">5월 29일 (수) 오후1시</div>
 			<NTContent mode="day">1/2</NTContent>
 		</div>
 	)
 }
 function DetailTagList() {
-	const { onClickOption, checkedOption, optionArr } = useOption([
-		"이달의 아트",
-		"연장 필요",
-		"타샵 제거 있음",
-	])
 	return (
-		<div className="flex w-full justify-between pl-[4px] pr-[1px] pt-[13px]">
-			<NTOption
-				optionArr={optionArr}
-				checkedOption={checkedOption}
-				onClickOption={onClickOption}
-				size="large"
-				itemsPerRow={2}
-			/>
+		<div className="flex h-full w-full justify-between pl-[4px] pr-[1px] pt-[13px]">
+			<div className="flex h-full flex-col gap-y-4">
+				<NTOption optionArr={["이달의 아트", "연장 필요"]} gap={4} />
+				<NTOption optionArr={["타샵 제거 있음"]} gap={4} />
+			</div>
 			<div className="flex items-end">
 				<NTButton icon="check" flexible="fit">
 					예약 확정

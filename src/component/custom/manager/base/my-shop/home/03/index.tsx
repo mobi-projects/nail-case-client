@@ -41,7 +41,7 @@ function InfoCardWorkingTime() {
 	}
 
 	return (
-		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] border py-[15px] drop-shadow">
+		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] py-[15px] shadow-customGray80">
 			<CardHeader title="영업시간" />
 			<div className="px-[13px]">
 				<div className="list-disc">
@@ -74,7 +74,7 @@ function InfoCardLocation() {
 	}
 
 	return (
-		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] border py-[15px] drop-shadow">
+		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] py-[15px] shadow-customGray80">
 			<CardHeader title="위치" />
 			<div className="mt-[20px] px-[25px]">{shopInfo?.address}</div>
 		</div>
@@ -88,7 +88,7 @@ function InfoCardNotification() {
 	}
 
 	return (
-		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] border py-[15px] drop-shadow">
+		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] py-[15px] shadow-customGray80">
 			<CardHeader title="안내사항" />
 			<div className="px-[13px]">
 				<div className="list-disc">
@@ -111,7 +111,7 @@ function InfoCardNotification() {
 }
 function InfoCardPrice() {
 	return (
-		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] border py-[15px] drop-shadow">
+		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] py-[15px] shadow-customGray80">
 			<CardHeader title="가격" />
 			<div className="px-[13px]">
 				<div className="list-disc">
