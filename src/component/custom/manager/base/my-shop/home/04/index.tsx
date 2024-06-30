@@ -40,7 +40,7 @@ function LeftInfo() {
 	]
 
 	return (
-		<div className="flex h-[586px] w-[690px] flex-col justify-center rounded-[26px] bg-White px-[25px] drop-shadow-[2.99px_2.99px_14.34px_rgba(224,224,224,0.7)]">
+		<div className="flex h-[586px] w-[690px] flex-col justify-center rounded-[26px] px-[25px] shadow-customGray70">
 			<NTIcon
 				icon="sortArrowLight"
 				className="mb-[10px] w-[20px] cursor-pointer text-PB100"
@@ -90,7 +90,7 @@ function RightInfo() {
 	]
 
 	return (
-		<div className="flex h-[586px] w-[486px] flex-col justify-center rounded-[26px] bg-White px-[25px] drop-shadow-[2.99px_2.99px_14.34px_rgba(224,224,224,0.7)]">
+		<div className="flex h-[586px] w-[486px] flex-col justify-center rounded-[26px] px-[25px] shadow-customGray70">
 			<div className="mt-[20px] flex justify-end"></div>
 			{categories.map((category, index) => (
 				<div key={index} className="mb-[15px]">

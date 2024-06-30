@@ -34,7 +34,7 @@ export default function ReservationSchedule() {
 function ReservationCalendar() {
 	return (
 		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[21px]">
-			<div className="flex h-full w-full items-center justify-center rounded-[26px] bg-White drop-shadow-[2.99px_2.99px_14.34px_rgba(224,224,224,0.6)]">
+			<div className="flex h-full w-full items-center justify-center rounded-[26px] shadow-customGray60">
 				<Calendar />
 			</div>
 			<NTButton variant="tertiary" flexible="full" size="small">
