@@ -1,106 +1,73 @@
+import type { VariantProps } from "class-variance-authority"
 import { cva } from "class-variance-authority"
 
 import { cn } from "@/config/tailwind"
 
-type NTOptionPT = {
-	optionArr: Array<string>
-	checkedOption?: Array<string>
-	onClickOption?: (item: string) => void
-	size?: "large" | "medium"
-	disabled?: boolean
-	gap?: number
-}
-
-type NTOptionSinglePT = Omit<
-	NTOptionPT,
-	"optionArr" | "checkedOption" | "gap"
-> & {
-	isClicked?: boolean
-	children: string
-	onClickOption?: () => void
-}
-
-export default function NTOption({
-	optionArr,
-	size,
-	disabled,
-	checkedOption,
-	onClickOption,
-	gap,
-}: NTOptionPT) {
-	return (
-		<div className={`flex gap-x-${gap}`}>
-			{optionArr.map((option, idx) => (
-				<NTOptionSingle
-					key={idx}
-					size={size}
-					disabled={disabled}
-					isClicked={checkedOption?.includes(option)}
-					onClickOption={
-						onClickOption ? () => onClickOption(option) : undefined
-					}
-				>
-					{option}
-				</NTOptionSingle>
-			))}
-		</div>
-	)
-}
-
-const NTOptionButtonVariants = cva(
-	"group flex h-fit w-fit cursor-pointer items-center justify-center px-6 disabled:bg-Gray10 disabled:cursor-default min-w-[80px] ",
+const OptionVariants = cva(
+	"active:text-PB110 flex items-center justify-center border-[1px] border-transparent px-[24px] text-center text-PB100 focus-visible:outline-none active:border-PB100 active:bg-BGblue02 active:shadow-[0_0_16_0_rgba(128,214,248,0.4)] disabled:border-none disabled:bg-Gray10",
 	{
 		variants: {
 			size: {
-				large: "text-Headline02 font-Regular rounded-[26px] py-3",
-				medium: "text-Body01 font-SemiBold rounded-[35px] py-[10px]",
+				medium:
+					"h-[44px] rounded-[35px] py-[10px] text-Body01 disabled:text-Gray70",
+				large:
+					"h-[52px] rounded-[26px] py-[12px] text-Headline02 disabled:text-Gray50",
+			},
+			isPressed: {
+				true: "text-White bg-PB100",
+				false: "text-PB110 bg-BGblue01",
 			},
 		},
 		defaultVariants: {
-			size: "large",
+			size: "medium",
+			isPressed: false,
 		},
 	},
 )
 
-const NTOptionSpanVariants = cva("", {
-	variants: {
-		size: {
-			large: " group-disabled:text-Gray50 ",
-			medium: " group-disabled:text-Gray70",
-		},
-	},
-	defaultVariants: {
-		size: "large",
-	},
-})
-
-function NTOptionSingle({
-	children,
-	disabled,
+type NTOptionPT = VariantProps<typeof OptionVariants> & {
+	optionArr: string[]
+	onSelect?: (idx: number) => void
+	selectedIdxArr?: number[]
+	disabledIdxArr?: number[]
+	className?: string
+}
+export default function NTOption({
+	optionArr,
+	onSelect,
+	selectedIdxArr = [],
+	disabledIdxArr = [],
+	className,
 	size,
-	isClicked,
-	onClickOption,
-}: NTOptionSinglePT) {
+}: NTOptionPT) {
+	const onClickOption = (idx: number) => {
+		onSelect && onSelect(idx)
+	}
 	return (
-		<button
-			onClick={onClickOption}
-			disabled={disabled}
+		<div
 			className={cn(
-				NTOptionButtonVariants({ size }),
-				isClicked ? "bg-PB100" : "bg-BGblue01",
-				typeof onClickOption !== "undefined"
-					? "cursor-pointer"
-					: "cursor-default",
+				"flex h-fit w-fit flex-wrap gap-[10px] text-nowrap",
+				className,
 			)}
 		>
-			<span
-				className={cn(
-					NTOptionSpanVariants({ size }),
-					isClicked ? "text-White" : "text-PB100",
-				)}
-			>
-				{children}
-			</span>
-		</button>
+			{optionArr.map((optionOne, idx) => (
+				<button
+					key={optionOne}
+					className={cn(
+						OptionVariants({
+							size,
+							isPressed: selectedIdxArr.includes(idx),
+						}),
+					)}
+					disabled={disabledIdxArr.includes(idx)}
+					onClick={() => {
+						onClickOption(idx)
+					}}
+				>
+					{optionOne}
+				</button>
+			))}
+			<div className="flex items-center justify-center border-[1px] border-transparent px-[24px] text-center text-PB100 focus-visible:outline-none active:border-PB100 active:bg-BGblue02 active:text-PB110 active:shadow-[0_0_16_0_rgba(128,214,248,0.4)] disabled:border-none disabled:bg-Gray10"></div>
+		</div>
 	)
 }
