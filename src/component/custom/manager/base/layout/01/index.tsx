@@ -6,7 +6,6 @@ import { useRef } from "react"
 import NTLogo from "@/../public/asset/nt-logo.svg"
 import NTIcon from "@/component/common/nt-icon"
 import NTSearchfield from "@/component/common/nt-searchfield"
-import NTToast from "@/component/common/nt-toast"
 import NTToolbar from "@/component/common/nt-toolbar"
 import { MANAGER_BASE_MYSHOP_HOME } from "@/constant/routing-path"
 import {
@@ -18,7 +17,6 @@ import {
 export default function ManagerBaseHeader() {
 	return (
 		<div className="flex h-fit w-full flex-col gap-[8.5px] pb-[14px] pt-[68px]">
-			<NTToast />
 			<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 			<div className="flex h-fit w-full flex-col gap-[16.5px]">
 				<ManagerLayoutCatalog />
