@@ -58,8 +58,11 @@ function DetailTagList() {
 	return (
 		<div className="flex h-full w-full justify-between pl-[4px] pr-[1px] pt-[13px]">
 			<div className="flex h-full flex-col gap-y-4">
-				<NTOption optionArr={["이달의 아트", "연장 필요"]} gap={4} />
-				<NTOption optionArr={["타샵 제거 있음"]} gap={4} />
+				<NTOption
+					optionArr={["이달의 아트", "연장 필요", "타샵 제거 있음"]}
+					className="w-[315px] gap-[10px]"
+					size="large"
+				/>
 			</div>
 			<div className="flex items-end">
 				<NTButton icon="check" flexible="fit">
