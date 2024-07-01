@@ -34,7 +34,7 @@ export default function ReservationSchedule() {
 function ReservationCalendar() {
 	return (
 		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[21px]">
-			<div className="flex h-full w-full items-center justify-center rounded-[26px] shadow-[2.99px_2.99px_14.34px_0px_rgba(224,224,224,0.6)]">
+			<div className="flex h-full w-full items-center justify-center rounded-[26px] shadow-customGray60">
 				<Calendar />
 			</div>
 			<NTButton variant="tertiary" flexible="full" size="small">
@@ -45,7 +45,7 @@ function ReservationCalendar() {
 }
 function ReservationCheck() {
 	return (
-		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[18px]">
+		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[22px]">
 			<ReservationCheckBody />
 			<NTButton variant="tertiary" flexible="full" size="small">
 				전화하기
@@ -56,35 +56,35 @@ function ReservationCheck() {
 
 function ReservationCheckBody() {
 	const { checkedOption, onClickOption, optionArr } = useOption([
-		"오전 11시",
-		"오후 1시",
-		"오후 2시",
-		"오후 3시",
-		"오전 11시",
-		"오후 1시",
-		"오후 3시",
+		["오전 11시", "오후 1시", "오후 2시", "오후 3시"],
+		["오전 4시", "오후 5시", "오후 7시"],
+		["1인", "2인 동반"],
 	])
-	const {
-		checkedOption: checkedOption3,
-		onClickOption: onClickOption3,
-		optionArr: optionArr3,
-	} = useOption(["1인", "2인 동반"])
 
 	return (
-		<div className="gap-[16px]] flex h-full w-full flex-col justify-around py-[10px]">
-			<p className="w-full justify-center text-center text-[1rem] font-SemiBold text-Gray90">
+		<div className="flex h-full w-full flex-col justify-around gap-[16px] py-[10px]">
+			<p className="w-full justify-center pt-2 text-center text-[18px] font-SemiBold text-Gray90">
 				6월 27일 (목요일)
 			</p>
-			<hr />
+			<hr className="border-BGblue02" />
 			<NTOption
-				{...{ checkedOption, optionArr, onClickOption }}
-				itemsPerRow={4}
+				optionArr={optionArr[0]}
+				checkedOption={checkedOption}
+				onClickOption={onClickOption}
+				gap={3}
 			/>
-			<hr />
 			<NTOption
-				checkedOption={checkedOption3}
-				optionArr={optionArr3}
-				onClickOption={onClickOption3}
+				optionArr={optionArr[1]}
+				checkedOption={checkedOption}
+				onClickOption={onClickOption}
+				gap={3}
+			/>
+			<hr className="border-BGblue02" />
+			<NTOption
+				optionArr={optionArr[2]}
+				checkedOption={checkedOption}
+				onClickOption={onClickOption}
+				gap={4}
 			/>
 			<p className="text-[16px] font-Regular text-Gray50">
 				2인 동반 선택시에는 두 타임 예약 부탁드립니다 :)
@@ -121,18 +121,18 @@ function Calendar() {
 			setFocusedMonth(prevMonth)
 		}
 		return (
-			<div className="flex h-[28px] w-full items-center justify-center gap-x-2">
+			<div className="flex h-[28px] w-full items-center justify-center gap-x-3">
 				<NTIcon
 					icon="expandLeft"
-					className="h-5 w-5 cursor-pointer text-Gray40 transition-all hover:scale-105"
+					className="h-6 w-6 cursor-pointer text-Gray30 transition-all hover:scale-105"
 					onClick={onClickPrevButton}
 				/>
-				<p className="font-Semibold w-[120px] text-Headline02 text-[18px]">
+				<p className="font-Semibold w-[120px] text-center text-Headline02 text-[18px]">
 					{paddedFocusedYear} 년 {paddedFocusedMonth} 월
 				</p>
 				<NTIcon
 					icon="expandRight"
-					className="h-5 w-5 cursor-pointer text-Gray40 transition-all hover:scale-105"
+					className="h-6 w-6 cursor-pointer text-Gray30 transition-all hover:scale-105"
 					onClick={onClickNextButton}
 				/>
 			</div>
@@ -189,13 +189,13 @@ function CalenderBody({
 				)
 				return (
 					<th
-						className="flex h-full w-full items-center justify-center shadow-none drop-shadow-none"
+						className="flex h-full w-full items-center justify-center"
 						key={stamp}
 					>
 						<p
 							className={cn(
-								"flex h-[30px] w-[34px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Gray100 shadow-none drop-shadow-none transition-all hover:scale-150",
-								isToday && "text-PB100",
+								"flex h-[30px] w-[34px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-[14px] font-Regular text-Gray100 transition-all hover:scale-150",
+								isToday && "text-[16px] text-PB100",
 								isNextMonth && "text-Gray60",
 								isReserved && "bg-PY100",
 								isPrevDay &&

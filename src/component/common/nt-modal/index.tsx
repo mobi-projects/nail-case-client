@@ -1,18 +1,22 @@
 import type { VariantProps } from "class-variance-authority"
 import { cva } from "class-variance-authority"
 import type { HTMLAttributes, PropsWithChildren } from "react"
+import { forwardRef } from "react"
 
 import { cn } from "@/config/tailwind"
 
 import NTIcon from "../nt-icon"
 
+import { useModal } from "./nt-modal.context"
+
 const ModalVariants = cva(
-	"relative py-[27px] rounded-[26px] bg-White overflow-hidden",
+	"fixed bottom-[50%] left-[50%] right-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[26px] bg-white ",
 	{
 		variants: {
 			size: {
-				small: "h-[494.25px] w-[486px] max-h-[494.25px] px-[28px]",
-				big: "h-fit min-h-[687.75px] max-h-[837px] w-[996px] px-[52px]",
+				small:
+					"h-[80dvh] aspect-[8/11] min-w-[300px] max-w-[90dvw] py-[28px] px-[28px]",
+				large: "h-[85dvh] aspect-[18/19] min-w-[400px] max-w-[90dvw] p-[46px]",
 			},
 		},
 		defaultVariants: {
@@ -21,117 +25,104 @@ const ModalVariants = cva(
 	},
 )
 
-type NTModalPT = VariantProps<typeof ModalVariants> &
+type NTModalPT = HTMLAttributes<HTMLDialogElement> &
+	VariantProps<typeof ModalVariants> &
 	PropsWithChildren & {
-		onClose?: VoidFunction
+		isX: boolean
 	}
 
-export default function NTModal({ size, children, onClose }: NTModalPT) {
-	return (
-		<div
-			className="fixed top-0 z-[10000] flex h-full w-full items-center justify-center bg-Black/50"
-			onClick={(e) => {
-				e.preventDefault
-				e.stopPropagation
-			}}
-		>
-			<div className={cn(ModalVariants({ size }))}>
-				{size !== "big" && <XButton {...{ onClose }} />}
-				{children}
-			</div>
-		</div>
-	)
-}
-
-const ModalHeaderVariants = cva(
-	"w-full h-[58px] order-first flex flex-col justify-start text-Gray90",
-	{
-		variants: {
-			size: {
-				small: "text-Body01",
-				big: "text-Title01",
-			},
-			align: {
-				center: "items-center",
-				left: "items-start",
-			},
-		},
-		defaultVariants: {
-			size: "small",
-			align: "center",
-		},
+const NTModal = forwardRef<HTMLDialogElement, NTModalPT>(
+	({ size, children, isX, className }, ref) => {
+		const { onCloseModal } = useModal()
+		return (
+			<dialog
+				ref={ref}
+				onClick={onCloseModal}
+				className={cn(
+					"h-full w-full bg-transparent backdrop:bg-Black/30 focus-visible:outline-none",
+					className,
+				)}
+			>
+				<ModalContainer className={ModalVariants({ size })} {...{ isX }}>
+					{children}
+				</ModalContainer>
+			</dialog>
+		)
 	},
 )
-type NTModalHeaderPT = VariantProps<typeof ModalHeaderVariants> &
-	PropsWithChildren
-export function NTModalHeader({ size, align, children }: NTModalHeaderPT) {
-	return (
-		<header className={cn(ModalHeaderVariants({ size, align }))}>
-			{children}
-		</header>
-	)
-}
-export function NTModalContent({
+NTModal.displayName = "NTModal"
+export default NTModal
+
+function ModalContainer({
 	children,
+	isX,
 	className,
-}: PropsWithChildren & HTMLAttributes<HTMLDivElement>) {
+}: NTModalPT & HTMLAttributes<HTMLDivElement>) {
 	return (
-		<div className={cn("max-h-80% h-fit w-full overflow-x-hidden", className)}>
+		<div
+			className={className}
+			onClick={(e) => {
+				e.stopPropagation()
+			}}
+		>
+			{isX && <CancelButton />}
 			{children}
-		</div>
-	)
-}
-const ModalDividerVariants = cva("w-full flex justify-center", {
-	variants: {
-		size: {
-			small: "",
-			big: "absolute scale-x-[200%]",
-		},
-		weight: {
-			thin: "h-[1.5px]",
-			bold: "h-[2px]",
-		},
-		color: {
-			light: "bg-Gray10",
-			dark: "bg-Gray20",
-		},
-	},
-	defaultVariants: {
-		size: "small",
-		weight: "thin",
-		color: "light",
-	},
-})
-export function NTModalDivider({
-	size,
-	weight,
-	color,
-}: VariantProps<typeof ModalDividerVariants>) {
-	return (
-		<div className={ModalDividerVariants({ weight })}>
-			<div className={cn(ModalDividerVariants({ size, color, weight }))} />
 		</div>
 	)
 }
 
-type NTModalFooterPT = { className?: string } & PropsWithChildren
-export function NTModalFooter({ children, className }: NTModalFooterPT) {
+function CancelButton() {
+	const { onCloseModal } = useModal()
+	return (
+		<div className="relative">
+			<NTIcon
+				icon="delete"
+				className="absolute right-0 top-0 aspect-square h-[18px] translate-x-[25px] translate-y-[-15px] text-Gray40"
+				onClick={onCloseModal}
+			/>
+		</div>
+	)
+}
+
+export function ModalContent({
+	children,
+	...rest
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+	return (
+		<div className={cn("flex h-full w-full flex-col", rest.className)}>
+			{children}
+		</div>
+	)
+}
+
+export function ModalHeader({
+	children,
+	...rest
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+	return (
+		<div className={cn("mb-auto h-fit w-full", rest.className)}>{children}</div>
+	)
+}
+export function ModalBody({
+	children,
+	...rest
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
 	return (
 		<div
 			className={cn(
-				"mt-auto flex h-[149px] items-center justify-center",
-				className,
+				"scrollbar-custom h-fit w-full shrink grow overflow-y-auto",
+				rest.className,
 			)}
 		>
 			{children}
 		</div>
 	)
 }
-
-function XButton({ onClose }: Pick<NTModalPT, "onClose">) {
+export function ModalFooter({
+	children,
+	...rest
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
 	return (
-		<div className="absolute right-[28px] top-[20px] box-content">
-			<NTIcon icon="delete" onClick={onClose} />
-		</div>
+		<div className={cn("mt-auto h-fit w-full", rest.className)}>{children}</div>
 	)
 }

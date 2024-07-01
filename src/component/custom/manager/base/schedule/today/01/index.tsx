@@ -7,7 +7,6 @@ import React from "react"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTNameBox from "@/component/common/nt-name-box"
 import NTOption from "@/component/common/nt-option"
-import { useOption } from "@/hook/use-component"
 
 type Artist = {
 	name: string
@@ -230,15 +229,7 @@ function DayScheduleTask({ slot, duration }: DayScheduleTaskPT) {
 }
 
 function DayScheduleOptions({ optionArr }: DayScheduleOptionsPT) {
-	const { onClickOption, checkedOption } = useOption(optionArr)
-	return (
-		<NTOption
-			optionArr={optionArr}
-			checkedOption={checkedOption}
-			itemsPerRow={4}
-			onClickOption={onClickOption}
-		/>
-	)
+	return <NTOption optionArr={optionArr} gap={2} />
 }
 
 function DayScheduleButton({ slot, currentTime }: DayScheduleTimePT) {
@@ -253,8 +244,12 @@ function DayScheduleButton({ slot, currentTime }: DayScheduleTimePT) {
 				<NTButton disabled>시술중</NTButton>
 			) : (
 				<div className="flex gap-2">
-					<NTButton variant="secondary">변경하기</NTButton>
-					<NTButton variant="primary">채팅하기</NTButton>
+					<NTButton variant="secondary" flexible="fit">
+						변경하기
+					</NTButton>
+					<NTButton variant="primary" flexible="fit">
+						채팅하기
+					</NTButton>
 				</div>
 			)}
 		</div>

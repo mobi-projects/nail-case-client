@@ -1,133 +1,98 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { NTButton } from "../atom/nt-button"
-import Pagination from "../nt-pagination"
-import NTSearchfield from "../nt-searchfield"
 
 import { ModalProvider, useModal } from "./nt-modal.context"
 
-import NTModal, {
-	NTModalContent,
-	NTModalDivider,
-	NTModalFooter,
-	NTModalHeader,
-} from "."
+import NTModal, { ModalBody, ModalContent, ModalFooter, ModalHeader } from "."
 
 const meta: Meta<typeof NTModal> = {
 	title: "component/common/nt-modal",
+	parameters: {
+		layout: "centered",
+		hideNoControlsWarning: true,
+	},
 	component: NTModal,
+	argTypes: {
+		size: {
+			control: "inline-radio",
+			options: ["small", "large"],
+		},
+		isX: {
+			control: "boolean",
+		},
+	},
+	args: {
+		size: "small",
+		isX: false,
+	},
 	decorators: [
 		(Story) => (
-			<div className="m-0 flex h-dvh w-dvw items-center justify-center bg-red-300 p-0">
+			<div className="h-[90dvh] w-[90dvw]">
 				<ModalProvider>
 					<Story />
 				</ModalProvider>
 			</div>
 		),
 	],
-	argTypes: {
-		size: {
-			control: "inline-radio",
-			options: ["small", "big"],
-		},
-	},
 }
 export default meta
 
 type Story = StoryObj<typeof NTModal>
 
-export const SmallModalOnlyHeader: Story = {
+export const Laboratory: Story = {
 	args: {
-		size: "small",
-		children: <NTModalHeader size="small">Header</NTModalHeader>,
+		isX: true,
 	},
-}
-export const BigModalOnlyHeader: Story = {
-	args: {
-		size: "big",
-		children: (
-			<NTModalHeader size="big" align="left">
-				Header
-			</NTModalHeader>
-		),
-	},
-}
-export const BigModal: Story = {
-	args: {
-		size: "big",
-		children: (
-			<div>
-				<NTModalHeader align="left" size="big">
-					BigModalHeaderNFooter
-				</NTModalHeader>
-				<NTModalContent className="flex flex-col gap-4 py-4">
-					<h2>소제목 1</h2>
-					<div className="rounded-xl border-2 border-Gray20 p-2">
-						모달 내용 1
-					</div>
-					<div className="rounded-xl border-2 border-Gray20 p-2">
-						모달 내용 2
-					</div>
-					<NTModalDivider size="small" />
-					<h2>소제목 2</h2>
-					<div className="rounded-xl border-2 border-Gray20 p-2">
-						모달 내용 3
-					</div>
-					<div className="rounded-xl border-2 border-Gray20 p-2">
-						모달 내용 4
-					</div>
-					<div className="rounded-xl border-2 border-Gray20 p-2">
-						모달 내용 5
-					</div>
 
-					<NTModalDivider size="small" />
+	render: (args) => {
+		const { onOpenModal } = useModal()
 
-					<h2>소제목 3</h2>
-					<input
-						className="h-[50px] w-full rounded-xl border-2 border-Gray20 p-2"
-						placeholder="마음껏 작성해주세요."
-					/>
-				</NTModalContent>
-				<NTModalFooter>
-					<NTButton>Button</NTButton>
-				</NTModalFooter>
+		const onClickButton = () => {
+			onOpenModal({
+				...args,
+				children: <TestModal />,
+			})
+		}
+		return (
+			<div className="flex h-[85dvh] w-[85dvw] flex-col items-center justify-center gap-10 rounded-[26px] bg-BGblue02 drop-shadow-lg">
+				<h1>NTModal 실험장</h1>
+				<p>패널로 조작 해보세요.!</p>
+				<NTButton onClick={onClickButton} flexible="fit">
+					모달 나옵니다
+				</NTButton>
 			</div>
-		),
+		)
 	},
 }
 
-export const ClickToSmallModal = () => {
-	const { onOpen } = useModal()
-
-	const onClick = () => {
-		onOpen({
-			size: "small",
-			children: (
-				<div>
-					<NTModalHeader>Header</NTModalHeader>
-					<NTModalContent className="flex flex-col gap-4 py-4">
-						<NTSearchfield />
-						<NTModalDivider size="small" weight="bold" color="dark" />
-						<div className="rounded-xl border-2 border-Gray20 p-2">
-							모달 내용 1
-						</div>
-						<div className="rounded-xl border-2 border-Gray20 p-2">
-							모달 내용 2
-						</div>
-						<div className="rounded-xl border-2 border-Gray20 p-2">
-							모달 내용 3
-						</div>
-						<div className="rounded-xl border-2 border-Gray20 p-2">
-							모달 내용 4
-						</div>
-
-						<NTModalDivider />
-						<Pagination totPage={1} curPage={1} perPage={1} />
-					</NTModalContent>
-				</div>
-			),
-		})
-	}
-
-	return <button onClick={onClick}>누르기!</button>
+function TestModal() {
+	const { onCloseModal } = useModal()
+	return (
+		<ModalContent className="flex flex-col gap-3">
+			<ModalHeader className="flex flex-col items-center justify-center">
+				<h2>[Modal Header]</h2>
+			</ModalHeader>
+			<ModalBody className="flex flex-col">
+				<h3>[Modal Body]</h3>
+				<p>내용이 많으면 스크롤 영역이 생성됩니다..</p>
+				<br />
+				<h3>[Modal Body]</h3>
+				<p>내용이 많으면 스크롤 영역이 생성됩니다..</p>
+				<br />
+				<h3>[Modal Body]</h3>
+				<p>내용이 많으면 스크롤 영역이 생성됩니다..</p>
+				<br />
+				<h3>[Modal Body]</h3>
+				<p>내용이 많으면 스크롤 영역이 생성됩니다..</p>
+				<br />
+				<h3>[Modal Body]</h3>
+				<p>내용이 많으면 스크롤 영역이 생성됩니다..</p>
+			</ModalBody>
+			<ModalFooter className="flex flex-col items-center justify-center">
+				<h2>[Modal Footer]</h2>
+				<NTButton onClick={onCloseModal}>닫기</NTButton>
+			</ModalFooter>
+		</ModalContent>
+	)
 }
