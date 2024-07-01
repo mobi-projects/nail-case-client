@@ -67,7 +67,6 @@ export default function NTOption({
 					{optionOne}
 				</button>
 			))}
-			<div className="flex items-center justify-center border-[1px] border-transparent px-[24px] text-center text-PB100 focus-visible:outline-none active:border-PB100 active:bg-BGblue02 active:text-PB110 active:shadow-[0_0_16_0_rgba(128,214,248,0.4)] disabled:border-none disabled:bg-Gray10"></div>
 		</div>
 	)
 }
