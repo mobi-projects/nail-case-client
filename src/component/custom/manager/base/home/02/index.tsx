@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
-import { useOption } from "@/hook/use-component"
 import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import {
 	getDayOfWeekFromStamp,
@@ -13,6 +12,7 @@ import {
 	getThisMonth,
 	getThisYear,
 } from "@/util/common"
+import { tagLists } from "@/util/common/tagList"
 
 export default function ReservationForm() {
 	const [dateInfo, setDateInfo] = useState({
@@ -167,6 +167,13 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 					reservation.conditionList[0]?.option,
 					reservation.treatmentList[0]?.option,
 				]
+				const extendTag = reservation.extend
+
+				const translateTagList = () => {
+					const tagListTranslate = tagList.map((tag) => tagLists[tag])
+					const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
+					return [...tagListTranslate, extendTagTranslate]
+				}
 
 				return (
 					<div key={idx}>
@@ -175,7 +182,7 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 							<ReservationTagList
 								idx={idx}
 								startTime={startTime}
-								tagList={tagList}
+								tagList={translateTagList()}
 							/>
 							<ReservationButtonList idx={idx} />
 						</div>
@@ -229,7 +236,6 @@ type ReservationTagListPT = {
 	idx: number
 }
 function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
-	const { checkedOption, optionArr } = useOption(tagList)
 	function formatTime(date: Date): string {
 		return date
 			.toLocaleTimeString("ko-KR", {
@@ -252,7 +258,7 @@ function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
 				</div>
 			</div>
 			<div className="w-full border-l-2 border-Gray10 pl-[34px]">
-				<NTOption itemsPerRow={4} {...{ checkedOption, optionArr }} />
+				<NTOption optionArr={tagList} gap={4} />
 			</div>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
 		</div>
