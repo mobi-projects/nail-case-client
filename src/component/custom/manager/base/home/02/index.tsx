@@ -20,12 +20,17 @@ export default function ReservationForm() {
 		month: getThisMonth() - 1,
 		date: getThisDate(),
 	})
-	const [startTime, setStartTime] = useState(
-		new Date(dateInfo.year, dateInfo.month, dateInfo.date, 0, 0, 0),
-	)
-	const [lastTime, setLastTime] = useState(
-		new Date(dateInfo.year, dateInfo.month, dateInfo.date, 23, 59, 59),
-	)
+	const [timeRange, setTimeRange] = useState({
+		startTime: new Date(dateInfo.year, dateInfo.month, dateInfo.date, 0, 0, 0),
+		lastTime: new Date(
+			dateInfo.year,
+			dateInfo.month,
+			dateInfo.date,
+			23,
+			59,
+			59,
+		),
+	})
 
 	useEffect(() => {
 		const updatedStartTime = new Date(
@@ -44,8 +49,7 @@ export default function ReservationForm() {
 			59,
 			59,
 		)
-		setStartTime(updatedStartTime)
-		setLastTime(updatedLastTime)
+		setTimeRange({ startTime: updatedStartTime, lastTime: updatedLastTime })
 	}, [dateInfo])
 
 	return (
@@ -53,10 +57,10 @@ export default function ReservationForm() {
 			<ReservationFormHeader
 				dateInfo={dateInfo}
 				setDateInfo={setDateInfo}
-				dayOfWeek={getDayOfWeekFromStamp(lastTime.getTime())}
+				dayOfWeek={getDayOfWeekFromStamp(timeRange.lastTime.getTime())}
 			/>
 			<hr className="border-Gray20" />
-			<ReservationTimeList startTime={startTime} lastTime={lastTime} />
+			<ReservationTimeList timeRange={timeRange} />
 			<ReservationFormFooter />
 		</div>
 	)
@@ -116,10 +120,12 @@ function ReservationFormHeader({
 	)
 }
 type ReservationTimeListPT = {
-	startTime: Date
-	lastTime: Date
+	timeRange: {
+		startTime: Date
+		lastTime: Date
+	}
 }
-function ReservationTimeList({ startTime, lastTime }: ReservationTimeListPT) {
+function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 	function formatDateToCustomString(date: Date): number {
 		const year = date.getFullYear()
 		const month = String(date.getMonth() + 1).padStart(2, "0")
@@ -134,8 +140,8 @@ function ReservationTimeList({ startTime, lastTime }: ReservationTimeListPT) {
 		error,
 	} = useListReservationQuery(
 		1,
-		formatDateToCustomString(startTime),
-		formatDateToCustomString(lastTime),
+		formatDateToCustomString(timeRange.startTime),
+		formatDateToCustomString(timeRange.lastTime),
 	)
 	const reservationArr = reservationData?.dataList || []
 
