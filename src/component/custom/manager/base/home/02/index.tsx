@@ -6,6 +6,7 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
 import { useOption } from "@/hook/use-component"
+import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import {
 	getDayOfWeekFromStamp,
 	getThisDate,
@@ -26,7 +27,6 @@ export default function ReservationForm() {
 		new Date(dateInfo.year, dateInfo.month, dateInfo.date, 23, 59, 59),
 	)
 
-	// console.log(startTime.getTime())
 	useEffect(() => {
 		const updatedStartTime = new Date(
 			dateInfo.year,
@@ -120,16 +120,57 @@ type ReservationTimeListPT = {
 	lastTime: Date
 }
 function ReservationTimeList({ startTime, lastTime }: ReservationTimeListPT) {
-	const time = ["오전11", "오후3", "오후4", "오후5", "오후6"]
+	function formatDateToCustomString(date: Date): number {
+		const year = date.getFullYear()
+		const month = String(date.getMonth() + 1).padStart(2, "0")
+		const day = String(date.getDate()).padStart(2, "0")
+		const hours = String(date.getHours()).padStart(2, "0")
+		const minutes = String(date.getMinutes()).padStart(2, "0")
+		return Number(`${year}${month}${day}${hours}${minutes}`)
+	}
+	const {
+		data: reservationData,
+		isError,
+		error,
+	} = useListReservationQuery(
+		1,
+		formatDateToCustomString(startTime),
+		formatDateToCustomString(lastTime),
+	)
+	const reservationArr = reservationData?.dataList || []
+
+	if (isError) {
+		return <div>Error: {error.message}</div>
+	}
+	const confirmedReservations = reservationArr
+		.map((reservation) =>
+			reservation.reservationDetailList.filter(
+				(detail) => detail.status === "CONFIRMED",
+			),
+		)
+		.flat()
 
 	return (
 		<div className="h-full max-h-[508px] scroll-p-3 overflow-y-scroll">
-			{time.map((time, idx) => {
+			{confirmedReservations.map((data, idx) => {
+				const reservation = data
+				const startTime = new Date(reservation.startTime * 1000)
+				const endTime = new Date(reservation.endTime * 1000)
+				const tagList = [
+					reservation.remove,
+					reservation.conditionList[0]?.option,
+					reservation.treatmentList[0]?.option,
+				]
+
 				return (
 					<div key={idx}>
 						<div className="flex h-[127px] w-full items-center justify-between gap-[26.5px] px-[27px]">
-							<ReservationTimeGap startTime={startTime} endTime={lastTime} />
-							<ReservationTagList time={time} idx={idx} />
+							<ReservationTimeGap startTime={startTime} endTime={endTime} />
+							<ReservationTagList
+								idx={idx}
+								startTime={startTime}
+								tagList={tagList}
+							/>
 							<ReservationButtonList idx={idx} />
 						</div>
 						<hr className="border border-Gray10" />
@@ -150,7 +191,7 @@ function ReservationTimeGap({ startTime, endTime }: ReservationTimeGapPT) {
 	for (let hour = startHour; hour <= endHour; hour++) {
 		timeRange.push(hour)
 	}
-	console.log(startHour)
+
 	return (
 		<ul className="flex w-[20px] flex-col gap-[2px]">
 			{timeRange.map((data, idx) => (
@@ -177,22 +218,34 @@ const ReservationFormVariants = cva(
 	},
 )
 type ReservationTagListPT = {
-	time?: string
+	startTime: Date
+	tagList: Array<string>
 	idx: number
 }
-function ReservationTagList({ time, idx }: ReservationTagListPT) {
-	const tag = ["이달의 아트 ", "동반2인", "타샵 제거 있음", "1인 연장 필요"]
-	const { checkedOption, optionArr } = useOption(tag)
+function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
+	const { checkedOption, optionArr } = useOption(tagList)
+	function formatTime(date: Date): string {
+		return date
+			.toLocaleTimeString("ko-KR", {
+				hour: "numeric",
+				hour12: true,
+			})
+			.replace(":00", "")
+			.replace("시", "")
+	}
+
 	return (
 		<div
 			className={ReservationFormVariants({
 				colorEffect: idx === 0,
 			})}
 		>
-			<div className="flex h-[56px] w-[88px] items-center justify-center border-r-2 border-Gray10">
-				<div className="text-Headline02 text-Gray90">{time}</div>
+			<div className="flex h-[56px] w-[72px] flex-shrink-0 items-center justify-start pl-[5px]">
+				<div className="w-full text-Headline02 text-Gray90">
+					{formatTime(startTime)}
+				</div>
 			</div>
-			<div className="w-full pl-[34px]">
+			<div className="w-full border-l-2 border-Gray10 pl-[34px]">
 				<NTOption itemsPerRow={4} {...{ checkedOption, optionArr }} />
 			</div>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
