@@ -126,7 +126,7 @@ type ReservationTimeListPT = {
 	}
 }
 function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
-	function formatDateToCustomString(date: Date): number {
+	const customTimeRage = (date: Date) => {
 		const year = date.getFullYear()
 		const month = String(date.getMonth() + 1).padStart(2, "0")
 		const day = String(date.getDate()).padStart(2, "0")
@@ -140,8 +140,8 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 		error,
 	} = useListReservationQuery(
 		1,
-		formatDateToCustomString(timeRange.startTime),
-		formatDateToCustomString(timeRange.lastTime),
+		customTimeRage(timeRange.startTime),
+		customTimeRage(timeRange.lastTime),
 	)
 	const reservationArr = reservationData?.dataList || []
 
@@ -236,7 +236,7 @@ type ReservationTagListPT = {
 	idx: number
 }
 function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
-	function formatTime(date: Date): string {
+	const formatTime = (date: Date) => {
 		return date
 			.toLocaleTimeString("ko-KR", {
 				hour: "numeric",
