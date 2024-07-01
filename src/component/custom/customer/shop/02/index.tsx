@@ -6,7 +6,6 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
 import { cn } from "@/config/tailwind"
-import { useOption } from "@/hook/use-component"
 import {
 	getCalendarArr,
 	getDateFromStamp,
@@ -55,12 +54,6 @@ function ReservationCheck() {
 }
 
 function ReservationCheckBody() {
-	const { checkedOption, onClickOption, optionArr } = useOption([
-		["오전 11시", "오후 1시", "오후 2시", "오후 3시"],
-		["오전 4시", "오후 5시", "오후 7시"],
-		["1인", "2인 동반"],
-	])
-
 	return (
 		<div className="flex h-full w-full flex-col justify-around gap-[16px] py-[10px]">
 			<p className="w-full justify-center pt-2 text-center text-[18px] font-SemiBold text-Gray90">
@@ -68,24 +61,20 @@ function ReservationCheckBody() {
 			</p>
 			<hr className="border-BGblue02" />
 			<NTOption
-				optionArr={optionArr[0]}
-				checkedOption={checkedOption}
-				onClickOption={onClickOption}
-				gap={3}
-			/>
-			<NTOption
-				optionArr={optionArr[1]}
-				checkedOption={checkedOption}
-				onClickOption={onClickOption}
-				gap={3}
+				optionArr={[
+					"오전 11시",
+					"오후 1시",
+					"오후 2시",
+					"오후 3시",
+					"오전 4시",
+					"오후 5시",
+					"오후 7시",
+				]}
+				className="flex h-[118px] w-full items-center gap-x-[11px]"
+				size="large"
 			/>
 			<hr className="border-BGblue02" />
-			<NTOption
-				optionArr={optionArr[2]}
-				checkedOption={checkedOption}
-				onClickOption={onClickOption}
-				gap={4}
-			/>
+			<NTOption optionArr={["1인", "2인 동반"]} size="large" />
 			<p className="text-[16px] font-Regular text-Gray50">
 				2인 동반 선택시에는 두 타임 예약 부탁드립니다 :)
 			</p>

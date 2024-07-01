@@ -38,23 +38,6 @@ export const usePulldown = () => {
 	}
 }
 
-/**
- * @param initialOptionList - option 목록을 Array<Array<string>>타입형태로 입력
- */
-export const useOption = (initialOptionList: Array<Array<string>>) => {
-	const optionArr = initialOptionList
-	const [checkedOption, setCheckedOption] = useState<Array<string>>([])
-
-	const onClickOption = (option: string) => {
-		setCheckedOption((prevList) => {
-			return prevList.includes(option)
-				? prevList.filter((item) => item !== option)
-				: [...prevList, option]
-		})
-	}
-	return { onClickOption, checkedOption, optionArr }
-}
-
 export const useBanner = () => {
 	const [carouselIdx, setCarouselIdx] = useState(0)
 	/**
