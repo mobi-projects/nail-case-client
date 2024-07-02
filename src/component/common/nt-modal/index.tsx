@@ -101,7 +101,6 @@ export function ModalContent({
 	children,
 	...rest
 }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
-	console.log(children)
 	return (
 		<div className={cn("flex h-full w-full flex-col", rest.className)}>
 			{children}

@@ -4,7 +4,9 @@ import { useCallback, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTOption from "@/component/common/nt-option"
+import { useSheet } from "@/component/common/nt-sheet/nt-sheet.context"
 import { cn } from "@/config/tailwind"
 import {
 	getCalendarArr,
@@ -22,6 +24,9 @@ import {
 	padStartToPrinting,
 } from "@/util/common"
 
+import CreationReservationModal from "../modal/01"
+import ReservationResponseReceptionSheet from "../sheet/01"
+
 export default function ReservationSchedule() {
 	return (
 		<div className="grid h-fit w-full grid-cols-[690px_485px] justify-between">
@@ -31,22 +36,46 @@ export default function ReservationSchedule() {
 	)
 }
 function ReservationCalendar() {
+	const { onOpenModal } = useModal()
+	const onOpenCreatingReservationModal = () => {
+		onOpenModal({
+			size: "large",
+			isX: true,
+			children: <CreationReservationModal startTime={-1} endTime={-1} />,
+		})
+	}
 	return (
 		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[21px]">
 			<div className="flex h-full w-full items-center justify-center rounded-[26px] shadow-customGray60">
 				<Calendar />
 			</div>
-			<NTButton variant="tertiary" flexible="full" size="small">
+			<NTButton
+				variant="tertiary"
+				flexible="full"
+				size="small"
+				onClick={onOpenCreatingReservationModal}
+			>
 				예약하기
 			</NTButton>
 		</div>
 	)
 }
 function ReservationCheck() {
+	const { onOpenSheet } = useSheet()
+	const onClickPhone = () => {
+		onOpenSheet({
+			children: <ReservationResponseReceptionSheet />,
+		})
+	}
 	return (
 		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[22px]">
 			<ReservationCheckBody />
-			<NTButton variant="tertiary" flexible="full" size="small">
+			<NTButton
+				onClick={onClickPhone}
+				variant="tertiary"
+				flexible="full"
+				size="small"
+			>
 				전화하기
 			</NTButton>
 		</div>
