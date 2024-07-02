@@ -38,6 +38,7 @@ export const ICON_DATA = {
 	commentLight: "lets-icons:comment-light",
 	editLight: "lets-icons:edit-light",
 	setting: "ep:setting",
+	upRight: "iconoir:arrow-up-right",
 	calendarLight: "lets-icons:calendar-light",
 	homeLight: "lets-icons:home-light",
 	creditCardLight: "lets-icons:credit-card-light",
