@@ -30,7 +30,9 @@ export default function NTEventDetail({
 }: NTEventDetailPT) {
 	return (
 		<div className={cn(EventDetailVariants({ variant }), className)}>
-			<span className="text-Body02 font-Bold text-Gray100">{name}</span>
+			<span className="mr-[10px] text-Body02 font-Bold text-Gray100">
+				{name}
+			</span>
 			<span className="text-Callout font-Light text-Gray100">{children}</span>
 		</div>
 	)
