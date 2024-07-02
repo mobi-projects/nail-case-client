@@ -247,7 +247,7 @@ function DayScheduleButton({ slot, currentTime }: DayScheduleTimePT) {
 			{isCurrent ? (
 				<NTButton disabled>시술중</NTButton>
 			) : (
-				<div className="flex gap-2">
+				<div className="flex gap-[22px]">
 					<NTButton variant="secondary" flexible="fit">
 						변경하기
 					</NTButton>
