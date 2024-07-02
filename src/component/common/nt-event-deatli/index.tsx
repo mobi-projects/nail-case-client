@@ -4,13 +4,13 @@ import { cva } from "class-variance-authority"
 import { cn } from "@/config/tailwind"
 
 const EventDetailVariants = cva(
-	" w-full  pl-[21px] rounded-[12px] flex justify-start items-center py-[14px] active:border",
+	"w-full pl-[21px] rounded-[12px] flex justify-start items-center py-[14px] border border-transparent",
 	{
 		variants: {
 			variant: {
-				PB: "bg-BGblue02 border-PB50   ",
-				PY: "bg-PY50 bg-opacity-60 border-PY100   ",
-				Gray: "bg-Gray10 border-Gray50  ",
+				PB: "bg-BGblue02 active:border-PB50",
+				PY: "bg-PY50 bg-opacity-60 active:border-PY100",
+				Gray: "bg-Gray10 active:border-Gray50",
 			},
 		},
 	},
