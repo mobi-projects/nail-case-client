@@ -1,42 +1,206 @@
 "use client"
 import { cva } from "class-variance-authority"
+import { useEffect, useRef, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
+import { useListReservationQuery } from "@/hook/use-reservation-controller"
+import {
+	getDayOfWeekFromStamp,
+	getThisDate,
+	getThisMonth,
+	getThisYear,
+} from "@/util/common"
+import { tagLists } from "@/util/common/tagList"
 
 export default function ReservationForm() {
+	const [dateInfo, setDateInfo] = useState({
+		year: getThisYear(),
+		month: getThisMonth() - 1,
+		date: getThisDate(),
+	})
+
+	const timeRange = {
+		startTime: new Date(dateInfo.year, dateInfo.month, dateInfo.date, 0, 0, 0),
+		lastTime: new Date(
+			dateInfo.year,
+			dateInfo.month,
+			dateInfo.date,
+			23,
+			59,
+			59,
+		),
+	}
 	return (
 		<div className="mb-[9px] h-[646px] rounded-[26px] shadow-customGray60">
-			<ReservationFormHeader />
+			<ReservationFormHeader
+				dateInfo={dateInfo}
+				setDateInfo={setDateInfo}
+				dayOfWeek={getDayOfWeekFromStamp(timeRange.lastTime.getTime())}
+			/>
 			<hr className="border-Gray20" />
-			<ReservationTimeList />
+			<ReservationTimeList timeRange={timeRange} />
 			<ReservationFormFooter />
 		</div>
 	)
 }
 
-function ReservationFormHeader() {
+type ReservationFormHeaderPT = {
+	dateInfo: {
+		year: number
+		month: number
+		date: number
+	}
+	setDateInfo: React.Dispatch<
+		React.SetStateAction<{
+			year: number
+			month: number
+			date: number
+		}>
+	>
+	dayOfWeek: string
+}
+
+function ReservationFormHeader({
+	dateInfo,
+	setDateInfo,
+	dayOfWeek,
+}: ReservationFormHeaderPT) {
+	const handlePrevDay = () => {
+		const newDate = new Date(dateInfo.year, dateInfo.month, dateInfo.date - 1)
+		setDateInfo({
+			year: newDate.getFullYear(),
+			month: newDate.getMonth(),
+			date: newDate.getDate(),
+		})
+	}
+	const handleNextDay = () => {
+		const newDate = new Date(dateInfo.year, dateInfo.month, dateInfo.date + 1)
+		setDateInfo({
+			year: newDate.getFullYear(),
+			month: newDate.getMonth(),
+			date: newDate.getDate(),
+		})
+	}
 	return (
 		<div className="flex h-[69px] items-center justify-center pb-[3px]">
-			<NTIcon icon="expandLeftLight" className="text-Gray08"></NTIcon>
-			<div className="text-Headline02 text-Gray50">5월 29일 (수)</div>
-			<NTIcon icon="expandRightLight" className="text-Gray08"></NTIcon>
+			<NTIcon
+				icon="expandLeftLight"
+				className="cursor-pointer text-Gray08"
+				onClick={handlePrevDay}
+			/>
+			<div className="w-[120px] text-center text-Headline02 text-Gray50">{`${dateInfo.month + 1}월 ${dateInfo.date}일 (${dayOfWeek})`}</div>
+			<NTIcon
+				icon="expandRightLight"
+				className="cursor-pointer text-Gray08"
+				onClick={handleNextDay}
+			/>
 		</div>
 	)
 }
+type ReservationTimeListPT = {
+	timeRange: {
+		startTime: Date
+		lastTime: Date
+	}
+}
+function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
+	const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+	const reservationRef = useRef<(HTMLDivElement | null)[]>([])
+	const { data: reservationData } = useListReservationQuery(
+		1,
+		timeRange.startTime.getTime() / 1000,
+		timeRange.lastTime.getTime() / 1000,
+	)
 
-function ReservationTimeList() {
-	const time = ["오전11", "오후3", "오후4", "오후5", "오후6"]
+	const reservationArr = reservationData?.dataList || []
 
+	const confirmedReservations = reservationArr
+		.map((reservation) =>
+			reservation.reservationDetailList.filter(
+				(detail) => detail.status === "CONFIRMED",
+			),
+		)
+		.flat()
+
+	useEffect(() => {
+		const reservationFormscroll = () => {
+			const now = new Date()
+			for (let i = 0; i < confirmedReservations.length; i++) {
+				const reservation = confirmedReservations[i]
+				const startTime = new Date(reservation.startTime * 1000)
+				const endTime = new Date(reservation.endTime * 1000)
+				if (now >= startTime && now <= endTime) {
+					const currentElement = reservationRef.current[i]
+					const containerElement = scrollContainerRef.current
+
+					if (currentElement && containerElement) {
+						const elementTop = currentElement.offsetTop
+						const elementHeight = currentElement.clientHeight
+						const containerHeight = containerElement.clientHeight
+
+						containerElement.scrollTop =
+							elementTop - containerHeight / 2 + elementHeight / 2
+					}
+					break
+				} else if (now < startTime) {
+					const currentElement = reservationRef.current[i]
+					const containerElement = scrollContainerRef.current
+
+					if (currentElement && containerElement) {
+						const elementTop = currentElement.offsetTop
+						const elementHeight = currentElement.clientHeight
+						const containerHeight = containerElement.clientHeight
+
+						containerElement.scrollTop =
+							elementTop - containerHeight / 2 + elementHeight / 2
+					}
+					break
+				}
+			}
+		}
+
+		reservationFormscroll()
+		const intervalId = setInterval(reservationFormscroll, 1800000)
+
+		return () => clearInterval(intervalId)
+	}, [confirmedReservations])
 	return (
-		<div className="h-full max-h-[508px] scroll-p-3 overflow-y-scroll">
-			{time.map((time, idx) => {
+		<div
+			className="h-full max-h-[508px] scroll-p-3 overflow-y-scroll"
+			ref={scrollContainerRef}
+		>
+			{confirmedReservations.map((data, idx) => {
+				const reservation = data
+				const startTime = new Date(reservation.startTime * 1000)
+				const endTime = new Date(reservation.endTime * 1000)
+				const tagList = [
+					reservation.remove,
+					...reservation.conditionList.map((data) => data.option.toString()),
+					reservation.treatmentList[0]?.option,
+				]
+				const extendTag = reservation.extend
+				const translateTagList = () => {
+					const tagListTranslate = tagList.map((tag) => tagLists[tag])
+					const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
+					return [extendTagTranslate, ...tagListTranslate]
+				}
+
 				return (
-					<div key={idx}>
+					<div
+						key={idx}
+						ref={(el) => {
+							reservationRef.current[idx] = el
+						}}
+					>
 						<div className="flex h-[127px] w-full items-center justify-between gap-[26.5px] px-[27px]">
-							<ReservationTimeGap />
-							<ReservationTagList time={time} idx={idx} />
+							<ReservationTimeGap startTime={startTime} endTime={endTime} />
+							<ReservationTagList
+								idx={idx}
+								startTime={startTime}
+								tagList={translateTagList()}
+							/>
 							<ReservationButtonList idx={idx} />
 						</div>
 						<hr className="border border-Gray10" />
@@ -46,24 +210,34 @@ function ReservationTimeList() {
 		</div>
 	)
 }
-function ReservationTimeGap() {
+type ReservationTimeGapPT = {
+	startTime: Date
+	endTime: Date
+}
+function ReservationTimeGap({ startTime, endTime }: ReservationTimeGapPT) {
+	const startHour = startTime.getHours()
+	const endHour = endTime.getHours()
+	const timeRange = []
+	for (let hour = startHour; hour <= endHour; hour++) {
+		timeRange.push(hour)
+	}
+
 	return (
 		<ul className="flex w-[20px] flex-col gap-[2px]">
-			<li className="text-center text-Headline02 font-Regular text-Gray40">
-				11
-			</li>
-			<li className="text-center text-Headline02 font-Regular text-Gray40">
-				12
-			</li>
-			<li className="text-center text-Headline02 font-Regular text-Gray40">
-				13
-			</li>
+			{timeRange.map((data, idx) => (
+				<li
+					className="w-full whitespace-nowrap text-center text-Headline02 font-Regular text-Gray40"
+					key={idx}
+				>
+					{data}
+				</li>
+			))}
 		</ul>
 	)
 }
 
 const ReservationFormVariants = cva(
-	"flex rounded-[20px] w-full max-w-[798.5px] h-[86px] items-center justify-between pl-[26px] pr-[17.5px]",
+	"flex rounded-[20px] w-full max-w-[798.5px] h-[86px] items-center justify-between p-[18px] ",
 	{
 		variants: {
 			colorEffect: {
@@ -73,48 +247,62 @@ const ReservationFormVariants = cva(
 		},
 	},
 )
-type ReservationTimeListPT = {
-	time?: string
+type ReservationTagListPT = {
+	startTime: Date
+	tagList: Array<string>
 	idx: number
 }
-function ReservationTagList({ time, idx }: ReservationTimeListPT) {
+function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
+	const formatTime = (date: Date) => {
+		return date
+			.toLocaleTimeString("ko-KR", {
+				hour: "numeric",
+				hour12: true,
+			})
+			.replace(":00", "")
+			.replace("시", "")
+	}
+	const limitedTagList = tagList.slice(0, 4)
 	return (
 		<div
 			className={ReservationFormVariants({
 				colorEffect: idx === 0,
 			})}
 		>
-			<div className="flex h-[56px] w-[88px] items-center justify-center border-r-2 border-Gray10">
-				<div className="text-Headline02 text-Gray90">{time}</div>
+			<div className="flex h-[56px] w-[72px] flex-shrink-0 items-center justify-start pl-[5px]">
+				<div className="w-full text-Headline02 text-Gray90">
+					{formatTime(startTime)}
+				</div>
 			</div>
-			<NTOption
-				optionArr={[
-					"이달의 아트 ",
-					"동반2인",
-					"타샵 제거 있음",
-					"1인 연장 필요",
-				]}
-				className="w-full flex-nowrap gap-[15px] pl-[15px]"
-				size="large"
-			/>
+			<div className="w-full border-l-2 border-Gray10 pl-[34px]">
+				<NTOption
+					optionArr={limitedTagList}
+					className="w-full gap-x-[4] py-[10px]"
+					size="large"
+					disabledIdxArr={[...Array(tagList.length).keys()]}
+				/>
+			</div>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
 		</div>
 	)
 }
-function ReservationButtonList({ idx }: ReservationTimeListPT) {
+type ReservationButtonListPT = {
+	idx: number
+}
+function ReservationButtonList({ idx }: ReservationButtonListPT) {
 	return (
-		<div className="ml-auto flex gap-[22px]">
+		<div className="ml-auto mr-[30px] flex gap-[22px]">
 			{idx === 0 && (
 				<NTButton variant="primary" disabled size="medium" flexible="fit">
 					시술중
 				</NTButton>
 			)}
-			{idx === 1 && (
+			{idx > 1 && (
 				<NTButton variant="primary" size="medium" flexible="fit">
 					채팅하기
 				</NTButton>
 			)}
-			{idx > 1 && (
+			{idx === 1 && (
 				<>
 					<NTButton variant="secondary" size="medium" flexible="fit">
 						변경하기

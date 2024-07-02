@@ -1,7 +1,7 @@
 "use client"
 import dayjs from "dayjs"
 
-import { NTButton } from "@/component/common/atom/nt-button"
+import NTDateTime from "@/component/common/nt-date-time"
 import NTIcon from "@/component/common/nt-icon"
 import NTPulldown from "@/component/common/nt-pulldown"
 import { usePulldown } from "@/hook/use-component"
@@ -19,7 +19,7 @@ export default function ScheduleLayout() {
 function ScheduleController() {
 	const year = dayjs().year()
 	const month = dayjs().month() + 1
-
+	const categoryArr = ["월별", "주별", "일별"]
 	return (
 		<div className="flex h-full w-full items-center justify-between border-t-[1.5px] border-t-Gray10 bg-BGblue01">
 			<div className="gap-x- flex items-center">
@@ -28,15 +28,9 @@ function ScheduleController() {
 				<NTIcon icon="expandRight" className="h-7 w-7 text-Gray08" />
 			</div>
 			<div className="flex gap-x-2">
-				<NTButton variant={"primary"} size={"exSmall"}>
-					이번달
-				</NTButton>
-				<NTButton variant={"primary"} size={"exSmall"} disabled>
-					이번주
-				</NTButton>
-				<NTButton variant={"primary"} size={"exSmall"} disabled>
-					오늘
-				</NTButton>
+				{categoryArr.map((category, idx) => (
+					<NTDateTime key={idx}>{category}</NTDateTime>
+				))}
 			</div>
 		</div>
 	)
