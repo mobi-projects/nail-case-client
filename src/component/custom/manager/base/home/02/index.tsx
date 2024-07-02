@@ -20,36 +20,7 @@ export default function ReservationForm() {
 		month: getThisMonth() - 1,
 		date: getThisDate(),
 	})
-	// const [timeRange, setTimeRange] = useState({
-	// 	startTime: new Date(dateInfo.year, dateInfo.month, dateInfo.date, 0, 0, 0),
-	// 	lastTime: new Date(
-	// 		dateInfo.year,
-	// 		dateInfo.month,
-	// 		dateInfo.date,
-	// 		23,
-	// 		59,
-	// 		59,
-	// 	),
-	// })
-	// useEffect(() => {
-	// 	const updatedStartTime = new Date(
-	// 		dateInfo.year,
-	// 		dateInfo.month,
-	// 		dateInfo.date,
-	// 		0,
-	// 		0,
-	// 		0,
-	// 	)
-	// 	const updatedLastTime = new Date(
-	// 		dateInfo.year,
-	// 		dateInfo.month,
-	// 		dateInfo.date,
-	// 		23,
-	// 		59,
-	// 		59,
-	// 	)
-	// 	setTimeRange({ startTime: updatedStartTime, lastTime: updatedLastTime })
-	// }, [dateInfo])
+
 	const timeRange = {
 		startTime: new Date(dateInfo.year, dateInfo.month, dateInfo.date, 0, 0, 0),
 		lastTime: new Date(
@@ -257,7 +228,12 @@ function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
 				</div>
 			</div>
 			<div className="w-full border-l-2 border-Gray10 pl-[34px]">
-				<NTOption optionArr={limitedTagList} gap={4} />
+				<NTOption
+					optionArr={limitedTagList}
+					className="w-full gap-x-[4] py-[10px]"
+					size="large"
+					disabledIdxArr={[...Array(tagList.length).keys()]}
+				/>
 			</div>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
 		</div>
@@ -268,18 +244,18 @@ type ReservationButtonListPT = {
 }
 function ReservationButtonList({ idx }: ReservationButtonListPT) {
 	return (
-		<div className="ml-auto flex gap-[22px]">
+		<div className="ml-auto mr-[30px] flex gap-[22px]">
 			{idx === 0 && (
 				<NTButton variant="primary" disabled size="medium" flexible="fit">
 					시술중
 				</NTButton>
 			)}
-			{idx === 1 && (
+			{idx > 1 && (
 				<NTButton variant="primary" size="medium" flexible="fit">
 					채팅하기
 				</NTButton>
 			)}
-			{idx > 1 && (
+			{idx === 1 && (
 				<>
 					<NTButton variant="secondary" size="medium" flexible="fit">
 						변경하기
