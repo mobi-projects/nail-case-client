@@ -1,11 +1,12 @@
 "use client"
 import dayjs from "dayjs"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 
 import NTDateTime from "@/component/common/nt-date-time"
 import NTIcon from "@/component/common/nt-icon"
 import NTPulldown from "@/component/common/nt-pulldown"
+import { MANAGER_BASE_SCHEDULE_THIS_MONTH } from "@/constant/routing-path"
 import { PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR } from "@/constant/toolbar-list"
 import { usePulldown } from "@/hook/use-component"
 
@@ -55,7 +56,7 @@ function ScheduleController() {
 }
 function ScheduleInfo() {
 	const pulldownSchedule = usePulldown()
-
+	const pathName = usePathname()
 	return (
 		<div className="flex h-full w-full items-center justify-between border-y-[1px] border-y-PB50/40">
 			<div className="flex h-full items-center pl-7">
@@ -80,13 +81,14 @@ function ScheduleInfo() {
 					<p className="text-Headline01 text-PB100">22 건</p>
 				</div>
 			</div>
-
-			<NTPulldown
-				description="시술 건수를 선택해주세요"
-				optionArr={["3건이하", "4건 이상 6건 이하", "7건 이상"]}
-				placeholder="시술"
-				{...pulldownSchedule}
-			/>
+			{pathName === MANAGER_BASE_SCHEDULE_THIS_MONTH ? (
+				<NTPulldown
+					description="시술 건수를 선택해주세요"
+					optionArr={["3건이하", "4건 이상 6건 이하", "7건 이상"]}
+					placeholder="시술"
+					{...pulldownSchedule}
+				/>
+			) : null}
 		</div>
 	)
 }
