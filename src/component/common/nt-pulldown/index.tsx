@@ -108,7 +108,7 @@ function NTPulldownItems({
 	position,
 }: NTPulldownItemsPT) {
 	const positionVariants = cva(
-		"absolute  top-full z-10 mt-2 w-[15rem]  overflow-hidden rounded-[14px] border-[0.5px] border-Gray40 bg-white shadow-lg transition-all duration-500 ease-in-out",
+		"absolute  top-full z-10 mt-2 w-[13rem]  overflow-hidden rounded-[14px] border-[0.5px] border-Gray40 bg-white shadow-lg transition-all duration-500 ease-in-out",
 		{
 			variants: {
 				position: {
