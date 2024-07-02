@@ -1,26 +1,48 @@
 "use client"
 
 import dayjs from "dayjs"
-import React from "react"
+import React, { useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
 
 export default function ManagerBaseScheduleThisWeekTask() {
+	const [startHour, setStartHour] = useState(11)
+	const [incremented, setIncremented] = useState(false)
+
+	const incrementHour = () => {
+		if (!incremented) {
+			setStartHour(13)
+			setIncremented(true)
+		} else {
+			setStartHour(11)
+			setIncremented(false)
+		}
+	}
+
 	return (
 		<div className="flex h-fit w-full flex-col py-[10px]">
-			<ManagerScheduleTime />
+			<ManagerScheduleTime startHour={startHour} />
 			<div className="flex flex-col gap-[15px]">
-				{Array.from({ length: 6 }).map((_, index) => (
-					<ManagerScheduleThisWeek key={index} index={index} />
+				{Array.from({ length: 6 }).map((_, idx) => (
+					<ManagerScheduleThisWeek
+						key={idx}
+						idx={idx}
+						startHour={startHour}
+						incrementHour={incrementHour}
+						incremented={incremented}
+					/>
 				))}
 			</div>
 		</div>
 	)
 }
 
-function ManagerScheduleTime() {
-	const startHour = 11
-	const hours = Array.from({ length: 7 }, (_, i) => {
+type ManagerScheduleTimePT = {
+	startHour: number
+}
+
+function ManagerScheduleTime({ startHour }: ManagerScheduleTimePT) {
+	const hours = Array.from({ length: 8 }, (_, i) => {
 		const hour = dayjs().hour(startHour + i)
 		if (hour.hour() === 12) {
 			return "정오"
@@ -35,7 +57,7 @@ function ManagerScheduleTime() {
 		<div className="flex h-[65px] w-full items-center justify-center">
 			{hours.map((date, idx) => {
 				return (
-					<div key={idx} className="relative px-[50px] text-Callout">
+					<div key={idx} className="relative px-[40px] text-Callout">
 						{date}
 						{idx < hours.length - 1 && (
 							<div className="absolute right-0 top-0 h-full"></div>
@@ -48,13 +70,21 @@ function ManagerScheduleTime() {
 }
 
 type ManagerScheduleThisWeekPT = {
-	index: number
+	idx: number
+	startHour: number
+	incrementHour: () => void
+	incremented: boolean
 }
 
-function ManagerScheduleThisWeek({ index }: ManagerScheduleThisWeekPT) {
+function ManagerScheduleThisWeek({
+	idx,
+	startHour,
+	incrementHour,
+	incremented,
+}: ManagerScheduleThisWeekPT) {
 	const today = dayjs()
 	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
-	const day = week[index]
+	const day = week[idx]
 	const isToday = day.isSame(today, "day")
 
 	return (
@@ -63,24 +93,27 @@ function ManagerScheduleThisWeek({ index }: ManagerScheduleThisWeekPT) {
 				isToday ? "border-PB100" : "border-Gray50"
 			}`}
 		>
-			<ManagerScheduleDay index={index} isToday={isToday} />
-			<ManagerScheduleTask index={index} />
-			<ManagerScheduleMoreTask />
+			<ManagerScheduleDay idx={idx} isToday={isToday} />
+			<ManagerScheduleTask idx={idx} startHour={startHour} />
+			<ManagerScheduleMoreTask
+				onClick={incrementHour}
+				incremented={incremented}
+			/>
 		</div>
 	)
 }
 
 type ManagerScheduleDayPT = {
-	index: number
+	idx: number
 	isToday: boolean
 }
 
-function ManagerScheduleDay({ index, isToday }: ManagerScheduleDayPT) {
+function ManagerScheduleDay({ idx, isToday }: ManagerScheduleDayPT) {
 	const today = dayjs()
 	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
 	const daysOfWeek = ["월", "화", "수", "목", "금", "토"]
 
-	const day = week[index]
+	const day = week[idx]
 
 	return (
 		<div className="ml-[10px] flex h-[131.27px] w-[100px] flex-col justify-between border-r-[2px] border-Gray10">
@@ -90,7 +123,7 @@ function ManagerScheduleDay({ index, isToday }: ManagerScheduleDayPT) {
 						isToday ? "text-PB100" : "text-Gray100"
 					}`}
 				>
-					{daysOfWeek[index]}
+					{daysOfWeek[idx]}
 				</div>
 				<div
 					className={`text-Body02 ${isToday ? "text-PB100" : "text-Gray40"}`}
@@ -112,7 +145,7 @@ function ManagerScheduleDay({ index, isToday }: ManagerScheduleDayPT) {
 const reservationData = [
 	[
 		{
-			date: 24,
+			date: 30,
 			firstTime: 11,
 			endTime: 13,
 			artistArr: [
@@ -127,7 +160,7 @@ const reservationData = [
 			],
 		},
 		{
-			date: 24,
+			date: 30,
 			firstTime: 15,
 			endTime: 18,
 			artistArr: [
@@ -140,7 +173,7 @@ const reservationData = [
 	],
 	[
 		{
-			date: 25,
+			date: 1,
 			firstTime: 13,
 			endTime: 15,
 			artistArr: [
@@ -153,9 +186,9 @@ const reservationData = [
 	],
 	[
 		{
-			date: 26,
-			firstTime: 11,
-			endTime: 14,
+			date: 1,
+			firstTime: 16,
+			endTime: 19,
 			artistArr: [
 				{
 					name: "모비쌤",
@@ -168,7 +201,7 @@ const reservationData = [
 			],
 		},
 		{
-			date: 26,
+			date: 2,
 			firstTime: 15,
 			endTime: 17,
 			artistArr: [
@@ -181,7 +214,7 @@ const reservationData = [
 	],
 	[
 		{
-			date: 27,
+			date: 2,
 			firstTime: 12,
 			endTime: 14,
 			artistArr: [
@@ -196,7 +229,7 @@ const reservationData = [
 			],
 		},
 		{
-			date: 27,
+			date: 3,
 			firstTime: 15,
 			endTime: 18,
 			artistArr: [
@@ -209,7 +242,7 @@ const reservationData = [
 	],
 	[
 		{
-			date: 28,
+			date: 4,
 			firstTime: 13,
 			endTime: 15,
 			artistArr: [
@@ -222,7 +255,7 @@ const reservationData = [
 	],
 	[
 		{
-			date: 29,
+			date: 5,
 			firstTime: 11,
 			endTime: 14,
 			artistArr: [
@@ -237,7 +270,7 @@ const reservationData = [
 			],
 		},
 		{
-			date: 29,
+			date: 5,
 			firstTime: 15,
 			endTime: 17,
 			artistArr: [
@@ -250,17 +283,21 @@ const reservationData = [
 	],
 ]
 
-function ManagerScheduleTask({ index }: ManagerScheduleThisWeekPT) {
+type ManagerScheduleTaskPT = {
+	idx: number
+	startHour: number
+}
+
+function ManagerScheduleTask({ idx, startHour }: ManagerScheduleTaskPT) {
 	const today = dayjs()
 	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
-	const day = week[index]
+	const day = week[idx]
 
 	const dailyReservations = reservationData
 		.flat()
 		.filter((res) => day.date() === res.date)
 
-	const startHour = 11
-	const endHour = 18
+	const endHour = startHour + 7
 
 	return (
 		<div className="grid h-full w-[1000px] grid-cols-8">
@@ -306,12 +343,21 @@ function ManagerScheduleTask({ index }: ManagerScheduleThisWeekPT) {
 	)
 }
 
-function ManagerScheduleMoreTask() {
+function ManagerScheduleMoreTask({
+	onClick,
+	incremented,
+}: {
+	onClick: () => void
+	incremented: boolean
+}) {
 	return (
 		<div className="flex h-full w-[100px] items-center justify-center border-l-[2px] border-Gray10">
-			<div className="flex h-[35px] w-[55.38px] items-center justify-center rounded-[35px] border-[0.5px] border-Gray40">
+			<div
+				className="flex h-[35px] w-[55.38px] cursor-pointer items-center justify-center rounded-[35px] border-[0.5px] border-Gray40"
+				onClick={onClick}
+			>
 				<NTIcon
-					icon="expandRightLight"
+					icon={incremented ? "expandLeftLight" : "expandRightLight"}
 					className="w-[25px] cursor-pointer text-Gray70"
 				/>
 			</div>
