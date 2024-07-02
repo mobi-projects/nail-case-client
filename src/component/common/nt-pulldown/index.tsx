@@ -1,3 +1,4 @@
+import { cva } from "class-variance-authority"
 import React, { useEffect, useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
@@ -10,6 +11,7 @@ type NTPulldownPT = {
 	isOpen: boolean
 	clickedOption: string
 	boxRef: React.RefObject<HTMLDivElement>
+	position?: "center" | "left" | "right"
 	onClickWrapper: VoidFunction
 	onClickTrigger: VoidFunction
 	onClickItems: (item: string) => void
@@ -25,6 +27,7 @@ type NTPulldownItemsPT = {
 	clickCallback: (option: string) => void
 	clickedOption: string
 	isVisible: boolean
+	position?: "center" | "left" | "right"
 }
 
 export default function NTPulldown({
@@ -33,6 +36,7 @@ export default function NTPulldown({
 	optionArr,
 	isOpen,
 	clickedOption,
+	position,
 	onClickItems,
 	onClickTrigger,
 	onClickWrapper,
@@ -64,6 +68,7 @@ export default function NTPulldown({
 					clickCallback={onClickItems}
 					clickedOption={clickedOption}
 					isVisible={isOpen}
+					position={position}
 				/>
 			)}
 		</div>
@@ -100,11 +105,25 @@ function NTPulldownItems({
 	clickCallback,
 	clickedOption,
 	isVisible,
+	position,
 }: NTPulldownItemsPT) {
+	const positionVariants = cva(
+		"absolute  top-full z-10 mt-2 w-[15rem]  overflow-hidden rounded-[14px] border-[0.5px] border-Gray40 bg-white shadow-lg transition-all duration-500 ease-in-out",
+		{
+			variants: {
+				position: {
+					center: "left-1/2 -translate-x-1/2 transform",
+					left: "left-0",
+					right: "right-0",
+				},
+			},
+			defaultVariants: { position: "center" },
+		},
+	)
 	return (
 		<div
 			className={cn(
-				"absolute left-1/2 top-full z-10 mt-2 w-[15rem] -translate-x-1/2 transform overflow-hidden rounded-[14px] border-[0.5px] border-Gray40 bg-white shadow-lg transition-all duration-500 ease-in-out",
+				positionVariants({ position }),
 				isVisible ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0",
 			)}
 		>
