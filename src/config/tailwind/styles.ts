@@ -12,6 +12,7 @@ export const COLORS = {
 	Gray10: "#F4F4F4",
 	Gray08: "#BDBDBD",
 	White: "#FFFFFF",
+	PB110: "#069AED",
 	PB100: "#02ADF2",
 	PB90: "#1BB5F3",
 	PB80: "#35BDF5",

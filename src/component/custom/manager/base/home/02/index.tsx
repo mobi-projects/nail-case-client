@@ -87,17 +87,16 @@ function ReservationTagList({ time, idx }: ReservationTimeListPT) {
 			<div className="flex h-[56px] w-[88px] items-center justify-center border-r-2 border-Gray10">
 				<div className="text-Headline02 text-Gray90">{time}</div>
 			</div>
-			<div className="w-full pl-[34px]">
-				<NTOption
-					optionArr={[
-						"이달의 아트 ",
-						"동반2인",
-						"타샵 제거 있음",
-						"1인 연장 필요",
-					]}
-					gap={4}
-				/>
-			</div>
+			<NTOption
+				optionArr={[
+					"이달의 아트 ",
+					"동반2인",
+					"타샵 제거 있음",
+					"1인 연장 필요",
+				]}
+				className="w-full flex-nowrap gap-[15px] pl-[15px]"
+				size="large"
+			/>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
 		</div>
 	)

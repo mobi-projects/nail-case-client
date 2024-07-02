@@ -178,13 +178,15 @@ function DetailTagList({ pendingData }: DetailTagListPT) {
 		const tagListTranslate = tagList.map((tag) => tagLists[tag])
 		return [...tagListTranslate, extendTagTranslate]
 	}
-	const limitedTopTagList = translateTagList().slice(0, 2)
-	const limitedBottomTagList = translateTagList().slice(2, 4)
+	const limitedTopTagList = translateTagList().slice(0, 4)
 	return (
 		<div className="flex h-full w-full justify-between pl-[4px] pr-[1px] pt-[13px]">
 			<div className="flex h-full flex-col gap-y-4">
-				<NTOption optionArr={limitedTopTagList} gap={4} />
-				<NTOption optionArr={limitedBottomTagList} gap={4} />
+				<NTOption
+					optionArr={limitedTopTagList}
+					className="flex flex-wrap gap-x-4"
+					size="large"
+				/>
 			</div>
 			<div className="flex w-fit shrink-0 items-end">
 				<NTButton icon="check" flexible="fit">
