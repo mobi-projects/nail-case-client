@@ -1,4 +1,4 @@
-import { NTButton } from "../../../common/atom/nt-button"
+import { NTButton } from "../../../../common/atom/nt-button"
 
 type ToastMessagePT = {
 	title: string
