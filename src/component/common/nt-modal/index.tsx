@@ -1,9 +1,9 @@
 import type { VariantProps } from "class-variance-authority"
 import { cva } from "class-variance-authority"
-import type { HTMLAttributes, PropsWithChildren } from "react"
-import { forwardRef } from "react"
+import { useEffect, type HTMLAttributes, type PropsWithChildren } from "react"
 
 import { cn } from "@/config/tailwind"
+import { useControlBodyScroll } from "@/hook/use-prevent-scroll"
 
 import NTIcon from "../nt-icon"
 
@@ -28,30 +28,43 @@ const ModalVariants = cva(
 type NTModalPT = HTMLAttributes<HTMLDialogElement> &
 	VariantProps<typeof ModalVariants> &
 	PropsWithChildren & {
-		isX: boolean
+		isX?: boolean
 	}
 
-const NTModal = forwardRef<HTMLDialogElement, NTModalPT>(
-	({ size, children, isX, className }, ref) => {
-		const { onCloseModal } = useModal()
-		return (
-			<dialog
-				ref={ref}
-				onClick={onCloseModal}
-				className={cn(
-					"h-full w-full bg-transparent backdrop:bg-Black/30 focus-visible:outline-none",
-					className,
-				)}
-			>
-				<ModalContainer className={ModalVariants({ size })} {...{ isX }}>
-					{children}
-				</ModalContainer>
-			</dialog>
-		)
-	},
-)
+export default function NTModal({
+	size = "small",
+	children,
+	isX = true,
+	className,
+}: NTModalPT) {
+	const { onCloseModal } = useModal()
+	const { pauseBodyScroll, restartBodyScroll } = useControlBodyScroll()
+
+	useEffect(() => {
+		const prevScrollY = pauseBodyScroll()
+		return () => {
+			restartBodyScroll(prevScrollY)
+		}
+	}, [pauseBodyScroll, restartBodyScroll])
+
+	return (
+		<div
+			onClick={onCloseModal}
+			className={cn(
+				"fixed left-0 top-0 z-50 h-full w-full overflow-hidden bg-Black/30 focus-visible:outline-none",
+				className,
+			)}
+			onScroll={(e) => {
+				e.preventDefault()
+			}}
+		>
+			<ModalContainer className={cn(ModalVariants({ size }))} {...{ isX }}>
+				{children}
+			</ModalContainer>
+		</div>
+	)
+}
 NTModal.displayName = "NTModal"
-export default NTModal
 
 function ModalContainer({
 	children,
@@ -88,6 +101,7 @@ export function ModalContent({
 	children,
 	...rest
 }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+	console.log(children)
 	return (
 		<div className={cn("flex h-full w-full flex-col", rest.className)}>
 			{children}
