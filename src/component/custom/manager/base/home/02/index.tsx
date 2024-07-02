@@ -1,6 +1,6 @@
 "use client"
 import { cva } from "class-variance-authority"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
@@ -106,20 +106,16 @@ type ReservationTimeListPT = {
 	}
 }
 function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
-	const {
-		data: reservationData,
-		isError,
-		error,
-	} = useListReservationQuery(
+	const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+	const reservationRef = useRef<(HTMLDivElement | null)[]>([])
+	const { data: reservationData } = useListReservationQuery(
 		1,
 		timeRange.startTime.getTime() / 1000,
 		timeRange.lastTime.getTime() / 1000,
 	)
 
 	const reservationArr = reservationData?.dataList || []
-	if (isError) {
-		return <div>Error: {error.message}</div>
-	}
+
 	const confirmedReservations = reservationArr
 		.map((reservation) =>
 			reservation.reservationDetailList.filter(
@@ -127,8 +123,54 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 			),
 		)
 		.flat()
+
+	useEffect(() => {
+		const reservationFormscroll = () => {
+			const now = new Date()
+			for (let i = 0; i < confirmedReservations.length; i++) {
+				const reservation = confirmedReservations[i]
+				const startTime = new Date(reservation.startTime * 1000)
+				const endTime = new Date(reservation.endTime * 1000)
+				if (now >= startTime && now <= endTime) {
+					const currentElement = reservationRef.current[i]
+					const containerElement = scrollContainerRef.current
+
+					if (currentElement && containerElement) {
+						const elementTop = currentElement.offsetTop
+						const elementHeight = currentElement.clientHeight
+						const containerHeight = containerElement.clientHeight
+
+						containerElement.scrollTop =
+							elementTop - containerHeight / 2 + elementHeight / 2
+					}
+					break
+				} else if (now < startTime) {
+					const currentElement = reservationRef.current[i]
+					const containerElement = scrollContainerRef.current
+
+					if (currentElement && containerElement) {
+						const elementTop = currentElement.offsetTop
+						const elementHeight = currentElement.clientHeight
+						const containerHeight = containerElement.clientHeight
+
+						containerElement.scrollTop =
+							elementTop - containerHeight / 2 + elementHeight / 2
+					}
+					break
+				}
+			}
+		}
+
+		reservationFormscroll()
+		const intervalId = setInterval(reservationFormscroll, 1800000)
+
+		return () => clearInterval(intervalId)
+	}, [confirmedReservations])
 	return (
-		<div className="h-full max-h-[508px] scroll-p-3 overflow-y-scroll">
+		<div
+			className="h-full max-h-[508px] scroll-p-3 overflow-y-scroll"
+			ref={scrollContainerRef}
+		>
 			{confirmedReservations.map((data, idx) => {
 				const reservation = data
 				const startTime = new Date(reservation.startTime * 1000)
@@ -146,7 +188,12 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 				}
 
 				return (
-					<div key={idx}>
+					<div
+						key={idx}
+						ref={(el) => {
+							reservationRef.current[idx] = el
+						}}
+					>
 						<div className="flex h-[127px] w-full items-center justify-between gap-[26.5px] px-[27px]">
 							<ReservationTimeGap startTime={startTime} endTime={endTime} />
 							<ReservationTagList
