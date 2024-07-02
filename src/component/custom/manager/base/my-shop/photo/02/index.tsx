@@ -1,6 +1,7 @@
 "use client"
+import { useState } from "react"
+
 import NTOption from "@/component/common/nt-option"
-import { useOption } from "@/hook/use-component"
 
 export default function PreviewImages() {
 	return (
@@ -12,16 +13,15 @@ export default function PreviewImages() {
 }
 
 function PreviewController() {
-	const { checkedOption, onClickOption, optionArr } = useOption([
-		["업체 사진", "이용자 사진"],
-	])
+	const [activeIdx, setActiveIdx] = useState(0)
+	const onToggleOption = (idx: number) => setActiveIdx(idx)
+
 	return (
 		<div className="flex h-[96px] items-center justify-between pr-7">
 			<NTOption
-				checkedOption={checkedOption}
-				onClickOption={onClickOption}
-				gap={4}
-				optionArr={optionArr[0]}
+				optionArr={["업체 사진", "이용자 사진"]}
+				selectedIdxArr={[activeIdx]}
+				onSelect={onToggleOption}
 			/>
 			<span className="pt-6 text-Body02 font-SemiBold text-Gray30">
 				전체보기
