@@ -1,6 +1,6 @@
 "use client"
 import { cva } from "class-variance-authority"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
@@ -20,7 +20,37 @@ export default function ReservationForm() {
 		month: getThisMonth() - 1,
 		date: getThisDate(),
 	})
-	const [timeRange, setTimeRange] = useState({
+	// const [timeRange, setTimeRange] = useState({
+	// 	startTime: new Date(dateInfo.year, dateInfo.month, dateInfo.date, 0, 0, 0),
+	// 	lastTime: new Date(
+	// 		dateInfo.year,
+	// 		dateInfo.month,
+	// 		dateInfo.date,
+	// 		23,
+	// 		59,
+	// 		59,
+	// 	),
+	// })
+	// useEffect(() => {
+	// 	const updatedStartTime = new Date(
+	// 		dateInfo.year,
+	// 		dateInfo.month,
+	// 		dateInfo.date,
+	// 		0,
+	// 		0,
+	// 		0,
+	// 	)
+	// 	const updatedLastTime = new Date(
+	// 		dateInfo.year,
+	// 		dateInfo.month,
+	// 		dateInfo.date,
+	// 		23,
+	// 		59,
+	// 		59,
+	// 	)
+	// 	setTimeRange({ startTime: updatedStartTime, lastTime: updatedLastTime })
+	// }, [dateInfo])
+	const timeRange = {
 		startTime: new Date(dateInfo.year, dateInfo.month, dateInfo.date, 0, 0, 0),
 		lastTime: new Date(
 			dateInfo.year,
@@ -30,28 +60,7 @@ export default function ReservationForm() {
 			59,
 			59,
 		),
-	})
-
-	useEffect(() => {
-		const updatedStartTime = new Date(
-			dateInfo.year,
-			dateInfo.month,
-			dateInfo.date,
-			0,
-			0,
-			0,
-		)
-		const updatedLastTime = new Date(
-			dateInfo.year,
-			dateInfo.month,
-			dateInfo.date,
-			23,
-			59,
-			59,
-		)
-		setTimeRange({ startTime: updatedStartTime, lastTime: updatedLastTime })
-	}, [dateInfo])
-
+	}
 	return (
 		<div className="mb-[9px] h-[646px] rounded-[26px] shadow-customGray60">
 			<ReservationFormHeader
@@ -110,7 +119,7 @@ function ReservationFormHeader({
 				className="cursor-pointer text-Gray08"
 				onClick={handlePrevDay}
 			/>
-			<div className="text-Headline02 text-Gray50">{`${dateInfo.month + 1}월 ${dateInfo.date}일 (${dayOfWeek})`}</div>
+			<div className="w-[120px] text-center text-Headline02 text-Gray50">{`${dateInfo.month + 1}월 ${dateInfo.date}일 (${dayOfWeek})`}</div>
 			<NTIcon
 				icon="expandRightLight"
 				className="cursor-pointer text-Gray08"
@@ -126,25 +135,17 @@ type ReservationTimeListPT = {
 	}
 }
 function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
-	const customTimeRage = (date: Date) => {
-		const year = date.getFullYear()
-		const month = String(date.getMonth() + 1).padStart(2, "0")
-		const day = String(date.getDate()).padStart(2, "0")
-		const hours = String(date.getHours()).padStart(2, "0")
-		const minutes = String(date.getMinutes()).padStart(2, "0")
-		return Number(`${year}${month}${day}${hours}${minutes}`)
-	}
 	const {
 		data: reservationData,
 		isError,
 		error,
 	} = useListReservationQuery(
 		1,
-		customTimeRage(timeRange.startTime),
-		customTimeRage(timeRange.lastTime),
+		timeRange.startTime.getTime() / 1000,
+		timeRange.lastTime.getTime() / 1000,
 	)
-	const reservationArr = reservationData?.dataList || []
 
+	const reservationArr = reservationData?.dataList || []
 	if (isError) {
 		return <div>Error: {error.message}</div>
 	}
@@ -155,7 +156,6 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 			),
 		)
 		.flat()
-
 	return (
 		<div className="h-full max-h-[508px] scroll-p-3 overflow-y-scroll">
 			{confirmedReservations.map((data, idx) => {
@@ -164,15 +164,14 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 				const endTime = new Date(reservation.endTime * 1000)
 				const tagList = [
 					reservation.remove,
-					reservation.conditionList[0]?.option,
+					...reservation.conditionList.map((data) => data.option.toString()),
 					reservation.treatmentList[0]?.option,
 				]
 				const extendTag = reservation.extend
-
 				const translateTagList = () => {
 					const tagListTranslate = tagList.map((tag) => tagLists[tag])
 					const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
-					return [...tagListTranslate, extendTagTranslate]
+					return [extendTagTranslate, ...tagListTranslate]
 				}
 
 				return (
@@ -245,7 +244,7 @@ function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
 			.replace(":00", "")
 			.replace("시", "")
 	}
-
+	const limitedTagList = tagList.slice(0, 4)
 	return (
 		<div
 			className={ReservationFormVariants({
@@ -258,7 +257,7 @@ function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
 				</div>
 			</div>
 			<div className="w-full border-l-2 border-Gray10 pl-[34px]">
-				<NTOption optionArr={tagList} gap={4} />
+				<NTOption optionArr={limitedTagList} gap={4} />
 			</div>
 			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
 		</div>
