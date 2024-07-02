@@ -38,22 +38,30 @@ export const getKSTStampByStamp = (timestamp: number) => {
 
 /** KST 기준, "현재 시각" 을 타임스탬프 로 반환 */
 export const getNowStamp = (): number => getKSTStampByStamp(Date.now())
-/** KST 기준, 이번 "연도" 반환 */
+/** KST 기준, 현재 호출 "연도" 를 타임스탬프 로 반환 */
 export const getThisYear = () => getYearFromStamp(getNowStamp())
-/** KST 기준, 이번 "달" 반환 */
+/** KST 기준, 현재 호출 "달" 를 타임스탬프 로 반환 */
 export const getThisMonth = () => getMonthFromStamp(getNowStamp())
-/** KST 기준, 이번 "날" 반환 */
+/** KST 기준, 현재 호출 "날" 를 타임스탬프 로 반환 */
 export const getThisDate = () => getDateFromStamp(getNowStamp())
+/** KST 기준, 현재 호출 "요일" 를 타임스탬프 로 반환 */
+export const getThisDayOfWeek = () => getDayOfWeekFromStamp(getNowStamp())
+/** KST 기준, 현재 호출 "시간" 를 타임스탬프 로 반환 */
+export const getThisTime = () => getHourFromStamp(getNowStamp())
+/** KST 기준, 현재 호출 "분" 를 타임스탬프 로 반환 */
+export const getThisMin = () => getMinFromStamp(getNowStamp())
+/** KST 기준, 현재 호출 "분" 를 타임스탬프 로 반환 */
+export const getThisSec = () => getSecFromStamp(getNowStamp())
 
 /** 입력받은 "연도", "월", "일" 기준, 당일 00시 00분 00초 반환 (timestamp) */
-export const getTodayFirst = (year: number, month: number, date: number) =>
+export const getThisDayFirst = (year: number, month: number, date: number) =>
 	getKSTStamp(year, month, date)
 /** 입력받은 "연도", "월", "일" 기준, 당일 23시 59분 59초 반환 (timestamp) */
-export const getTodayLast = (year: number, month: number, date: number) =>
+export const getThisDayLast = (year: number, month: number, date: number) =>
 	getKSTStamp(year, month, date, 23, 59, 59)
 
 /** 입력받은 "연도", "월", "일" 기준, 당 주 첫째 날 00시 00분 00초 반환 (timestamp) */
-export const getWeekFirst = (year: number, month: number, date: number) => {
+export const getThisWeekFirst = (year: number, month: number, date: number) => {
 	const weekFirst = dayjs
 		.unix(getKSTStamp(year, month, date))
 		.startOf("week")
@@ -61,7 +69,7 @@ export const getWeekFirst = (year: number, month: number, date: number) => {
 	return weekFirst.unix()
 }
 /** 입력받은 "연도", "월", "일" 기준, 당 주 마지막 날 23시 59분 59초 반환 (timestamp) */
-export const getWeekLast = (year: number, month: number, date: number) => {
+export const getThisWeekLast = (year: number, month: number, date: number) => {
 	const weekLast = dayjs
 		.unix(getKSTStamp(year, month, date))
 		.endOf("week")
@@ -107,6 +115,24 @@ export const getDayOfWeekFromStamp = (timestamp: number) => {
 	const ktcStamp = getKSTStampByStamp(timestamp)
 	const date = new Date(ktcStamp * 1000)
 	return dayOfWeekArr[date.getDay()]
+}
+/** 입력(타입스탬프)으로부터 "시간" 반환 */
+export const getHourFromStamp = (timestamp: number) => {
+	timestamp = convertSecondTimestamp(timestamp)
+	const ktcStamp = getKSTStampByStamp(timestamp)
+	return new Date(ktcStamp * 1000).getHours()
+}
+/** 입력(타입스탬프)으로부터 "분" 반환 */
+export const getMinFromStamp = (timestamp: number) => {
+	timestamp = convertSecondTimestamp(timestamp)
+	const ktcStamp = getKSTStampByStamp(timestamp)
+	return new Date(ktcStamp * 1000).getMinutes()
+}
+/** 입력(타입스탬프)으로부터 "초" 반환 */
+export const getSecFromStamp = (timestamp: number) => {
+	timestamp = convertSecondTimestamp(timestamp)
+	const ktcStamp = getKSTStampByStamp(timestamp)
+	return new Date(ktcStamp * 1000).getSeconds()
 }
 
 /** 입력된 "년", "월" 에 대해, 달력에 출력될 날짜(timestamp) 배열을 반환  */
