@@ -120,9 +120,13 @@ export default function DayScheDule() {
 	return (
 		<div className="flex h-fit w-full flex-col rounded-[26px] border shadow-customGray60">
 			<div className="flex flex-col">
-				{reservation.map((slot, index) => (
-					<DayScheduleTime key={index} slot={slot} currentTime={currentTime} />
-				))}
+				{reservation
+					.filter((slot) =>
+						dayjs().hour(slot.endTime).minute(0).isAfter(currentTime),
+					)
+					.map((slot, idx) => (
+						<DayScheduleTime key={idx} slot={slot} currentTime={currentTime} />
+					))}
 			</div>
 			<div className="mt-[20px] flex h-[65px] w-full justify-center text-Headline02 text-Gray50">
 				근무 종료
