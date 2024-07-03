@@ -7,7 +7,7 @@ import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
 import { useListReservationQuery } from "@/hook/use-reservation-controller"
-import type { TResGetListReservation, reservationDetailList } from "@/type"
+import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import { getShopById } from "@/util/api/shop-controller"
 import { getThisDate, getThisMonth, getThisYear } from "@/util/common"
 import { tagLists } from "@/util/common/tagList"
@@ -118,11 +118,11 @@ function WaitingTotalCard({
 }
 
 type WaitingDetailCardPT = {
-	pendingReservations: Array<reservationDetailList>
+	pendingReservations: Array<TReservationDetailList>
 }
 function WaitingDetailCard({ pendingReservations }: WaitingDetailCardPT) {
 	const [pendingDataArr, setPendingDataArr] = useState<
-		Array<reservationDetailList>
+		Array<TReservationDetailList>
 	>([])
 	useEffect(() => {
 		setPendingDataArr(pendingReservations)
@@ -163,7 +163,7 @@ function DetailDate({ startTime, dataLength, idx }: DetailDatePT) {
 	)
 }
 type DetailTagListPT = {
-	pendingData: reservationDetailList
+	pendingData: TReservationDetailList
 }
 function DetailTagList({ pendingData }: DetailTagListPT) {
 	const tagList = [

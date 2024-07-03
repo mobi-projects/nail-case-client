@@ -188,7 +188,7 @@ export type TResUpdateReservation = {
 	createdAt: number
 	modifiedAt: number
 }
-export type reservationDetailList = {
+export type TReservationDetailList = {
 	reservationDetailId: number
 	nailArtistId: number
 	remove: TRemoveOption
