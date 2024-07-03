@@ -65,7 +65,7 @@ function ReservationCalendar({
 	return (
 		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[21px]">
 			<div className="flex h-full w-full items-center justify-center rounded-[26px] shadow-customGray60">
-				<Calendar {...{ setClickedStamp }} />
+				<Calendar {...{ setClickedStamp, clickedStamp }} />
 			</div>
 			<NTButton
 				variant="tertiary"
@@ -134,8 +134,12 @@ const reservationDateMockData = [
 ]
 
 function Calendar({
+	clickedStamp,
 	setClickedStamp,
-}: Pick<ReservationScheduleSubComponentPT, "setClickedStamp">) {
+}: Pick<
+	ReservationScheduleSubComponentPT,
+	"setClickedStamp" | "clickedStamp"
+>) {
 	const [focusedYear, setFocusedYear] = useState(getThisYear())
 	const [focusedMonth, setFocusedMonth] = useState(getThisMonth())
 
@@ -199,7 +203,7 @@ function Calendar({
 					<CalenderBody
 						focusedStampArr={getCalendarArr(focusedYear, focusedMonth)}
 						reservationStampArr={reservationDateMockData}
-						{...{ setClickedStamp }}
+						{...{ setClickedStamp, clickedStamp }}
 					/>
 				</tbody>
 			</table>
@@ -209,12 +213,16 @@ function Calendar({
 
 function CalenderBody({
 	focusedStampArr = [],
-	reservationStampArr = [],
+	// reservationStampArr = [], // [Todo] 예약일 표시할 경우 사용
 	setClickedStamp,
+	clickedStamp,
 }: {
 	focusedStampArr: number[]
 	reservationStampArr?: number[]
-} & Pick<ReservationScheduleSubComponentPT, "setClickedStamp">) {
+} & Pick<
+	ReservationScheduleSubComponentPT,
+	"setClickedStamp" | "clickedStamp"
+>) {
 	return (
 		<tr className="grid h-full w-full grid-cols-7">
 			{focusedStampArr.map((stamp) => {
@@ -222,9 +230,10 @@ function CalenderBody({
 				const isPrevDay = isBefore(stamp, nowStamp)
 				const isToday = isSame(stamp, nowStamp)
 				const isNextMonth = isAfter(stamp, nowStamp, "month")
-				const isReserved = reservationStampArr.some((reservationStamp) =>
-					isSame(reservationStamp, stamp),
-				)
+				// const isReserved = reservationStampArr.some((reservationStamp) =>
+				// 	isSame(reservationStamp, stamp),
+				// )
+				const isClicked = isSame(stamp, clickedStamp)
 				return (
 					<th
 						className="flex h-full w-full items-center justify-center"
@@ -235,7 +244,7 @@ function CalenderBody({
 								"flex h-[30px] w-[34px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-[14px] font-Regular text-Gray100 transition-all hover:scale-150",
 								isToday && "text-[16px] text-PB100",
 								isNextMonth && "text-Gray60",
-								isReserved && "bg-PY100",
+								isClicked && "bg-PY100",
 								isPrevDay &&
 									"cursor-default bg-White text-Gray40 hover:scale-100",
 							)}
