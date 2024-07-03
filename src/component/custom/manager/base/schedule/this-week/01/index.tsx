@@ -3,6 +3,7 @@
 import dayjs from "dayjs"
 import React, { useState } from "react"
 
+import NTEventDetail from "@/component/common/nt-event-deatli"
 import NTIcon from "@/component/common/nt-icon"
 
 export default function ManagerBaseScheduleThisWeekTask() {
@@ -119,9 +120,7 @@ function ManagerScheduleDay({ idx, isToday }: ManagerScheduleDayPT) {
 		<div className="ml-[10px] flex h-[131.27px] w-[100px] flex-col justify-between border-r-[2px] border-Gray10">
 			<div>
 				<div
-					className={`text-Headline02 ${
-						isToday ? "text-PB100" : "text-Gray100"
-					}`}
+					className={`text-Headline02 ${isToday ? "text-PB100" : "text-Gray100"}`}
 				>
 					{daysOfWeek[idx]}
 				</div>
@@ -132,9 +131,7 @@ function ManagerScheduleDay({ idx, isToday }: ManagerScheduleDayPT) {
 				</div>
 			</div>
 			<div
-				className={`text-Title03 font-Bold ${
-					isToday ? "text-PB100" : "text-Gray40"
-				}`}
+				className={`text-Title03 font-Bold ${isToday ? "text-PB100" : "text-Gray40"}`}
 			>
 				4건
 			</div>
@@ -145,7 +142,7 @@ function ManagerScheduleDay({ idx, isToday }: ManagerScheduleDayPT) {
 const reservationData = [
 	[
 		{
-			date: 30,
+			date: 2,
 			firstTime: 11,
 			endTime: 13,
 			artistArr: [
@@ -160,7 +157,7 @@ const reservationData = [
 			],
 		},
 		{
-			date: 30,
+			date: 2,
 			firstTime: 15,
 			endTime: 18,
 			artistArr: [
@@ -173,7 +170,7 @@ const reservationData = [
 	],
 	[
 		{
-			date: 1,
+			date: 3,
 			firstTime: 13,
 			endTime: 15,
 			artistArr: [
@@ -186,7 +183,7 @@ const reservationData = [
 	],
 	[
 		{
-			date: 1,
+			date: 4,
 			firstTime: 16,
 			endTime: 19,
 			artistArr: [
@@ -201,9 +198,9 @@ const reservationData = [
 			],
 		},
 		{
-			date: 2,
-			firstTime: 15,
-			endTime: 17,
+			date: 4,
+			firstTime: 11,
+			endTime: 13,
 			artistArr: [
 				{
 					name: "비모쌤",
@@ -214,7 +211,7 @@ const reservationData = [
 	],
 	[
 		{
-			date: 2,
+			date: 5,
 			firstTime: 12,
 			endTime: 14,
 			artistArr: [
@@ -229,7 +226,7 @@ const reservationData = [
 			],
 		},
 		{
-			date: 3,
+			date: 5,
 			firstTime: 15,
 			endTime: 18,
 			artistArr: [
@@ -242,7 +239,7 @@ const reservationData = [
 	],
 	[
 		{
-			date: 4,
+			date: 6,
 			firstTime: 13,
 			endTime: 15,
 			artistArr: [
@@ -255,12 +252,12 @@ const reservationData = [
 	],
 	[
 		{
-			date: 5,
+			date: 7,
 			firstTime: 11,
 			endTime: 14,
 			artistArr: [
 				{
-					name: "모비쌤",
+					name: "미지정",
 					optionArr: ["아트", "동반 2인 시술"],
 				},
 				{
@@ -270,7 +267,7 @@ const reservationData = [
 			],
 		},
 		{
-			date: 5,
+			date: 7,
 			firstTime: 15,
 			endTime: 17,
 			artistArr: [
@@ -302,7 +299,7 @@ function ManagerScheduleTask({ idx, startHour }: ManagerScheduleTaskPT) {
 	return (
 		<div className="grid h-full w-[1000px] grid-cols-8">
 			{Array.from({ length: endHour - startHour }).map((_, i) => (
-				<div key={i} className="mt-[12px]" style={{ minHeight: "136.8px" }}>
+				<div key={i} className="mt-[12px] min-h-[136.8px]">
 					{dailyReservations.map((res, idx) => {
 						const duration = res.endTime - res.firstTime
 						const widthClass =
@@ -315,23 +312,26 @@ function ManagerScheduleTask({ idx, startHour }: ManagerScheduleTaskPT) {
 						return res.firstTime === startHour + i ? (
 							<div
 								key={idx}
-								className={`mb-2 rounded-lg grid-column-span-${duration}`}
+								className={`rounded-lg grid-column-span-${duration}`}
 							>
 								{res.artistArr.map((artist, artistIdx) => {
-									const artistBgColorClass =
-										artist.name === "모비쌤" ? "bg-BGblue02" : "bg-PY50"
+									let variant: "PB" | "PY" | "Gray" | null = null
+									if (artist.name === "모비쌤") {
+										variant = "PB"
+									} else if (artist.name === "비모쌤") {
+										variant = "PY"
+									} else if (artist.name === "미지정") {
+										variant = "Gray"
+									}
 									return (
-										<div
+										<NTEventDetail
 											key={`${idx}-${artistIdx}`}
-											className={`mb-2 rounded-lg ${widthClass} ${artistBgColorClass} flex h-[50px] items-center px-[10px]`}
+											variant={variant}
+											className={`${widthClass} mb-[15px]`}
+											name={artist.name}
 										>
-											<div className="mr-2 text-Body02 font-Bold text-Gray100">
-												{artist.name}
-											</div>
-											<div className="text-Callout text-Gray100">
-												{artist.optionArr.join(" / ")}
-											</div>
-										</div>
+											{artist.optionArr.join(" / ")}
+										</NTEventDetail>
 									)
 								})}
 							</div>

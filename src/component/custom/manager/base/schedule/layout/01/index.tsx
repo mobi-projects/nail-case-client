@@ -86,6 +86,7 @@ function ScheduleInfo() {
 					description="시술 건수를 선택해주세요"
 					optionArr={["3건이하", "4건 이상 6건 이하", "7건 이상"]}
 					placeholder="시술"
+          position="right"
 					{...pulldownSchedule}
 				/>
 			) : null}
