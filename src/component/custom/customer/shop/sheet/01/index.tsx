@@ -1,3 +1,4 @@
+import NTIcon from "@/component/common/nt-icon"
 import type { TNailTreatment } from "@/type/union-option/nail-treatment"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
 import {
@@ -38,10 +39,11 @@ export default function ReservationResponseReceptionSheet({
 
 export function TopRightArrowIcon() {
 	return (
-		<div className="flex h-[56px] w-[56px] items-center justify-center overflow-hidden rounded-full bg-Gray90">
-			<p className="flex h-[31.5px] w-[31.5px] scale-[200%] items-center justify-center bg-gradient-to-t from-PY100 to-PB100 bg-clip-text text-center font-Bold text-transparent">
-				NT
-			</p>
+		<div className="flex h-[56px] w-[56px] items-center justify-center overflow-hidden rounded-full bg-gradient-to-t from-PB100 to-PY100 p-0">
+			<NTIcon
+				icon="circleUpRight"
+				className="h-[100px] w-[100px] bg-transparent text-Gray90"
+			/>
 		</div>
 	)
 }
