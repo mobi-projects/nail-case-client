@@ -1,132 +1,69 @@
 "use client"
-
-import type { Dayjs } from "dayjs"
-import dayjs from "dayjs"
-import React from "react"
-
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTNameBox from "@/component/common/nt-name-box"
 import NTOption from "@/component/common/nt-option"
-
-type Artist = {
-	name: string
-	optionArr: string[]
-}
-
-type Slot = {
-	firstTime: number
-	endTime: number
-	artistArr: Artist[]
-}
-
-type DayScheduleTimePT = {
-	slot: Slot
-	currentTime: Dayjs
-}
-
-type DayScheduleDashPT = {
-	slot: Slot
-}
-
-type DayScheduleTaskPT = {
-	slot: Slot
-	duration: number
-}
-
-type DayScheduleOptionsPT = {
-	optionArr: string[]
-}
+import { useListReservationQuery } from "@/hook/use-reservation-controller"
+import type { TReservationDetailList } from "@/type"
+import {
+	getThisDayFirst,
+	getThisDate,
+	getThisMonth,
+	getThisYear,
+	getThisDayLast,
+} from "@/util/common"
+import { tagLists } from "@/util/common/tagList"
 
 export default function DayScheDule() {
-	const reservation: Slot[] = [
-		{
-			firstTime: 11,
-			endTime: 13,
-			artistArr: [
-				{
-					name: "모비쌤",
-					optionArr: [
-						"이달의 아트",
-						"동반 2인",
-						"타샵 제거 있음",
-						"1인 연장 필요",
-					],
-				},
-				{
-					name: "비모쌤",
-					optionArr: [
-						"이달의 아트",
-						"동반 2인",
-						"타샵 제거 있음",
-						"1인 연장 필요",
-					],
-				},
-			],
+	const startTime = getThisDayFirst(
+		getThisYear(),
+		getThisMonth(),
+		getThisDate(),
+	)
+	const endTime = getThisDayLast(getThisYear(), getThisMonth(), getThisDate())
+	const { data: reservationData } = useListReservationQuery(
+		1,
+		startTime,
+		endTime,
+	)
+	const reservationArr = reservationData?.dataList || []
+	const confirmedReservations = reservationArr.reduce<TReservationDetailList[]>(
+		(data, reservation) => {
+			data.push(
+				...reservation.reservationDetailList.filter(
+					(detail) => detail.status === "CONFIRMED",
+				),
+			)
+			return data
 		},
-		{
-			firstTime: 15,
-			endTime: 16,
-			artistArr: [
-				{
-					name: "모비쌤",
-					optionArr: ["이달의 아트", "동반 2인", "타샵 제거 있음"],
-				},
-			],
-		},
-		{
-			firstTime: 16,
-			endTime: 17,
-			artistArr: [
-				{
-					name: "비모쌤",
-					optionArr: ["이달의 아트", "동반 2인", "타샵 제거 있음"],
-				},
-			],
-		},
-		{
-			firstTime: 17,
-			endTime: 18,
-			artistArr: [
-				{
-					name: "비모쌤",
-					optionArr: ["이달의 아트", "동반 2인", "타샵 제거 있음"],
-				},
-			],
-		},
-		{
-			firstTime: 18,
-			endTime: 19,
-			artistArr: [
-				{
-					name: "모비쌤",
-					optionArr: ["이달의 아트", "동반 2인", "타샵 제거 있음"],
-				},
-			],
-		},
-		{
-			firstTime: 19,
-			endTime: 20,
-			artistArr: [
-				{
-					name: "미지정",
-					optionArr: ["이달의 아트", "동반 2인", "타샵 제거 있음"],
-				},
-			],
-		},
-	]
-
-	const currentTime = dayjs()
-
+		[],
+	)
 	return (
-		<div className="flex h-fit w-full flex-col rounded-[26px] border shadow-customGray60">
+		<div className="flex h-fit w-full flex-col rounded-[26px] shadow-customGray60">
 			<div className="flex flex-col">
-				{reservation
-					.filter((slot) =>
-						dayjs().hour(slot.endTime).minute(0).isAfter(currentTime),
+				{confirmedReservations.map((data, idx) => {
+					const reservation = data
+					const startTime = new Date(reservation.startTime * 1000)
+					const endTime = new Date(reservation.endTime * 1000)
+					const tagList = [
+						reservation.remove,
+						...reservation.conditionList.map((data) => data.option.toString()),
+						reservation.treatmentList[0]?.option,
+					]
+					const extendTag = reservation.extend
+					const translateTagList = () => {
+						const tagListTranslate = tagList.map((tag) => tagLists[tag])
+						const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
+						return [extendTagTranslate, ...tagListTranslate]
+					}
+					return (
+						<DayScheduleTime
+							key={idx}
+							startTime={startTime}
+							endTime={endTime}
+							tagList={translateTagList()}
+						/>
 					)
-					.map((slot, idx) => (
-						<DayScheduleTime key={idx} slot={slot} currentTime={currentTime} />
-					))}
+				})}
 			</div>
 			<div className="mt-[20px] flex h-[65px] w-full justify-center text-Headline02 text-Gray50">
 				근무 종료
@@ -134,128 +71,108 @@ export default function DayScheDule() {
 		</div>
 	)
 }
-
-function DayScheduleTime({ slot, currentTime }: DayScheduleTimePT) {
-	const duration = slot.endTime - slot.firstTime
-	const boxHeight = 120 * duration
-
+type DayScheduleTimePT = {
+	startTime: Date
+	endTime: Date
+	tagList: Array<string>
+}
+function DayScheduleTime({ startTime, endTime, tagList }: DayScheduleTimePT) {
 	return (
 		<div
-			className={`flex w-full items-center border-b-[2px] border-Gray10 h-[${boxHeight}px]`}
+			className={`flex h-fit max-h-[222.5px] min-h-[145.5px] w-full items-center border-b-[2px] border-Gray10`}
 		>
-			<DayScheduleDash slot={slot} />
-			<DayScheduleTask slot={slot} duration={duration} />
-			<DayScheduleButton slot={slot} currentTime={currentTime} />
+			<DayScheduleDash startTime={startTime} endTime={endTime} />
+			<DayScheduleTask
+				startTime={startTime}
+				endTime={endTime}
+				tagList={tagList}
+			/>
+			<DayScheduleButton startTime={startTime} endTime={endTime} />
 		</div>
 	)
 }
-
-function DayScheduleDash({ slot }: DayScheduleDashPT) {
-	const hours = []
-	for (let i = slot.firstTime; i <= slot.endTime; i++) {
-		hours.push(i)
-		if (i < slot.endTime) {
-			hours.push("dash")
-		}
+type DayScheduleDashPT = {
+	startTime: Date
+	endTime: Date
+}
+function DayScheduleDash({ startTime, endTime }: DayScheduleDashPT) {
+	const startHour = startTime.getHours()
+	const endHour = endTime.getHours()
+	const timeRange = []
+	for (let hour = startHour; hour <= endHour; hour++) {
+		timeRange.push(hour)
 	}
 
 	return (
 		<div className="flex w-[75px] flex-col items-center justify-center">
-			{hours.map((item, index) => (
-				<div
-					key={index}
-					className="flex h-full flex-col items-center justify-center"
-				>
-					{item === "dash" ? (
-						<div className="flex w-full flex-1 items-center justify-center">
-							<div className="h-[30px] border-l-2 border-dashed border-Gray30 py-[18px]"></div>
-						</div>
-					) : (
-						<span className="text-Headline02 text-Gray40">{item}</span>
-					)}
-				</div>
-			))}
+			<div className="flex h-full flex-col items-center justify-center">
+				<span className="text-Headline02 text-Gray40">{timeRange}</span>
+			</div>
 		</div>
 	)
 }
 
-function DayScheduleTask({ slot, duration }: DayScheduleTaskPT) {
-	const height = duration === 2 ? 160 : 86
-	const subHeight = duration === 2 ? 132.7 : 56.54
-	const startTime = dayjs().hour(slot.firstTime).minute(0)
-	const period = startTime.format("A") === "AM" ? "오전" : "오후"
-	const formattedFirstTime = startTime.format("h")
-
-	const getBgColor = (artist: string) => {
-		switch (artist) {
-			case "모비쌤":
-				return "BGblue"
-			case "비모쌤":
-				return "PY"
-			case "미지정":
-				return "Gray"
-			default:
-				return "Gray"
-		}
-	}
-
+function DayScheduleTask({ startTime, endTime, tagList }: DayScheduleTimePT) {
+	const limitedTagList = tagList.slice(0, 4)
 	return (
-		<div
-			className={`flex w-[792px] items-center rounded-[20px] border h-[${height}px] shadow-customGray60`}
-		>
-			<div
-				className={`mr-[15px] border-r-[2px] border-Gray20 pl-[20px] pr-[40px] h-[${subHeight}px]`}
-			>
+		<div className="flex h-[86px] w-[792px] items-center rounded-[20px] border shadow-customGray60">
+			<div className="mr-[15px] h-[57px] border-r-[2px] border-Gray20 pl-[20px] pr-[40px]">
 				<div className="text-Headline02 text-Gray90">
-					{period} {formattedFirstTime}시
+					{startTime.getHours()}
 				</div>
-				<div className="text-Callout text-Gray40">
-					{slot.endTime - slot.firstTime}시간
-				</div>
+				<div className="text-Callout text-Gray40">{endTime.getHours()}</div>
 			</div>
-			<div className="mr-[15px] flex flex-col gap-2">
-				{slot.artistArr.map((artist, idx) => (
-					<React.Fragment key={idx}>
-						<div className="flex items-center gap-2">
-							<NTNameBox bgColor={getBgColor(artist.name)}>
-								{artist.name}
-							</NTNameBox>
-							<DayScheduleOptions optionArr={artist.optionArr} />
-						</div>
-						{idx < slot.artistArr.length - 1 && (
-							<div className="my-1 border-t-[2px] border-Gray10"></div>
-						)}
-					</React.Fragment>
-				))}
+			<div className="mr-[15px] flex items-center gap-2">
+				<NTNameBox bgColor="Gray">미지정</NTNameBox>
+				<div className="flex">
+					<NTOption size="large" optionArr={limitedTagList} />
+				</div>
 			</div>
 		</div>
 	)
 }
 
-function DayScheduleOptions({ optionArr }: DayScheduleOptionsPT) {
-	return <NTOption optionArr={optionArr} size="large" />
+type DayScheduleButtonPT = {
+	startTime: Date
+	endTime: Date
 }
-
-function DayScheduleButton({ slot, currentTime }: DayScheduleTimePT) {
-	const startTime = dayjs().hour(slot.firstTime).minute(0)
-	const endTime = dayjs().hour(slot.endTime).minute(0)
-	const isCurrent =
-		currentTime.isAfter(startTime) && currentTime.isBefore(endTime)
-
+function DayScheduleButton({ startTime, endTime }: DayScheduleButtonPT) {
+	const now = new Date()
+	const customDate = new Date(now.getTime() + 30 * 60 * 1000)
+	let buttonContent
+	if (now >= startTime && now <= endTime) {
+		buttonContent = (
+			<NTButton variant="primary" disabled size="medium" flexible="fit">
+				시술중
+			</NTButton>
+		)
+	} else if (now >= endTime) {
+		buttonContent = (
+			<NTButton variant="primary" disabled size="medium" flexible="fit">
+				시술 끝
+			</NTButton>
+		)
+	} else if (now >= customDate && now < startTime) {
+		buttonContent = (
+			<NTButton variant="primary" size="medium" flexible="fit">
+				채팅하기
+			</NTButton>
+		)
+	} else {
+		buttonContent = (
+			<>
+				<NTButton variant="secondary" size="medium" flexible="fit">
+					변경하기
+				</NTButton>
+				<NTButton variant="primary" size="medium" flexible="fit">
+					채팅하기
+				</NTButton>
+			</>
+		)
+	}
 	return (
 		<div className="flex h-full w-[300px] items-center justify-end">
-			{isCurrent ? (
-				<NTButton disabled>시술중</NTButton>
-			) : (
-				<div className="flex gap-[22px]">
-					<NTButton variant="secondary" flexible="fit">
-						변경하기
-					</NTButton>
-					<NTButton variant="primary" flexible="fit">
-						채팅하기
-					</NTButton>
-				</div>
-			)}
+			{buttonContent}
 		</div>
 	)
 }
