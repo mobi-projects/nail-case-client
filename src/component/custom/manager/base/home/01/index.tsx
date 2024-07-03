@@ -52,19 +52,24 @@ export default function ReservationCard() {
 	if (isError) {
 		return <div>Error: {error.message}</div>
 	}
-	const confirmedReservationCount = reservationArr
-		.map((reservation) =>
-			reservation.reservationDetailList.filter(
-				(detail) => detail.status === "CONFIRMED",
-			),
-		)
-		.flat().length
 
+	const confirmedReservations = reservationArr.reduce<TReservationDetailList[]>(
+		(data, reservation) => {
+			data.push(
+				...reservation.reservationDetailList.filter(
+					(detail) => detail.status === "CONFIRMED",
+				),
+			)
+			return data
+		},
+
+		[],
+	)
 	return (
 		<div className="flex h-[240px] w-full justify-between gap-[24px]">
 			<WaitingCard reservationArr={reservationArr} shopName={shopName} />
 			<ConfirmedCard
-				confirmedReservationCount={confirmedReservationCount}
+				confirmedReservationCount={confirmedReservations.length}
 				shopName={shopName}
 			/>
 		</div>
@@ -75,14 +80,18 @@ type WaitingCardPT = {
 	reservationArr: Array<TResGetListReservation>
 }
 function WaitingCard({ reservationArr, shopName }: WaitingCardPT) {
-	const pendingReservations = reservationArr
-		.map((reservation) =>
-			reservation.reservationDetailList.filter(
-				(detail) => detail.status === "PENDING",
-			),
-		)
-		.flat()
+	const pendingReservations = reservationArr.reduce<TReservationDetailList[]>(
+		(data, reservation) => {
+			data.push(
+				...reservation.reservationDetailList.filter(
+					(detail) => detail.status === "PENDING",
+				),
+			)
+			return data
+		},
 
+		[],
+	)
 	return (
 		<div className="flex h-[240px] w-[792px] rounded-[26px] bg-White px-[5px] py-[19.5px] shadow-customGray60">
 			<WaitingTotalCard
