@@ -6,6 +6,7 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
 import { useListReservationQuery } from "@/hook/use-reservation-controller"
+import type { TReservationDetailList } from "@/type"
 import {
 	getDayOfWeekFromStamp,
 	getThisDate,
@@ -116,13 +117,17 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 
 	const reservationArr = reservationData?.dataList || []
 
-	const confirmedReservations = reservationArr
-		.map((reservation) =>
-			reservation.reservationDetailList.filter(
-				(detail) => detail.status === "CONFIRMED",
-			),
-		)
-		.flat()
+	const confirmedReservations = reservationArr.reduce<TReservationDetailList[]>(
+		(data, reservation) => {
+			data.push(
+				...reservation.reservationDetailList.filter(
+					(detail) => detail.status === "CONFIRMED",
+				),
+			)
+			return data
+		},
+		[],
+	)
 
 	useEffect(() => {
 		const reservationFormscroll = () => {
@@ -197,11 +202,11 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 						<div className="flex h-[127px] w-full items-center justify-between gap-[26.5px] px-[27px]">
 							<ReservationTimeGap startTime={startTime} endTime={endTime} />
 							<ReservationTagList
-								idx={idx}
 								startTime={startTime}
+								endTime={endTime}
 								tagList={translateTagList()}
 							/>
-							<ReservationButtonList idx={idx} />
+							<ReservationButtonList startTime={startTime} endTime={endTime} />
 						</div>
 						<hr className="border border-Gray10" />
 					</div>
@@ -250,9 +255,16 @@ const ReservationFormVariants = cva(
 type ReservationTagListPT = {
 	startTime: Date
 	tagList: Array<string>
-	idx: number
+	endTime: Date
 }
-function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
+function ReservationTagList({
+	startTime,
+	tagList,
+	endTime,
+}: ReservationTagListPT) {
+	const [currentTagIdx, setCurrentTagIdx] = useState(0)
+	const now = new Date()
+	const colorEffect = now >= startTime && now <= endTime
 	const formatTime = (date: Date) => {
 		return date
 			.toLocaleTimeString("ko-KR", {
@@ -262,11 +274,19 @@ function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
 			.replace(":00", "")
 			.replace("시", "")
 	}
-	const limitedTagList = tagList.slice(0, 4)
+	const visibleTags = tagList.slice(currentTagIdx, currentTagIdx + 4)
+
+	const handleIconClick = () => {
+		if (currentTagIdx + 4 >= tagList.length) {
+			setCurrentTagIdx(0)
+		} else {
+			setCurrentTagIdx(currentTagIdx + 4)
+		}
+	}
 	return (
 		<div
 			className={ReservationFormVariants({
-				colorEffect: idx === 0,
+				colorEffect,
 			})}
 		>
 			<div className="flex h-[56px] w-[72px] flex-shrink-0 items-center justify-start pl-[5px]">
@@ -276,43 +296,62 @@ function ReservationTagList({ startTime, tagList, idx }: ReservationTagListPT) {
 			</div>
 			<div className="w-full border-l-2 border-Gray10 pl-[34px]">
 				<NTOption
-					optionArr={limitedTagList}
+					optionArr={visibleTags}
 					className="w-full gap-x-[4] py-[10px]"
 					size="large"
-					disabledIdxArr={[...Array(tagList.length).keys()]}
 				/>
 			</div>
-			<NTIcon icon="expandRight" className="h-[20px] w-[20px] text-Gray08" />
+			<NTIcon
+				icon="expandRight"
+				className={`h-[20px] w-[20px] text-Gray08 ${tagList.length > 4 ? "cursor-pointer" : ""}`}
+				onClick={handleIconClick}
+			/>
 		</div>
 	)
 }
 type ReservationButtonListPT = {
-	idx: number
+	startTime: Date
+	endTime: Date
 }
-function ReservationButtonList({ idx }: ReservationButtonListPT) {
-	return (
-		<div className="ml-auto mr-[30px] flex gap-[22px]">
-			{idx === 0 && (
-				<NTButton variant="primary" disabled size="medium" flexible="fit">
-					시술중
+function ReservationButtonList({
+	startTime,
+	endTime,
+}: ReservationButtonListPT) {
+	const now = new Date()
+	const customDate = new Date(now.getTime() + 30 * 60 * 1000)
+	let buttonContent
+	if (now >= startTime && now <= endTime) {
+		buttonContent = (
+			<NTButton variant="primary" disabled size="medium" flexible="fit">
+				시술중
+			</NTButton>
+		)
+	} else if (now >= endTime) {
+		buttonContent = (
+			<NTButton variant="primary" disabled size="medium" flexible="fit">
+				시술 끝
+			</NTButton>
+		)
+	} else if (now >= customDate && now < startTime) {
+		buttonContent = (
+			<NTButton variant="primary" size="medium" flexible="fit">
+				채팅하기
+			</NTButton>
+		)
+	} else {
+		buttonContent = (
+			<>
+				<NTButton variant="secondary" size="medium" flexible="fit">
+					변경하기
 				</NTButton>
-			)}
-			{idx > 1 && (
 				<NTButton variant="primary" size="medium" flexible="fit">
 					채팅하기
 				</NTButton>
-			)}
-			{idx === 1 && (
-				<>
-					<NTButton variant="secondary" size="medium" flexible="fit">
-						변경하기
-					</NTButton>
-					<NTButton variant="primary" size="medium" flexible="fit">
-						채팅하기
-					</NTButton>
-				</>
-			)}
-		</div>
+			</>
+		)
+	}
+	return (
+		<div className="ml-auto mr-[30px] flex gap-[22px]">{buttonContent}</div>
 	)
 }
 
