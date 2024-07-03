@@ -6,11 +6,11 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
+import { conditionList, removeList, treatmentList } from "@/constant/tagList"
 import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import { getShopById } from "@/util/api/shop-controller"
 import { getThisDate, getThisMonth, getThisYear } from "@/util/common"
-import { removeList, conditionList, treatmentList } from "@/util/common/tagList"
 
 export default function ReservationCard() {
 	const [shopName, setShopName] = useState<string | null>(null)
