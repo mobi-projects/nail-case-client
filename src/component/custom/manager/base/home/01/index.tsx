@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTContent from "@/component/common/nt-content"
@@ -92,6 +92,9 @@ function WaitingCard({ reservationArr, shopName }: WaitingCardPT) {
 
 		[],
 	)
+	if (pendingReservations.length === 0) {
+		return <div></div>
+	}
 	return (
 		<div className="flex h-[240px] w-[792px] rounded-[26px] bg-White px-[5px] py-[19.5px] shadow-customGray60">
 			<WaitingTotalCard
@@ -130,21 +133,12 @@ type WaitingDetailCardPT = {
 	pendingReservations: Array<TReservationDetailList>
 }
 function WaitingDetailCard({ pendingReservations }: WaitingDetailCardPT) {
-	const [pendingDataArr, setPendingDataArr] = useState<
-		Array<TReservationDetailList>
-	>([])
-	useEffect(() => {
-		setPendingDataArr(pendingReservations)
-	}, [pendingReservations])
-	if (pendingDataArr.length === 0) {
-		return <div></div>
-	}
-	const removeTag = pendingDataArr[0].remove
-	const conditionTagList = pendingDataArr[0].conditionList.map((data) =>
+	const removeTag = pendingReservations[0].remove
+	const conditionTagList = pendingReservations[0].conditionList.map((data) =>
 		data.option.toString(),
 	)
-	const treatmentTag = pendingDataArr[0].treatmentList[0].option
-	const extendTag = pendingDataArr[0].extend
+	const treatmentTag = pendingReservations[0].treatmentList[0].option
+	const extendTag = pendingReservations[0].extend
 
 	const translateTagList = () => {
 		const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
@@ -160,10 +154,11 @@ function WaitingDetailCard({ pendingReservations }: WaitingDetailCardPT) {
 			treatmentTagTranslate,
 		]
 	}
+	console.log(pendingReservations)
 	return (
 		<div className="flex h-full w-[542px] flex-col px-[21px]">
 			<DetailDate
-				startTime={pendingDataArr[0].startTime}
+				startTime={pendingReservations[0].startTime}
 				tagLength={translateTagList().length}
 			/>
 			<hr className="w-full" />
