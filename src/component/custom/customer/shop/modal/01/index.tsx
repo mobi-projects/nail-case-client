@@ -28,7 +28,7 @@ const TREATMENT_OPTIONS: TReservationOptions<TNailTreatment> = {
 } as const
 const REMOVE_OPTIONS: TReservationOptions<TRemoveOption> = {
 	labelArr: ["자샵 제거 필요", "타샵 제거 필요", "제거 필요 없음"],
-	valueArr: ["IN-SHOP", "ELSE-WHERE", "NO-NEED"],
+	valueArr: ["IN_SHOP", "ELSE_WHERE", "NO_NEED"],
 } as const
 const EXTENSION_OPTIONS: TReservationOptions<boolean> = {
 	labelArr: ["연장 필요", "연장 필요 없음"],
@@ -137,10 +137,15 @@ export default function CreationReservationModal({
 					startTime={startTime}
 					endTime={endTime}
 					treatment={"AOM"}
-					remove={"IN-SHOP"}
+					remove={"IN_SHOP"}
 					extension={true}
 					conditionArr={["AS"]}
-					isButtonActive={true}
+					isButtonActive={
+						!isSameNumber(treatmentIdx, UNSELECTED_IDX) &&
+						!isSameNumber(removeIdx, UNSELECTED_IDX) &&
+						!isSameNumber(extensionIdx, UNSELECTED_IDX) &&
+						!isSameNumber(conditionIdxArr.length, 0)
+					}
 				/>
 			</ModalFooter>
 		</ModalContent>
@@ -151,7 +156,7 @@ function ModalTitle() {
 	return (
 		<div className="flex h-fit items-center gap-[8px]">
 			<p className="text-Title01 text-Gray90">시술 세부 내용</p>
-			<NTHoverCard contants="안녕하세요.">
+			<NTHoverCard contants="ׄׄ• 표시가 된 항목은 필수 사항입니다.">
 				<NTIcon icon="infoLight" className="h-[24px] text-Gray30" />
 			</NTHoverCard>
 		</div>
@@ -197,7 +202,7 @@ function ConfirmSection({
 			<NTButton
 				size="large"
 				onClick={onOpenCheckingModal}
-				disabled={isButtonActive}
+				disabled={!isButtonActive}
 			>
 				확인하기
 			</NTButton>
@@ -227,9 +232,10 @@ function SectionTitle({
 		</div>
 	)
 }
-
 function AbsoluteDivider() {
 	return (
 		<hr className="absolute left-0 h-[1.5px] w-full self-start bg-Gray20" />
 	)
 }
+
+const isSameNumber = (value: number, expect: number) => value === expect
