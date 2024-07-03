@@ -42,6 +42,7 @@ const CONDITION_OPTIONS: TReservationOptions<TNailCondition> = {
 type CreationReservationModal = {
 	startTime: number
 	endTime: number
+	shopId: number
 }
 
 const UNSELECTED_IDX = -1
@@ -49,6 +50,7 @@ const UNSELECTED_IDX = -1
 export default function CreationReservationModal({
 	startTime,
 	endTime,
+	shopId,
 }: CreationReservationModal) {
 	const [treatmentIdx, setTreatmentOptionIdx] = useState<number>(UNSELECTED_IDX)
 	const [removeIdx, setRemoveIdx] = useState<number>(UNSELECTED_IDX)
@@ -134,11 +136,12 @@ export default function CreationReservationModal({
 			</ModalBody>
 			<ModalFooter>
 				<ConfirmSection
+					shopId={shopId}
 					startTime={startTime}
 					endTime={endTime}
-					treatment={"AOM"}
-					remove={"IN_SHOP"}
-					extension={true}
+					treatment={TREATMENT_OPTIONS.valueArr[treatmentIdx]}
+					remove={REMOVE_OPTIONS.valueArr[removeIdx]}
+					extension={EXTENSION_OPTIONS.valueArr[extensionIdx]}
 					conditionArr={["AS"]}
 					isButtonActive={
 						!isSameNumber(treatmentIdx, UNSELECTED_IDX) &&
@@ -170,6 +173,7 @@ type ReservationConfirmModalPT = ComponentProps<
 }
 
 function ConfirmSection({
+	shopId,
 	startTime,
 	endTime,
 	treatment,
@@ -185,6 +189,7 @@ function ConfirmSection({
 			children: (
 				<ReservationConfirmModal
 					{...{
+						shopId,
 						startTime,
 						endTime,
 						treatment,

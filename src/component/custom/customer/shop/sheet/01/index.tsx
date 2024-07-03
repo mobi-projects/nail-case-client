@@ -1,9 +1,37 @@
-export default function ReservationResponseReceptionSheet() {
+import type { TNailTreatment } from "@/type/union-option/nail-treatment"
+import type { TRemoveOption } from "@/type/union-option/remove-option"
+import {
+	getDateFromStamp,
+	getDayOfWeekFromStamp,
+	getMinFromStamp,
+	getMonthFromStamp,
+	padStartToPrinting,
+} from "@/util/common"
+
+type ReservationResponseReceptionSheetPT = {
+	shopId: number
+	startTime: number
+	endTime: number
+	treatmentArr: TNailTreatment[]
+	remove: TRemoveOption
+	extend: boolean
+}
+
+export default function ReservationResponseReceptionSheet({
+	shopId,
+	startTime,
+	endTime,
+	treatmentArr,
+	remove,
+	extend,
+}: ReservationResponseReceptionSheetPT) {
 	return (
 		<div className="flex h-full w-full flex-col items-center justify-around">
 			<TopRightArrowIcon />
 			<ResponseMessage />
-			<ReservationContent />
+			<ReservationContent
+				{...{ shopId, startTime, endTime, remove, treatmentArr, extend }}
+			/>
 		</div>
 	)
 }
@@ -30,64 +58,120 @@ function ResponseMessage() {
 	)
 }
 
-function ReservationContent() {
+function ReservationContent({
+	shopId,
+	startTime,
+	endTime,
+	remove,
+	treatmentArr,
+	extend,
+}: ReservationResponseReceptionSheetPT) {
 	return (
 		<div className="grid h-[351px] w-[838px] grid-rows-[1fr_auto_2fr] items-center rounded-[26px] bg-Gray90 p-[19px]">
-			<ContentHeader />
+			<ContentHeader {...{ shopId, startTime, endTime }} />
 			<hr className="h-[1.5px] w-full border-Gray70" />
-			<ContentBody />
+			<ContentBody {...{ treatmentArr, remove, extend }} />
 		</div>
 	)
 }
-function ContentHeader() {
+function ContentHeader({
+	// shopId, // [Todo] 추후에 수정, 샵 이름이 필요하다.
+	startTime,
+	endTime,
+}: Pick<
+	ReservationResponseReceptionSheetPT,
+	"shopId" | "startTime" | "endTime"
+>) {
+	const printedMonth = `${getMonthFromStamp(startTime)}월`
+	const printedDate = `${getDateFromStamp(startTime)}일`
+	const printedDayOfWeek = `(${getDayOfWeekFromStamp(startTime)}요일)`
+
+	const startHour = getDateFromStamp(startTime)
+	const startMin = getMinFromStamp(startTime)
+	const printedStartDivision = startHour >= 12 ? "오후" : "오전"
+	const printedStartTime = `${startHour}:${padStartToPrinting("time", startMin)}`
+
+	const endHour = getDateFromStamp(endTime)
+	const endMin = getMinFromStamp(endTime)
+	const printedEndDivision = endHour >= 12 ? "오후" : "오전"
+	const printedEndTime = `${startHour}:${padStartToPrinting("time", endMin)}`
+
+	const printedReservationTime = [
+		printedMonth,
+		printedDate,
+		printedDayOfWeek,
+		printedStartDivision,
+		printedStartTime,
+		"-",
+		printedEndDivision,
+		printedEndTime,
+	].join(" ")
+
 	return (
 		<div className="flex h-[85px] flex-col justify-between">
 			<p className="text-center text-Body01 font-SemiBold text-White">
 				모네네일 한남점
 			</p>
 			<p className="text-center text-Body02 font-Regular text-PB100">
-				6월 27일 (목요일) 오후 1:00 - 2:00
+				{printedReservationTime}
 			</p>
 			<p className="text-center text-Body02 font-Regular text-White">
-				2인 동반 시술
+				1인 시술
 			</p>
 		</div>
 	)
 }
 
-// const TREATMENT_MAP: { [key in TNailTreatment]: string } = {
-// 	AOM: "이달의 아트",
-// 	CARE: "케어",
-// 	ONE: "원 컬러",
-// 	MEMBER_IMAGE: "사진등록",
-// }
-// const REMOVE_MAP: { [key in TRemoveOption]: string } = {
-// 	"IN-SHOP": "자샵 제거 필요",
-// 	"ELSE-WHERE": "타샵 제거 필요",
-// 	"NO-NEED": "제거 필요 없음",
-// }
+const TREATMENT_MAP: { [key in TNailTreatment]: string } = {
+	AOM: "이달의 아트",
+	CARE: "케어",
+	ONE: "원 컬러",
+	MEMBER_IMAGE: "사진등록",
+}
+const REMOVE_MAP: { [key in TRemoveOption]: string } = {
+	IN_SHOP: "자샵 제거 필요",
+	ELSE_WHERE: "타샵 제거 필요",
+	NO_NEED: "제거 필요 없음",
+}
 
-function ContentBody() {
+function ContentBody({
+	treatmentArr,
+	remove,
+	extend,
+}: Pick<
+	ReservationResponseReceptionSheetPT,
+	"treatmentArr" | "remove" | "extend"
+>) {
+	const treatmentInfo = treatmentArr
+		.map((treatment) => TREATMENT_MAP[treatment])
+		.join(", ")
+	const removeInfo = REMOVE_MAP[remove]
+	const extendInfo = extend ? "연장 필요" : "연장 필요 없음"
 	return (
 		<div className="flex h-full w-full flex-col justify-center gap-[15px]">
-			<DetailInfo />
+			<DetailInfo title="시술 내용" info={treatmentInfo} />
 			<hr className="h-[2px] w-full border-Gray80" />
-			<DetailInfo />
+			<DetailInfo title="네일 제거 유무" info={removeInfo} />
 			<hr className="h-[2px] w-full border-Gray80" />
-			<DetailInfo />
+			<DetailInfo title="연장 유무" info={extendInfo} />
 		</div>
 	)
 }
 
-function DetailInfo() {
+type DetailInfo = {
+	title: string
+	info: string
+}
+
+function DetailInfo({ title, info }: DetailInfo) {
 	return (
 		<div className="grid h-fit w-full grid-cols-[auto_2px_1fr] items-center justify-start">
 			<div className="h-[22px] w-full px-[27px] text-Body02 font-SemiBold text-White">
-				시술 내용
+				{title}
 			</div>
 			<div className="h-[13px] w-full bg-Gray70" />
 			<div className="h-[22px] w-full px-[27px] text-Body02 font-SemiBold text-PB100">
-				케어, 사진 등록
+				{info}
 			</div>
 		</div>
 	)

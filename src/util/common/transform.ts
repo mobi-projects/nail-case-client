@@ -43,3 +43,9 @@ const getDayDivision = (hourIn24System: number): TDayDivision => {
 	if (hourIn24System >= 12) return "PM"
 	return "AM"
 }
+
+export const convertStringToInteger = (input: string | number): number => {
+	if (typeof input === "number") return input
+	if (!isNaN(Number(input))) return parseInt(input)
+	throw Error("number type 으로 변환할 수 없습니다.")
+}

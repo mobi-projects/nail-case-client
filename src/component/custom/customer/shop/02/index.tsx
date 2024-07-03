@@ -1,16 +1,17 @@
 "use client"
 
+import type { Dispatch, SetStateAction } from "react"
 import { useCallback, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTOption from "@/component/common/nt-option"
-import { useSheet } from "@/component/common/nt-sheet/nt-sheet.context"
 import { cn } from "@/config/tailwind"
 import {
 	getCalendarArr,
 	getDateFromStamp,
+	getDayOfWeekFromStamp,
 	getMonthFromStamp,
 	getNextMonthFirstDate,
 	getNowStamp,
@@ -25,29 +26,46 @@ import {
 } from "@/util/common"
 
 import CreationReservationModal from "../modal/01"
-import ReservationResponseReceptionSheet from "../sheet/01"
 
-export default function ReservationSchedule() {
+export default function ReservationSchedule({ shopId }: { shopId: number }) {
+	const [clickedStamp, setClickedStamp] = useState(getNowStamp())
+
 	return (
 		<div className="grid h-fit w-full grid-cols-[690px_485px] justify-between">
-			<ReservationCalendar />
-			<ReservationCheck />
+			<ReservationCalendar {...{ clickedStamp, setClickedStamp, shopId }} />
+			<ReservationCheck {...{ clickedStamp }} />
 		</div>
 	)
 }
-function ReservationCalendar() {
+type ReservationScheduleSubComponentPT = {
+	clickedStamp: number
+	setClickedStamp: Dispatch<SetStateAction<number>>
+	shopId: number
+}
+
+function ReservationCalendar({
+	clickedStamp,
+	setClickedStamp,
+	shopId,
+}: ReservationScheduleSubComponentPT) {
 	const { onOpenModal } = useModal()
 	const onOpenCreatingReservationModal = () => {
 		onOpenModal({
 			size: "large",
 			isX: true,
-			children: <CreationReservationModal startTime={-1} endTime={-1} />,
+			children: (
+				<CreationReservationModal
+					startTime={clickedStamp}
+					endTime={clickedStamp + 1 * 60 * 60} // [Todo] 추후 수정: 일단 시술 시간을 1시간으로 설정
+					shopId={shopId}
+				/>
+			),
 		})
 	}
 	return (
 		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[21px]">
 			<div className="flex h-full w-full items-center justify-center rounded-[26px] shadow-customGray60">
-				<Calendar />
+				<Calendar {...{ setClickedStamp }} />
 			</div>
 			<NTButton
 				variant="tertiary"
@@ -60,33 +78,26 @@ function ReservationCalendar() {
 		</div>
 	)
 }
-function ReservationCheck() {
-	const { onOpenSheet } = useSheet()
-	const onClickPhone = () => {
-		onOpenSheet({
-			children: <ReservationResponseReceptionSheet />,
-		})
-	}
+function ReservationCheck({
+	clickedStamp,
+}: Pick<ReservationScheduleSubComponentPT, "clickedStamp">) {
 	return (
 		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[22px]">
-			<ReservationCheckBody />
-			<NTButton
-				onClick={onClickPhone}
-				variant="tertiary"
-				flexible="full"
-				size="small"
-			>
+			<ReservationCheckBody {...{ clickedStamp }} />
+			<NTButton variant="tertiary" flexible="full" size="small">
 				전화하기
 			</NTButton>
 		</div>
 	)
 }
-
-function ReservationCheckBody() {
+function ReservationCheckBody({
+	clickedStamp,
+}: Pick<ReservationScheduleSubComponentPT, "clickedStamp">) {
 	return (
 		<div className="flex h-full w-full flex-col justify-around gap-[16px] py-[10px]">
 			<p className="w-full justify-center pt-2 text-center text-[18px] font-SemiBold text-Gray90">
-				6월 27일 (목요일)
+				{getMonthFromStamp(clickedStamp)}월 {getDateFromStamp(clickedStamp)}일 (
+				{getDayOfWeekFromStamp(clickedStamp)}요일)
 			</p>
 			<hr className="border-BGblue02" />
 			<NTOption
@@ -95,7 +106,7 @@ function ReservationCheckBody() {
 					"오후 1시",
 					"오후 2시",
 					"오후 3시",
-					"오전 4시",
+					"오후 4시",
 					"오후 5시",
 					"오후 7시",
 				]}
@@ -103,7 +114,12 @@ function ReservationCheckBody() {
 				size="large"
 			/>
 			<hr className="border-BGblue02" />
-			<NTOption optionArr={["1인", "2인 동반"]} size="large" />
+			<NTOption
+				optionArr={["1인", "2인 동반"]}
+				size="large"
+				selectedIdxArr={[0]}
+				disabledIdxArr={[1]}
+			/>
 			<p className="text-[16px] font-Regular text-Gray50">
 				2인 동반 선택시에는 두 타임 예약 부탁드립니다 :)
 			</p>
@@ -117,7 +133,9 @@ const reservationDateMockData = [
 	getNowStamp() + 48 * 60 * 60 * 1000,
 ]
 
-function Calendar() {
+function Calendar({
+	setClickedStamp,
+}: Pick<ReservationScheduleSubComponentPT, "setClickedStamp">) {
 	const [focusedYear, setFocusedYear] = useState(getThisYear())
 	const [focusedMonth, setFocusedMonth] = useState(getThisMonth())
 
@@ -181,6 +199,7 @@ function Calendar() {
 					<CalenderBody
 						focusedStampArr={getCalendarArr(focusedYear, focusedMonth)}
 						reservationStampArr={reservationDateMockData}
+						{...{ setClickedStamp }}
 					/>
 				</tbody>
 			</table>
@@ -191,10 +210,11 @@ function Calendar() {
 function CalenderBody({
 	focusedStampArr = [],
 	reservationStampArr = [],
+	setClickedStamp,
 }: {
 	focusedStampArr: number[]
 	reservationStampArr?: number[]
-}) {
+} & Pick<ReservationScheduleSubComponentPT, "setClickedStamp">) {
 	return (
 		<tr className="grid h-full w-full grid-cols-7">
 			{focusedStampArr.map((stamp) => {
@@ -219,6 +239,10 @@ function CalenderBody({
 								isPrevDay &&
 									"cursor-default bg-White text-Gray40 hover:scale-100",
 							)}
+							onClick={() => {
+								if (isPrevDay) return
+								setClickedStamp(stamp)
+							}}
 						>
 							{getDateFromStamp(stamp)}
 						</p>
