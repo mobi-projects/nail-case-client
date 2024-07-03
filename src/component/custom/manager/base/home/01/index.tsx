@@ -10,7 +10,7 @@ import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import { getShopById } from "@/util/api/shop-controller"
 import { getThisDate, getThisMonth, getThisYear } from "@/util/common"
-import { tagLists } from "@/util/common/tagList"
+import { removeList, conditionList, treatmentList } from "@/util/common/tagList"
 
 export default function ReservationCard() {
 	const [shopName, setShopName] = useState<string | null>(null)
@@ -130,24 +130,43 @@ function WaitingDetailCard({ pendingReservations }: WaitingDetailCardPT) {
 	if (pendingDataArr.length === 0) {
 		return <div></div>
 	}
+	const removeTag = pendingDataArr[0].remove
+	const conditionTagList = pendingDataArr[0].conditionList.map((data) =>
+		data.option.toString(),
+	)
+	const treatmentTag = pendingDataArr[0].treatmentList[0].option
+	const extendTag = pendingDataArr[0].extend
+
+	const translateTagList = () => {
+		const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
+		const removeTagTranslate = removeList[removeTag]
+		const conditionTagTranslate = conditionTagList.map(
+			(tag) => conditionList[tag],
+		)
+		const treatmentTagTranslate = treatmentList[treatmentTag]
+		return [
+			extendTagTranslate,
+			removeTagTranslate,
+			...conditionTagTranslate,
+			treatmentTagTranslate,
+		]
+	}
 	return (
 		<div className="flex h-full w-[542px] flex-col px-[21px]">
 			<DetailDate
 				startTime={pendingDataArr[0].startTime}
-				dataLength={pendingDataArr.length}
-				idx={0}
+				tagLength={translateTagList().length}
 			/>
 			<hr className="w-full" />
-			<DetailTagList pendingData={pendingDataArr[0]} />
+			<DetailTagList tagList={translateTagList()} />
 		</div>
 	)
 }
 type DetailDatePT = {
 	startTime: number
-	dataLength: number
-	idx: number
+	tagLength: number
 }
-function DetailDate({ startTime, dataLength, idx }: DetailDatePT) {
+function DetailDate({ startTime, tagLength }: DetailDatePT) {
 	const startDate = new Date(startTime * 1000).toLocaleString("ko-KR", {
 		month: "long",
 		day: "numeric",
@@ -158,27 +177,15 @@ function DetailDate({ startTime, dataLength, idx }: DetailDatePT) {
 		<div className="flex w-full justify-between pb-4 pl-[15px] pr-[1px]">
 			<div className="text-Title03 text-Gray70">{startDate}</div>
 
-			<NTContent mode="day">{`${idx + 1}/${dataLength}`}</NTContent>
+			<NTContent mode="day">{`태그 ${tagLength}개`}</NTContent>
 		</div>
 	)
 }
 type DetailTagListPT = {
-	pendingData: TReservationDetailList
+	tagList: Array<string>
 }
-function DetailTagList({ pendingData }: DetailTagListPT) {
-	const tagList = [
-		pendingData.remove,
-		...pendingData.conditionList.map((data) => data.option.toString()),
-		pendingData.treatmentList[0].option,
-	]
-	const extendTag = pendingData.extend
-
-	const translateTagList = () => {
-		const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
-		const tagListTranslate = tagList.map((tag) => tagLists[tag])
-		return [...tagListTranslate, extendTagTranslate]
-	}
-	const limitedTopTagList = translateTagList().slice(0, 4)
+function DetailTagList({ tagList }: DetailTagListPT) {
+	const limitedTopTagList = tagList.slice(0, 4)
 	return (
 		<div className="flex h-full w-full justify-between pl-[4px] pr-[1px] pt-[13px]">
 			<div className="flex h-full flex-col gap-y-4">
