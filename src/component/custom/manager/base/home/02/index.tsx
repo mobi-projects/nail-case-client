@@ -299,7 +299,6 @@ function ReservationTagList({
 					optionArr={visibleTags}
 					className="w-full gap-x-[4] py-[10px]"
 					size="large"
-					disabledIdxArr={[...Array(tagList.length).keys()]}
 				/>
 			</div>
 			<NTIcon
