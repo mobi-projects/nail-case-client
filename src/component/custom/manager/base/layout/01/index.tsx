@@ -7,10 +7,14 @@ import NTLogo from "@/../public/asset/nt-logo.svg"
 import NTIcon from "@/component/common/nt-icon"
 import NTSearchfield from "@/component/common/nt-searchfield"
 import NTToolbar from "@/component/common/nt-toolbar"
-import { MANAGER_BASE_MYSHOP_HOME } from "@/constant/routing-path"
+import {
+	MANAGER_BASE_MYSHOP_HOME,
+	MANAGER_BASE_SCHEDULE_THIS_MONTH,
+} from "@/constant/routing-path"
 import {
 	LABEL_LIST_FOR_MANAGER_BASE_TOOLBAR,
 	PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
+	PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR,
 	PATH_LIST_FOR_MANAGER_BASE_TOOLBAR,
 } from "@/constant/toolbar-list"
 
@@ -62,6 +66,7 @@ function ManagerBaseToolbar() {
 		pathName,
 		[...PATH_LIST_FOR_MANAGER_BASE_TOOLBAR],
 		[...PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR],
+		[...PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR],
 	)
 	const onClickTool = (idx: number) =>
 		router.push(PATH_LIST_FOR_MANAGER_BASE_TOOLBAR[idx])
@@ -80,8 +85,11 @@ function ManagerBaseToolbar() {
 const getFocusedIdx = (
 	pathName: string,
 	toolPathArr: string[],
-	subPathArr: string[],
+	myShopPathArr: string[],
+	schedulePathArr: string[],
 ) => {
-	if (subPathArr.includes(pathName)) pathName = MANAGER_BASE_MYSHOP_HOME
+	if (myShopPathArr.includes(pathName)) pathName = MANAGER_BASE_MYSHOP_HOME
+	if (schedulePathArr.includes(pathName))
+		pathName = MANAGER_BASE_SCHEDULE_THIS_MONTH
 	return toolPathArr.findIndex((toolPath) => toolPath === pathName)
 }
