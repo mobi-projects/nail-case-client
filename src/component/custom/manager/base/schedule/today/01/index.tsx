@@ -13,7 +13,7 @@ import {
 } from "@/util/common"
 import { tagLists } from "@/util/common/tagList"
 
-export default function DayScheDule() {
+export default function ScheduleDate() {
 	const startTime = getThisDayFirst(
 		getThisYear(),
 		getThisMonth(),
@@ -38,8 +38,8 @@ export default function DayScheDule() {
 		[],
 	)
 	return (
-		<div className="flex h-fit w-full flex-col rounded-[26px] shadow-customGray60">
-			<div className="flex flex-col">
+		<div className="flex h-full w-full flex-col rounded-[26px] shadow-customGray60">
+			<div className="h-full max-h-[962px] min-h-[582px] overflow-y-scroll">
 				{confirmedReservations.map((data, idx) => {
 					const reservation = data
 					const startTime = new Date(reservation.startTime * 1000)
@@ -56,7 +56,7 @@ export default function DayScheDule() {
 						return [extendTagTranslate, ...tagListTranslate]
 					}
 					return (
-						<DayScheduleTime
+						<ReservationForm
 							key={idx}
 							startTime={startTime}
 							endTime={endTime}
@@ -65,37 +65,35 @@ export default function DayScheDule() {
 					)
 				})}
 			</div>
-			<div className="mt-[20px] flex h-[65px] w-full justify-center text-Headline02 text-Gray50">
-				근무 종료
-			</div>
+			<ScheduleDateFooter />
 		</div>
 	)
 }
-type DayScheduleTimePT = {
+type ReservationFormPT = {
 	startTime: Date
 	endTime: Date
 	tagList: Array<string>
 }
-function DayScheduleTime({ startTime, endTime, tagList }: DayScheduleTimePT) {
+function ReservationForm({ startTime, endTime, tagList }: ReservationFormPT) {
 	return (
-		<div
-			className={`flex h-fit max-h-[222.5px] min-h-[145.5px] w-full items-center border-b-[2px] border-Gray10`}
-		>
-			<DayScheduleDash startTime={startTime} endTime={endTime} />
-			<DayScheduleTask
+		<div className="flex h-[145.5px] w-full items-center gap-[23px] border-b-[2px] border-Gray10 px-[24px]">
+			<FormTimeRange startTime={startTime} endTime={endTime} />
+			<ReservationDetailForm
 				startTime={startTime}
 				endTime={endTime}
 				tagList={tagList}
 			/>
-			<DayScheduleButton startTime={startTime} endTime={endTime} />
+			<FormButtonList startTime={startTime} endTime={endTime} />
 		</div>
 	)
 }
-type DayScheduleDashPT = {
+//btnform : 284px
+// gap -[7px]
+type FormTimeRangePT = {
 	startTime: Date
 	endTime: Date
 }
-function DayScheduleDash({ startTime, endTime }: DayScheduleDashPT) {
+function FormTimeRange({ startTime, endTime }: FormTimeRangePT) {
 	const startHour = startTime.getHours()
 	const endHour = endTime.getHours()
 	const timeRange = []
@@ -104,39 +102,75 @@ function DayScheduleDash({ startTime, endTime }: DayScheduleDashPT) {
 	}
 
 	return (
-		<div className="flex w-[75px] flex-col items-center justify-center">
-			<div className="flex h-full flex-col items-center justify-center">
-				<span className="text-Headline02 text-Gray40">{timeRange}</span>
-			</div>
+		<div className="flex w-[22px] flex-col items-center justify-center">
+			{timeRange.map((time, idx) => (
+				<div
+					key={idx}
+					className="flex h-full flex-col items-center justify-center gap-[6px] text-Headline02 text-Gray40"
+				>
+					<span className="">{time}</span>
+					{idx < timeRange.length - 1 && (
+						<div className="mb-[6px] h-[30px] border-l border-dashed border-Gray30"></div>
+					)}
+				</div>
+			))}
 		</div>
 	)
 }
 
-function DayScheduleTask({ startTime, endTime, tagList }: DayScheduleTimePT) {
+function ReservationDetailForm({
+	startTime,
+	endTime,
+	tagList,
+}: ReservationFormPT) {
+	return (
+		<div className="flex h-[86px] min-w-[792px] items-center gap-[25.5px] rounded-[20px] px-[11px] shadow-customGray60">
+			<FormTime startTime={startTime} endTime={endTime}></FormTime>
+			<FormTagList tagList={tagList}></FormTagList>
+		</div>
+	)
+}
+
+type FormTimePT = { startTime: Date; endTime: Date }
+function FormTime({ startTime, endTime }: FormTimePT) {
+	const formatTime = (hour: number): string => {
+		if (hour === 12) {
+			return "정오"
+		} else if (hour > 12) {
+			return `오후 ${hour - 12}`
+		} else {
+			return `오전 ${hour}`
+		}
+	}
+	return (
+		<div className="flex flex-col gap-[7px] pl-[7px]">
+			<div className="text-Headline02 text-Gray90">
+				{formatTime(startTime.getHours())}
+			</div>
+			<div className="text-Callout font-SemiBold text-Gray40">
+				{endTime.getHours() - startTime.getHours()}시간
+			</div>
+		</div>
+	)
+}
+type FormTagListPT = { tagList: Array<string> }
+function FormTagList({ tagList }: FormTagListPT) {
 	const limitedTagList = tagList.slice(0, 4)
 	return (
-		<div className="flex h-[86px] w-[792px] items-center rounded-[20px] border shadow-customGray60">
-			<div className="mr-[15px] h-[57px] border-r-[2px] border-Gray20 pl-[20px] pr-[40px]">
-				<div className="text-Headline02 text-Gray90">
-					{startTime.getHours()}
-				</div>
-				<div className="text-Callout text-Gray40">{endTime.getHours()}</div>
-			</div>
-			<div className="mr-[15px] flex items-center gap-2">
-				<NTNameBox bgColor="Gray">미지정</NTNameBox>
-				<div className="flex">
-					<NTOption size="large" optionArr={limitedTagList} />
-				</div>
+		<div className="flex h-[56.5px] items-center gap-[16px] border-l-2 border-Gray20 px-[17px]">
+			<NTNameBox bgColor="Gray">미지정</NTNameBox>
+			<div className="flex gap-[14px]">
+				<NTOption
+					size="large"
+					optionArr={limitedTagList}
+					className="font-Regular"
+				/>
 			</div>
 		</div>
 	)
 }
 
-type DayScheduleButtonPT = {
-	startTime: Date
-	endTime: Date
-}
-function DayScheduleButton({ startTime, endTime }: DayScheduleButtonPT) {
+function FormButtonList({ startTime, endTime }: FormTimePT) {
 	const now = new Date()
 	const customDate = new Date(now.getTime() + 30 * 60 * 1000)
 	let buttonContent
@@ -148,9 +182,14 @@ function DayScheduleButton({ startTime, endTime }: DayScheduleButtonPT) {
 		)
 	} else if (now >= endTime) {
 		buttonContent = (
-			<NTButton variant="primary" disabled size="medium" flexible="fit">
-				시술 끝
-			</NTButton>
+			<div className="flex gap-[21.5px]">
+				<NTButton variant="secondary" size="medium" flexible="fit">
+					예약관리
+				</NTButton>
+				<NTButton variant="primary" size="medium" flexible="fit">
+					채팅하기
+				</NTButton>
+			</div>
 		)
 	} else if (now >= customDate && now < startTime) {
 		buttonContent = (
@@ -160,19 +199,26 @@ function DayScheduleButton({ startTime, endTime }: DayScheduleButtonPT) {
 		)
 	} else {
 		buttonContent = (
-			<>
+			<div className="flex gap-[21.5px]">
 				<NTButton variant="secondary" size="medium" flexible="fit">
-					변경하기
+					예약관리
 				</NTButton>
 				<NTButton variant="primary" size="medium" flexible="fit">
 					채팅하기
 				</NTButton>
-			</>
+			</div>
 		)
 	}
 	return (
-		<div className="flex h-full w-[300px] items-center justify-end">
+		<div className="flex h-full w-[338px] items-center justify-end pr-[25px]">
 			{buttonContent}
+		</div>
+	)
+}
+function ScheduleDateFooter() {
+	return (
+		<div className="flex h-[96px] w-full justify-center pt-[17.5px] text-Headline02 text-Gray50">
+			근무 종료
 		</div>
 	)
 }
