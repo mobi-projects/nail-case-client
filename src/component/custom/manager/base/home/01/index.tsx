@@ -154,7 +154,7 @@ function WaitingDetailCard({ pendingReservations }: WaitingDetailCardPT) {
 			treatmentTagTranslate,
 		]
 	}
-	console.log(pendingReservations)
+
 	return (
 		<div className="flex h-full w-[542px] flex-col px-[21px]">
 			<DetailDate
