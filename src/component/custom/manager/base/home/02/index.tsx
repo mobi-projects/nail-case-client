@@ -8,6 +8,7 @@ import NTOption from "@/component/common/nt-option"
 import { conditionList, removeList, treatmentList } from "@/constant/tagList"
 import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import type { TReservationDetailList } from "@/type"
+import type { TNailCondition } from "@/type/union-option/nail-condition"
 import {
 	getDayOfWeekFromStamp,
 	getThisDate,
@@ -180,8 +181,8 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 				const startTime = new Date(reservation.startTime * 1000)
 				const endTime = new Date(reservation.endTime * 1000)
 				const removeTag = data.remove
-				const conditionTagList = data.conditionList.map((data) =>
-					data.option.toString(),
+				const conditionTagList = data.conditionList.map(
+					(data) => data.option as TNailCondition,
 				)
 				const treatmentTag = data.treatmentList[0].option
 				const extendTag = data.extend

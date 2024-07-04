@@ -9,6 +9,7 @@ import NTOption from "@/component/common/nt-option"
 import { conditionList, removeList, treatmentList } from "@/constant/tagList"
 import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
+import type { TNailCondition } from "@/type/union-option/nail-condition"
 import { getShopById } from "@/util/api/shop-controller"
 import { getThisDate, getThisMonth, getThisYear } from "@/util/common"
 
@@ -134,9 +135,10 @@ type WaitingDetailCardPT = {
 }
 function WaitingDetailCard({ pendingReservations }: WaitingDetailCardPT) {
 	const removeTag = pendingReservations[0].remove
-	const conditionTagList = pendingReservations[0].conditionList.map((data) =>
-		data.option.toString(),
+	const conditionTagList = pendingReservations[0].conditionList.map(
+		(data) => data.option as TNailCondition,
 	)
+
 	const treatmentTag = pendingReservations[0].treatmentList[0].option
 	const extendTag = pendingReservations[0].extend
 
