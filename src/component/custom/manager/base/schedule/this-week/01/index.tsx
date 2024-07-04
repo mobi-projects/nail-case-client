@@ -1,13 +1,13 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import type { Dayjs } from "dayjs"
 import dayjs from "dayjs"
 import React, { useState } from "react"
 
 import NTEventDetail from "@/component/common/nt-event-deatli"
 import NTIcon from "@/component/common/nt-icon"
+import { axiosInstance } from "@/config/axios"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import {
 	convertSecondTimestamp,
@@ -24,7 +24,8 @@ const fetchReservations = async ({
 	queryKey: [string, number, number]
 }) => {
 	const [, startTime, endTime] = queryKey
-	const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}`, {
+
+	const response = await axiosInstance().get(``, {
 		params: {
 			startTime: startTime,
 			endTime: endTime,
