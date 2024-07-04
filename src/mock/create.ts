@@ -148,7 +148,7 @@ const createEssentialForm = () => {
 	const essentialForm: TEssentialForm = {
 		reservationDate: createNTTime(),
 		treatment: pickRandomOneOfArr(["AOM", "CARE", "ONE", "MEMBER_IMAGE"]),
-		removalReq: pickRandomOneOfArr(["IN-SHOP", "ELSE-WHERE", "NO-NEED"]),
+		removalReq: pickRandomOneOfArr(["IN_SHOP", "ELSE_WHERE", "NO_NEED"]),
 		extensionReq: getRandomBoolean(),
 		conditionArr: createNailConditionArr(),
 	}
