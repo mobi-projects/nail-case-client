@@ -224,3 +224,41 @@ export const isAfter = (
 /** 주어진 날짜의 UTC 타임스탬프(S) 반환 */
 const getUTC = (date: Date): number =>
 	Math.floor(date.getTime() / 1000) + date.getTimezoneOffset() * 60
+
+/**
+ * 주어진 연도와 월을 기준으로 해당 월의 몇 번째 주차인지 계산합니다.
+ * @param year - 연도
+ * @param month - 월 (1부터 12까지의 값)
+ * @param day - 날짜 (기본값은 1일로 설정)
+ * @returns 월의 몇 번째 주차인지 계산된 값
+ */
+export const getWeekNumber = (
+	year: number,
+	month: number,
+	day: number = 1,
+): number => {
+	const date = new Date(year, month - 1, day)
+
+	// 월의 첫 날을 생성합니다.
+	const firstDayOfMonth = new Date(year, month - 1, 1)
+
+	// 첫 날의 요일을 구합니다.
+	const dayOfWeek = firstDayOfMonth.getDay()
+	// 일요일(0)을 0주차로 하는 대신 1주차로 시작하기 위해 조정합니다.
+	// 월요일을 주의 시작으로 설정하려면 dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+	const firstMondayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1
+
+	// 월의 첫 월요일 날짜를 계산합니다.
+	const firstMondayOfMonth = new Date(
+		year,
+		month - 1,
+		1 + (7 - firstMondayOffset),
+	)
+
+	// 현재 날짜와 첫 월요일 날짜의 차이를 계산합니다.
+	const daysDifference =
+		(date.getTime() - firstMondayOfMonth.getTime()) / (1000 * 60 * 60 * 24)
+	const weekNumber = Math.ceil(daysDifference / 7) + 1 // `Math.ceil`을 사용하여 1부터 시작하는 주차
+
+	return weekNumber
+}
