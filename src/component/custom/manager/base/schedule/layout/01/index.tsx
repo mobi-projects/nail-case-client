@@ -9,6 +9,7 @@ import NTPulldown from "@/component/common/nt-pulldown"
 import { MANAGER_BASE_SCHEDULE_THIS_MONTH } from "@/constant/routing-path"
 import { PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR } from "@/constant/toolbar-list"
 import { usePulldown } from "@/hook/use-component"
+import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import type { TResponseData } from "@/type/response"
 import {
@@ -68,12 +69,30 @@ function ScheduleController() {
 function ScheduleInfo() {
 	const pulldownSchedule = usePulldown()
 	const pathName = usePathname()
+	const { timeInfo } = useTimeInfo()
+	const { day, month, year } = timeInfo
+
+	const { startTIme, endTime } = getScheduleTimeRange(
+		year,
+		month,
+		day,
+		pathName,
+	)
+
+	const { data, isLoading } = useListReservationQuery(1, startTIme, endTime)
+
+	if (isLoading) return <h1>data Loading중....</h1>
+	if (isUndefined(data)) return <h1>data가 없습니다.</h1>
+
+	const confirmedReservations = sortReservation(data, "CONFIRMED")
+	const pendingReservations = sortReservation(data, "PENDING")
+
 	return (
 		<div className="flex h-full w-full items-center justify-between border-y-[1px] border-y-PB50/40">
 			<div className="flex h-full items-center pl-7">
 				<div className="flex h-fit items-end gap-x-2">
 					<p className="text-Headline02 font-SemiBold text-Gray100">총 시술</p>
-					<p className="text-Headline01 text-PB100">136 건</p>
+					<p className="text-Headline01 text-PB100">{`${data.dataList.length} 건`}</p>
 				</div>
 				<NTIcon
 					icon="dot"
@@ -81,7 +100,9 @@ function ScheduleInfo() {
 				/>
 				<div className="flex h-fit items-end gap-x-2">
 					<p className="text-Headline02 text-Gray100">예약 대기</p>
-					<p className="text-Headline01 text-PB100">3 건</p>
+					<p className="text-Headline01 text-PB100">
+						{`${pendingReservations.length} 건`}
+					</p>
 				</div>
 				<NTIcon
 					icon="dot"
@@ -89,7 +110,7 @@ function ScheduleInfo() {
 				/>
 				<div className="flex h-fit items-end gap-x-2">
 					<p className="text-Headline02 text-Gray100">예약 확정</p>
-					<p className="text-Headline01 text-PB100">22 건</p>
+					<p className="text-Headline01 text-PB100">{`${confirmedReservations.length} 건`}</p>
 				</div>
 			</div>
 			{pathName === MANAGER_BASE_SCHEDULE_THIS_MONTH ? (
