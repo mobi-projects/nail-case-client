@@ -11,6 +11,14 @@ import { PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR } from "@/constant/toolbar-
 import { usePulldown } from "@/hook/use-component"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import type { TResponseData } from "@/type/response"
+import {
+	getThisDayFirst,
+	getThisDayLast,
+	getThisMonthFirstDate,
+	getThisMonthLastDate,
+	getThisWeekFirst,
+	getThisWeekLast,
+} from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
 
 export default function ScheduleLayout() {
@@ -119,4 +127,41 @@ export const sortReservation = (
 
 		[],
 	)
+}
+
+/**
+ * @param year 연도
+ * @param month 월
+ * @param day 일
+ * @param pathName 현재 페이지의 주소
+ * @returns 페이지의 주소를 받아서 해당 페이지에 맞는 startTime, endTime을 반환
+ */
+export const getScheduleTimeRange = (
+	year: number,
+	month: number,
+	day: number,
+	pathName: string,
+) => {
+	let startTIme
+	let endTime
+	switch (pathName) {
+		case PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR[0]: {
+			startTIme = getThisMonthFirstDate(year, month)
+			endTime = getThisMonthLastDate(year, month)
+			break
+		}
+		case PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR[1]: {
+			startTIme = getThisWeekFirst(year, month, day)
+			endTime = getThisWeekLast(year, month, day)
+			break
+		}
+		case PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR[2]: {
+			startTIme = getThisDayFirst(year, month, day)
+			endTime = getThisDayLast(year, month, day)
+			break
+		}
+		default:
+			throw new Error("TimeRange Error")
+	}
+	return { startTIme, endTime }
 }
