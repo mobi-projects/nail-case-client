@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
-import { conditionList, removeList, treatmentList } from "@/constant/tagList"
+import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import type { TReservationDetailList } from "@/type"
 import type { TNailCondition } from "@/type/union-option/nail-condition"
@@ -189,11 +189,11 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 
 				const translateTagList = () => {
 					const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
-					const removeTagTranslate = removeList[removeTag]
+					const removeTagTranslate = REMOVE_LIST[removeTag]
 					const conditionTagTranslate = conditionTagList.map(
-						(tag) => conditionList[tag],
+						(tag) => CONDITION_LIST[tag],
 					)
-					const treatmentTagTranslate = treatmentList[treatmentTag]
+					const treatmentTagTranslate = TREATMENT_LIST[treatmentTag]
 					return [
 						extendTagTranslate,
 						removeTagTranslate,
