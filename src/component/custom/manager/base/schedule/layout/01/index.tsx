@@ -9,6 +9,9 @@ import NTPulldown from "@/component/common/nt-pulldown"
 import { MANAGER_BASE_SCHEDULE_THIS_MONTH } from "@/constant/routing-path"
 import { PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR } from "@/constant/toolbar-list"
 import { usePulldown } from "@/hook/use-component"
+import type { TResGetListReservation, TReservationDetailList } from "@/type"
+import type { TResponseData } from "@/type/response"
+import { isUndefined } from "@/util/common/type-guard"
 
 export default function ScheduleLayout() {
 	return (
@@ -91,5 +94,29 @@ function ScheduleInfo() {
 				/>
 			) : null}
 		</div>
+	)
+}
+
+/**
+ * @param data listReservation 예약정보
+ * @param status 예약상태 5가지중 선택"CONFIRMED" | "REJECTED" | "CANCELED" | "PENDING" | "COMPLETED"
+ * @returns 전체 예약정보중 status와 일치하는 예약정보 반환
+ */
+export const sortReservation = (
+	data: TResponseData<TResGetListReservation[], "dataList"> | undefined,
+	status: "CONFIRMED" | "REJECTED" | "CANCELED" | "PENDING" | "COMPLETED",
+) => {
+	if (isUndefined(data)) return []
+	return data.dataList.reduce<TReservationDetailList[]>(
+		(data, reservation) => {
+			data.push(
+				...reservation.reservationDetailList.filter(
+					(detail) => detail.status === status,
+				),
+			)
+			return data
+		},
+
+		[],
 	)
 }
