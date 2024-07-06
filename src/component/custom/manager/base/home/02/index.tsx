@@ -5,16 +5,16 @@ import { useEffect, useRef, useState } from "react"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTOption from "@/component/common/nt-option"
+import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import type { TReservationDetailList } from "@/type"
+import type { TNailCondition } from "@/type/union-option/nail-condition"
 import {
 	getDayOfWeekFromStamp,
 	getThisDate,
 	getThisMonth,
 	getThisYear,
 } from "@/util/common"
-import { tagLists } from "@/util/common/tagList"
-
 export default function ReservationForm() {
 	const [dateInfo, setDateInfo] = useState({
 		year: getThisYear(),
@@ -180,18 +180,27 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 				const reservation = data
 				const startTime = new Date(reservation.startTime * 1000)
 				const endTime = new Date(reservation.endTime * 1000)
-				const tagList = [
-					reservation.remove,
-					...reservation.conditionList.map((data) => data.option.toString()),
-					reservation.treatmentList[0]?.option,
-				]
-				const extendTag = reservation.extend
-				const translateTagList = () => {
-					const tagListTranslate = tagList.map((tag) => tagLists[tag])
-					const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
-					return [extendTagTranslate, ...tagListTranslate]
-				}
+				const removeTag = data.remove
+				const conditionTagList = data.conditionList.map(
+					(data) => data.option as TNailCondition,
+				)
+				const treatmentTag = data.treatmentList[0].option
+				const extendTag = data.extend
 
+				const translateTagList = () => {
+					const extendTagTranslate = extendTag ? "연장 필요" : "연장 필요없음"
+					const removeTagTranslate = REMOVE_LIST[removeTag]
+					const conditionTagTranslate = conditionTagList.map(
+						(tag) => CONDITION_LIST[tag],
+					)
+					const treatmentTagTranslate = TREATMENT_LIST[treatmentTag]
+					return [
+						extendTagTranslate,
+						removeTagTranslate,
+						...conditionTagTranslate,
+						treatmentTagTranslate,
+					]
+				}
 				return (
 					<div
 						key={idx}
