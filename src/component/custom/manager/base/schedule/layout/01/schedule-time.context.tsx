@@ -3,31 +3,29 @@ import { createContext, useContext, useState } from "react"
 
 import { getThisDate, getThisMonth, getThisYear } from "@/util/common"
 
-type TimeInfoType = {
+type TTimeInfo = {
 	year: number
 	month: number
 	day: number
 }
 
-type TimeInfoContextType = {
-	timeInfo: TimeInfoType
-	setTimeInfo: Dispatch<SetStateAction<TimeInfoType>>
+type TTimeInfoContext = {
+	timeInfo: TTimeInfo
+	setTimeInfo: Dispatch<SetStateAction<TTimeInfo>>
 }
 
-const TimeInfoContext = createContext<TimeInfoContextType | undefined>(
-	undefined,
-)
+const TimeInfoContext = createContext<TTimeInfoContext | undefined>(undefined)
 
 type TimeInfoProviderPT = { children: ReactNode }
 
 export function TimeInfoProvider({ children }: TimeInfoProviderPT) {
-	const defaultTimeInfo: TimeInfoType = {
+	const defaultTimeInfo: TTimeInfo = {
 		year: getThisYear(),
 		month: getThisMonth(),
 		day: getThisDate(),
 	}
 
-	const [timeInfo, setTimeInfo] = useState<TimeInfoType>(defaultTimeInfo)
+	const [timeInfo, setTimeInfo] = useState<TTimeInfo>(defaultTimeInfo)
 
 	return (
 		<TimeInfoContext.Provider value={{ timeInfo, setTimeInfo }}>
