@@ -1,7 +1,7 @@
 "use client"
 import { usePathname, useRouter } from "next/navigation"
 
-import { NTBannerImageCarousel } from "@/component/common/nt-banner-image-carousel"
+import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"

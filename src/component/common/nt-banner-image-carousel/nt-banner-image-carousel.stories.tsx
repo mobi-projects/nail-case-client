@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
 
-import { NTBannerImageCarousel } from "."
+import NTBannerImageCarousel from "."
 
 const meta: Meta<typeof NTBannerImageCarousel> = {
 	title: "component/common/nt-banner-image-carousel",

@@ -23,7 +23,7 @@ type NTBannerImageCarouselPT = HTMLAttributes<HTMLDivElement> & {
 	accessSelected?: (idx: number) => void
 }
 
-export function NTBannerImageCarousel({
+export default function NTBannerImageCarousel({
 	isInfinity = false,
 	essentialImagePropArr = [],
 	objectFit = "object-cover",

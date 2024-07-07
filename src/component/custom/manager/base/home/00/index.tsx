@@ -1,5 +1,5 @@
 "use client"
-import { NTBannerImageCarousel } from "@/component/common/nt-banner-image-carousel"
+import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 
 export default function ManagerBaseHomeBanner() {
