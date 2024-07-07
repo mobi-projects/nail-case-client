@@ -1,5 +1,8 @@
 import type { EmblaCarouselType } from "embla-carousel"
+import useEmblaCarousel from "embla-carousel-react"
 import { useCallback, useEffect, useRef, useState } from "react"
+
+import { isUndefined } from "@/util/common/type-guard"
 
 export const usePulldown = () => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -54,4 +57,25 @@ export const useBanner = () => {
 	}
 
 	return { carouselIdx, handleCarousel }
+}
+
+export const useBannerImageCarousel = (
+	isInfinity: boolean = false,
+	accessSelected: ((idx: number) => void) | undefined,
+) => {
+	const [carouselRef, carouselController] = useEmblaCarousel({
+		loop: isInfinity,
+	})
+	const updateSelectedIdx = useCallback(
+		(carouselController: EmblaCarouselType) => {
+			accessSelected && accessSelected(carouselController.selectedScrollSnap())
+		},
+		[accessSelected],
+	)
+	useEffect(() => {
+		if (isUndefined(carouselController)) return
+		carouselController.on("select", updateSelectedIdx)
+		carouselController.on("reInit", updateSelectedIdx)
+	}, [carouselController, updateSelectedIdx])
+	return { carouselRef }
 }
