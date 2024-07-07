@@ -7,6 +7,7 @@ import "dayjs/locale/ko"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTOption from "@/component/common/nt-option"
 import { axiosInstance } from "@/config/axios"
+import { REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import {
 	getThisDate,
@@ -17,7 +18,6 @@ import {
 	convertSecondTimestamp,
 	getKSTStampByStamp,
 } from "@/util/common"
-import { tagLists } from "@/util/common/tagList"
 
 const fetchReservations = async ({
 	queryKey,
@@ -89,12 +89,12 @@ export default function DaySchedule() {
 		imageUrl: string
 		modifiedAt: number
 		modifiedBy: null
-		option: string
+		option: keyof typeof TREATMENT_LIST
 	}
 
 	const treatmentOptions =
 		firstData?.treatmentList.map(
-			(treatment: treatmentType) => tagLists[treatment.option],
+			(treatment: treatmentType) => TREATMENT_LIST[treatment.option],
 		) || []
 
 	return (
@@ -134,7 +134,11 @@ export default function DaySchedule() {
 				<div className="mr-[20px] text-Body02 font-SemiBold text-Gray80">
 					네일 제거 유무
 				</div>
-				<NTOption optionArr={[tagLists[firstData?.remove]]} />
+				<NTOption
+					optionArr={[
+						REMOVE_LIST[firstData?.remove as keyof typeof REMOVE_LIST],
+					]}
+				/>
 			</div>
 			<div className="flex items-center border-b border-Gray20 py-[20px]">
 				<div className="mr-[20px] text-Body02 font-SemiBold text-Gray80">
