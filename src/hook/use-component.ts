@@ -41,24 +41,6 @@ export const usePulldown = () => {
 	}
 }
 
-export const useBanner = () => {
-	const [carouselIdx, setCarouselIdx] = useState(0)
-	/**
-	 * @description - carouse 스크롤시 carouseIdx를 추적
-	 */
-	const handleCarousel = (api?: EmblaCarouselType) => {
-		if (!api) return
-		api.on("select", () => {
-			const newIdx = api?.selectedScrollSnap()
-			if (typeof newIdx === "number") {
-				setCarouselIdx(newIdx)
-			}
-		})
-	}
-
-	return { carouselIdx, handleCarousel }
-}
-
 export const useBannerImageCarousel = (
 	isInfinity: boolean = false,
 	accessSelected: ((idx: number) => void) | undefined,
