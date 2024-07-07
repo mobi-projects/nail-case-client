@@ -10,13 +10,17 @@ import { MANAGER_BASE_SCHEDULE_THIS_MONTH } from "@/constant/routing-path"
 import { PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR } from "@/constant/toolbar-list"
 import { usePulldown } from "@/hook/use-component"
 
+import { TimeInfoProvider } from "./schedule-time.context"
+
 export default function ScheduleLayout() {
 	return (
-		<div className="grid w-full grid-rows-[70px_76px_62px] items-center border-t border-t-Gray10">
-			<p className="text-Title03 font-SemiBold">일정</p>
-			<ScheduleController />
-			<ScheduleInfo />
-		</div>
+		<TimeInfoProvider>
+			<div className="grid w-full grid-rows-[70px_76px_62px] items-center border-t border-t-Gray10">
+				<p className="text-Title03 font-SemiBold">일정</p>
+				<ScheduleController />
+				<ScheduleInfo />
+			</div>
+		</TimeInfoProvider>
 	)
 }
 
