@@ -17,13 +17,17 @@ import {
 	getWeekNumber,
 } from "@/util/common"
 
+import { TimeInfoProvider } from "./schedule-time.context"
+
 export default function ScheduleLayout() {
 	return (
-		<div className="grid w-full grid-rows-[70px_76px_62px] items-center border-t border-t-Gray10">
-			<p className="text-Title03 font-SemiBold">일정</p>
-			<ScheduleController />
-			<ScheduleInfo />
-		</div>
+		<TimeInfoProvider>
+			<div className="grid w-full grid-rows-[70px_76px_62px] items-center border-t border-t-Gray10">
+				<p className="text-Title03 font-SemiBold">일정</p>
+				<ScheduleController />
+				<ScheduleInfo />
+			</div>
+		</TimeInfoProvider>
 	)
 }
 
