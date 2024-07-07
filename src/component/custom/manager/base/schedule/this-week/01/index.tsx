@@ -8,15 +8,15 @@ import React, { useState } from "react"
 import NTEventDetail from "@/component/common/nt-event-deatli"
 import NTIcon from "@/component/common/nt-icon"
 import { axiosInstance } from "@/config/axios"
+import { REMOVE_LIST } from "@/constant/tagList"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import {
 	convertSecondTimestamp,
+	getHourFromStamp,
 	getNowStamp,
 	getThisWeekFirst,
 	getThisWeekLast,
-	getHourFromStamp,
 } from "@/util/common"
-import { tagLists } from "@/util/common/tagList"
 
 const fetchReservations = async ({
 	queryKey,
@@ -282,7 +282,7 @@ function ManagerScheduleTask({
 									className={`${widthClass} mb-[15px]`}
 									name={res.nailArtistId ? `미지정` : `미지정`}
 								>
-									{tagLists[res.remove]}
+									{REMOVE_LIST[res.remove]}
 								</NTEventDetail>
 							</div>
 						) : null
