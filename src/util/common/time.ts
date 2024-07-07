@@ -157,7 +157,7 @@ export const getCalendarArr = (year: number, month: number): number[] => {
 
 /** "년","월","일" 출력할 경우, 적절히 padding 하여 반환 */
 export const padStartToPrinting = (
-	type: "year" | "month" | "date",
+	type: "year" | "month" | "date" | "time",
 	target: number,
 ) => {
 	if (type === "year") return target.toString().padStart(4, "0")

@@ -11,7 +11,7 @@ const OptionVariants = cva(
 				medium:
 					"h-[44px] rounded-[35px] py-[10px] text-Body01 disabled:text-Gray70",
 				large:
-					"h-[52px] rounded-[26px] py-[12px] text-Headline02 disabled:text-Gray50",
+					"h-[52px] rounded-[26px] py-[12px] text-Headline02 font-Regular disabled:text-Gray50",
 			},
 			isPressed: {
 				true: "text-White bg-PB100",
