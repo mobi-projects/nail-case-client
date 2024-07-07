@@ -4,6 +4,7 @@ import type { ComponentPropsWithoutRef, PropsWithChildren } from "react"
 import { createContext, useContext, useRef, useState } from "react"
 
 import { cn } from "@/config/tailwind"
+import { useControlBodyScroll } from "@/hook/use-prevent-scroll"
 
 import NTSheet from "."
 
@@ -35,10 +36,13 @@ export const SheetProvider = ({ children }: PropsWithChildren) => {
 	const [animatedClass, setAnimatedClass] = useState<string>(
 		ANIMATION_STATES.idle,
 	)
+	const prevScrollYRef = useRef(0)
+	const { pauseBodyScroll, restartBodyScroll } = useControlBodyScroll()
 
 	const onOpenSheet = ({ children }: PropsWithChildren) => {
 		setTimeout(() => {
 			setAnimatedClass(ANIMATION_STATES.entered)
+			prevScrollYRef.current = pauseBodyScroll()
 		}, ANIMATION_DURATION)
 		sheetRef.current?.showModal()
 		setSheetAttributes({ ...{ children } })
@@ -48,6 +52,7 @@ export const SheetProvider = ({ children }: PropsWithChildren) => {
 		setTimeout(() => {
 			sheetRef.current?.close()
 			setSheetAttributes(initAttribute)
+			restartBodyScroll(prevScrollYRef.current)
 		}, ANIMATION_DURATION)
 	}
 	return (

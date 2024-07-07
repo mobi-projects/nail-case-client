@@ -10,6 +10,7 @@ type NTSheetPT = PropsWithChildren<{ className?: string }>
 const NTSheet = forwardRef<HTMLDialogElement, NTSheetPT>(
 	({ children, className, ...rest }, ref) => {
 		const { onCloseSheet } = useSheet()
+
 		return (
 			<dialog
 				ref={ref}
@@ -31,7 +32,7 @@ export default NTSheet
 function SheetBody({ children }: PropsWithChildren) {
 	return (
 		<div
-			className="fixed bottom-0 left-0 right-0 h-[80%] w-full rounded-t-[26px] bg-gradient-to-t from-[#AFBFC6] to-[#EFFAFF] p-[50px]"
+			className="fixed bottom-0 left-0 right-0 h-[80%] w-full rounded-t-[26px] bg-gradient-to-t from-[#AFBFC6] to-[#EFFAFF] px-[50px]"
 			onClick={(e) => {
 				e.stopPropagation()
 			}}
