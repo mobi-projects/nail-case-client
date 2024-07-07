@@ -5,7 +5,7 @@ import NTContent from "@/component/common/nt-content"
 export default function ManagerBaseHomeBanner() {
 	return (
 		<div className="relative h-[380px] w-full">
-			<NTBannerImageCarousel className="absolute left-0 z-0 h-full w-full bg-transparent" />
+			<NTBannerImageCarousel className="absolute left-0 h-full w-full bg-transparent" />
 			<BannerHeader />
 			<BannerDescription />
 			<NTContent mode="dark" className="absolute right-[78px] top-[62px]">
