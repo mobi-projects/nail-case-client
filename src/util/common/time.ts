@@ -230,35 +230,58 @@ const getUTC = (date: Date): number =>
  * @param year - 연도
  * @param month - 월 (1부터 12까지의 값)
  * @param day - 날짜 (기본값은 1일로 설정)
- * @returns 월의 몇 번째 주차인지 계산된 값
+ * @returns
+ * - 해당요일이 `월`의 몇주차인지 반환
+ * - 해당일이 1~7일인 경우 해당주차에 포함된 일수가 4일 미만이라면 0 반환
+ * - 해당일이 월의 마지막주차라면 해당주차에 포함된 일수가 4일미만이라면 -1 반환
  */
 export const getWeekNumber = (
 	year: number,
 	month: number,
 	day: number = 1,
 ): number => {
-	const date = new Date(year, month - 1, day)
+	// year, month ,day를 기반으로 currentDate객체 생성
+	const currentDate = dayjs()
+		.year(year)
+		.month(month - 1)
+		.date(day)
+	// 달의 첫번째 요일을 파악 일~토 => 0~6 으로 매칭됨
+	const firstDayOfMonth = currentDate.startOf("month").day()
+	// 현재 `월`의 요일 수
+	const daysInMonth = currentDate.daysInMonth()
 
-	// 월의 첫 날을 생성합니다.
-	const firstDayOfMonth = new Date(year, month - 1, 1)
+	// 첫 번째 주의 남은 일수 계산
+	const firstWeekDays = 7 - firstDayOfMonth
 
-	// 첫 날의 요일을 구합니다.
-	const dayOfWeek = firstDayOfMonth.getDay()
-	// 일요일(0)을 0주차로 하는 대신 1주차로 시작하기 위해 조정합니다.
-	// 월요일을 주의 시작으로 설정하려면 dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-	const firstMondayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1
+	// 첫 주차가 4일 미만일 경우 주차로 인식하지 않음
+	let weekNumber = 1
+	if (firstWeekDays < 4) {
+		weekNumber = 0
+	}
 
-	// 월의 첫 월요일 날짜를 계산합니다.
-	const firstMondayOfMonth = new Date(
-		year,
-		month - 1,
-		1 + (7 - firstMondayOffset),
-	)
+	// 현재 날짜가 첫 주차에 해당할 경우
+	if (day <= firstWeekDays) {
+		if (weekNumber === 0) {
+			return 0
+		}
+		return weekNumber
+	}
 
-	// 현재 날짜와 첫 월요일 날짜의 차이를 계산합니다.
-	const daysDifference =
-		(date.getTime() - firstMondayOfMonth.getTime()) / (1000 * 60 * 60 * 24)
-	const weekNumber = Math.ceil(daysDifference / 7) + 1 // `Math.ceil`을 사용하여 1부터 시작하는 주차
+	// 첫 주차 이후의 주차 계산
+	const remainingDays = daysInMonth - firstWeekDays
+	weekNumber += Math.floor((day - firstWeekDays - 1) / 7) + 1
+
+	// 마지막 주차의 일수가 4일 미만일 경우 -1 반환
+	const lastWeekDays = remainingDays % 7
+	if (
+		lastWeekDays > 0 &&
+		lastWeekDays < 4 &&
+		day > daysInMonth - lastWeekDays
+	) {
+		if (day > daysInMonth - lastWeekDays) {
+			return -1
+		}
+	}
 
 	return weekNumber
 }
