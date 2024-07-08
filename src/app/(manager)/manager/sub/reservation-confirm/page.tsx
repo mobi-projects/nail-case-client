@@ -113,21 +113,11 @@ export default function DaySchedule() {
 				</div>
 			</div>
 			<div className="border-b border-Gray20 py-[20px]">
-				<div className="flex items-center pb-[10px]">
+				<div className="flex items-center">
 					<div className="mr-[20px] text-Body02 font-SemiBold text-Gray80">
 						시술 내용
 					</div>
 					<NTOption optionArr={treatmentOptions} />
-				</div>
-				<div className="flex">
-					{Array(5)
-						.fill("")
-						.map((_, index) => (
-							<div
-								key={index}
-								className="mr-[15px] h-[100px] w-[100px] rounded-[7px] bg-Gray10"
-							></div>
-						))}
 				</div>
 			</div>
 			<div className="flex items-center border-b border-Gray20 py-[20px]">
