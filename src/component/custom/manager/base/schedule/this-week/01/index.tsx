@@ -13,9 +13,11 @@ import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import {
 	convertSecondTimestamp,
 	getHourFromStamp,
-	getNowStamp,
+	getThisDate,
+	getThisMonth,
 	getThisWeekFirst,
 	getThisWeekLast,
+	getThisYear,
 } from "@/util/common"
 
 const fetchReservations = async ({
@@ -48,17 +50,12 @@ export default function ManagerBaseScheduleThisWeekTask() {
 		}
 	}
 
-	const now = getNowStamp()
 	const weekFirst = getThisWeekFirst(
-		dayjs.unix(now).year(),
-		dayjs.unix(now).month() + 1,
-		dayjs.unix(now).date(),
+		getThisYear(),
+		getThisMonth(),
+		getThisDate(),
 	)
-	const weekLast = getThisWeekLast(
-		dayjs.unix(now).year(),
-		dayjs.unix(now).month() + 1,
-		dayjs.unix(now).date(),
-	)
+	const weekLast = getThisWeekLast(getThisYear(), getThisMonth(), getThisDate())
 
 	const thisWeekTimeRange = {
 		startTime: new Date(weekFirst * 1000),
