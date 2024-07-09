@@ -43,3 +43,9 @@ export const PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR = [
 	MANAGER_BASE_SCHEDULE_THIS_WEEK,
 	MANAGER_BASE_SCHEDULE_TODAY,
 ]
+export const LABEL_LIST_FOR_CUSTOMER_BASE_TOOLBAR = [
+	"홈",
+	"검색",
+	"스케줄",
+	"마이페이지",
+] as const
