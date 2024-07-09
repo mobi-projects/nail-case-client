@@ -27,7 +27,7 @@ const fetchReservations = async ({
 }) => {
 	const [, startTime, endTime] = queryKey
 
-	const response = await axiosInstance().get(``, {
+	const response = await axiosInstance().get(`/shops/1/reservations`, {
 		params: {
 			startTime: startTime,
 			endTime: endTime,
