@@ -71,10 +71,17 @@ export default function ManagerBaseScheduleThisWeekTask() {
 		queryFn: fetchReservations,
 	})
 
-	const reservationData = data?.dataList
+	if (!data || !data.dataList) {
+		return null
+	}
 
-	const confirmedReservations = reservationData?.reduce(
+	const reservationData = data.dataList
+
+	const confirmedReservations = reservationData.reduce(
 		(acc: TReservationDetailList[], reservation: TResGetListReservation) => {
+			if (!reservation.reservationDetailList) {
+				return acc
+			}
 			const confirmedDetails = reservation.reservationDetailList.filter(
 				(detail: TReservationDetailList) => detail.status === "CONFIRMED",
 			)
@@ -94,7 +101,7 @@ export default function ManagerBaseScheduleThisWeekTask() {
 						weekFirst.add(i, "day"),
 					)
 					const day = week[idx]
-					const dailyReservations = confirmedReservations?.filter(
+					const dailyReservations = confirmedReservations.filter(
 						(res: TReservationDetailList) => {
 							const reservationDate = dayjs.unix(res.startTime).date()
 							return day.date() === reservationDate
@@ -108,9 +115,7 @@ export default function ManagerBaseScheduleThisWeekTask() {
 							incrementHour={incrementHour}
 							incremented={incremented}
 							confirmedReservations={confirmedReservations}
-							dailyReservationsCount={
-								dailyReservations ? dailyReservations.length : 0
-							}
+							dailyReservationsCount={dailyReservations.length}
 							day={day}
 						/>
 					)
@@ -249,7 +254,7 @@ function ManagerScheduleTask({
 	day,
 	confirmedReservations,
 }: ManagerScheduleTaskPT) {
-	const dailyReservations = confirmedReservations?.filter((res) => {
+	const dailyReservations = confirmedReservations.filter((res) => {
 		const reservationDate = dayjs.unix(res.startTime).date()
 		return day.date() === reservationDate
 	})
@@ -260,7 +265,7 @@ function ManagerScheduleTask({
 		<div className="grid h-full w-[1000px] grid-cols-8">
 			{Array.from({ length: endHour - startHour }).map((_, i) => (
 				<div key={i} className="mt-[12px] min-h-[136.8px]">
-					{dailyReservations?.map((res, idx) => {
+					{dailyReservations.map((res, idx) => {
 						const startTime = getHourFromStamp(res.startTime)
 						const endTime = getHourFromStamp(res.endTime)
 						const duration = endTime - startTime
