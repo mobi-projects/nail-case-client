@@ -73,12 +73,15 @@ export default function ManagerBaseScheduleThisWeekTask() {
 
 	const reservationData = data?.dataList
 
-	const confirmedReservations = reservationData
-		?.flatMap(
-			(reservation: TResGetListReservation) =>
-				reservation.reservationDetailList,
-		)
-		.filter((detail: TReservationDetailList) => detail.status === "CONFIRMED")
+	const confirmedReservations = reservationData?.reduce(
+		(acc: TReservationDetailList[], reservation: TResGetListReservation) => {
+			const confirmedDetails = reservation.reservationDetailList.filter(
+				(detail: TReservationDetailList) => detail.status === "CONFIRMED",
+			)
+			return acc.concat(confirmedDetails)
+		},
+		[] as TReservationDetailList[],
+	)
 
 	return (
 		<div className="flex h-fit w-full flex-col py-[10px]">
