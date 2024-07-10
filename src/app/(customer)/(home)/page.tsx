@@ -1,3 +1,7 @@
+import ShopListForm from "@/component/custom/customer/home/03"
+
+import { AroundShop, LikedShop } from "./mockData"
+
 export default function CustomerBaseHome() {
 	return (
 		<div className="flex flex-col">
@@ -6,8 +10,8 @@ export default function CustomerBaseHome() {
 				<div>진행 중인 네일</div>
 				<div>다시 돌아보는 지난 네일</div>
 			</div>
-			<div>내 주변 네일샵 👣</div>
-			<div>내가 좋아한 네일샵 ✨</div>
+			<ShopListForm listData={AroundShop} />
+			<ShopListForm listData={LikedShop} />
 		</div>
 	)
 }
