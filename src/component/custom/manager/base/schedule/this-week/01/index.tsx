@@ -9,7 +9,7 @@ import NTEventDetail from "@/component/common/nt-event-deatli"
 import NTIcon from "@/component/common/nt-icon"
 import { axiosInstance } from "@/config/axios"
 import { REMOVE_LIST } from "@/constant/tagList"
-import type { TResGetListReservation, TReservationDetailList } from "@/type"
+import type { TReservationDetailList } from "@/type"
 import {
 	convertSecondTimestamp,
 	getHourFromStamp,
@@ -20,6 +20,8 @@ import {
 	getThisYear,
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
+
+import { sortReservation } from "../../layout/01"
 
 const fetchReservations = async ({
 	queryKey,
@@ -74,20 +76,7 @@ export default function ManagerBaseScheduleThisWeekTask() {
 
 	if (isUndefined(data)) return <h1>주간 일정 로딩중...</h1>
 
-	const reservationData = data.dataList
-
-	const confirmedReservations = reservationData.reduce(
-		(acc: TReservationDetailList[], reservation: TResGetListReservation) => {
-			if (!reservation.reservationDetailList) {
-				return acc
-			}
-			const confirmedDetails = reservation.reservationDetailList.filter(
-				(detail: TReservationDetailList) => detail.status === "CONFIRMED",
-			)
-			return acc.concat(confirmedDetails)
-		},
-		[] as TReservationDetailList[],
-	)
+	const confirmedReservations = sortReservation(data, "CONFIRMED")
 
 	return (
 		<div className="flex h-fit w-full flex-col py-[10px]">
