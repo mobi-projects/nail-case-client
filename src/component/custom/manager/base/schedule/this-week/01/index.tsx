@@ -19,6 +19,7 @@ import {
 	getThisWeekLast,
 	getThisYear,
 } from "@/util/common"
+import { isUndefined } from "@/util/common/type-guard"
 
 const fetchReservations = async ({
 	queryKey,
@@ -71,9 +72,7 @@ export default function ManagerBaseScheduleThisWeekTask() {
 		queryFn: fetchReservations,
 	})
 
-	if (!data || !data.dataList) {
-		return null
-	}
+	if (isUndefined(data)) return <h1>주간 일정 로딩중...</h1>
 
 	const reservationData = data.dataList
 
