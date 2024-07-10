@@ -52,13 +52,7 @@ function PostCard({ title, imgSrc, likes, comments, createAt }: TPostCard) {
 function PostThumbnail({ imgSrc }: Pick<TPostCard, "imgSrc">) {
 	return (
 		<div className="relative block h-full w-full overflow-hidden rounded-[6px]">
-			<Image
-				src={imgSrc}
-				width="233"
-				height="160"
-				alt="post-thumbnail"
-				loading="lazy"
-			/>
+			<Image src={imgSrc} width="233" height="160" alt="post-thumbnail" />
 		</div>
 	)
 }
