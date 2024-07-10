@@ -30,10 +30,10 @@ export default function CustomerShopContent() {
 				toolList={["홈", "디자인", "소식", "리뷰"]}
 				className="w-[1200px] border-b-[2px] px-[400px]"
 				onToolClick={(tool) => {
-					if (tool === "홈") handleScroll(shopInfoRef)
-					else if (tool === "디자인") handleScroll(designRef)
-					else if (tool === "소식") handleScroll(newsRef)
-					else if (tool === "리뷰") handleScroll(reviewRef)
+					if (tool === "홈") return handleScroll(shopInfoRef)
+					if (tool === "디자인") return handleScroll(designRef)
+					if (tool === "소식") return handleScroll(newsRef)
+					if (tool === "리뷰") return handleScroll(reviewRef)
 				}}
 			/>
 			<div ref={shopInfoRef} className="flex w-full flex-col gap-[20px] pt-16">
