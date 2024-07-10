@@ -44,6 +44,7 @@ export const ICON_DATA = {
 	creditCardLight: "lets-icons:credit-card-light",
 	shopLight: "lets-icons:shop-light",
 	favoriteLight: "lets-icons:favorite-light",
+	favoriteFill: "ic:baseline-favorite",
 	deskAltLight: "lets-icons:desk-alt-light",
 	sortArrowLight: "lets-icons:sort-arrow-light",
 	timeLight: "lets-icons:time-light",
