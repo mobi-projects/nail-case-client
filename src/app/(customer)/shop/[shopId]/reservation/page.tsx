@@ -18,7 +18,7 @@ type CustomerShopPT = {
 
 export default function CustomerShopReservation({ params }: CustomerShopPT) {
 	const { shopId } = params
-	const { data, isError } = useListShopNailArtist(shopId)
+	const { data, isLoading, isError } = useListShopNailArtist(shopId)
 	const artistInfoArr = data?.dataList
 	const artistNicknameArr = isError ? [] : getArtistNicknameArr(artistInfoArr)
 	return (
@@ -29,7 +29,11 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 					<Companion maxCompanion={RESERVATION_MOCK_DATA.maxCompanion} />
 				</ExpandableToggle>
 				<ExpandableToggle title="아티스트">
-					<Artist artistArr={artistNicknameArr} isError={isError} />
+					<Artist
+						artistArr={artistNicknameArr}
+						isLoading={isLoading}
+						isError={isError}
+					/>
 				</ExpandableToggle>
 				<ExpandableToggle title="시술 세부 내용">
 					<TreatmentNCondition />
