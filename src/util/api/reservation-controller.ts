@@ -64,3 +64,15 @@ export const patchUpdateReservation = async (
 	)
 	return response.data
 }
+/** [GET] 예약 중, "예약 가능 시간" & "아티스트" api 호출 */
+export const getAvailableTime = async (
+	shopId: number,
+	artistIds: number[],
+	date: number,
+) => {
+	const response = await axiosInstance().get(
+		`/shops/${shopId}/reservations/time`,
+		{ params: { artistIds, date } },
+	)
+	return response.data
+}
