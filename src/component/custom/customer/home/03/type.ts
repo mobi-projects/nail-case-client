@@ -1,4 +1,4 @@
-export type shop = {
+export type Tshop = {
 	title: string
 	content: string
 	location: string

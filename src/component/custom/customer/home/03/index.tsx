@@ -1,9 +1,9 @@
 import NTIcon from "@/component/common/nt-icon"
 
-import type { shop } from "./type"
+import type { Tshop } from "./type"
 
 type ShopListFomrPT = {
-	listData: Array<shop>
+	listData: Array<Tshop>
 }
 export default function ShopListForm({ listData }: ShopListFomrPT) {
 	return (
@@ -26,7 +26,7 @@ function ShopListTitle() {
 	)
 }
 type ShopFormPT = {
-	data: shop
+	data: Tshop
 }
 function ShopForm({ data }: ShopFormPT) {
 	return (
@@ -61,9 +61,9 @@ function ShopHoverInfo({ data }: ShopFormPT) {
 function ShopFormInfo({ data }: ShopFormPT) {
 	const formatDistance = (distance: number): string => {
 		if (distance < 1) {
-			return `${distance * 1000} m`
+			return `${distance * 1000}m`
 		} else {
-			return `${distance} km`
+			return `${distance}km`
 		}
 	}
 	return (
