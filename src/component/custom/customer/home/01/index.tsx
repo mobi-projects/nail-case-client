@@ -30,7 +30,7 @@ export default function CardSlideListForm() {
 		<div className="h-[397.5px] w-full">
 			<div className="relative h-full w-full">
 				<NTContent mode="day" className="absolute right-[20px] top-[57px] z-10">
-					{`${((currentIndex + 1) % dataList.length) + 1}/${dataList.length}`}
+					{`${((currentIndex + 2) % dataList.length) + 1}/${dataList.length}`}
 				</NTContent>
 			</div>
 			<div className="absolute left-0 top-[243px] z-0 flex h-[397.5px] w-full justify-center overflow-hidden bg-BGblue01 py-[37px]">
