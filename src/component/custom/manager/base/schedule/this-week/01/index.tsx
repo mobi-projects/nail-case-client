@@ -1,13 +1,46 @@
 "use client"
 
+import { useQuery } from "@tanstack/react-query"
+import type { Dayjs } from "dayjs"
 import dayjs from "dayjs"
 import React, { useState } from "react"
 
 import NTEventDetail from "@/component/common/nt-event-deatli"
 import NTIcon from "@/component/common/nt-icon"
+import { axiosInstance } from "@/config/axios"
+import { REMOVE_LIST } from "@/constant/tagList"
+import type { TReservationDetailList } from "@/type"
+import {
+	convertSecondTimestamp,
+	getHourFromStamp,
+	getThisDate,
+	getThisMonth,
+	getThisWeekFirst,
+	getThisWeekLast,
+	getThisYear,
+} from "@/util/common"
+import { isUndefined } from "@/util/common/type-guard"
+
+import { sortReservation } from "../../layout/01"
+
+const fetchReservations = async ({
+	queryKey,
+}: {
+	queryKey: [string, number, number]
+}) => {
+	const [, startTime, endTime] = queryKey
+
+	const response = await axiosInstance().get(`/shops/1/reservations`, {
+		params: {
+			startTime: startTime,
+			endTime: endTime,
+		},
+	})
+	return response.data
+}
 
 export default function ManagerBaseScheduleThisWeekTask() {
-	const [startHour, setStartHour] = useState(11)
+	const [startHour, setStartHour] = useState(10)
 	const [incremented, setIncremented] = useState(false)
 
 	const incrementHour = () => {
@@ -15,24 +48,66 @@ export default function ManagerBaseScheduleThisWeekTask() {
 			setStartHour(13)
 			setIncremented(true)
 		} else {
-			setStartHour(11)
+			setStartHour(10)
 			setIncremented(false)
 		}
 	}
+
+	const weekFirst = getThisWeekFirst(
+		getThisYear(),
+		getThisMonth(),
+		getThisDate(),
+	)
+	const weekLast = getThisWeekLast(getThisYear(), getThisMonth(), getThisDate())
+
+	const thisWeekTimeRange = {
+		startTime: new Date(weekFirst * 1000),
+		endTime: new Date(weekLast * 1000),
+	}
+
+	const { data } = useQuery({
+		queryKey: [
+			"reservations",
+			convertSecondTimestamp(thisWeekTimeRange.startTime.getTime()),
+			convertSecondTimestamp(thisWeekTimeRange.endTime.getTime()),
+		],
+		queryFn: fetchReservations,
+	})
+
+	if (isUndefined(data)) return <h1>주간 일정 로딩중...</h1>
+
+	const confirmedReservations = sortReservation(data, "CONFIRMED")
 
 	return (
 		<div className="flex h-fit w-full flex-col py-[10px]">
 			<ManagerScheduleTime startHour={startHour} />
 			<div className="flex flex-col gap-[15px]">
-				{Array.from({ length: 6 }).map((_, idx) => (
-					<ManagerScheduleThisWeek
-						key={idx}
-						idx={idx}
-						startHour={startHour}
-						incrementHour={incrementHour}
-						incremented={incremented}
-					/>
-				))}
+				{Array.from({ length: 7 }).map((_, idx) => {
+					const today = dayjs()
+					const weekFirst = today.startOf("week").add(1, "day")
+					const week = Array.from({ length: 7 }, (_, i) =>
+						weekFirst.add(i, "day"),
+					)
+					const day = week[idx]
+					const dailyReservations = confirmedReservations.filter(
+						(res: TReservationDetailList) => {
+							const reservationDate = dayjs.unix(res.startTime).date()
+							return day.date() === reservationDate
+						},
+					)
+					return (
+						<ManagerScheduleThisWeek
+							key={idx}
+							idx={idx}
+							startHour={startHour}
+							incrementHour={incrementHour}
+							incremented={incremented}
+							confirmedReservations={confirmedReservations}
+							dailyReservationsCount={dailyReservations.length}
+							day={day}
+						/>
+					)
+				})}
 			</div>
 		</div>
 	)
@@ -75,6 +150,9 @@ type ManagerScheduleThisWeekPT = {
 	startHour: number
 	incrementHour: () => void
 	incremented: boolean
+	confirmedReservations: TReservationDetailList[]
+	dailyReservationsCount: number
+	day: Dayjs
 }
 
 function ManagerScheduleThisWeek({
@@ -82,10 +160,11 @@ function ManagerScheduleThisWeek({
 	startHour,
 	incrementHour,
 	incremented,
+	confirmedReservations,
+	dailyReservationsCount,
+	day,
 }: ManagerScheduleThisWeekPT) {
 	const today = dayjs()
-	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
-	const day = week[idx]
 	const isToday = day.isSame(today, "day")
 
 	return (
@@ -94,8 +173,18 @@ function ManagerScheduleThisWeek({
 				isToday ? "border-PB100" : "border-Gray50"
 			}`}
 		>
-			<ManagerScheduleDay idx={idx} isToday={isToday} />
-			<ManagerScheduleTask idx={idx} startHour={startHour} />
+			<ManagerScheduleDay
+				idx={idx}
+				day={day}
+				isToday={isToday}
+				dailyReservationsCount={dailyReservationsCount}
+			/>
+			<ManagerScheduleTask
+				idx={idx}
+				startHour={startHour}
+				day={day}
+				confirmedReservations={confirmedReservations}
+			/>
 			<ManagerScheduleMoreTask
 				onClick={incrementHour}
 				incremented={incremented}
@@ -106,15 +195,17 @@ function ManagerScheduleThisWeek({
 
 type ManagerScheduleDayPT = {
 	idx: number
+	day: Dayjs
 	isToday: boolean
+	dailyReservationsCount: number
 }
 
-function ManagerScheduleDay({ idx, isToday }: ManagerScheduleDayPT) {
-	const today = dayjs()
-	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
-	const daysOfWeek = ["월", "화", "수", "목", "금", "토"]
-
-	const day = week[idx]
+function ManagerScheduleDay({
+	day,
+	isToday,
+	dailyReservationsCount,
+}: ManagerScheduleDayPT) {
+	const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
 
 	return (
 		<div className="ml-[10px] flex h-[131.27px] w-[100px] flex-col justify-between border-r-[2px] border-Gray10">
@@ -122,7 +213,7 @@ function ManagerScheduleDay({ idx, isToday }: ManagerScheduleDayPT) {
 				<div
 					className={`text-Headline02 ${isToday ? "text-PB100" : "text-Gray100"}`}
 				>
-					{daysOfWeek[idx]}
+					{daysOfWeek[day.day()]}
 				</div>
 				<div
 					className={`text-Body02 ${isToday ? "text-PB100" : "text-Gray40"}`}
@@ -133,166 +224,28 @@ function ManagerScheduleDay({ idx, isToday }: ManagerScheduleDayPT) {
 			<div
 				className={`text-Title03 font-Bold ${isToday ? "text-PB100" : "text-Gray40"}`}
 			>
-				4건
+				{dailyReservationsCount}건
 			</div>
 		</div>
 	)
 }
 
-const reservationData = [
-	[
-		{
-			date: 2,
-			firstTime: 11,
-			endTime: 13,
-			artistArr: [
-				{
-					name: "모비쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-				{
-					name: "비모쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-			],
-		},
-		{
-			date: 2,
-			firstTime: 15,
-			endTime: 18,
-			artistArr: [
-				{
-					name: "비모쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-			],
-		},
-	],
-	[
-		{
-			date: 3,
-			firstTime: 13,
-			endTime: 15,
-			artistArr: [
-				{
-					name: "모비쌤",
-					optionArr: ["이달의 아트", "타샵 제거 필요"],
-				},
-			],
-		},
-	],
-	[
-		{
-			date: 4,
-			firstTime: 16,
-			endTime: 19,
-			artistArr: [
-				{
-					name: "모비쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-				{
-					name: "비모쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-			],
-		},
-		{
-			date: 4,
-			firstTime: 11,
-			endTime: 13,
-			artistArr: [
-				{
-					name: "비모쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-			],
-		},
-	],
-	[
-		{
-			date: 5,
-			firstTime: 12,
-			endTime: 14,
-			artistArr: [
-				{
-					name: "비모쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-				{
-					name: "모비쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-			],
-		},
-		{
-			date: 5,
-			firstTime: 15,
-			endTime: 18,
-			artistArr: [
-				{
-					name: "비모쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-			],
-		},
-	],
-	[
-		{
-			date: 6,
-			firstTime: 13,
-			endTime: 15,
-			artistArr: [
-				{
-					name: "모비쌤",
-					optionArr: ["이달의 아트", "타샵 제거 필요"],
-				},
-			],
-		},
-	],
-	[
-		{
-			date: 7,
-			firstTime: 11,
-			endTime: 14,
-			artistArr: [
-				{
-					name: "미지정",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-				{
-					name: "비모쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-			],
-		},
-		{
-			date: 7,
-			firstTime: 15,
-			endTime: 17,
-			artistArr: [
-				{
-					name: "비모쌤",
-					optionArr: ["아트", "동반 2인 시술"],
-				},
-			],
-		},
-	],
-]
-
 type ManagerScheduleTaskPT = {
 	idx: number
 	startHour: number
+	day: Dayjs
+	confirmedReservations: TReservationDetailList[]
 }
 
-function ManagerScheduleTask({ idx, startHour }: ManagerScheduleTaskPT) {
-	const today = dayjs()
-	const week = Array.from({ length: 6 }, (_, i) => today.add(i, "day"))
-	const day = week[idx]
-
-	const dailyReservations = reservationData
-		.flat()
-		.filter((res) => day.date() === res.date)
+function ManagerScheduleTask({
+	startHour,
+	day,
+	confirmedReservations,
+}: ManagerScheduleTaskPT) {
+	const dailyReservations = confirmedReservations.filter((res) => {
+		const reservationDate = dayjs.unix(res.startTime).date()
+		return day.date() === reservationDate
+	})
 
 	const endHour = startHour + 7
 
@@ -301,7 +254,9 @@ function ManagerScheduleTask({ idx, startHour }: ManagerScheduleTaskPT) {
 			{Array.from({ length: endHour - startHour }).map((_, i) => (
 				<div key={i} className="mt-[12px] min-h-[136.8px]">
 					{dailyReservations.map((res, idx) => {
-						const duration = res.endTime - res.firstTime
+						const startTime = getHourFromStamp(res.startTime)
+						const endTime = getHourFromStamp(res.endTime)
+						const duration = endTime - startTime
 						const widthClass =
 							duration === 2
 								? "w-[263px]"
@@ -309,31 +264,19 @@ function ManagerScheduleTask({ idx, startHour }: ManagerScheduleTaskPT) {
 									? "w-[388px]"
 									: "w-[263px]"
 
-						return res.firstTime === startHour + i ? (
+						return startTime === startHour + i ? (
 							<div
 								key={idx}
 								className={`rounded-lg grid-column-span-${duration}`}
 							>
-								{res.artistArr.map((artist, artistIdx) => {
-									let variant: "PB" | "PY" | "Gray" | null = null
-									if (artist.name === "모비쌤") {
-										variant = "PB"
-									} else if (artist.name === "비모쌤") {
-										variant = "PY"
-									} else if (artist.name === "미지정") {
-										variant = "Gray"
-									}
-									return (
-										<NTEventDetail
-											key={`${idx}-${artistIdx}`}
-											variant={variant}
-											className={`${widthClass} mb-[15px]`}
-											name={artist.name}
-										>
-											{artist.optionArr.join(" / ")}
-										</NTEventDetail>
-									)
-								})}
+								<NTEventDetail
+									key={idx}
+									variant={"Gray"}
+									className={`${widthClass} mb-[15px]`}
+									name={res.nailArtistId ? `미지정` : `미지정`}
+								>
+									{REMOVE_LIST[res.remove]}
+								</NTEventDetail>
 							</div>
 						) : null
 					})}
