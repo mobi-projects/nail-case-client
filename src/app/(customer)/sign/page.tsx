@@ -3,8 +3,8 @@
 import type { HTMLAttributes, PropsWithChildren } from "react"
 
 import { cn } from "@/config/tailwind"
-
 import type { TSignType } from "@/type/union-option/sign-type"
+
 type SocialLoginButtonList = { loginType: TSignType }
 export default function SocialLoginButtonList({
 	loginType,
