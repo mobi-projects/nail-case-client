@@ -2,16 +2,22 @@
 
 import type { HTMLAttributes, PropsWithChildren } from "react"
 
+import { NTButton } from "@/component/common/atom/nt-button"
 import { cn } from "@/config/tailwind"
+import { COMMON_HOME } from "@/constant/routing-path"
 import type { TSignType } from "@/type/union-option/sign-type"
 
-type SocialLoginButtonListPT = { loginType: TSignType }
+type SocialLoginButtonListPT = { params: { type: TSignType } }
+
 export default function SocialLoginButtonList({
-	loginType,
+	params,
 }: SocialLoginButtonListPT) {
+	if (!(params.type === "manager" || params.type === "member")) {
+		return <InvalidAccess />
+	}
 	return (
 		<div className="flex h-fit flex-col items-center justify-center gap-[15px]">
-			<KakaoLoginButton loginType={loginType} />
+			<KakaoLoginButton loginType={params.type} />
 			<SocialLoginButton
 				isDisabled={true}
 				className="bg-gradient-to-tr from-[#FFD96B] via-[#FF2395] to-[#AD23F1] text-[#FFFFFF]"
@@ -65,5 +71,22 @@ function KakaoLoginButton({ loginType }: KakaoLoginButtonPT) {
 		>
 			<p>카카오 로그인</p>
 		</button>
+	)
+}
+
+function InvalidAccess() {
+	return (
+		<div className="flex h-dvh w-full items-center justify-center gap-x-4">
+			<h1>잘못된 접근입니다</h1>
+			<NTButton
+				variant={"secondary"}
+				size={"large"}
+				onClick={() => {
+					window.location.href = COMMON_HOME
+				}}
+			>
+				홈으로
+			</NTButton>
+		</div>
 	)
 }
