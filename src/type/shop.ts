@@ -114,3 +114,9 @@ export type TResPutUpdateShop = {
 	tags: Array<string>
 	images: [] // [TODO] 추후 수정, 타입 미확인
 }
+export type TResGetListShopNailArtist = {
+	id: number
+	nickname: string
+	enable: boolean
+	near: number
+}
