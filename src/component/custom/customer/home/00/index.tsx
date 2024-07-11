@@ -16,7 +16,7 @@ export default function CustomerHeader() {
 				<CustomerLayoutSearchfield />
 				<CustomerLayoutSubCatalog />
 			</div>
-			<div className="flex w-full flex-col">
+			<div className="mb-[23px] flex w-full flex-col">
 				<hr className="absolute left-0 z-[-10] w-full border border-Gray10" />
 				<NTToolbar
 					toolList={[...LABEL_LIST_FOR_CUSTOMER_BASE_TOOLBAR]}
