@@ -1,3 +1,4 @@
+import CustomerHeader from "@/component/custom/customer/home/00"
 import ShopListForm from "@/component/custom/customer/home/03"
 
 import { AroundShop, LikedShop } from "./mockData"
@@ -5,6 +6,7 @@ import { AroundShop, LikedShop } from "./mockData"
 export default function CustomerBaseHome() {
 	return (
 		<div className="flex flex-col">
+			<CustomerHeader />
 			<div>배너</div>
 			<div className="flex">
 				<div>진행 중인 네일</div>
