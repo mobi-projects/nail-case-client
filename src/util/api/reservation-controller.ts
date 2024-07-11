@@ -70,7 +70,7 @@ export const getAvailableTime = async (
 	shopId: number,
 	artistIds: number[],
 	date: number,
-): Promise<TResponseData<TResGetListAvailableTime, "dataList">> => {
+): Promise<TResponseData<TResGetListAvailableTime[], "dataList">> => {
 	const response = await axiosInstance().get(
 		`/shops/${shopId}/reservations/time`,
 		{ params: { artistIds, date } },

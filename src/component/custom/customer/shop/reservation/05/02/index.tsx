@@ -3,20 +3,49 @@
 import { useState } from "react"
 
 import NTOption from "@/component/common/nt-option"
+import { useAvailableTimeQuery } from "@/hook/use-reservation-controller"
+import type { TResGetListAvailableTime } from "@/type"
 import {
 	getHourFromStamp,
 	getMinFromStamp,
 	padStartToPrinting,
 } from "@/util/common"
+import { isUndefined } from "@/util/common/type-guard"
 
-import type { ScheduleSelectionPT, TAvailabilityInfo } from ".."
+type DesiredTimePT = {
+	selectedStamp: number
+	shopId: number
+}
 
-export default function DesiredTime({ availableArr }: ScheduleSelectionPT) {
+export default function DesiredTime({ shopId, selectedStamp }: DesiredTimePT) {
+	const { data, isLoading, isError } = useAvailableTimeQuery(
+		shopId,
+		[1, 2, 3],
+		selectedStamp,
+	)
 	const [selectedIdx, setSelectedIdx] = useState(-1)
 	const [possibleArtistArr, setPossibleArtistArr] = useState<string[]>([])
 	const [impossibleArtistArr, setImpossibleArtistArr] = useState<string[]>([])
+
+	if (isLoading) {
+		return (
+			<div className="flex h-fit w-full items-center justify-center p-[30px] shadow-customGray60">
+				<p>로딩 중..</p>
+			</div>
+		)
+	}
+	const availableInfoArr = data?.dataList
+	if (isError || isUndefined(availableInfoArr)) {
+		return (
+			<div className="flex h-fit w-full items-center justify-center p-[30px] shadow-customGray60">
+				<p>데이터를 정상적으로 불러오지 못했습니다.</p>
+			</div>
+		)
+	}
+
 	const onSelectedTime = (idx: number) => {
-		const { artists } = availableArr[idx]
+		const { artists } = availableInfoArr[idx]
+		console.log(artists)
 		setSelectedIdx(idx)
 		setPossibleArtistArr(getPossibleArtistArr(artists))
 		setImpossibleArtistArr(getImPossibleArtistArr(artists))
@@ -46,9 +75,9 @@ export default function DesiredTime({ availableArr }: ScheduleSelectionPT) {
 				</div>
 			</section>
 			<NTOption
-				optionArr={getBusinessTimeArr(availableArr)}
+				optionArr={getBusinessTimeArr(availableInfoArr)}
 				selectedIdxArr={[selectedIdx]}
-				disabledIdxArr={getDisabledIdxArr(availableArr, 2)}
+				disabledIdxArr={getDisabledIdxArr(availableInfoArr, 2)}
 				onSelect={onSelectedTime}
 				className="w-full rounded-[26px] border border-Gray10 p-[30px] shadow-customGray60"
 				size="large"
@@ -57,12 +86,12 @@ export default function DesiredTime({ availableArr }: ScheduleSelectionPT) {
 	)
 }
 /** 매장의 모든 영업시간 출력 */
-const getBusinessTimeArr = (availableArr: Array<TAvailabilityInfo>) =>
-	availableArr.map((availableInfo) => {
-		const { time } = availableInfo
-		const dayOfDivision = determineDayOfDivision(time)
-		const hour = getHourFromStamp(time)
-		const min = getMinFromStamp(time)
+const getBusinessTimeArr = (availableInfoArr: TResGetListAvailableTime[]) =>
+	availableInfoArr.map((availableInfo) => {
+		const { startTime } = availableInfo
+		const dayOfDivision = determineDayOfDivision(startTime)
+		const hour = getHourFromStamp(startTime)
+		const min = getMinFromStamp(startTime)
 		const printedHour = convert12SystemHour(hour)
 		const printedMin = padStartToPrinting("time", min)
 		return [dayOfDivision, printedHour + ":" + printedMin].join(" ")
@@ -77,11 +106,11 @@ const convert12SystemHour = (hour: number) => {
 }
 /** 옵션 선택 불가 idx */
 const getDisabledIdxArr = (
-	availableArr: Array<TAvailabilityInfo>,
+	availableInfoArr: TResGetListAvailableTime[],
 	companion: number,
 ) => {
 	const result: number[] = []
-	availableArr.forEach((availableInfo, idx) => {
+	availableInfoArr.forEach((availableInfo, idx) => {
 		const { availableSeats, artists } = availableInfo
 		/* 1. "동반인원" 이 "시술가능좌석" 보다 많을 경우, disabled */
 		if (companion >= availableSeats) result.push(idx)
@@ -99,13 +128,13 @@ type TArtist = {
 	id: number
 	nickname: string
 	enable: boolean
-	near: number
+	near: number | null
 }
 const getPossibleArtistArr = (artists: TArtist[]) => {
 	const possibleArtistArr: string[] = []
 	artists.forEach((artist) => {
 		const { enable } = artist
-		if (!enable) possibleArtistArr.push(artist.nickname)
+		if (enable) possibleArtistArr.push(artist.nickname)
 		return possibleArtistArr
 	})
 	return possibleArtistArr

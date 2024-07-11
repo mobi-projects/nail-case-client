@@ -221,6 +221,6 @@ export type TResGetListAvailableTime = {
 		id: number
 		nickname: string
 		enable: boolean
-		near: number
+		near: number | null
 	}>
 }
