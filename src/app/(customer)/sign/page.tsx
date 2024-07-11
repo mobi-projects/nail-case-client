@@ -4,15 +4,14 @@ import type { HTMLAttributes, PropsWithChildren } from "react"
 
 import { cn } from "@/config/tailwind"
 
-export default function SocialLoginButtonList() {
+import type { TSignType } from "@/type/union-option/sign-type"
+type SocialLoginButtonList = { loginType: TSignType }
+export default function SocialLoginButtonList({
+	loginType,
+}: SocialLoginButtonList) {
 	return (
 		<div className="flex h-fit flex-col items-center justify-center gap-[15px]">
-			<SocialLoginButton
-				isDisabled={true}
-				className="bg-gradient-to-tr from-[#FFD96B] via-[#FF2395] to-[#AD23F1] text-[#FFFFFF]"
-			>
-				인스타그램 로그인
-			</SocialLoginButton>
+			<KakaoLoginButton loginType={loginType} />
 			<SocialLoginButton
 				isDisabled={true}
 				className="bg-gradient-to-tr from-[#FFD96B] via-[#FF2395] to-[#AD23F1] text-[#FFFFFF]"
@@ -49,6 +48,22 @@ function SocialLoginButton({
 			disabled={isDisabled}
 		>
 			{children}
+		</button>
+	)
+}
+type KakaoLoginButtonPT = { loginType: TSignType }
+
+function KakaoLoginButton({ loginType }: KakaoLoginButtonPT) {
+	const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_REST_API_KEY_KAKAO}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRET_URI_KAKAO}&response_type=code&prompt=select_account&state=${loginType}`
+	const handleLogin = () => {
+		window.location.href = kakaoURL
+	}
+	return (
+		<button
+			className="flex h-fit w-fit items-center justify-center"
+			onClick={handleLogin}
+		>
+			<p>카카오 로그인</p>
 		</button>
 	)
 }
