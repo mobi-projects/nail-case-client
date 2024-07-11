@@ -1,61 +1,46 @@
 "use client"
-import BannerCarousel from "@/component/common/nt-banner-carousel"
+import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
-import { useShopInfo } from "@/hook/use-common"
-import { useBanner } from "@/hook/use-component"
-import type { TShopInfo } from "@/type"
 
-export default function HomeBanner() {
-	const { carouselIdx, handleCarousel } = useBanner()
-	const { shopInfo } = useShopInfo()
-	if (!shopInfo) return <h1>Banner Image..</h1>
+export default function ManagerBaseHomeBanner() {
 	return (
-		<div className="h-[380px] w-full">
-			<BannerCarousel type="managerBase" handleCarousel={handleCarousel}>
-				<BannerHeader shopInfo={shopInfo} />
-				<BannerDesciption shopInfo={shopInfo} />
-				<NTContent
-					mode="dark"
-					className="absolute right-[78px] top-[62px]"
-				>{`${carouselIdx + 1}/${shopInfo.srcArr.length}`}</NTContent>
-			</BannerCarousel>
+		<div className="relative h-[380px] w-full">
+			<NTBannerImageCarousel className="absolute left-0 h-full w-full bg-transparent" />
+			<BannerHeader />
+			<BannerDescription />
+			<NTContent mode="dark" className="absolute right-[78px] top-[62px]">
+				0/0
+			</NTContent>
 		</div>
 	)
 }
-type BannerItemPT = {
-	shopInfo: TShopInfo
-}
-function BannerHeader({ shopInfo }: BannerItemPT) {
-	const { specialty, address, shopName, todayAccess, totalAccess } = shopInfo
+function BannerHeader() {
 	return (
-		<div className="absolute left-[64px] top-[52.5px] z-10">
-			<p className="text-Callout text-[14px] font-Light text-White">{`${specialty}  |  ${address}`}</p>
+		<div className="absolute left-[6%] top-[52.5px]">
+			<p className="text-Callout text-[14px] font-Light text-White">
+				네일아트 전문 | 서울시 용산구
+			</p>
 			<h1 className="pt-[5.5px] text-Title01 text-[28px] font-Bold text-White">
-				{shopName}
+				모비네일 한남
 			</h1>
-			<p className="pt-[3px] text-Callout font-SemiBold text-Gray20">{`오늘 ${todayAccess.toLocaleString(
-				"ko-KR",
-			)} · 전체 ${totalAccess.toLocaleString("ko-KR")}`}</p>
+			<p className="pt-[3px] text-Callout font-SemiBold text-Gray20">
+				오늘 340 · 전체 3,455,666
+			</p>
 		</div>
 	)
 }
 
-function BannerDesciption({ shopInfo }: BannerItemPT) {
-	const { hashtagArr, overview } = shopInfo
+function BannerDescription() {
 	return (
-		<div className="absolute left-[64px] top-[239px] z-10">
+		<div className="absolute left-[64px] top-[239px] z-10 flex flex-col gap-4">
 			<div className="flex gap-[13px]">
-				{hashtagArr.map((hashtag, idx) => (
-					<p
-						key={idx}
-						className="text-Body01 text-[18px] font-SemiBold text-White"
-					>
-						{hashtag}
-					</p>
-				))}
+				<p className="text-Body01 text-[18px] font-SemiBold text-White">
+					#네일맛집 #주차가능 #오마카세아트
+				</p>
 			</div>
-			<p className="line-clamp-3 w-[500px] text-Body01 text-[18px] font-Regular text-White">
-				{overview}
+			<p className="line-clamp-3 w-[500px] whitespace-pre-wrap text-Body01 text-[18px] font-Regular text-White">
+				✨ 매달 네일 오마카세를 제공하는 디자인 맛집 모비네일 {`\n`}
+				🔛 현재 당일 예약 가능합니다.
 			</p>
 		</div>
 	)

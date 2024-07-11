@@ -12,6 +12,7 @@
  *   - patchUpdateOverview()
  *   - putUpdateShop()
  *   - postUploadImage()
+ *   - getListShopNailArtist()
  */
 
 import { axiosInstance } from "@/config/axios"
@@ -21,6 +22,7 @@ import type {
 	TReqBodyPostRegisterShop,
 	TReqBodyPostUploadImage,
 	TReqBodyPutUpdateShop,
+	TResGetListShopNailArtist,
 	TResGetSearchShop,
 	TResPatchUpdateOverview,
 	TResPostRegisterShop,
@@ -89,5 +91,12 @@ export const postUploadImage = async (
 	reqBody: TReqBodyPostUploadImage,
 ): Promise<TResponseData<string, "data">> => {
 	const response = await axiosInstance().post(`/shops/${shopId}/image`, reqBody)
+	return response.data
+}
+/** [GET] 네일샵 별, 아티스트 목록 조회 api 호출 */
+export const getListShopNailArtist = async (
+	shopId: number,
+): Promise<TResponseData<TResGetListShopNailArtist[], "dataList">> => {
+	const response = await axiosInstance().get(`/shops/${shopId}/manager/list`)
 	return response.data
 }
