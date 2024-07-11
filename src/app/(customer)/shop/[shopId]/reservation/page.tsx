@@ -49,6 +49,11 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
 
 	useEffect(() => {
+		setArtistIdArr((prev) => {
+			const _prev = [...prev]
+			while (_prev.length > companion) _prev.pop()
+			return _prev
+		})
 		setReservationFormArr((prev) => {
 			const _prev = [...prev]
 			while (_prev.length < companion) _prev.push(initialReservationForm)
