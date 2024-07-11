@@ -7,7 +7,7 @@ type ShopListFomrPT = {
 }
 export default function ShopListForm({ listData }: ShopListFomrPT) {
 	return (
-		<div className="flex flex-col gap-[20px]">
+		<div className="flex h-fit w-fit flex-col gap-[20px]">
 			<ShopListTitle />
 			<div className="flex gap-[24px]">
 				{listData.map((data, idx) => (
@@ -19,7 +19,7 @@ export default function ShopListForm({ listData }: ShopListFomrPT) {
 }
 function ShopListTitle() {
 	return (
-		<div className="flex justify-between pr-[20.5px]">
+		<div className="flex w-full justify-between pr-[20.5px]">
 			<div className="text-Title03 font-SemiBold">내가 좋아한 네일샵 ✨</div>
 			<div className="text-Headline02 text-Gray40">전체보기</div>
 		</div>
@@ -30,7 +30,7 @@ type ShopFormPT = {
 }
 function ShopForm({ data }: ShopFormPT) {
 	return (
-		<div className="flex flex-col gap-[13px]">
+		<div className="flex h-fit w-fit flex-col gap-[13px]">
 			<div className="group relative h-[264px] w-[384px] rounded-[26px] bg-Gray40">
 				<NTIcon
 					icon="favoriteFill"
