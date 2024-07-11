@@ -1,9 +1,9 @@
 import NTIcon from "@/component/common/nt-icon"
 
-import type { Tshop } from "./type"
+import type { TShop } from "./type"
 
 type ShopListFomrPT = {
-	listData: Array<Tshop>
+	listData: Array<TShop>
 }
 export default function ShopListForm({ listData }: ShopListFomrPT) {
 	return (
@@ -26,7 +26,7 @@ function ShopListTitle() {
 	)
 }
 type ShopFormPT = {
-	data: Tshop
+	data: TShop
 }
 function ShopForm({ data }: ShopFormPT) {
 	return (
