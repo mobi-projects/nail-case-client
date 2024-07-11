@@ -32,7 +32,7 @@ const tempData = [
 	},
 ]
 
-export default function Customer_Shop_04_02() {
+export default function ShopDesignList() {
 	return (
 		<div className="flex w-full flex-col">
 			<div className="flex items-center justify-between">

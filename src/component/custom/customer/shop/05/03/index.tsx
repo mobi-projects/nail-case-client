@@ -1,4 +1,4 @@
-export default function Customer_Shop_04_03() {
+export default function ShopNewsList() {
 	const items = Array(6).fill({
 		createdAt: "2024.05.28",
 		title: "Lorem ipsum dolor sit amet",

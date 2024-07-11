@@ -1,6 +1,6 @@
 import NTOption from "@/component/common/nt-option"
 
-export default function Customer_Shop_04_04() {
+export default function ShopReviewList() {
 	const reviews = Array(6).fill({
 		username: "닉네임",
 		visitCount: 3,
