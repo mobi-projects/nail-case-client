@@ -11,6 +11,7 @@ import { ExpandableToggle } from "@/component/custom/customer/shop/reservation/c
 import type { TNailCondition } from "@/type/union-option/nail-condition"
 import type { TNailTreatment } from "@/type/union-option/nail-treatment"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
+import { getNowStamp } from "@/util/common"
 
 type CustomerShopPT = {
 	params: {
@@ -45,6 +46,7 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 	const [reservationFormArr, setReservationFormArr] = useState<
 		TReservationForm[]
 	>([initialReservationForm])
+	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
 
 	useEffect(() => {
 		setReservationFormArr((prev) => {
@@ -78,7 +80,7 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 					/>
 				</ExpandableToggle>
 				<ExpandableToggle title="시술 일정">
-					<ScheduleSelection shopId={shopId} />
+					<ScheduleSelection {...{ shopId, selectedStamp, setSelectedStamp }} />
 				</ExpandableToggle>
 			</div>
 
