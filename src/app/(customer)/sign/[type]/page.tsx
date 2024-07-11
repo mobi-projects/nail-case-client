@@ -5,10 +5,10 @@ import type { HTMLAttributes, PropsWithChildren } from "react"
 import { cn } from "@/config/tailwind"
 import type { TSignType } from "@/type/union-option/sign-type"
 
-type SocialLoginButtonList = { loginType: TSignType }
+type SocialLoginButtonListPT = { loginType: TSignType }
 export default function SocialLoginButtonList({
 	loginType,
-}: SocialLoginButtonList) {
+}: SocialLoginButtonListPT) {
 	return (
 		<div className="flex h-fit flex-col items-center justify-center gap-[15px]">
 			<KakaoLoginButton loginType={loginType} />
