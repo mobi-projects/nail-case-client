@@ -1,11 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { LIST_RESERVATION_QUERY, VIEW_RESERVATION_QUERY } from "@/constant"
+import {
+	LIST_RESERVATION_QUERY,
+	QUERY_LIST_AVAILABLE_TIME,
+	VIEW_RESERVATION_QUERY,
+} from "@/constant"
 import type {
 	TReqBodyPostRegisterReservation,
 	TReqBodyUpdateReservation,
 } from "@/type"
 import {
+	getAvailableTime,
 	getListReservation,
 	getViewReservation,
 	patchUpdateReservation,
@@ -66,3 +71,13 @@ export const useUpdateReservationMutation = (shopId: number) => {
 	})
 	return { updateReservation, ...rest }
 }
+/** 예약 중, "예약 가능 시간" & "아티스트" 조회 */
+export const useAvailableTimeQuery = (
+	shopId: number,
+	artistIds: number[],
+	timestamp: number,
+) =>
+	useQuery({
+		queryKey: [QUERY_LIST_AVAILABLE_TIME, artistIds.length, shopId, timestamp],
+		queryFn: async () => await getAvailableTime(shopId, artistIds, timestamp),
+	})

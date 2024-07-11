@@ -1,4 +1,5 @@
 "use client"
+import type { Dispatch, SetStateAction } from "react"
 import { useCallback, useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
@@ -10,8 +11,6 @@ import {
 	getNextMonthFirstDate,
 	getNowStamp,
 	getPrevMonthLastDate,
-	getThisMonth,
-	getThisYear,
 	getYearFromStamp,
 	isAfter,
 	isBefore,
@@ -19,9 +18,21 @@ import {
 	padStartToPrinting,
 } from "@/util/common"
 
-export default function Calendar() {
-	const [focusedYear, setFocusedYear] = useState(getThisYear())
-	const [focusedMonth, setFocusedMonth] = useState(getThisMonth())
+type CalendarPT = {
+	selectedStamp: number
+	setSelectedStamp: Dispatch<SetStateAction<number>>
+}
+
+export default function Calendar({
+	selectedStamp,
+	setSelectedStamp,
+}: CalendarPT) {
+	const [focusedYear, setFocusedYear] = useState(
+		getYearFromStamp(selectedStamp),
+	)
+	const [focusedMonth, setFocusedMonth] = useState(
+		getMonthFromStamp(selectedStamp),
+	)
 
 	const CalendarHeader = useCallback(() => {
 		const paddedFocusedYear = padStartToPrinting("year", focusedYear)
@@ -61,13 +72,13 @@ export default function Calendar() {
 	const DayOfWeeks = useCallback(() => {
 		return (
 			<tr className="grid w-full grid-cols-7 text-center text-Headline02 text-Gray60">
+				<th>일</th>
 				<th>월</th>
 				<th>화</th>
 				<th>수</th>
 				<th>목</th>
 				<th>금</th>
 				<th>토</th>
-				<th>일</th>
 			</tr>
 		)
 	}, [])
@@ -80,7 +91,9 @@ export default function Calendar() {
 					<DayOfWeeks />
 				</thead>
 				<tbody className="flex h-full w-full flex-col">
-					<CalenderBody
+					<CalendarBody
+						selectedStamp={selectedStamp}
+						setSelectedStamp={setSelectedStamp}
 						focusedStampArr={getCalendarArr(focusedYear, focusedMonth)}
 					/>
 				</tbody>
@@ -89,12 +102,15 @@ export default function Calendar() {
 	)
 }
 
-function CalenderBody({
+type CalendarBodyPT = CalendarPT & {
+	focusedStampArr?: number[]
+}
+
+function CalendarBody({
 	focusedStampArr = [],
-}: {
-	focusedStampArr: number[]
-	reservationStampArr?: number[]
-}) {
+	selectedStamp,
+	setSelectedStamp,
+}: CalendarBodyPT) {
 	return (
 		<tr className="grid h-full w-full grid-cols-7">
 			{focusedStampArr.map((stamp) => {
@@ -102,15 +118,20 @@ function CalenderBody({
 				const isPrevDay = isBefore(stamp, nowStamp)
 				const isToday = isSame(stamp, nowStamp)
 				const isNextMonth = isAfter(stamp, nowStamp, "month")
+				const isFocused = isSame(stamp, selectedStamp)
 				return (
 					<th
 						className="flex h-full w-full items-center justify-center"
+						onClick={() => {
+							setSelectedStamp(stamp)
+						}}
 						key={stamp}
 					>
 						<p
 							className={cn(
-								"flex h-[30px] w-[34px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Body02 text-Gray100 transition-all hover:scale-150",
+								"flex h-[36px] w-[36px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Body02 text-Gray100 transition-all hover:scale-150",
 								isToday && "text-[16px] text-PB100",
+								isFocused && "bg-PY100",
 								isNextMonth && "text-Gray60",
 								isPrevDay &&
 									"cursor-default bg-White text-Gray40 hover:scale-100",

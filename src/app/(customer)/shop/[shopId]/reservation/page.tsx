@@ -39,11 +39,7 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 					<TreatmentNCondition />
 				</ExpandableToggle>
 				<ExpandableToggle title="시술 일정">
-					<ScheduleSelection
-						availableArr={JSON.parse(
-							JSON.stringify(RESERVATION_MOCK_DATA.availableArtistArr),
-						)}
-					/>
+					<ScheduleSelection shopId={shopId} />
 				</ExpandableToggle>
 			</div>
 
