@@ -1,3 +1,4 @@
+"use client"
 import { NTButton } from "@/component/common/atom/nt-button"
 import CustomerShopReservationHeader from "@/component/custom/customer/shop/reservation/01"
 import Companion from "@/component/custom/customer/shop/reservation/02"
@@ -5,6 +6,9 @@ import Artist from "@/component/custom/customer/shop/reservation/03"
 import TreatmentNCondition from "@/component/custom/customer/shop/reservation/04"
 import ScheduleSelection from "@/component/custom/customer/shop/reservation/05"
 import { ExpandableToggle } from "@/component/custom/customer/shop/reservation/common/expandable-toggle"
+import { useListShopNailArtist } from "@/hook/use-shop-controller"
+import type { TResGetListShopNailArtist } from "@/type/shop"
+import { isUndefined } from "@/util/common/type-guard"
 
 type CustomerShopPT = {
 	params: {
@@ -13,7 +17,10 @@ type CustomerShopPT = {
 }
 
 export default function CustomerShopReservation({ params }: CustomerShopPT) {
-	console.log(params)
+	const { shopId } = params
+	const { data, isLoading, isError } = useListShopNailArtist(shopId)
+	const artistInfoArr = data?.dataList
+	const artistNicknameArr = isError ? [] : getArtistNicknameArr(artistInfoArr)
 	return (
 		<main className="h-fit w-full">
 			<CustomerShopReservationHeader name="모비네일 한남" />
@@ -22,7 +29,11 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 					<Companion maxCompanion={RESERVATION_MOCK_DATA.maxCompanion} />
 				</ExpandableToggle>
 				<ExpandableToggle title="아티스트">
-					<Artist artistArr={[...RESERVATION_MOCK_DATA.artistArr]} />
+					<Artist
+						artistArr={artistNicknameArr}
+						isLoading={isLoading}
+						isError={isError}
+					/>
 				</ExpandableToggle>
 				<ExpandableToggle title="시술 세부 내용">
 					<TreatmentNCondition />
@@ -42,7 +53,14 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 		</main>
 	)
 }
-
+const getArtistNicknameArr = (
+	artistInfoArr: TResGetListShopNailArtist[] | undefined,
+) => {
+	if (isUndefined(artistInfoArr)) return []
+	return artistInfoArr.map(
+		(artistInfo: TResGetListShopNailArtist) => artistInfo.nickname,
+	)
+}
 const RESERVATION_MOCK_DATA = {
 	maxCompanion: 5,
 	artistArr: [
