@@ -40,9 +40,9 @@ export default function Customer_Shop_04_02() {
 				<p className="cursor-pointer text-Gray40">전체보기</p>
 			</div>
 			<div className="mt-[15px] grid grid-cols-3 gap-6">
-				{tempData.map((item, index) => (
+				{tempData.map((item, idx) => (
 					<div
-						key={index}
+						key={idx}
 						className="relative flex h-[264px] flex-col justify-center rounded-[26px] bg-Gray40 p-[16px] text-white"
 					>
 						<h3 className="font-semibold text-Headline01 text-PY80">

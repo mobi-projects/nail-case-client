@@ -15,9 +15,9 @@ export default function Customer_Shop_04_03() {
 				<p className="cursor-pointer text-Gray40">전체보기</p>
 			</div>
 			<div className="mt-[15px] grid grid-cols-3 gap-[15px]">
-				{items.map((item, index) => (
+				{items.map((item, idx) => (
 					<div
-						key={index}
+						key={idx}
 						className="flex h-[384px] w-[384px] cursor-pointer flex-col rounded-[26px] bg-gradient-to-b from-transparent to-Gray50 p-[20px]"
 					>
 						<div className="flex-1 rounded-[26px]"></div>

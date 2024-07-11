@@ -18,9 +18,9 @@ export default function Customer_Shop_04_04() {
 				<p className="cursor-pointer text-Gray40">전체보기</p>
 			</div>
 			<div className="flex flex-col gap-6">
-				{reviews.map((review, index) => (
+				{reviews.map((review, idx) => (
 					<div
-						key={index}
+						key={idx}
 						className="transform rounded-lg bg-white p-[24px] shadow-customGray transition duration-500 hover:shadow-xl"
 					>
 						<div className="mb-[16px] flex items-center">
@@ -33,13 +33,13 @@ export default function Customer_Shop_04_04() {
 						</div>
 						<div className="mb-[16px] flex items-center">
 							<div className="flex">
-								{Array.from({ length: review.rating }, (_, i) => (
-									<span key={i} className="text-[24px] text-PB100">
+								{Array.from({ length: review.rating }, (_, idx) => (
+									<span key={idx} className="text-[24px] text-PB100">
 										★
 									</span>
 								))}
-								{Array.from({ length: 5 - review.rating }, (_, i) => (
-									<span key={i} className="text-[24px] text-gray-300">
+								{Array.from({ length: 5 - review.rating }, (_, idx) => (
+									<span key={idx} className="text-[24px] text-gray-300">
 										★
 									</span>
 								))}
