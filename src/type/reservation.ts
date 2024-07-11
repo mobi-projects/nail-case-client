@@ -214,3 +214,13 @@ export type TReservationDetailList = {
 		modifiedBy: string
 	}>
 }
+export type TResGetListAvailableTime = {
+	startTime: number
+	availableSeats: number
+	artists: Array<{
+		id: number
+		nickname: string
+		enable: boolean
+		near: number | null
+	}>
+}

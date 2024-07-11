@@ -1,3 +1,4 @@
+import CustomerHeader from "@/component/custom/customer/home/00"
 import CardSlideListForm from "@/component/custom/customer/home/01"
 import UsageForm from "@/component/custom/customer/home/02"
 import ShopListForm from "@/component/custom/customer/home/03"
@@ -7,7 +8,7 @@ import { AroundShop, LikedShop } from "./mockData"
 export default function CustomerHome() {
 	return (
 		<div className="flex h-fit flex-col pb-[7px]">
-			<div className="h-[243px]"></div>
+			<CustomerHeader />
 			<CardSlideListForm />
 			<UsageForm />
 			<hr className="w-full bg-Gray10" />

@@ -26,6 +26,11 @@ const setRequestInterceptor = (instance: AxiosInstance) => {
 		},
 		(error) => Promise.reject(error),
 	)
+	instance.defaults.paramsSerializer = function (paramObj) {
+		const params = new URLSearchParams()
+		for (const key in paramObj) params.append(key, paramObj[key])
+		return params.toString()
+	}
 	return instance
 }
 /** "응답" 인터셉터 설정 */

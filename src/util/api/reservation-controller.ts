@@ -2,6 +2,7 @@ import { axiosInstance } from "@/config/axios"
 import type {
 	TReqBodyPostRegisterReservation,
 	TReqBodyUpdateReservation,
+	TResGetListAvailableTime,
 	TResGetListReservation,
 	TResGetViewReservation,
 	TResPostRegisterReservation,
@@ -61,6 +62,18 @@ export const patchUpdateReservation = async (
 	const response = await axiosInstance().patch(
 		`/shops/${shopId}/reservations/${reservationId}`,
 		reqBody,
+	)
+	return response.data
+}
+/** [GET] 예약 중, "예약 가능 시간" & "아티스트" api 호출 */
+export const getAvailableTime = async (
+	shopId: number,
+	artistIds: number[],
+	date: number,
+): Promise<TResponseData<TResGetListAvailableTime[], "dataList">> => {
+	const response = await axiosInstance().get(
+		`/shops/${shopId}/reservations/time`,
+		{ params: { artistIds, date } },
 	)
 	return response.data
 }
