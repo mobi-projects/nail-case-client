@@ -8,7 +8,6 @@ import type { TResGetListAvailableTime } from "@/type"
 import {
 	getHourFromStamp,
 	getMinFromStamp,
-	invalidateTime,
 	padStartToPrinting,
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
@@ -27,7 +26,7 @@ export default function DesiredTime({
 	const { data, isLoading, isError } = useAvailableTimeQuery(
 		shopId,
 		[1, 2, 3],
-		invalidateTime(selectedStamp),
+		selectedStamp,
 	)
 
 	if (isLoading) {

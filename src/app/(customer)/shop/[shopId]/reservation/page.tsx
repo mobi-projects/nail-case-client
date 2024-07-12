@@ -2,36 +2,25 @@
 import { useEffect, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import CustomerShopReservationHeader from "@/component/custom/customer/shop/reservation/01"
 import Companion from "@/component/custom/customer/shop/reservation/02"
 import Artist from "@/component/custom/customer/shop/reservation/03"
 import TreatmentNCondition from "@/component/custom/customer/shop/reservation/04"
 import ScheduleSelection from "@/component/custom/customer/shop/reservation/05"
 import { ExpandableToggle } from "@/component/custom/customer/shop/reservation/common/expandable-toggle"
-import type { TNailCondition } from "@/type/union-option/nail-condition"
-import type { TNailTreatment } from "@/type/union-option/nail-treatment"
-import type { TRemoveOption } from "@/type/union-option/remove-option"
-import { getNowStamp } from "@/util/common"
+import ReservationCheckModal from "@/component/custom/customer/shop/reservation/modal/01"
+import type { TReservationForm } from "@/type"
+import { convertStringToInteger, getNowStamp } from "@/util/common"
 
 type CustomerShopPT = {
 	params: {
 		shopId: number
 	}
 }
-export type TReservationForm = {
-	shopId: number
-	startTime: number
-	remove: TRemoveOption
-	extend: boolean
-	conditionList: {
-		option: TNailCondition
-	}[]
-	treatmentList: {
-		option: TNailTreatment
-	}[]
-}
 const initialReservationForm: TReservationForm = {
 	shopId: -1,
+	nailArtistId: null,
 	startTime: -1,
 	remove: "NO_NEED",
 	extend: false,
@@ -47,7 +36,7 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 		TReservationForm[]
 	>([initialReservationForm])
 	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
-
+	const { onOpenModal } = useModal()
 	useEffect(() => {
 		setArtistIdArr((prev) => {
 			const _prev = [...prev]
@@ -61,6 +50,19 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 			return _prev
 		})
 	}, [companion])
+
+	const onOpenReservationCheckModal = () => {
+		onOpenModal({
+			children: (
+				<ReservationCheckModal
+					shopId={convertStringToInteger(shopId)}
+					companion={companion}
+					reservationFormArr={reservationFormArr}
+					reservationTimestamp={selectedStamp}
+				/>
+			),
+		})
+	}
 
 	return (
 		<main className="h-fit w-full">
@@ -81,7 +83,12 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 				</ExpandableToggle>
 				<ExpandableToggle title="시술 세부 내용">
 					<TreatmentNCondition
-						{...{ companion, reservationFormArr, setReservationFormArr }}
+						{...{
+							companion,
+							artistIdArr,
+							reservationFormArr,
+							setReservationFormArr,
+						}}
 					/>
 				</ExpandableToggle>
 				<ExpandableToggle title="시술 일정">
@@ -90,7 +97,7 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 			</div>
 
 			<div className="my-[100px] flex h-fit w-full items-center justify-center">
-				<NTButton disabled>예약하기</NTButton>
+				<NTButton onClick={onOpenReservationCheckModal}>예약하기</NTButton>
 			</div>
 		</main>
 	)

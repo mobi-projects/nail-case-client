@@ -6,7 +6,7 @@ import {
 	VIEW_RESERVATION_QUERY,
 } from "@/constant"
 import type {
-	TReqBodyPostRegisterReservation,
+	TReqBodyRegisterReservation,
 	TReqBodyUpdateReservation,
 } from "@/type"
 import {
@@ -30,19 +30,19 @@ export const useListReservationQuery = (
 
 /** 예약 등록 */
 type RegisterReservationPT = {
-	newReservation: TReqBodyPostRegisterReservation
+	newReservation: TReqBodyRegisterReservation
 }
 export const useRegisterReservationMutation = (shopId: number) => {
-	const queryClient = useQueryClient()
-	const { mutateAsync: registerReservation, ...rest } = useMutation({
+	return useMutation({
 		mutationFn: async ({ newReservation }: RegisterReservationPT) =>
 			await postRegisterReservation(shopId, newReservation),
-		onSuccess: () =>
-			queryClient.invalidateQueries({
-				queryKey: [LIST_RESERVATION_QUERY, shopId],
-			}),
+		onSuccess: (data) => {
+			alert(JSON.stringify(data))
+		},
+		onError: (error) => {
+			alert(JSON.stringify(error))
+		},
 	})
-	return { registerReservation, ...rest }
 }
 /** 예약 상세 조회 */
 export const useViewReservationQuery = (

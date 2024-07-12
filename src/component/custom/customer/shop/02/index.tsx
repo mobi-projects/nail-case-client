@@ -1,11 +1,11 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import type { Dispatch, SetStateAction } from "react"
 import { useCallback, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
-import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTOption from "@/component/common/nt-option"
 import { cn } from "@/config/tailwind"
 import {
@@ -24,8 +24,6 @@ import {
 	isSame,
 	padStartToPrinting,
 } from "@/util/common"
-
-import CreationReservationModal from "../modal/01"
 
 export default function ReservationSchedule({ shopId }: { shopId: number }) {
 	const [clickedStamp, setClickedStamp] = useState(getNowStamp())
@@ -48,20 +46,7 @@ function ReservationCalendar({
 	setClickedStamp,
 	shopId,
 }: ReservationScheduleSubComponentPT) {
-	const { onOpenModal } = useModal()
-	const onOpenCreatingReservationModal = () => {
-		onOpenModal({
-			size: "large",
-			isX: true,
-			children: (
-				<CreationReservationModal
-					startTime={clickedStamp}
-					endTime={clickedStamp + 1 * 60 * 60} // [Todo] 추후 수정: 일단 시술 시간을 1시간으로 설정
-					shopId={shopId}
-				/>
-			),
-		})
-	}
+	const router = useRouter()
 	return (
 		<div className="grid h-full w-full grid-rows-[326.8px_auto] gap-[21px]">
 			<div className="flex h-full w-full items-center justify-center rounded-[26px] shadow-customGray60">
@@ -71,7 +56,9 @@ function ReservationCalendar({
 				variant="tertiary"
 				flexible="full"
 				size="small"
-				onClick={onOpenCreatingReservationModal}
+				onClick={() => {
+					router.push(`/shop/${shopId}/reservation`)
+				}}
 			>
 				예약하기
 			</NTButton>
