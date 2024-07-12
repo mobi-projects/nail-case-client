@@ -3,9 +3,9 @@
 import type { Dispatch, SetStateAction } from "react"
 import { useEffect, useState } from "react"
 
-import type { TReservationForm } from "@/app/(customer)/shop/[shopId]/reservation/page"
 import NTOption from "@/component/common/nt-option"
 import Pagination from "@/component/common/nt-pagination"
+import type { TReservationForm } from "@/type"
 import type { TNailCondition } from "@/type/union-option/nail-condition"
 import type { TNailTreatment } from "@/type/union-option/nail-treatment"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
@@ -33,11 +33,13 @@ const CONDITION_OPTIONS: TReservationOptions<TNailCondition> = {
 
 type TreatmentNConditionPT = {
 	companion: number
+	artistIdArr: number[]
 	reservationFormArr: TReservationForm[]
 	setReservationFormArr: Dispatch<SetStateAction<TReservationForm[]>>
 }
 export default function TreatmentNCondition({
 	companion,
+	artistIdArr,
 	reservationFormArr,
 	setReservationFormArr,
 }: TreatmentNConditionPT) {
@@ -46,6 +48,14 @@ export default function TreatmentNCondition({
 	useEffect(() => {
 		if (companion <= curFormIdx) setCurFormIdx(companion - 1)
 	}, [companion, curFormIdx])
+	useEffect(() => {
+		setReservationFormArr((prev) => {
+			const _prev: TReservationForm[] = JSON.parse(JSON.stringify(prev))
+			if (artistIdArr.length <= curFormIdx) _prev[curFormIdx].nailArtistId = -1
+			else _prev[curFormIdx].nailArtistId = artistIdArr[curFormIdx]
+			return _prev
+		})
+	}, [curFormIdx, artistIdArr, setReservationFormArr])
 
 	const curForm = reservationFormArr[curFormIdx]
 	const treatmentSelectedIdxArr = curForm.treatmentList.map(({ option }) =>
@@ -88,6 +98,8 @@ export default function TreatmentNCondition({
 			if (duplicatedIdx === -1)
 				_prevArr[curFormIdx].treatmentList.push({
 					option: TREATMENT_OPTIONS.valueArr[idx],
+					imageId: -1,
+					imageUrl: "",
 				})
 			else
 				_prevArr[curFormIdx].treatmentList = prevTreatmentList.filter(

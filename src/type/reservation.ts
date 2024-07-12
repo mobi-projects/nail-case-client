@@ -29,6 +29,27 @@ export type TCustomForm = {
 }
 
 /* Request */
+export type TReservationForm = {
+	shopId: number
+	nailArtistId: number
+	startTime: number
+	remove: TRemoveOption
+	extend: boolean
+	conditionList: Array<{
+		option: TNailCondition
+	}>
+	treatmentList: Array<{
+		option: TNailTreatment
+		imageId: number
+		imageUrl: string
+	}>
+}
+export type TReqBodyRegisterReservation = {
+	shopId: number
+	reservationDetailList: Array<TReservationForm>
+	nailArtistIds: number[]
+	startTime: number
+}
 export type TReqBodyPostRegisterReservation = {
 	shopId: number
 	reservationDetailList: Array<{
