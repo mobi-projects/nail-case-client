@@ -51,7 +51,8 @@ export default function TreatmentNCondition({
 	useEffect(() => {
 		setReservationFormArr((prev) => {
 			const _prev: TReservationForm[] = JSON.parse(JSON.stringify(prev))
-			if (artistIdArr.length <= curFormIdx) _prev[curFormIdx].nailArtistId = -1
+			if (artistIdArr.length <= curFormIdx)
+				_prev[curFormIdx].nailArtistId = null
 			else _prev[curFormIdx].nailArtistId = artistIdArr[curFormIdx]
 			return _prev
 		})

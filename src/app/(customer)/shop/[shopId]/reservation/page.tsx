@@ -11,7 +11,7 @@ import ScheduleSelection from "@/component/custom/customer/shop/reservation/05"
 import { ExpandableToggle } from "@/component/custom/customer/shop/reservation/common/expandable-toggle"
 import ReservationCheckModal from "@/component/custom/customer/shop/reservation/modal/01"
 import type { TReservationForm } from "@/type"
-import { getNowStamp } from "@/util/common"
+import { convertStringToInteger, getNowStamp } from "@/util/common"
 
 type CustomerShopPT = {
 	params: {
@@ -20,7 +20,7 @@ type CustomerShopPT = {
 }
 const initialReservationForm: TReservationForm = {
 	shopId: -1,
-	nailArtistId: -1,
+	nailArtistId: null,
 	startTime: -1,
 	remove: "NO_NEED",
 	extend: false,
@@ -37,17 +37,6 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 	>([initialReservationForm])
 	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
 	const { onOpenModal } = useModal()
-	const onOpenReservationCheckModal = () => {
-		onOpenModal({
-			children: (
-				<ReservationCheckModal
-					companion={companion}
-					reservationFormArr={reservationFormArr}
-					reservationTimestamp={selectedStamp}
-				/>
-			),
-		})
-	}
 	useEffect(() => {
 		setArtistIdArr((prev) => {
 			const _prev = [...prev]
@@ -61,6 +50,19 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 			return _prev
 		})
 	}, [companion])
+
+	const onOpenReservationCheckModal = () => {
+		onOpenModal({
+			children: (
+				<ReservationCheckModal
+					shopId={convertStringToInteger(shopId)}
+					companion={companion}
+					reservationFormArr={reservationFormArr}
+					reservationTimestamp={selectedStamp}
+				/>
+			),
+		})
+	}
 
 	return (
 		<main className="h-fit w-full">

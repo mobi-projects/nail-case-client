@@ -1,6 +1,6 @@
 import { axiosInstance } from "@/config/axios"
 import type {
-	TReqBodyPostRegisterReservation,
+	TReqBodyRegisterReservation,
 	TReqBodyUpdateReservation,
 	TResGetListAvailableTime,
 	TResGetListReservation,
@@ -35,7 +35,7 @@ export const getListReservation = async (
 /** [POST] 예약 등록 api 호출 */
 export const postRegisterReservation = async (
 	shopId: number,
-	reqBody: TReqBodyPostRegisterReservation,
+	reqBody: TReqBodyRegisterReservation,
 ): Promise<TResponseData<TResPostRegisterReservation, "data">> => {
 	const response = await axiosInstance().post(
 		`/shops/${shopId}/reservations`,
