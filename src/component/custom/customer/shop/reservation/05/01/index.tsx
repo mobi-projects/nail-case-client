@@ -12,6 +12,7 @@ import {
 	getNowStamp,
 	getPrevMonthLastDate,
 	getYearFromStamp,
+	invalidateTime,
 	isAfter,
 	isBefore,
 	isSame,
@@ -92,7 +93,7 @@ export default function Calendar({
 				</thead>
 				<tbody className="flex h-full w-full flex-col">
 					<CalendarBody
-						selectedStamp={selectedStamp}
+						selectedStamp={invalidateTime(selectedStamp)}
 						setSelectedStamp={setSelectedStamp}
 						focusedStampArr={getCalendarArr(focusedYear, focusedMonth)}
 					/>

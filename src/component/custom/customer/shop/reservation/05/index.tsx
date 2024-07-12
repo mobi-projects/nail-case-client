@@ -1,18 +1,21 @@
 "use client"
 
-import { useState } from "react"
-
-import { getNowStamp } from "@/util/common"
+import type { Dispatch, SetStateAction } from "react"
 
 import Calendar from "./01"
 import DesiredTime from "./02"
 
 export type ScheduleSelectionPT = {
 	shopId: number
+	selectedStamp: number
+	setSelectedStamp: Dispatch<SetStateAction<number>>
 }
 
-export default function ScheduleSelection({ shopId }: ScheduleSelectionPT) {
-	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
+export default function ScheduleSelection({
+	shopId,
+	selectedStamp,
+	setSelectedStamp,
+}: ScheduleSelectionPT) {
 	return (
 		<div className="flex h-full w-full flex-col gap-[40px]">
 			<div className="flex flex-col gap-[10px]">
@@ -21,7 +24,7 @@ export default function ScheduleSelection({ shopId }: ScheduleSelectionPT) {
 			</div>
 			<div className="flex flex-col gap-[10px]">
 				<h2 className="text-Headline02">희망 시간 선택</h2>
-				<DesiredTime {...{ shopId, selectedStamp }} />
+				<DesiredTime {...{ shopId, selectedStamp, setSelectedStamp }} />
 			</div>
 		</div>
 	)
