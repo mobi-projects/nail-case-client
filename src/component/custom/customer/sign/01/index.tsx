@@ -1,7 +1,6 @@
 import Image from "next/image"
 
 import NTLoginImage from "@/../public/asset/nt-login.svg"
-import { isCustomer } from "@/app/(customer)/sign/[type]/page"
 import type { TSignType } from "@/type/union-option/sign-type"
 
 type LoginLogowithWelcomeMessagePT = { loginType: TSignType }
@@ -26,4 +25,14 @@ export default function LoginLogowithWelcomeMessage({
 			</p>
 		</div>
 	)
+}
+
+export const isCustomer = (path: string) => {
+	let isCustomer
+	if (path === "manager") {
+		isCustomer = false
+	} else if (path === "member") {
+		isCustomer = true
+	}
+	return isCustomer
 }

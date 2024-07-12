@@ -1,9 +1,7 @@
 "use client"
 import Image from "next/image"
-// import type { HTMLAttributes, PropsWithChildren } from "react"
 
 import KakaoSymbol from "@/../public/asset/kakao-symbol.png"
-// import { cn } from "@/config/tailwind"
 import type { TSignType } from "@/type/union-option/sign-type"
 type SocialLoginButtonsPT = { loginType: TSignType }
 

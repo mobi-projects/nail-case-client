@@ -1,8 +1,9 @@
 import Link from "next/link"
 
-import { isCustomer } from "@/app/(customer)/sign/[type]/page"
 import { COMMON_SIGN } from "@/constant/routing-path"
 import type { TSignType } from "@/type/union-option/sign-type"
+
+import { isCustomer } from "../01"
 
 type CheckMessaPT = { loginType: TSignType }
 

@@ -23,7 +23,3 @@ export default function SocialLoginButtonList({
 		</div>
 	)
 }
-
-export const isCustomer = (path: TSignType): boolean => {
-	return path === "member" ? true : false
-}
