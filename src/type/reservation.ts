@@ -61,7 +61,7 @@ export type TResGetListReservation = {
 	reservationId: number
 	reservationDetailList: Array<{
 		reservationDetailId: number
-		nailArtistId: number | null
+		nailArtistId: number
 		remove: TRemoveOption
 		extend: boolean
 		status: TReservationStatus
