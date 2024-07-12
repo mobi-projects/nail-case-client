@@ -39,7 +39,13 @@ export default function CustomerShopReservation({ params }: CustomerShopPT) {
 	const { onOpenModal } = useModal()
 	const onOpenReservationCheckModal = () => {
 		onOpenModal({
-			children: <ReservationCheckModal />,
+			children: (
+				<ReservationCheckModal
+					companion={companion}
+					reservationFormArr={reservationFormArr}
+					reservationTimestamp={selectedStamp}
+				/>
+			),
 		})
 	}
 	useEffect(() => {
