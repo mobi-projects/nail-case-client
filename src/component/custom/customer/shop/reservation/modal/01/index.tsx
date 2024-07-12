@@ -10,22 +10,27 @@ import {
 import NTOption from "@/component/common/nt-option"
 import Pagination from "@/component/common/nt-pagination"
 import { REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
-import type { TReservationForm } from "@/type"
+import { useRegisterReservationMutation } from "@/hook/use-reservation-controller"
+import type { TReqBodyRegisterReservation, TReservationForm } from "@/type"
 import type { TNailTreatment } from "@/type/union-option/nail-treatment"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
 
 type ReservationCheckModalPT = {
+	shopId: number
 	companion: number
 	reservationFormArr: TReservationForm[]
 	reservationTimestamp: number
 }
 
 export default function ReservationCheckModal({
+	shopId,
 	companion,
 	reservationFormArr,
 	reservationTimestamp,
 }: ReservationCheckModalPT) {
 	const [curFormIdx, setCurFormIdx] = useState(0)
+	const { mutateAsync: postReservation } =
+		useRegisterReservationMutation(shopId)
 	const ListInfo = useCallback(() => {
 		return (
 			<ul className="flex list-inside flex-col gap-[2px] self-start text-Callout text-Gray60">
@@ -34,9 +39,16 @@ export default function ReservationCheckModal({
 			</ul>
 		)
 	}, [])
-
 	const onClickPagination = (page: number) => {
 		setCurFormIdx(page - 1)
+	}
+	const onClickPostReservationButton = async () => {
+		const newReservation = createNewReservation(
+			shopId,
+			reservationFormArr,
+			reservationTimestamp,
+		)
+		await postReservation({ newReservation })
 	}
 
 	const curForm = reservationFormArr[curFormIdx]
@@ -69,7 +81,7 @@ export default function ReservationCheckModal({
 
 			<ModalFooter className="flex h-[115px] w-full flex-col items-center justify-between">
 				<ListInfo />
-				<NTButton disabled size="medium">
+				<NTButton onClick={onClickPostReservationButton} size="medium">
 					예약 요청하기
 				</NTButton>
 			</ModalFooter>
@@ -116,4 +128,35 @@ function ExtensionConfirm({ extend }: { extend: boolean }) {
 			/>
 		</div>
 	)
+}
+
+const createNewReservation = (
+	shopId: number,
+	reservationFormArr: TReservationForm[],
+	reservationTimestamp: number,
+): TReqBodyRegisterReservation => {
+	const adjustedFormArr = adjustShopIdNReservationTime(
+		shopId,
+		reservationFormArr,
+		reservationTimestamp,
+	)
+	const newReservation: TReqBodyRegisterReservation = {
+		shopId,
+		reservationDetailList: adjustedFormArr,
+		startTime: reservationTimestamp,
+	}
+	return newReservation
+}
+/** 모든 form 에 "매장 id" 과 "예약시간" 을 통일 */
+const adjustShopIdNReservationTime = (
+	shopId: number,
+	reservationFormArr: TReservationForm[],
+	reservationTimestamp: number,
+) => {
+	return reservationFormArr.map((reservationForm) => {
+		const _reservationForm = { ...reservationForm }
+		_reservationForm.shopId = shopId
+		_reservationForm.startTime = reservationTimestamp
+		return _reservationForm
+	})
 }
