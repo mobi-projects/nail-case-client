@@ -48,14 +48,12 @@ export default function CustomerHome() {
 				<ShopListForm
 					listData={$reseponseData.topPopularShops}
 					listMockData={AroundShop}
-				/>
-				<div
-					className="absolute left-0 top-[166.5%] h-[12px] w-full border-y-[1px] bg-White"
-					style={{ borderColor: "rgba(128, 214, 248, 0.4)" }}
+					formTitle="뉴팁스 추천 네일샵 👣"
 				/>
 				<ShopListForm
-					listData={$reseponseData.topPopularShops}
+					listData={$reseponseData.likedShops}
 					listMockData={LikedShop}
+					formTitle="내가 좋아한 네일샵 ✨"
 				/>
 			</div>
 		</div>
