@@ -23,7 +23,7 @@ import {
 	getMonthFromStamp,
 	padStartToPrinting,
 } from "@/util/common"
-import { isNull } from "@/util/common/type-guard"
+import { isUndefined } from "@/util/common/type-guard"
 
 type ReservationResponseSheetPT = {
 	shopId: number
@@ -34,27 +34,33 @@ export default function ReservationResponseSheet({
 	shopId,
 	newReservation,
 }: ReservationResponseSheetPT) {
-	const [reservationContents, setReservationContents] =
-		useState<TResPostRegisterReservation | null>(null)
+	const [reservationContents, setReservationContents] = useState<
+		TResPostRegisterReservation | undefined
+	>(undefined)
 
-	const { mutateAsync, isError, isPending } =
-		useRegisterReservationMutation(shopId)
+	const { mutateAsync, status } = useRegisterReservationMutation(shopId)
 	const fetchMutateResponse = useCallback(async () => {
-		const response = await mutateAsync({ newReservation })
-		setReservationContents(response.data)
+		try {
+			const response = await mutateAsync({ newReservation })
+			setReservationContents(response.data)
+		} catch {
+			setReservationContents(undefined)
+		}
 	}, [mutateAsync, newReservation])
 
 	useEffect(() => {
-		fetchMutateResponse()
-	}, [fetchMutateResponse])
+		if (status === "idle") fetchMutateResponse()
+	}, [status, fetchMutateResponse])
 
-	if (isPending || isNull(reservationContents))
+	if (status === "pending")
 		return (
 			<div className="flex h-full w-full flex-col items-center justify-center gap-10">
 				<NTLoadingSpinner size="medium" />
 				<p className="text-Body01">잠시만 기다려주세요.</p>
 			</div>
 		)
+
+	const isError = status === "error" || isUndefined(reservationContents)
 
 	const companion = reservationContents?.reservationDetailList.length
 	const reservationStamp =
@@ -67,8 +73,8 @@ export default function ReservationResponseSheet({
 			{!isError && (
 				<ReservationContent
 					shopId={shopId}
-					reservationStamp={reservationStamp}
-					companion={companion}
+					reservationStamp={reservationStamp!}
+					companion={companion!}
 					reservationContents={reservationContents!}
 				/>
 			)}
@@ -268,7 +274,7 @@ function BackToButton({ buttonType, shopId }: BackToButtonPT) {
 
 	return (
 		<NTButton
-			variant="secondary"
+			variant={buttonType == "home" ? "primary" : "secondary"}
 			size="small"
 			flexible="full"
 			icon={icons[buttonType]}
