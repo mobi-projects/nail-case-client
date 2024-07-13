@@ -1,4 +1,8 @@
+"use client"
+
 import dynamic from "next/dynamic"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 import CustomerShopBanner from "@/component/custom/customer/shop/01"
 import ReservationSchedule from "@/component/custom/customer/shop/02"
@@ -15,7 +19,24 @@ type CustomerShopPT = {
 	}
 }
 
+const validShopIds = [1]
+
 export default function CustomerShop({ params }: CustomerShopPT) {
+	const router = useRouter()
+	const [isValidShop, setIsValidShop] = useState(true)
+
+	useEffect(() => {
+		const shopId = convertStringToInteger(params.shopId)
+		if (!validShopIds.includes(shopId)) {
+			setIsValidShop(false)
+			router.push("/no-results")
+		}
+	}, [params.shopId, router])
+
+	if (!isValidShop) {
+		return null
+	}
+
 	return (
 		<div className="h-full w-full">
 			<CustomerShopBanner />
