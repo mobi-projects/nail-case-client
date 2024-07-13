@@ -90,7 +90,7 @@ export default function ReservationResponseSheet({
 	)
 }
 
-const SheetIcon = ({ isError = false }: { isError?: boolean }) => {
+function SheetIcon({ isError = false }: { isError?: boolean }) {
 	return (
 		<div
 			className={cn(
@@ -109,7 +109,7 @@ const SheetIcon = ({ isError = false }: { isError?: boolean }) => {
 		</div>
 	)
 }
-const ResponseMessage = ({ isError = false }: { isError?: boolean }) => {
+function ResponseMessage({ isError = false }: { isError?: boolean }) {
 	return (
 		<div className="flex h-fit w-full flex-col items-center gap-[1px]">
 			{isError ? (
