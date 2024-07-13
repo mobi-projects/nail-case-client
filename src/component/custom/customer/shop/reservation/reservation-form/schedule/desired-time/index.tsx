@@ -14,6 +14,7 @@ import {
 import { isUndefined } from "@/util/common/type-guard"
 
 type DesiredTimePT = {
+	artistIdArr: Array<number>
 	setSelectedStamp: Dispatch<SetStateAction<number>>
 	selectedStamp: number
 	shopId: number
@@ -21,18 +22,19 @@ type DesiredTimePT = {
 
 export default function DesiredTime({
 	shopId,
+	artistIdArr,
 	selectedStamp,
 	setSelectedStamp,
 }: DesiredTimePT) {
 	const { data, isLoading, isError } = useAvailableTimeQuery(
 		shopId,
-		[1, 2, 3],
+		artistIdArr,
 		selectedStamp,
 	)
 
 	if (isLoading) {
 		return (
-			<div className="flex h-fit w-full items-center justify-center p-[30px] shadow-customGray60">
+			<div className="flex h-fit w-full items-center justify-center p-[30px]">
 				<p>로딩 중..</p>
 			</div>
 		)
@@ -40,7 +42,7 @@ export default function DesiredTime({
 	const availableInfoArr = data?.dataList
 	if (isError || isUndefined(availableInfoArr)) {
 		return (
-			<div className="flex h-fit w-full items-center justify-center p-[30px] shadow-customGray60">
+			<div className="flex h-fit w-full items-center justify-center p-[30px]">
 				<p>데이터를 정상적으로 불러오지 못했습니다.</p>
 			</div>
 		)
@@ -53,13 +55,13 @@ export default function DesiredTime({
 		startTimeArr.findIndex((startTime) => selectedStamp === startTime)
 
 	return (
-		<div className="flex flex-col py-6">
+		<div className="flex flex-col">
 			<NTOption
 				optionArr={getFormattedStartTimeArr(startTimeArr)}
 				selectedIdxArr={[getSelectedIdx()]}
 				disabledIdxArr={getDisabledIdxArr(availableInfoArr, 2)}
 				onSelect={onSelectedTime}
-				className="w-full rounded-[26px] border border-Gray10 p-[30px] shadow-customGray60"
+				className="w-full rounded-[26px] p-[30px]"
 				size="large"
 			/>
 		</div>

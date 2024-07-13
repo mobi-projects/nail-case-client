@@ -1,7 +1,6 @@
-"use client"
-
 import type { Dispatch, SetStateAction } from "react"
 
+import NTLoadingSpinner from "@/component/common/nt-loading-spinner"
 import NTOption from "@/component/common/nt-option"
 import { useListShopNailArtist } from "@/hook/use-shop-controller"
 import type { TResGetListShopNailArtist } from "@/type/shop"
@@ -37,21 +36,18 @@ export default function Artist({
 
 	if (isLoading)
 		return (
-			<div className="flex w-full items-center justify-center rounded-[26px] border border-Gray10 p-[30px] shadow-customGray60">
-				<div className="aspect-square h-[18px] animate-spin rounded-full bg-gradient-to-tr from-PY100 to-PB100" />
+			<div className="flex h-[44px] w-full items-center justify-center text-center">
+				<NTLoadingSpinner size="small" />
 			</div>
 		)
 	if (isError)
 		return (
-			<div className="flex w-full items-center justify-center rounded-[26px] border border-Gray10 p-[30px] shadow-customGray60">
-				<p className="text-center text-Caption01 text-Gray40">
-					데이터를 불러오지 못했습니다.
-				</p>
-			</div>
+			<p className="flex h-[44px] items-center justify-center text-center text-Caption01 text-Gray40">
+				데이터를 불러오지 못했습니다.
+			</p>
 		)
 	return (
 		<NTOption
-			className="w-full rounded-[26px] border border-Gray10 p-[30px] shadow-customGray60"
 			optionArr={artistNicknameArr}
 			selectedIdxArr={artistIdArr}
 			size="large"
