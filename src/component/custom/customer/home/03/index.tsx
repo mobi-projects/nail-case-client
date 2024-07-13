@@ -56,7 +56,7 @@ function ShopForm({ data, mockData }: ShopFormPT) {
 				></div>
 				<ShopHoverInfo data={data} mockData={mockData} />
 			</div>
-			<ShopFormInfo data={data} mockData={mockData} />
+			<ShopFormInfo data={data} />
 		</div>
 	)
 }
@@ -73,22 +73,16 @@ function ShopHoverInfo({ data, mockData }: ShopFormPT) {
 		</div>
 	)
 }
-function ShopFormInfo({ data, mockData }: ShopFormPT) {
-	const formatDistance = (distance: number): string => {
-		if (distance < 1) {
-			return `${distance * 1000}m`
-		} else {
-			return `${distance}km`
-		}
-	}
+type ShopFormInfoPT = {
+	data: TResShop
+}
+function ShopFormInfo({ data }: ShopFormInfoPT) {
 	return (
 		<div>
 			<div className="text-Body01 font-SemiBold">{data.shopName}</div>
 			<div>
 				<div className="flex items-center gap-[4px] text-Body01 font-SemiBold text-Gray40">
 					<span>{data.address}</span>
-					<div className="h-1 w-1 rounded-full bg-Gray40" />
-					<span>{formatDistance(mockData.distance)}</span>
 				</div>
 			</div>
 		</div>
