@@ -9,6 +9,7 @@ import {
 	get12HourFromStamp,
 	getDayDivisionInKor,
 	getMinFromStamp,
+	invalidateTime,
 	padStartToPrinting,
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
@@ -29,7 +30,7 @@ export default function DesiredTime({
 	const { data, isLoading, isError } = useAvailableTimeQuery(
 		shopId,
 		artistIdArr,
-		selectedStamp,
+		invalidateTime(selectedStamp),
 	)
 
 	if (isLoading) {
