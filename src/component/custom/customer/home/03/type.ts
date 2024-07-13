@@ -4,4 +4,5 @@ export type TShop = {
 	location: string
 	distance: number
 	liked: boolean
+	images: string
 }
