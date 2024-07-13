@@ -32,7 +32,7 @@ export default function CustomerHome() {
 					listMockData={AroundShop}
 				/>
 				<div
-					className="absolute left-0 top-[171%] h-[12px] w-full border-y-[1px] bg-White"
+					className="absolute left-0 top-[166.5%] h-[12px] w-full border-y-[1px] bg-White"
 					style={{ borderColor: "rgba(128, 214, 248, 0.4)" }}
 				/>
 				<ShopListForm
