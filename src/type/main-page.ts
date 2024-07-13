@@ -6,7 +6,7 @@ import type { TReservationStatus } from "./union-option/resesrvation-status"
 export type TResShop = {
 	shopId: number
 	ownerId: string
-	shopName: string
+	name: string
 	address: string
 	images: null
 	likedByUser: boolean

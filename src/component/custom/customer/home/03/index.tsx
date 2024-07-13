@@ -47,7 +47,7 @@ function ShopForm({ data, mockData }: ShopFormPT) {
 			<div className="group relative h-[264px] w-[384px] rounded-[26px] bg-Gray40">
 				<Image
 					src={mockData.images}
-					alt={data.shopName}
+					alt={data.name}
 					layout="fill"
 					objectFit="cover"
 					className="rounded-[26px]"
@@ -75,7 +75,7 @@ function ShopHoverInfo({ data }: ShopHoverInfoPT) {
 	return (
 		<div className="absolute inset-0 flex flex-col justify-between py-[19px] pl-[29px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
 			<div className="pt-[10]">
-				<div className="text-Headline01 text-PY100">{data.shopName}</div>
+				<div className="text-Headline01 text-PY100">{data.name}</div>
 				<div className="max-w-[300px] whitespace-pre-wrap text-Body01 font-SemiBold">
 					{data.overview}
 				</div>
@@ -90,7 +90,7 @@ type ShopHoverInfoPT = {
 function ShopFormInfo({ data }: ShopHoverInfoPT) {
 	return (
 		<div>
-			<div className="text-Body01 font-SemiBold">{data.shopName}</div>
+			<div className="text-Body01 font-SemiBold">{data.name}</div>
 			<div>
 				<div className="flex items-center gap-[4px] text-Body01 font-SemiBold text-Gray40">
 					<span>{data.address}</span>
