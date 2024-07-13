@@ -285,3 +285,11 @@ export const getWeekNumber = (
 
 	return weekNumber
 }
+
+/** 시간 무효화, ["년","월","일"] 유지 & ["시간","분","초"] 는 0 으로 초기화 */
+export const invalidateTime = (timestamp: number) =>
+	getKSTStamp(
+		getYearFromStamp(timestamp),
+		getMonthFromStamp(timestamp),
+		getDateFromStamp(timestamp),
+	)
