@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 import NTIcon from "@/component/common/nt-icon"
-import type { TResShop } from "@/type/mainPage"
+import type { TResShop } from "@/type/main-page"
 
 import type { TShop } from "./type"
 

@@ -6,7 +6,7 @@ import {
 	tmpFetch,
 } from "@/mock"
 import type { TShopInfo } from "@/type"
-import type { TResGetMainPageHaveToken } from "@/type/mainPage"
+import type { TResGetMainPageHaveToken } from "@/type/main-page"
 import type { TPost } from "@/type/post"
 import type { TReservation } from "@/type/reservation"
 import type { TResponseData } from "@/type/response"
