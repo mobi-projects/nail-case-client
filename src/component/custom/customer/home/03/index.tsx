@@ -1,18 +1,25 @@
+import Image from "next/image"
+
 import NTIcon from "@/component/common/nt-icon"
+import type { TResShop } from "@/type/mainPage"
 
 import type { TShop } from "./type"
 
 type ShopListFomrPT = {
-	listData: Array<TShop>
+	listData: Array<TResShop>
+	listMockData: Array<TShop>
 }
-export default function ShopListForm({ listData }: ShopListFomrPT) {
+export default function ShopListForm({
+	listData = [],
+	listMockData,
+}: ShopListFomrPT) {
 	return (
 		<div className="flex h-fit w-fit flex-col gap-[20px]">
 			<ShopListTitle />
 			<div className="flex gap-[24px]">
-				{listData.map((data, idx) => (
-					<ShopForm key={idx} data={data} />
-				))}
+				{listData.map((data, idx) => {
+					return <ShopForm key={idx} data={data} mockData={listMockData[idx]} />
+				})}
 			</div>
 		</div>
 	)
@@ -26,39 +33,47 @@ function ShopListTitle() {
 	)
 }
 type ShopFormPT = {
-	data: TShop
+	data: TResShop
+	mockData: TShop
 }
-function ShopForm({ data }: ShopFormPT) {
+function ShopForm({ data, mockData }: ShopFormPT) {
 	return (
 		<div className="flex h-fit w-fit flex-col gap-[13px]">
 			<div className="group relative h-[264px] w-[384px] rounded-[26px] bg-Gray40">
+				<Image
+					src={mockData.images}
+					alt={data.shopName}
+					layout="fill"
+					objectFit="cover"
+					className="rounded-[26px]"
+				/>
 				<NTIcon
 					icon="favoriteFill"
-					className={`absolute right-[18px] top-[21px] text-Headline01 ${data.liked ? "text-PY100" : "text-White"} `}
+					className={`absolute right-[18px] top-[21px] text-Headline01 ${mockData.liked ? "text-PY100" : "text-White"}`}
 				/>
 				<div
-					className={`absolute inset-0 rounded-[26px] bg-gradient-to-tr from-Black to-White opacity-0 transition-opacity duration-300 ${data.liked ? "group-hover:opacity-30" : "group-hover:opacity-60"}`}
+					className={`absolute inset-0 rounded-[26px] bg-gradient-to-tr from-Black to-White opacity-0 transition-opacity duration-300 ${mockData.liked ? "group-hover:opacity-30" : "group-hover:opacity-60"}`}
 				></div>
-				<ShopHoverInfo data={data} />
+				<ShopHoverInfo data={data} mockData={mockData} />
 			</div>
-			<ShopFormInfo data={data} />
+			<ShopFormInfo data={data} mockData={mockData} />
 		</div>
 	)
 }
-function ShopHoverInfo({ data }: ShopFormPT) {
+function ShopHoverInfo({ data, mockData }: ShopFormPT) {
 	return (
 		<div className="absolute inset-0 flex flex-col justify-between py-[19px] pl-[29px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
 			<div className="pt-[10]">
-				<div className="text-Headline01 text-PY100">{data.title}</div>
+				<div className="text-Headline01 text-PY100">{data.shopName}</div>
 				<div className="max-w-[300px] whitespace-pre-wrap text-Body01 font-SemiBold">
-					{data.content}
+					{mockData.content}
 				</div>
 			</div>
 			<div className="hover:text-Gray60">예약하러가기</div>
 		</div>
 	)
 }
-function ShopFormInfo({ data }: ShopFormPT) {
+function ShopFormInfo({ data, mockData }: ShopFormPT) {
 	const formatDistance = (distance: number): string => {
 		if (distance < 1) {
 			return `${distance * 1000}m`
@@ -68,12 +83,12 @@ function ShopFormInfo({ data }: ShopFormPT) {
 	}
 	return (
 		<div>
-			<div className="text-Body01 font-SemiBold">{data.title}</div>
+			<div className="text-Body01 font-SemiBold">{data.shopName}</div>
 			<div>
 				<div className="flex items-center gap-[4px] text-Body01 font-SemiBold text-Gray40">
-					<span>{data.location}</span>
+					<span>{data.address}</span>
 					<div className="h-1 w-1 rounded-full bg-Gray40" />
-					<span>{formatDistance(data.distance)}</span>
+					<span>{formatDistance(mockData.distance)}</span>
 				</div>
 			</div>
 		</div>
