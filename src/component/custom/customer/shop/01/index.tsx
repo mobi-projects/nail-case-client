@@ -1,6 +1,10 @@
+"use client"
+
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
+
+import { useScroll } from "../05/scroll-context"
 
 export default function CustomerShopBanner() {
 	return (
@@ -95,8 +99,12 @@ function FiveStars({ starRating }: { starRating: number }) {
 	)
 }
 function ReviewNotice({ reviewCount }: { reviewCount: number }) {
+	const { reviewRef, scrollToSection } = useScroll()
 	return (
-		<div className="flex items-center hover:cursor-pointer hover:drop-shadow-lg">
+		<div
+			className="flex items-center hover:cursor-pointer hover:drop-shadow-lg"
+			onClick={() => scrollToSection(reviewRef)}
+		>
 			<p className="text-Body02 font-Regular text-Gray10">
 				{reviewCount} 개의 리뷰
 			</p>
