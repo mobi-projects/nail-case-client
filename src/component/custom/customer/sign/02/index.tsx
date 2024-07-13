@@ -1,8 +1,9 @@
 "use client"
 import Image from "next/image"
 
-import KakaoSymbol from "@/../public/asset/kakao-symbol.png"
+import KakaoSymbol from "@/../public/asset/kakao-symbol.svg"
 import type { TSignType } from "@/type/union-option/sign-type"
+
 type SocialLoginButtonsPT = { loginType: TSignType }
 
 export default function SocialLoginButtons({
@@ -30,7 +31,13 @@ function KakaoLoginButton({ loginType }: KakaoLoginButtonPT) {
 			className="flex h-[50px] w-full min-w-[10rem] items-center justify-center gap-2 rounded-[12px] bg-[#FEE500]"
 			onClick={handleLogin}
 		>
-			<Image src={KakaoSymbol} alt="Symbol" width={20} height={20} />
+			<Image
+				src={KakaoSymbol}
+				alt="Symbol"
+				width={20}
+				height={20}
+				className="h-5 w-5"
+			/>
 			<p className="text-Black">카카오 로그인</p>
 		</button>
 	)
