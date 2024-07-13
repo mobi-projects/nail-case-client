@@ -1,3 +1,7 @@
+"use client"
+
+import { useRouter } from "next/navigation"
+
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
@@ -16,16 +20,25 @@ export default function CustomerShopBanner() {
 		</div>
 	)
 }
+
 function PageRoutingIconButtons() {
+	const router = useRouter()
+
+	const navigateHome = () => {
+		router.push("/")
+	}
+
 	return (
 		<div className="absolute left-64 top-[78px] flex h-full w-7 gap-2">
 			<NTIcon
 				className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
 				icon="back"
+				onClick={navigateHome}
 			/>
 			<NTIcon
 				className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
 				icon="homeLight"
+				onClick={navigateHome}
 			/>
 		</div>
 	)
@@ -39,6 +52,7 @@ function ShareIconButtons() {
 		/>
 	)
 }
+
 function ShopBasic() {
 	const category = "네일아트 전문"
 	const location = "서울시 용산구"
@@ -94,6 +108,7 @@ function FiveStars({ starRating }: { starRating: number }) {
 		</div>
 	)
 }
+
 function ReviewNotice({ reviewCount }: { reviewCount: number }) {
 	return (
 		<div className="flex items-center hover:cursor-pointer hover:drop-shadow-lg">
