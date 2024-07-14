@@ -7,3 +7,5 @@ export type TSignDataResponse = {
 	accessTokenExpirationTime: number
 	refreshTokenExpirationTime: number
 }
+
+export type TRefreshDataResponse = { accessToken: string; refreshToken: string }
