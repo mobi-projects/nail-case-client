@@ -1,4 +1,3 @@
-"use client"
 import type { Dispatch, SetStateAction } from "react"
 
 import NTOption from "@/component/common/nt-option"
@@ -14,10 +13,8 @@ export default function Companion({ companion, setCompanion }: CompanionPT) {
 	const onClickCompanionOption = (idx: number) => {
 		setCompanion(idx + 1)
 	}
-
 	return (
 		<NTOption
-			className="w-full rounded-[26px] border border-Gray10 p-[30px] shadow-customGray60"
 			selectedIdxArr={[companion - 1]}
 			optionArr={companionOptionArr}
 			onSelect={onClickCompanionOption}

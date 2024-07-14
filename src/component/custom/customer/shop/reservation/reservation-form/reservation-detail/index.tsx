@@ -1,5 +1,3 @@
-"use client"
-
 import type { Dispatch, SetStateAction } from "react"
 import { useEffect, useState } from "react"
 
@@ -9,6 +7,8 @@ import type { TReservationForm } from "@/type"
 import type { TNailCondition } from "@/type/union-option/nail-condition"
 import type { TNailTreatment } from "@/type/union-option/nail-treatment"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
+
+import SectionTitle from "./section-title"
 
 type TReservationOptions<T> = {
 	labelArr: Array<string>
@@ -129,7 +129,7 @@ export default function TreatmentNCondition({
 	}
 
 	return (
-		<div className="flex h-fit w-full flex-col gap-[30px] rounded-[26px] border border-Gray10 p-6 shadow-customGray60">
+		<div className="flex h-fit w-full flex-col gap-[15px] pt-6">
 			<div className="flex flex-col gap-[10px]">
 				<SectionTitle title="시술 내용" isEssential={true} />
 				<NTOption
@@ -139,6 +139,7 @@ export default function TreatmentNCondition({
 					onSelect={onClickTreatmentOption}
 				/>
 			</div>
+			<hr className="w-full border-[1px] border-Gray10" />
 			<div className="flex flex-col gap-[8px]">
 				<SectionTitle title="네일 제거 유무" isEssential={true} />
 				<NTOption
@@ -147,6 +148,7 @@ export default function TreatmentNCondition({
 					onSelect={onClickRemoveOption}
 				/>
 			</div>
+			<hr className="w-full border-[1px] border-Gray10" />
 			<div className="flex flex-col gap-[8px]">
 				<SectionTitle title="연장 유무" isEssential={true} />
 				<NTOption
@@ -155,6 +157,7 @@ export default function TreatmentNCondition({
 					onSelect={onClickExtendOption}
 				/>
 			</div>
+			<hr className="w-full border-[1px] border-Gray10" />
 			<div className="flex flex-col gap-[8px]">
 				<SectionTitle title="컨디션" />
 				<NTOption
@@ -175,30 +178,6 @@ export default function TreatmentNCondition({
 					</div>
 				)}
 			</div>
-		</div>
-	)
-}
-
-function SectionTitle({
-	title,
-	isEssential = false,
-	additionalNotice,
-}: {
-	title: string
-	isEssential?: boolean
-	additionalNotice?: string
-}) {
-	return (
-		<div className="flex h-fit w-full gap-[1px]">
-			<p className="text-Headline02 text-Gray80">{title}</p>
-			{isEssential && (
-				<div className="aspect-square h-[4px] self-start rounded-full bg-PB100" />
-			)}
-			{additionalNotice && (
-				<p className="self-center text-Caption02 text-Gray40">
-					{additionalNotice}
-				</p>
-			)}
 		</div>
 	)
 }

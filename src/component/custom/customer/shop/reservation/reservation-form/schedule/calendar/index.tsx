@@ -3,21 +3,17 @@ import type { Dispatch, SetStateAction } from "react"
 import { useCallback, useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
-import { cn } from "@/config/tailwind"
 import {
 	getCalendarArr,
-	getDateFromStamp,
 	getMonthFromStamp,
 	getNextMonthFirstDate,
-	getNowStamp,
 	getPrevMonthLastDate,
 	getYearFromStamp,
 	invalidateTime,
-	isAfter,
-	isBefore,
-	isSame,
 	padStartToPrinting,
 } from "@/util/common"
+
+import CalendarBody from "./calendar-body"
 
 type CalendarPT = {
 	selectedStamp: number
@@ -85,7 +81,7 @@ export default function Calendar({
 	}, [])
 
 	return (
-		<div className="grid h-full w-full grid-rows-[28px_1fr] gap-10 rounded-[26px] border border-Gray10 p-[30px] shadow-customGray60">
+		<div className="grid h-full w-full grid-rows-[28px_1fr] gap-10">
 			<CalendarHeader />
 			<table className="grid h-full w-full grid-rows-[1fr_10fr] items-center gap-6">
 				<thead className="flex h-full w-full items-center">
@@ -100,49 +96,5 @@ export default function Calendar({
 				</tbody>
 			</table>
 		</div>
-	)
-}
-
-type CalendarBodyPT = CalendarPT & {
-	focusedStampArr?: number[]
-}
-
-function CalendarBody({
-	focusedStampArr = [],
-	selectedStamp,
-	setSelectedStamp,
-}: CalendarBodyPT) {
-	return (
-		<tr className="grid h-full w-full grid-cols-7">
-			{focusedStampArr.map((stamp) => {
-				const nowStamp = getNowStamp()
-				const isPrevDay = isBefore(stamp, nowStamp)
-				const isToday = isSame(stamp, nowStamp)
-				const isNextMonth = isAfter(stamp, nowStamp, "month")
-				const isFocused = isSame(stamp, selectedStamp)
-				return (
-					<th
-						className="flex h-full w-full items-center justify-center"
-						onClick={() => {
-							setSelectedStamp(stamp)
-						}}
-						key={stamp}
-					>
-						<p
-							className={cn(
-								"flex h-[36px] w-[36px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Body02 text-Gray100 transition-all hover:scale-150",
-								isToday && "text-[16px] text-PB100",
-								isFocused && "bg-PY100",
-								isNextMonth && "text-Gray60",
-								isPrevDay &&
-									"cursor-default bg-White text-Gray40 hover:scale-100",
-							)}
-						>
-							{getDateFromStamp(stamp)}
-						</p>
-					</th>
-				)
-			})}
-		</tr>
 	)
 }
