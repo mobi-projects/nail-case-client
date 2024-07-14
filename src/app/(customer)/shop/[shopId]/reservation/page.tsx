@@ -7,8 +7,7 @@ type CustomerShopPT = {
 		shopId: number
 	}
 }
-
-export const serverFetchShopById = async (shopId: number) => {
+const serverFetchShopById = async (shopId: number) => {
 	let shopName: string
 	let address: string
 	const category: string = "네일아트 전문"
@@ -28,7 +27,6 @@ export default async function CustomerShopReservation({
 }: CustomerShopPT) {
 	const { shopId } = params
 	const { shopName, address, category } = await serverFetchShopById(shopId)
-
 	return (
 		<main className="flex h-fit w-full flex-col gap-[35px] py-[80px]">
 			<Header {...{ shopId, shopName, address, category }} />
