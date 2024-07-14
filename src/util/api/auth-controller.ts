@@ -6,7 +6,7 @@ import type { TSignType } from "@/type/union-option/sign-type"
 export const getLogin = async (code: string, loginType: TSignType) => {
 	try {
 		const response = await axios.get(
-			`${process.env.NEXT_PUBLIC_BACKEND_APP_DEP}/auth/${loginType}/kakao`,
+			`${process.env.NEXT_PUBLIC_BACKEND_APP}/auth/${loginType}/kakao`,
 			{
 				params: { code },
 			},
