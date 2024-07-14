@@ -25,11 +25,9 @@ export const getPostArr = async () => {
 	const response = await tmpFetch<TPost[]>(createPostArr()) // TODO: fetching 함수 교체 필요
 	return response
 }
-export const getMainPageData = async (
-	memberId: number,
-): Promise<TResponseData<TResGetMainPageHaveToken, "data">> => {
-	const response = await axiosInstance().get("/main", {
-		params: { memberId },
-	})
+export const getMainPageData = async (): Promise<
+	TResponseData<TResGetMainPageHaveToken, "data">
+> => {
+	const response = await axiosInstance().get("/main", {})
 	return response.data
 }

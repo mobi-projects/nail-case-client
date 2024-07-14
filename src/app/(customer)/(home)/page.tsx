@@ -11,8 +11,8 @@ import type { TResGetMainPageHaveToken } from "@/type/main-page"
 import { AroundShop, LikedShop } from "./mockData"
 
 export default function CustomerHome() {
-	const memberId = 2
-	const { data: responseData, isError } = useGetMainPageDataQuery(memberId)
+	const { data: responseData, isError } = useGetMainPageDataQuery()
+
 	if (isError) {
 		return (
 			<div className="flex h-dvh w-full flex-col items-center justify-center gap-4">
@@ -36,7 +36,7 @@ export default function CustomerHome() {
 			</div>
 		)
 	}
-	const $reseponseData = (responseData?.data as TResGetMainPageHaveToken) || {}
+	const $responseData = (responseData?.data as TResGetMainPageHaveToken) || {}
 
 	return (
 		<div className="flex h-fit flex-col pb-[7px]">
@@ -46,12 +46,12 @@ export default function CustomerHome() {
 			<hr className="w-full bg-Gray10" />
 			<div className="flex h-fit w-full flex-col gap-[52px] pb-[33px] pt-[34px]">
 				<ShopListForm
-					listData={$reseponseData.topPopularShops}
+					listData={$responseData.topPopularShops}
 					listMockData={AroundShop}
 					formTitle="뉴팁스 추천 네일샵 👣"
 				/>
 				<ShopListForm
-					listData={$reseponseData.likedShops}
+					listData={$responseData.likedShops}
 					listMockData={LikedShop}
 					formTitle="내가 좋아한 네일샵 ✨"
 				/>

@@ -4,13 +4,10 @@ import type { TRemoveOption } from "./union-option/remove-option"
 import type { TReservationStatus } from "./union-option/resesrvation-status"
 
 export type TResShop = {
-	shopId: number
-	ownerId: string
-	shopName: string
-	address: string
-	images: null
-	likedByUser: boolean
+	id: number
+	name: string
 	overview: string
+	likedByUser: boolean
 }
 export type TRecentReservation = {
 	reservationId: number
@@ -25,7 +22,7 @@ export type TRecentReservation = {
 		treatmentOptions: Array<TNailTreatment>
 		removeOption: TRemoveOption
 		conditionOptions: Array<TNailCondition>
-		accompanied: true
+		accompanied: boolean
 		status: TReservationStatus
 	}>
 }
