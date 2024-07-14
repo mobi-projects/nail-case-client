@@ -18,11 +18,13 @@ import CalendarBody from "./calendar-body"
 type CalendarPT = {
 	selectedStamp: number
 	setSelectedStamp: Dispatch<SetStateAction<number>>
+	setIsTimeSelected: Dispatch<SetStateAction<boolean>>
 }
 
 export default function Calendar({
 	selectedStamp,
 	setSelectedStamp,
+	setIsTimeSelected,
 }: CalendarPT) {
 	const [focusedYear, setFocusedYear] = useState(
 		getYearFromStamp(selectedStamp),
@@ -92,6 +94,7 @@ export default function Calendar({
 						selectedStamp={invalidateTime(selectedStamp)}
 						setSelectedStamp={setSelectedStamp}
 						focusedStampArr={getCalendarArr(focusedYear, focusedMonth)}
+						setIsTimeSelected={setIsTimeSelected}
 					/>
 				</tbody>
 			</table>
