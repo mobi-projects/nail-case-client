@@ -42,7 +42,10 @@ export default function CustomerHome() {
 		<div className="flex h-fit flex-col pb-[7px]">
 			<CustomerHeader />
 			<CardSlideListForm />
-			<UsageForm />
+			<UsageForm
+				recentReservation={$responseData.recentReservation}
+				PastReservation={$responseData.max3RecentlyCompletedReservation}
+			/>
 			<hr className="w-full bg-Gray10" />
 			<div className="flex h-fit w-full flex-col gap-[52px] pb-[33px] pt-[34px]">
 				<ShopListForm

@@ -26,17 +26,18 @@ export type TRecentReservation = {
 		status: TReservationStatus
 	}>
 }
+export type TResCompletedReservation = {
+	reservationId: number
+	shop: {
+		id: number
+		name: string
+		image: null
+	}
+	startTime: number
+}
 export type TResGetMainPageHaveToken = {
 	recentReservation: TRecentReservation
 	topPopularShops: Array<TResShop>
 	likedShops: Array<TResShop>
-	max3RecentlyCompletedReservation: Array<{
-		reservationId: number
-		shop: {
-			id: number
-			name: string
-			image: null
-		}
-		startTime: number
-	}>
+	max3RecentlyCompletedReservation: Array<TResCompletedReservation>
 }

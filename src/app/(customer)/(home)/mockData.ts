@@ -44,3 +44,14 @@ export const LikedShop = [
 		liked: true,
 	},
 ]
+export const ImageMockMonthList = [
+	{ month: 1, image: "https://picsum.photos/id/202/200/300" },
+	{ month: 2, image: "https://picsum.photos/id/204/200/300" },
+	{ month: 3, image: "https://picsum.photos/id/206/200/300" },
+	{ month: 4, image: "https://picsum.photos/id/208/200/300" },
+]
+export const ImageMockList = [
+	"https://picsum.photos/id/212/200/300",
+	"https://picsum.photos/id/222/200/300",
+	"https://picsum.photos/id/232/200/300",
+]
