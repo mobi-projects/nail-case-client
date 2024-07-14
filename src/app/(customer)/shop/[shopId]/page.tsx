@@ -24,7 +24,7 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 					<p className="text-Title02">예약 일시</p>
 					<ReservationSchedule shopId={convertStringToInteger(params.shopId)} />
 				</div>
-				<CustomerShopContent />
+				<CustomerShopContent shopId={convertStringToInteger(params.shopId)} />
 			</div>
 		</div>
 	)

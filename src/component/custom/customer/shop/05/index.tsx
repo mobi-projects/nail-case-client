@@ -9,7 +9,7 @@ import ShopDesignList from "@/component/custom/customer/shop/05/02"
 import ShopNewsList from "@/component/custom/customer/shop/05/03"
 import ShopReviewList from "@/component/custom/customer/shop/05/04"
 
-export default function CustomerShopContent() {
+export default function CustomerShopContent({ shopId }: { shopId: number }) {
 	const shopInfoRef = useRef<HTMLDivElement>(null)
 	const designRef = useRef<HTMLDivElement>(null)
 	const newsRef = useRef<HTMLDivElement>(null)
@@ -39,16 +39,16 @@ export default function CustomerShopContent() {
 			<div ref={shopInfoRef} className="flex w-full flex-col gap-[20px] pt-16">
 				<ShopInfoCardList />
 				<p className="text-Title02">네일샵 공지</p>
-				<PostCardList />
+				<PostCardList shopId={shopId} />
 			</div>
 			<div ref={designRef} className="pt-[32px]">
-				<ShopDesignList />
+				<ShopDesignList shopId={shopId} />
 			</div>
 			<div ref={newsRef} className="pt-[32px]">
-				<ShopNewsList />
+				<ShopNewsList shopId={shopId} />
 			</div>
 			<div ref={reviewRef} className="pt-[32px]">
-				<ShopReviewList />
+				<ShopReviewList shopId={shopId} />
 			</div>
 		</div>
 	)
