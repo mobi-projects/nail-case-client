@@ -1,3 +1,4 @@
+"use client"
 import { useCallback, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
@@ -7,13 +8,16 @@ import {
 	ModalFooter,
 	ModalHeader,
 } from "@/component/common/nt-modal"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTOption from "@/component/common/nt-option"
 import Pagination from "@/component/common/nt-pagination"
+import { useSheet } from "@/component/common/nt-sheet/nt-sheet.context"
 import { REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
-import { useRegisterReservationMutation } from "@/hook/use-reservation-controller"
 import type { TReqBodyRegisterReservation, TReservationForm } from "@/type"
 import type { TNailTreatment } from "@/type/union-option/nail-treatment"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
+
+import ReservationResponseSheet from "../../sheet/01"
 
 type ReservationCheckModalPT = {
 	shopId: number
@@ -29,8 +33,8 @@ export default function ReservationCheckModal({
 	reservationTimestamp,
 }: ReservationCheckModalPT) {
 	const [curFormIdx, setCurFormIdx] = useState(0)
-	const { mutateAsync: postReservation } =
-		useRegisterReservationMutation(shopId)
+	const { onOpenSheet } = useSheet()
+	const { onCloseModal } = useModal()
 	const ListInfo = useCallback(() => {
 		return (
 			<ul className="flex list-inside flex-col gap-[2px] self-start text-Callout text-Gray60">
@@ -48,7 +52,10 @@ export default function ReservationCheckModal({
 			reservationFormArr,
 			reservationTimestamp,
 		)
-		await postReservation({ newReservation })
+		onOpenSheet({
+			children: <ReservationResponseSheet {...{ shopId, newReservation }} />,
+		})
+		onCloseModal()
 	}
 
 	const curForm = reservationFormArr[curFormIdx]
@@ -141,9 +148,7 @@ const createNewReservation = (
 		reservationTimestamp,
 	)
 	const newReservation: TReqBodyRegisterReservation = {
-		shopId,
 		reservationDetailList: adjustedFormArr,
-		startTime: reservationTimestamp,
 	}
 	return newReservation
 }

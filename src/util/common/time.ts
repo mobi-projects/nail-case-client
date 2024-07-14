@@ -122,6 +122,11 @@ export const getHourFromStamp = (timestamp: number) => {
 	const ktcStamp = getKSTStampByStamp(timestamp)
 	return new Date(ktcStamp * 1000).getHours()
 }
+/** 입력(타임스탬프)으로부터 "12시간제 시간" 반환 */
+export const get12HourFromStamp = (timestamp: number) => {
+	const hour = getHourFromStamp(timestamp)
+	return hour === 12 ? 12 : hour % 12
+}
 /** 입력(타입스탬프)으로부터 "분" 반환 */
 export const getMinFromStamp = (timestamp: number) => {
 	timestamp = convertSecondTimestamp(timestamp)
@@ -133,6 +138,11 @@ export const getSecFromStamp = (timestamp: number) => {
 	timestamp = convertSecondTimestamp(timestamp)
 	const ktcStamp = getKSTStampByStamp(timestamp)
 	return new Date(ktcStamp * 1000).getSeconds()
+}
+/** "오전", "오후" 반환 */
+export const getDayDivisionInKor = (timestamp: number) => {
+	const hour = getHourFromStamp(timestamp)
+	return hour < 12 ? "오전" : "오후"
 }
 
 /** 입력된 "년", "월" 에 대해, 달력에 출력될 날짜(timestamp) 배열을 반환  */

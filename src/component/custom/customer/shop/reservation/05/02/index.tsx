@@ -6,7 +6,8 @@ import NTOption from "@/component/common/nt-option"
 import { useAvailableTimeQuery } from "@/hook/use-reservation-controller"
 import type { TResGetListAvailableTime } from "@/type"
 import {
-	getHourFromStamp,
+	get12HourFromStamp,
+	getDayDivisionInKor,
 	getMinFromStamp,
 	padStartToPrinting,
 } from "@/util/common"
@@ -67,21 +68,13 @@ export default function DesiredTime({
 /** 매장의 모든 영업시간 출력 */
 const getFormattedStartTimeArr = (startTimeArr: number[]) =>
 	startTimeArr.map((startTime) => {
-		const dayOfDivision = determineDayOfDivision(startTime)
-		const hour = getHourFromStamp(startTime)
+		const dayOfDivision = getDayDivisionInKor(startTime)
+		const hour = get12HourFromStamp(startTime)
 		const min = getMinFromStamp(startTime)
-		const printedHour = convert12SystemHour(hour)
+		const printedHour = padStartToPrinting("time", hour)
 		const printedMin = padStartToPrinting("time", min)
 		return [dayOfDivision, printedHour + ":" + printedMin].join(" ")
 	})
-/** 오후/오전 구분 */
-const determineDayOfDivision = (timestamp: number) =>
-	getHourFromStamp(timestamp) < 12 ? "오전" : "오후"
-/** 24시간제 -> 12시간제 시간 변환 */
-const convert12SystemHour = (hour: number) => {
-	if (hour === 12) return "12"
-	return padStartToPrinting("time", hour % 12)
-}
 /** 옵션 선택 불가 idx */
 const getDisabledIdxArr = (
 	availableInfoArr: TResGetListAvailableTime[],
