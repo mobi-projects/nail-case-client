@@ -10,8 +10,14 @@ import ShopReviewList from "@/component/custom/customer/shop/05/04"
 import { useScroll } from "./scroll-context"
 
 export default function CustomerShopContent() {
-	const { shopInfoRef, designRef, newsRef, reviewRef, scrollToSection } =
-		useScroll()
+	const {
+		shopInfoRef,
+		designRef,
+		newsRef,
+		reviewRef,
+		scrollToSection,
+		setFocusedSection,
+	} = useScroll()
 
 	return (
 		<div className="flex w-full flex-col">
@@ -19,6 +25,7 @@ export default function CustomerShopContent() {
 				toolList={["홈", "디자인", "소식", "리뷰"]}
 				className="w-[1200px] border-b-[2px] px-[400px]"
 				onToolClick={(tool) => {
+					setFocusedSection(tool)
 					if (tool === "홈") return scrollToSection(shopInfoRef)
 					if (tool === "디자인") return scrollToSection(designRef)
 					if (tool === "소식") return scrollToSection(newsRef)

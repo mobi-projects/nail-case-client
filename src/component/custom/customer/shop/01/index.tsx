@@ -99,11 +99,14 @@ function FiveStars({ starRating }: { starRating: number }) {
 	)
 }
 function ReviewNotice({ reviewCount }: { reviewCount: number }) {
-	const { reviewRef, scrollToSection } = useScroll()
+	const { reviewRef, scrollToSection, setFocusedSection } = useScroll()
 	return (
 		<div
 			className="flex items-center hover:cursor-pointer hover:drop-shadow-lg"
-			onClick={() => scrollToSection(reviewRef)}
+			onClick={() => {
+				scrollToSection(reviewRef)
+				setFocusedSection("리뷰")
+			}}
 		>
 			<p className="text-Body02 font-Regular text-Gray10">
 				{reviewCount} 개의 리뷰

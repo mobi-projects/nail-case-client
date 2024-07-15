@@ -1,7 +1,7 @@
 "use client"
 
 import type { ReactNode, RefObject } from "react"
-import React, { createContext, useContext, useRef } from "react"
+import React, { createContext, useContext, useRef, useState } from "react"
 
 type ScrollContextType = {
 	shopInfoRef: RefObject<HTMLDivElement>
@@ -9,6 +9,8 @@ type ScrollContextType = {
 	newsRef: RefObject<HTMLDivElement>
 	reviewRef: RefObject<HTMLDivElement>
 	scrollToSection: (ref: RefObject<HTMLDivElement>) => void
+	setFocusedSection: (section: string) => void
+	focusedSection: string
 }
 
 const ScrollContext = createContext<ScrollContextType | null>(null)
@@ -21,6 +23,8 @@ export const ScrollProvider: React.FC<{ children: ReactNode }> = ({
 	const newsRef = useRef<HTMLDivElement>(null)
 	const reviewRef = useRef<HTMLDivElement>(null)
 
+	const [focusedSection, setFocusedSection] = useState<string>("")
+
 	const scrollToSection = (ref: RefObject<HTMLDivElement>) => {
 		const offset = 40
 		if (ref.current) {
@@ -32,7 +36,15 @@ export const ScrollProvider: React.FC<{ children: ReactNode }> = ({
 
 	return (
 		<ScrollContext.Provider
-			value={{ shopInfoRef, designRef, newsRef, reviewRef, scrollToSection }}
+			value={{
+				shopInfoRef,
+				designRef,
+				newsRef,
+				reviewRef,
+				scrollToSection,
+				focusedSection,
+				setFocusedSection,
+			}}
 		>
 			{children}
 		</ScrollContext.Provider>
