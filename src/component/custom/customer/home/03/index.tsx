@@ -1,6 +1,5 @@
 import Image from "next/image"
 
-import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
 import type { TResShop } from "@/type/main-page"
 
@@ -52,13 +51,7 @@ function ShopForm({ data, mockData }: ShopFormPT) {
 					objectFit="cover"
 					className="rounded-[26px]"
 				/>
-				<NTIcon
-					icon="favoriteFill"
-					className={cn(
-						"absolute right-[18px] top-[21px] z-20 text-Headline01 text-White",
-						data.likedByUser && "text-PY100",
-					)}
-				/>
+
 				<div
 					className={cn(
 						"absolute inset-0 rounded-[26px] bg-gradient-to-tr from-Black to-White opacity-0 transition-opacity duration-300 group-hover:opacity-60",
@@ -85,7 +78,6 @@ function ShopHoverInfo({ data }: ShopHoverInfoPT) {
 					{overview}
 				</div>
 			</div>
-			<div className="hover:text-Gray60">예약하러가기</div>
 		</div>
 	)
 }
