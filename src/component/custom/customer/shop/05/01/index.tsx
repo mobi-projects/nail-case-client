@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import React, { useState } from "react"
 
+import { QUERY_ANNOUNCEMENT_ARR } from "@/constant"
 import { getShopAnnouncement } from "@/util/api/shop-controller"
 import {
 	getMonthFromStamp,
@@ -43,7 +44,7 @@ export default function ShopNoticeList({ shopId }: { shopId: number }) {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	const { data: shopNotice, isError } = useQuery({
-		queryKey: ["shopNews", shopId],
+		queryKey: [QUERY_ANNOUNCEMENT_ARR, shopId],
 		queryFn: () => getShopAnnouncement(shopId),
 	})
 

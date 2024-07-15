@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import React, { useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
+import { QUERY_MONTHLY_ART_ARR } from "@/constant"
 import { getShopMonthlyArt } from "@/util/api/shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
@@ -36,7 +37,7 @@ export default function ShopDesignList({ shopId }: { shopId: number }) {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	const { data: monthlyArt, isError } = useQuery({
-		queryKey: ["monthlyArt", shopId],
+		queryKey: [QUERY_MONTHLY_ART_ARR, shopId],
 		queryFn: () => getShopMonthlyArt(shopId),
 	})
 

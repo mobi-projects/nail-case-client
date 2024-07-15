@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 
 import NTOption from "@/component/common/nt-option"
+import { QUERY_REVIEW_ARR } from "@/constant"
 import { CONDITION_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import { getShopReview } from "@/util/api/shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
@@ -26,7 +27,7 @@ type TReview = {
 
 export default function ShopReviewList({ shopId }: { shopId: number }) {
 	const { data: shopReviews, isError } = useQuery({
-		queryKey: ["shopReviews", shopId],
+		queryKey: [QUERY_REVIEW_ARR, shopId],
 		queryFn: () => getShopReview(shopId),
 	})
 
