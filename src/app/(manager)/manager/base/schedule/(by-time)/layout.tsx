@@ -1,14 +1,14 @@
-import type { PropsWithChildren } from "react"
+// import type { PropsWithChildren } from "react"
 
-import ScheduleLayout from "@/component/custom/manager/base/schedule/by-time/layout/01"
+// import ScheduleLayout from "@/component/custom/manager/base/schedule/by-time/layout/01"
 
-export default function ManagerBaseScheduleLayout({
-	children,
-}: Readonly<PropsWithChildren>) {
-	return (
-		<div className="flex w-full flex-col pb-[102px]">
-			<ScheduleLayout />
-			{children}
-		</div>
-	)
-}
+// export default function ManagerBaseScheduleLayout({
+// 	children,
+// }: Readonly<PropsWithChildren>) {
+// 	return (
+// 		<div className="flex w-full flex-col pb-[102px]">
+// 			<ScheduleLayout />
+// 			{children}
+// 		</div>
+// 	)
+// }
