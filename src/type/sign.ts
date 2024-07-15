@@ -3,7 +3,7 @@ export type TSignDataResponse = {
 	refreshToken: string
 	shopIds: null | Array<number>
 	hasShop: boolean
-	userType: "MEMBER" | "MANAGER"
+	role: "MEMBER" | "MANAGER"
 	accessTokenExpirationTime: number
 	refreshTokenExpirationTime: number
 }
