@@ -1,5 +1,5 @@
+"use client"
 import Image from "next/image"
-import { useState } from "react"
 import { toast, Toaster } from "sonner"
 
 import {
@@ -34,13 +34,10 @@ export default function UsageForm({
 	recentReservation,
 	PastReservation,
 }: UsageFormPT) {
-	const [currentReservation, setCurrentReservation] =
-		useState<TRecentReservation | null>(recentReservation)
 	return (
 		<div className="flex h-fit gap-[24px] pb-[45px] pt-[30.5px]">
 			<ReservationForm
-				currentReservation={currentReservation}
-				setCurrentReservation={setCurrentReservation}
+				recentReservation={recentReservation}
 				ImageMockList={ImageMockList}
 			/>
 			<PastHistoryForm
@@ -51,32 +48,25 @@ export default function UsageForm({
 	)
 }
 type ReservationFormPT = {
-	currentReservation: TRecentReservation | null
-	setCurrentReservation: React.Dispatch<
-		React.SetStateAction<TRecentReservation | null>
-	>
+	recentReservation: TRecentReservation | null
 	ImageMockList: Array<string>
 }
 function ReservationForm({
-	currentReservation,
-	setCurrentReservation,
+	recentReservation,
 	ImageMockList,
 }: ReservationFormPT) {
 	const collectImages = (image: Array<string>) => {
 		return image.flatMap((detail) => detail)
 	}
 	const imageList = collectImages(ImageMockList)
-
+	console.log(recentReservation)
 	return (
 		<div className="flex h-fit w-[690px] flex-col justify-center gap-[16.5px] rounded-[26px] px-[25px] py-[22px] shadow-customGray60">
 			<div className="text-Title03 font-Bold text-PB100">진행 중인 네일</div>
-			{currentReservation ? (
+			{recentReservation ? (
 				<div className="flex gap-[16px]">
 					<ReservationImageList imageList={imageList} />
-					<ReservationInfo
-						currentReservation={currentReservation}
-						setCurrentReservation={setCurrentReservation}
-					/>
+					<ReservationInfo recentReservation={recentReservation} />
 				</div>
 			) : (
 				<div className="h-[220px] pt-[80px] text-center text-Title03 font-SemiBold text-Gray100">
@@ -100,8 +90,9 @@ function ReservationImageList({ imageList }: ReservationImageListPT) {
 						className="rounded-[7px]"
 						src={firstImage}
 						alt={firstImage}
-						objectFit="cover"
 						fill
+						priority
+						sizes="40px"
 					/>
 				) : (
 					<div className="h-full w-full pt-[50px] text-center text-Body02 font-SemiBold">
@@ -117,8 +108,9 @@ function ReservationImageList({ imageList }: ReservationImageListPT) {
 							className="rounded-[4px]"
 							src={image}
 							alt={image}
-							objectFit="cover"
 							fill
+							priority
+							sizes="40px"
 						/>
 					</div>
 				))}
@@ -127,30 +119,21 @@ function ReservationImageList({ imageList }: ReservationImageListPT) {
 	)
 }
 type ReservationInfoPT = {
-	currentReservation: TRecentReservation
-	setCurrentReservation: React.Dispatch<
-		React.SetStateAction<TRecentReservation | null>
-	>
+	recentReservation: TRecentReservation
 }
-function ReservationInfo({
-	currentReservation,
-	setCurrentReservation,
-}: ReservationInfoPT) {
+function ReservationInfo({ recentReservation }: ReservationInfoPT) {
 	return (
 		<div className="flex h-fit w-full flex-col gap-[17px]">
-			<InfoForm currentReservation={currentReservation} />
-			<InfoButtonFrom
-				currentReservation={currentReservation}
-				setCurrentReservation={setCurrentReservation}
-			/>
+			<InfoForm recentReservation={recentReservation} />
+			<InfoButtonFrom recentReservation={recentReservation} />
 		</div>
 	)
 }
 type InfoFormPT = {
-	currentReservation: TRecentReservation
+	recentReservation: TRecentReservation
 }
-function InfoForm({ currentReservation }: InfoFormPT) {
-	const dataList = currentReservation.details
+function InfoForm({ recentReservation }: InfoFormPT) {
+	const dataList = recentReservation.details
 	const status = RESERVATION_STATUS[dataList[0].status]
 	const tagListFuntion = () => {
 		const tags = []
@@ -204,7 +187,7 @@ function InfoForm({ currentReservation }: InfoFormPT) {
 			</NTContent>
 			<div className="flex flex-col gap-[6px]">
 				<div className="text-Body01 font-SemiBold text-Gray100">
-					{currentReservation.shop.name}
+					{recentReservation.shop.name}
 				</div>
 				<div className="text-Body02 font-SemiBold text-PB100">
 					{timestampFuntion(dataList[0].startTime)}
@@ -215,26 +198,17 @@ function InfoForm({ currentReservation }: InfoFormPT) {
 		</div>
 	)
 }
-function InfoButtonFrom({
-	currentReservation,
-	setCurrentReservation,
-}: ReservationInfoPT) {
+function InfoButtonFrom({ recentReservation }: ReservationInfoPT) {
 	return (
 		<div className="flex w-full items-center justify-end pr-[2px]">
-			<InfoButtonList
-				currentReservation={currentReservation}
-				setCurrentReservation={setCurrentReservation}
-			/>
+			<InfoButtonList recentReservation={recentReservation} />
 			<div className="flex h-fit items-center gap-[11px] text-Button font-Medium text-Gray60"></div>
 		</div>
 	)
 }
-function InfoButtonList({
-	currentReservation,
-	setCurrentReservation,
-}: ReservationInfoPT) {
+function InfoButtonList({ recentReservation }: ReservationInfoPT) {
 	const { updateReservation } = useUpdateReservationMutation(
-		currentReservation.shop.id,
+		recentReservation.shop.id,
 	)
 	const handleUpdateReservation = async () => {
 		const status: TReservationStatus = "CANCELED"
@@ -245,31 +219,32 @@ function InfoButtonList({
 		}
 		try {
 			await updateReservation({
-				reservationId: currentReservation.reservationId,
+				reservationId: recentReservation.reservationId,
 				updated: updatedData,
 			})
-			toast.success("예약 취소 되엇습니다")
-			setCurrentReservation(null)
+			toast.success("예약 취소 되었습니다")
+			setTimeout(() => {
+				window.location.href = "./"
+			}, 2000)
 		} catch (error) {
 			toast.error("예약 취소 요청이 실패하여 가게로 연락부탁드립니다")
 		}
 	}
-
+	const onClickCloseToast = () => {
+		if (toast) {
+			toast.dismiss(0)
+		}
+		toast.warning("예약을 취소하시겠습니까?", {
+			action: {
+				label: "예약취소",
+				onClick: handleUpdateReservation,
+			},
+		})
+	}
 	return (
 		<div className="flex gap-[22px]">
 			<Toaster position="top-center" />
-			<NTButton
-				variant="secondary"
-				flexible="fit"
-				onClick={() =>
-					toast.warning("예약을 취소하시겠습니까?", {
-						action: {
-							label: "예약취소",
-							onClick: handleUpdateReservation,
-						},
-					})
-				}
-			>
+			<NTButton variant="secondary" flexible="fit" onClick={onClickCloseToast}>
 				예약취소
 			</NTButton>
 		</div>
