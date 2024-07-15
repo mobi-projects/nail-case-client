@@ -1,4 +1,6 @@
+"use client"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 import { cn } from "@/config/tailwind"
 import type { TResShop } from "@/type/main-page"
@@ -83,9 +85,17 @@ function ShopHoverInfo({ data }: ShopHoverInfoPT) {
 }
 
 function ShopFormInfo({ data }: ShopHoverInfoPT) {
+	const router = useRouter()
 	return (
 		<div>
-			<div className="text-Body01 font-SemiBold">{data.name}</div>
+			<div
+				className="cursor-pointer text-Body01 font-SemiBold hover:text-Gray60"
+				onClick={() => {
+					router.push(`shop/${data.id}`)
+				}}
+			>
+				{data.name}
+			</div>
 			<div>
 				<div className="flex items-center gap-[4px] text-Body01 font-SemiBold text-Gray40"></div>
 			</div>
