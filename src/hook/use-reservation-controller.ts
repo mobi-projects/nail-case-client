@@ -36,12 +36,6 @@ export const useRegisterReservationMutation = (shopId: number) => {
 	return useMutation({
 		mutationFn: async ({ newReservation }: RegisterReservationPT) =>
 			await postRegisterReservation(shopId, newReservation),
-		onSuccess: (data) => {
-			alert(JSON.stringify(data))
-		},
-		onError: (error) => {
-			alert(JSON.stringify(error))
-		},
 	})
 }
 /** 예약 상세 조회 */
