@@ -1,6 +1,7 @@
 import axios from "axios"
 import { getCookie } from "cookies-next"
 
+import { axiosInstance } from "@/config/axios"
 import { REFRESH_TOKEN } from "@/constant/auth-key"
 import type { TSignType } from "@/type/union-option/sign-type"
 
@@ -23,8 +24,8 @@ export const getLogin = async (code: string, loginType: TSignType) => {
 export const postResquestNewToken = async () => {
 	const refreshToken = getCookie(REFRESH_TOKEN)
 
-	const response = await axios.post(
-		`${process.env.NEXT_PUBLIC_BACKEND_APP}/auth/refresh`,
+	const response = await axiosInstance().post(
+		"/auth/refresh",
 		{},
 		{
 			headers: {
