@@ -5,7 +5,7 @@ import { axiosInstance } from "@/config/axios"
 import { CONDITION_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import { isUndefined } from "@/util/common/type-guard"
 
-type Review = {
+type TReview = {
 	accompaniedIn: boolean
 	comments: string[]
 	conditionOptions: string[]
@@ -30,12 +30,33 @@ export default function ShopReviewList({ shopId }: { shopId: number }) {
 		return response.data
 	}
 
-	const { data: shopReviews } = useQuery({
+	const { data: shopReviews, isError } = useQuery({
 		queryKey: ["shopReviews", shopId],
 		queryFn: () => fetchReviews(shopId),
 	})
 
-	if (isUndefined(shopReviews)) return <h1>데이터 없음</h1>
+	if (isUndefined(shopReviews))
+		return (
+			<div className="w-full">
+				<p className="font-bold mb-6 text-2xl text-Title02">리뷰</p>
+				<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
+					데이터가 존재하지 않습니다.
+					<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
+				</div>
+			</div>
+		)
+
+	if (isError) {
+		return (
+			<div className="w-full">
+				<p className="font-bold mb-6 text-2xl text-Title02">리뷰</p>
+				<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
+					데이터를 불러오는 중에 오류가 발생했습니다.
+					<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
+				</div>
+			</div>
+		)
+	}
 
 	const shopReviewList = shopReviews.dataList
 
@@ -62,7 +83,7 @@ export default function ShopReviewList({ shopId }: { shopId: number }) {
 		<div className="w-full p-[16px]">
 			<p className="font-bold mb-6 text-2xl text-Title02">리뷰</p>
 			<div className="flex flex-col gap-6">
-				{shopReviewList.map((review: Review, idx: number) => (
+				{shopReviewList.map((review: TReview, idx: number) => (
 					<div
 						key={idx}
 						className="transform rounded-lg bg-white p-[24px] shadow-customGray transition duration-500 hover:shadow-xl"
@@ -97,10 +118,7 @@ export default function ShopReviewList({ shopId }: { shopId: number }) {
 								)}
 							/>
 						</div>
-						<div className="flex">
-							<div className="mr-[16px] h-[100px] w-[100px] rounded-[14px] bg-gray-200"></div>
-							<p className="leading-relaxed text-gray-700">{review.contents}</p>
-						</div>
+						<p className="leading-relaxed text-gray-700">{review.contents}</p>
 					</div>
 				))}
 			</div>

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+import React, { useState } from "react"
 
 import { axiosInstance } from "@/config/axios"
 import {
@@ -8,7 +9,9 @@ import {
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
 
-type Comment = {
+import ShopNoticeModal from "./notice-modal"
+
+export type TComment = {
 	postCommentId: number
 	body: string
 	createdAt: number
@@ -16,7 +19,7 @@ type Comment = {
 	timestampsFromLocalDateTime: string
 }
 
-type ShopNewsItem = {
+export type TShopNewsItem = {
 	imageIds: number[]
 	memberId: number
 	shopId: number
@@ -30,34 +33,66 @@ type ShopNewsItem = {
 	commentCount: number
 	createdAt: number
 	imageUrls: string[]
-	comments: Comment[]
+	comments: TComment[]
 }
 
 export default function ShopNoticeList({ shopId }: { shopId: number }) {
+	const [selectedNotice, setSelectedNotice] = useState<TShopNewsItem | null>(
+		null,
+	)
+	const [isModalOpen, setIsModalOpen] = useState(false)
+
 	const fetchShopNotice = async (shopId: number) => {
 		const response = await axiosInstance().get(`/shops/${shopId}/announcements`)
 		return response.data
 	}
 
-	const { data: shopNotice } = useQuery({
+	const { data: shopNotice, isError } = useQuery({
 		queryKey: ["shopNews", shopId],
 		queryFn: () => fetchShopNotice(shopId),
 	})
 
-	if (isUndefined(shopNotice)) return <h1>데이터 없음</h1>
+	if (isUndefined(shopNotice))
+		return (
+			<div className="w-full">
+				<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
+					데이터가 존재하지 않습니다.
+					<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
+				</div>
+			</div>
+		)
 
-	const shopNoticeList: ShopNewsItem[] = shopNotice.dataList.filter(
-		(item: ShopNewsItem) => item.category === "NOTICE",
+	if (isError) {
+		return (
+			<div className="w-full">
+				<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
+					데이터를 불러오는 중에 오류가 발생했습니다.
+					<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
+				</div>
+			</div>
+		)
+	}
+
+	const shopNoticeList: TShopNewsItem[] = shopNotice.dataList.filter(
+		(item: TShopNewsItem) => item.category === "NOTICE",
 	)
 
 	const formatTimeStamp = (createAt: number) => {
-		const year = getYearFromStamp(createAt!)
-		const month = getMonthFromStamp(createAt!)
-		const date = getMonthFromStamp(createAt!)
+		const year = getYearFromStamp(createAt)
+		const month = getMonthFromStamp(createAt)
+		const date = getMonthFromStamp(createAt)
 		return `${padStartToPrinting("year", year)}.${padStartToPrinting("month", month)}.${padStartToPrinting("date", date)}`
 	}
 
-	console.log(shopNoticeList)
+	const handleNoticeClick = (notice: TShopNewsItem) => {
+		setSelectedNotice(notice)
+		setIsModalOpen(true)
+	}
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false)
+		setSelectedNotice(null)
+	}
 
 	return (
 		<div className="w-full">
@@ -65,6 +100,7 @@ export default function ShopNoticeList({ shopId }: { shopId: number }) {
 				<div
 					key={idx}
 					className="mb-[20px] h-[160px] w-full cursor-pointer rounded-[26px] px-[25px] py-[20px] shadow-customGray60 transition-all hover:scale-105"
+					onClick={() => handleNoticeClick(item)}
 				>
 					<div className="flex">
 						<div className="mr-[20px] h-[120px] w-[233.6px] rounded-[6px] bg-Gray40"></div>
@@ -84,6 +120,11 @@ export default function ShopNoticeList({ shopId }: { shopId: number }) {
 					</div>
 				</div>
 			))}
+			<ShopNoticeModal
+				isOpen={isModalOpen}
+				notice={selectedNotice}
+				onClose={handleCloseModal}
+			/>
 		</div>
 	)
 }
