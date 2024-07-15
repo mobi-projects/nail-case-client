@@ -1,5 +1,8 @@
 "use client"
 
+import { useState } from "react"
+
+import { NTButton } from "@/component/common/atom/nt-button"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
@@ -20,6 +23,7 @@ export default function CustomerShopBanner() {
 		</div>
 	)
 }
+
 function PageRoutingIconButtons() {
 	return (
 		<div className="absolute left-64 top-[78px] flex h-full w-7 gap-2">
@@ -36,13 +40,56 @@ function PageRoutingIconButtons() {
 }
 
 function ShareIconButtons() {
+	const [isModalOpen, setIsModalOpen] = useState(false)
+
+	const handleShareClick = () => {
+		setIsModalOpen(true)
+	}
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false)
+	}
+
+	const handleCopyUrl = () => {
+		navigator.clipboard.writeText(window.location.href).then(() => {
+			alert("URL이 복사되었습니다.")
+		})
+	}
+
 	return (
-		<NTIcon
-			className="absolute right-64 top-[78px] aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
-			icon="share"
-		/>
+		<>
+			<NTIcon
+				className="absolute right-64 top-[78px] aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
+				icon="share"
+				onClick={handleShareClick}
+			/>
+			{isModalOpen && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+					<div className="w-[500px] rounded bg-white p-[16px] shadow-lg">
+						<div className="mb-[15px] flex items-center justify-between">
+							<p className="text-Headline02">공유하기</p>
+							<NTIcon
+								icon="closeRoundLight"
+								onClick={handleCloseModal}
+								className="cursor-pointer"
+							/>
+						</div>
+						<div className="flex items-center">
+							<input
+								type="text"
+								value={window.location.href}
+								readOnly
+								className="mr-[8px] h-[56px] w-full rounded-[12px] border p-[8px]"
+							/>
+							<NTButton onClick={handleCopyUrl}>복사</NTButton>
+						</div>
+					</div>
+				</div>
+			)}
+		</>
 	)
 }
+
 function ShopBasic() {
 	const category = "네일아트 전문"
 	const location = "서울시 용산구"
@@ -98,6 +145,7 @@ function FiveStars({ starRating }: { starRating: number }) {
 		</div>
 	)
 }
+
 function ReviewNotice({ reviewCount }: { reviewCount: number }) {
 	const { reviewRef, scrollToSection, setFocusedSection } = useScroll()
 	return (
