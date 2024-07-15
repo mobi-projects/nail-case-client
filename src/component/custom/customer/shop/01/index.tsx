@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
+import { COMMON_HOME } from "@/constant/routing-path"
 
 export default function CustomerShopBanner() {
 	return (
@@ -24,8 +25,12 @@ export default function CustomerShopBanner() {
 function PageRoutingIconButtons() {
 	const router = useRouter()
 
+	const navigateBack = () => {
+		router.back()
+	}
+
 	const navigateHome = () => {
-		router.push("/")
+		router.push(COMMON_HOME)
 	}
 
 	return (
@@ -33,7 +38,7 @@ function PageRoutingIconButtons() {
 			<NTIcon
 				className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
 				icon="back"
-				onClick={navigateHome}
+				onClick={navigateBack}
 			/>
 			<NTIcon
 				className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
