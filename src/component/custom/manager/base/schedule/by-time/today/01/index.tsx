@@ -234,3 +234,6 @@
 // 		</div>
 // 	)
 // }
+export default function ScheduleDate() {
+	return <h1>ScheduleDate</h1>
+}

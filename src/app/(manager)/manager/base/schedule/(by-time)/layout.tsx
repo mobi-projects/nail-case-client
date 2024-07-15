@@ -12,3 +12,6 @@
 // 		</div>
 // 	)
 // }
+export default function ManagerBaseScheduleLayout() {
+	return <h1>시간별 [확정] 예약목록 조회</h1>
+}

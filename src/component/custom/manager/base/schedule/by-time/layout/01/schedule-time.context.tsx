@@ -41,3 +41,6 @@
 // 	}
 // 	return context
 // }
+export default function TimeInfoProvider() {
+	return <h1>TimeInfoProvider</h1>
+}

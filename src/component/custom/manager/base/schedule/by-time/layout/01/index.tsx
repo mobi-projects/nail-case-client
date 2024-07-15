@@ -355,3 +355,6 @@
 // 	}
 // 	return { weeklyMonth: month, weekNumber: weekNumber }
 // }
+export default function ScheduleLayout() {
+	return <h1>ScheduleLayout</h1>
+}
