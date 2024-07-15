@@ -58,7 +58,7 @@ export type TReqBodyUpdateReservation = {
 export type TResGetListReservation = {
 	reservationId: number
 	nickname: string
-	reservationDetailList: Array<TListReservationDetail>
+	reservationDetailList: Array<TReservationDetail>
 	createdAt: number
 	modifiedAt: number
 }

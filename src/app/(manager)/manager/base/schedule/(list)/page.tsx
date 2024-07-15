@@ -9,10 +9,14 @@ import {
 } from "@/util/common"
 
 export default async function ScheduleList() {
+	//[todo] 추후 수정, shopId 동적 확보
+	const test = serverFetchReservationList(1)
+	//[todo] 추후 삭제, 미사용 변수 사용을 위한 console
+	console.log(test)
 	return <h1>일정 목록</h1>
 }
 
-export const serverFetchReservationList = async (shopId: number) => {
+const serverFetchReservationList = async (shopId: number) => {
 	let isError = false
 	const pendingList: TResGetListReservation[] = []
 	const confirmedList: TResGetListReservation[] = []
