@@ -49,11 +49,11 @@ function ShopForm({ data, mockData }: ShopFormPT) {
 				<Image
 					src={mockData.images}
 					alt={data.name}
-					layout="fill"
-					objectFit="cover"
+					fill
+					priority
 					className="rounded-[26px]"
+					sizes="384px"
 				/>
-
 				<div
 					className={cn(
 						"absolute inset-0 rounded-[26px] bg-gradient-to-tr from-Black to-White opacity-0 transition-opacity duration-300 group-hover:opacity-60",

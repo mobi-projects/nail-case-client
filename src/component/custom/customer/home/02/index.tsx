@@ -315,8 +315,9 @@ function PastHistoryImageList({
 					src={PastReservationImage[0].image}
 					alt={PastReservationImage[0].month.toString()}
 					fill
-					objectFit="cover"
 					className="rounded-l-[26px]"
+					priority
+					sizes="326px"
 				/>
 				<div className="z-20 flex h-[30px] items-center gap-[3px] text-Title03 font-SemiBold text-White">
 					<span>{PastReservationImage[0].month}월 카타네일</span>
@@ -333,10 +334,11 @@ function PastHistoryImageList({
 							src={PastReservationImage[idx + 1].image}
 							alt={PastReservationImage[idx + 1].month.toString()}
 							fill
-							objectFit="cover"
+							priority
+							sizes="106px"
 							className="rounded-r-[26px]"
 						/>
-						<div className="z-20 text-Headline02 text-Gray10">
+						<div className="absolute z-20 text-Headline02 text-Gray10">
 							{PastReservationImage[idx + 1].month}월
 						</div>
 					</div>
