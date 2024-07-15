@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 
 import NTOption from "@/component/common/nt-option"
-import { axiosInstance } from "@/config/axios"
 import { CONDITION_LIST, TREATMENT_LIST } from "@/constant/tagList"
+import { getShopReview } from "@/util/api/shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
 type TReview = {
@@ -25,14 +25,9 @@ type TReview = {
 }
 
 export default function ShopReviewList({ shopId }: { shopId: number }) {
-	const fetchReviews = async (shopId: number) => {
-		const response = await axiosInstance().get(`/shops/${shopId}/reviews`)
-		return response.data
-	}
-
 	const { data: shopReviews, isError } = useQuery({
 		queryKey: ["shopReviews", shopId],
-		queryFn: () => fetchReviews(shopId),
+		queryFn: () => getShopReview(shopId),
 	})
 
 	if (isUndefined(shopReviews))

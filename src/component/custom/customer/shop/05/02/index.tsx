@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import React, { useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
-import { axiosInstance } from "@/config/axios"
+import { getShopMonthlyArt } from "@/util/api/shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
 import MonthlyArtModal from "./monthly-art-modal"
@@ -35,14 +35,9 @@ export default function ShopDesignList({ shopId }: { shopId: number }) {
 	const [selectedArt, setSelectedArt] = useState<TMonthlyArtItem | null>(null)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
-	const fetchMonthlyArt = async (shopId: number) => {
-		const response = await axiosInstance().get(`/shops/${shopId}/monthly-art`)
-		return response.data
-	}
-
 	const { data: monthlyArt, isError } = useQuery({
 		queryKey: ["monthlyArt", shopId],
-		queryFn: () => fetchMonthlyArt(shopId),
+		queryFn: () => getShopMonthlyArt(shopId),
 	})
 
 	if (isUndefined(monthlyArt))

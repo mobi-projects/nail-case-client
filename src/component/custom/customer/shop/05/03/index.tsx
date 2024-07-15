@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import React, { useState } from "react"
 
-import { axiosInstance } from "@/config/axios"
+import { getShopAnnouncement } from "@/util/api/shop-controller"
 import {
 	getMonthFromStamp,
 	getYearFromStamp,
@@ -40,14 +40,9 @@ export default function ShopNewsList({ shopId }: { shopId: number }) {
 	const [selectedNews, setSelectedNews] = useState<TShopNewsItem | null>(null)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
-	const fetchShopNews = async (shopId: number) => {
-		const response = await axiosInstance().get(`/shops/${shopId}/announcements`)
-		return response.data
-	}
-
 	const { data: shopNews, isError } = useQuery({
 		queryKey: ["shopNews", shopId],
-		queryFn: () => fetchShopNews(shopId),
+		queryFn: () => getShopAnnouncement(shopId),
 	})
 
 	if (isUndefined(shopNews))

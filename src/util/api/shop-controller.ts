@@ -100,3 +100,18 @@ export const getListShopNailArtist = async (
 	const response = await axiosInstance().get(`/shops/${shopId}/manager/list`)
 	return response.data
 }
+
+export const getShopAnnouncement = async (shopId: number) => {
+	const response = await axiosInstance().get(`/shops/${shopId}/announcements`)
+	return response.data
+}
+
+export const getShopMonthlyArt = async (shopId: number) => {
+	const response = await axiosInstance().get(`/shops/${shopId}/monthly-art`)
+	return response.data
+}
+
+export const getShopReview = async (shopId: number) => {
+	const response = await axiosInstance().get(`/shops/${shopId}/reviews`)
+	return response.data
+}
