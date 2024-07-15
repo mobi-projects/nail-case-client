@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react"
 
-import ScheduleLayout from "@/component/custom/manager/base/schedule/layout/01"
+import ScheduleLayout from "@/component/custom/manager/base/schedule/by-time/layout/01"
 
 export default function ManagerBaseScheduleLayout({
 	children,

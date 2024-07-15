@@ -1,4 +1,4 @@
-import ManagerBaseScheduleThisWeekTask from "@/component/custom/manager/base/schedule/this-week/01"
+import ManagerBaseScheduleThisWeekTask from "@/component/custom/manager/base/schedule/by-time/this-week/01"
 
 export default function ManagerBaseScheduleThisWeek() {
 	return (

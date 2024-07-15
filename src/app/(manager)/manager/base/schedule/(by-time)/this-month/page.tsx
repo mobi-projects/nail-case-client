@@ -1,4 +1,4 @@
-import MonthlySchedule from "@/component/custom/manager/base/schedule/this-month/01"
+import MonthlySchedule from "@/component/custom/manager/base/schedule/by-time/this-month/01"
 
 export default function Schedule() {
 	return (

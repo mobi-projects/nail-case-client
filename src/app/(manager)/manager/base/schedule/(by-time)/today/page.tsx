@@ -1,4 +1,4 @@
-import ScheduleDay from "@/component/custom/manager/base/schedule/today/01"
+import ScheduleDay from "@/component/custom/manager/base/schedule/by-time/today/01"
 
 export default function ManagerBaseScheduleToday() {
 	return (

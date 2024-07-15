@@ -12,16 +12,16 @@ import { useListReservationQuery } from "@/hook/use-reservation-controller"
 import type { TResGetListReservation, TReservationDetailList } from "@/type"
 import type { TResponseData } from "@/type/response"
 import {
+	getDayOfWeekFromStamp,
+	getKSTStamp,
+	getThisDate,
 	getThisDayFirst,
 	getThisDayLast,
+	getThisMonth,
 	getThisMonthFirstDate,
 	getThisMonthLastDate,
 	getThisWeekFirst,
 	getThisWeekLast,
-	getDayOfWeekFromStamp,
-	getKSTStamp,
-	getThisDate,
-	getThisMonth,
 	getThisYear,
 	getWeekNumber,
 } from "@/util/common"
@@ -211,6 +211,8 @@ function ScheduleInfo() {
 	const pathName = usePathname()
 	const { timeInfo } = useTimeInfo()
 	const { day, month, year } = timeInfo
+
+	console.log(timeInfo, pathName)
 
 	const { startTIme, endTime } = getScheduleTimeRange(
 		year,
