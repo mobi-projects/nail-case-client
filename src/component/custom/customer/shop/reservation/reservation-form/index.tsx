@@ -42,6 +42,8 @@ export default function ReservationForm({ shopId }: ReservationFormPT) {
 	const [selectedStamp, setSelectedStamp] = useState(
 		invalidateTime(getNowStamp()),
 	)
+	/** 날짜만 선택했을 경우 false, 예약 시간대도 선택했을 경우 true */
+	const [isTimeSelected, setIsTimeSelected] = useState(false)
 
 	const { onOpenModal } = useModal()
 
@@ -58,6 +60,12 @@ export default function ReservationForm({ shopId }: ReservationFormPT) {
 			return _prev
 		})
 	}, [companion])
+
+	/** 동반인원만큼 "시술내용" 이 선택 되었는지 */
+	const isTreatmentListForm = reservationFormArr.every(
+		(reservationForm) => !!reservationForm.treatmentList.length,
+	)
+	const isButtonDisabled = !(isTimeSelected && isTreatmentListForm)
 
 	const onOpenReservationCheckModal = () => {
 		onOpenModal({
@@ -98,14 +106,25 @@ export default function ReservationForm({ shopId }: ReservationFormPT) {
 				<p className="px-[40px] text-[22px] font-SemiBold">시술 일시</p>
 				<FocusingCard>
 					<Schedule
-						{...{ artistIdArr, shopId, selectedStamp, setSelectedStamp }}
+						{...{
+							artistIdArr,
+							shopId,
+							selectedStamp,
+							setSelectedStamp,
+							setIsTimeSelected,
+						}}
 					/>
 				</FocusingCard>
 			</div>
 			<SectionDivider />
 
 			<div className="flex h-fit w-full items-center justify-center">
-				<NTButton onClick={onOpenReservationCheckModal}>예약하기</NTButton>
+				<NTButton
+					onClick={onOpenReservationCheckModal}
+					disabled={isButtonDisabled}
+				>
+					예약하기
+				</NTButton>
 			</div>
 		</div>
 	)
