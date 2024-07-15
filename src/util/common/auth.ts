@@ -1,7 +1,7 @@
 import { setCookie } from "cookies-next"
 
 import { ACCESS_TOKEN, IS_MANAGER, REFRESH_TOKEN } from "@/constant/auth-key"
-import type { TSignDataResponse } from "@/type"
+import type { TSignDataResponse, TRefreshDataResponse } from "@/type"
 
 export const initAuthTokens = ({
 	accessToken,
@@ -13,10 +13,6 @@ export const initAuthTokens = ({
 	setCookie(REFRESH_TOKEN, refreshToken, { maxAge: 86400 })
 	setCookie(IS_MANAGER, isManager)
 }
-import { setCookie } from "cookies-next"
-
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constant/auth-key"
-import type { TRefreshDataResponse } from "@/type"
 
 /** accessToken, refreshToken cookie에 추가 */
 export const setAuthTokens = (response: TRefreshDataResponse) => {
