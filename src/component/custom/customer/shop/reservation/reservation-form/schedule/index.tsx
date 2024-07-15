@@ -18,6 +18,7 @@ export type SchedulePT = {
 	selectedStamp: number
 	artistIdArr: Array<number>
 	setSelectedStamp: Dispatch<SetStateAction<number>>
+	setIsTimeSelected: Dispatch<SetStateAction<boolean>>
 }
 
 export default function Schedule({
@@ -25,6 +26,7 @@ export default function Schedule({
 	selectedStamp,
 	artistIdArr,
 	setSelectedStamp,
+	setIsTimeSelected,
 }: SchedulePT) {
 	const printedTime = getPrintedTime(selectedStamp)
 
@@ -33,10 +35,16 @@ export default function Schedule({
 			<p className="w-full text-[22px] font-SemiBold text-Gray100">
 				{printedTime}
 			</p>
-			<Calendar {...{ selectedStamp, setSelectedStamp }} />
+			<Calendar {...{ selectedStamp, setSelectedStamp, setIsTimeSelected }} />
 			<hr className="w-full border-[1.5px] border-Gray20" />
 			<DesiredTime
-				{...{ artistIdArr, shopId, selectedStamp, setSelectedStamp }}
+				{...{
+					artistIdArr,
+					shopId,
+					selectedStamp,
+					setSelectedStamp,
+					setIsTimeSelected,
+				}}
 			/>
 		</div>
 	)

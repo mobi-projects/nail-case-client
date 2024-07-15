@@ -13,12 +13,14 @@ type CalendarBodyPT = {
 	selectedStamp: number
 	setSelectedStamp: Dispatch<SetStateAction<number>>
 	focusedStampArr?: number[]
+	setIsTimeSelected: Dispatch<SetStateAction<boolean>>
 }
 
 export default function CalendarBody({
 	focusedStampArr = [],
 	selectedStamp,
 	setSelectedStamp,
+	setIsTimeSelected,
 }: CalendarBodyPT) {
 	return (
 		<tr className="grid h-full w-full grid-cols-7">
@@ -33,6 +35,7 @@ export default function CalendarBody({
 						className="flex h-full w-full items-center justify-center"
 						onClick={() => {
 							setSelectedStamp(stamp)
+							setIsTimeSelected(false)
 						}}
 						key={stamp}
 					>

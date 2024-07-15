@@ -17,6 +17,7 @@ import { isUndefined } from "@/util/common/type-guard"
 type DesiredTimePT = {
 	artistIdArr: Array<number>
 	setSelectedStamp: Dispatch<SetStateAction<number>>
+	setIsTimeSelected: Dispatch<SetStateAction<boolean>>
 	selectedStamp: number
 	shopId: number
 }
@@ -26,6 +27,7 @@ export default function DesiredTime({
 	artistIdArr,
 	selectedStamp,
 	setSelectedStamp,
+	setIsTimeSelected,
 }: DesiredTimePT) {
 	const { data, isLoading, isError } = useAvailableTimeQuery(
 		shopId,
@@ -51,6 +53,7 @@ export default function DesiredTime({
 	const startTimeArr = availableInfoArr.map((info) => info.startTime)
 	const onSelectedTime = (idx: number) => {
 		setSelectedStamp(startTimeArr[idx])
+		setIsTimeSelected(true)
 	}
 	const getSelectedIdx = () =>
 		startTimeArr.findIndex((startTime) => selectedStamp === startTime)
