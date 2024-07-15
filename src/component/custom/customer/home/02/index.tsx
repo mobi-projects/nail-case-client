@@ -1,4 +1,6 @@
 import Image from "next/image"
+import { useState } from "react"
+import { toast, Toaster } from "sonner"
 
 import {
 	ImageMockList,
@@ -6,13 +8,15 @@ import {
 } from "@/app/(customer)/(home)/mockData"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTContent from "@/component/common/nt-content"
-import NTIcon from "@/component/common/nt-icon"
 import { RESERVATION_STATUS } from "@/constant/reservation-status"
 import { REMOVE_LIST, CONDITION_LIST, TREATMENT_LIST } from "@/constant/tagList"
+import { useUpdateReservationMutation } from "@/hook/use-reservation-controller"
+import type { TReqBodyUpdateReservation } from "@/type"
 import type {
 	TRecentReservation,
 	TResCompletedReservation,
 } from "@/type/main-page"
+import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 import {
 	getDateFromStamp,
 	getDayDivisionInKor,
@@ -30,10 +34,13 @@ export default function UsageForm({
 	recentReservation,
 	PastReservation,
 }: UsageFormPT) {
+	const [currentReservation, setCurrentReservation] =
+		useState<TRecentReservation | null>(recentReservation)
 	return (
 		<div className="flex h-fit gap-[24px] pb-[45px] pt-[30.5px]">
 			<ReservationForm
-				recentReservation={recentReservation}
+				currentReservation={currentReservation}
+				setCurrentReservation={setCurrentReservation}
 				ImageMockList={ImageMockList}
 			/>
 			<PastHistoryForm
@@ -44,11 +51,15 @@ export default function UsageForm({
 	)
 }
 type ReservationFormPT = {
-	recentReservation: TRecentReservation
+	currentReservation: TRecentReservation | null
+	setCurrentReservation: React.Dispatch<
+		React.SetStateAction<TRecentReservation | null>
+	>
 	ImageMockList: Array<string>
 }
 function ReservationForm({
-	recentReservation,
+	currentReservation,
+	setCurrentReservation,
 	ImageMockList,
 }: ReservationFormPT) {
 	const collectImages = (image: Array<string>) => {
@@ -59,10 +70,13 @@ function ReservationForm({
 	return (
 		<div className="flex h-fit w-[690px] flex-col justify-center gap-[16.5px] rounded-[26px] px-[25px] py-[22px] shadow-customGray60">
 			<div className="text-Title03 font-Bold text-PB100">진행 중인 네일</div>
-			{recentReservation ? (
+			{currentReservation ? (
 				<div className="flex gap-[16px]">
 					<ReservationImageList imageList={imageList} />
-					<ReservationInfo recentReservation={recentReservation} />
+					<ReservationInfo
+						currentReservation={currentReservation}
+						setCurrentReservation={setCurrentReservation}
+					/>
 				</div>
 			) : (
 				<div className="h-[220px] pt-[80px] text-center text-Title03 font-SemiBold text-Gray100">
@@ -78,7 +92,6 @@ type ReservationImageListPT = {
 function ReservationImageList({ imageList }: ReservationImageListPT) {
 	const [firstImage, ...otherImages] = imageList
 	const sliceImageList = otherImages.slice(0, 4)
-
 	return (
 		<div className="flex flex-col gap-[9px]">
 			<div className="relative h-[174px] w-[173px] rounded-[7px]">
@@ -88,7 +101,7 @@ function ReservationImageList({ imageList }: ReservationImageListPT) {
 						src={firstImage}
 						alt={firstImage}
 						objectFit="cover"
-						layout="fill"
+						fill
 					/>
 				) : (
 					<div className="h-full w-full pt-[50px] text-center text-Body02 font-SemiBold">
@@ -105,7 +118,7 @@ function ReservationImageList({ imageList }: ReservationImageListPT) {
 							src={image}
 							alt={image}
 							objectFit="cover"
-							layout="fill"
+							fill
 						/>
 					</div>
 				))}
@@ -114,18 +127,30 @@ function ReservationImageList({ imageList }: ReservationImageListPT) {
 	)
 }
 type ReservationInfoPT = {
-	recentReservation: TRecentReservation
+	currentReservation: TRecentReservation
+	setCurrentReservation: React.Dispatch<
+		React.SetStateAction<TRecentReservation | null>
+	>
 }
-function ReservationInfo({ recentReservation }: ReservationInfoPT) {
+function ReservationInfo({
+	currentReservation,
+	setCurrentReservation,
+}: ReservationInfoPT) {
 	return (
 		<div className="flex h-fit w-full flex-col gap-[17px]">
-			<InfoForm recentReservation={recentReservation} />
-			<InfoButtonFrom recentReservation={recentReservation} />
+			<InfoForm currentReservation={currentReservation} />
+			<InfoButtonFrom
+				currentReservation={currentReservation}
+				setCurrentReservation={setCurrentReservation}
+			/>
 		</div>
 	)
 }
-function InfoForm({ recentReservation }: ReservationInfoPT) {
-	const dataList = recentReservation.details
+type InfoFormPT = {
+	currentReservation: TRecentReservation
+}
+function InfoForm({ currentReservation }: InfoFormPT) {
+	const dataList = currentReservation.details
 	const status = RESERVATION_STATUS[dataList[0].status]
 	const tagListFuntion = () => {
 		const tags = []
@@ -179,7 +204,7 @@ function InfoForm({ recentReservation }: ReservationInfoPT) {
 			</NTContent>
 			<div className="flex flex-col gap-[6px]">
 				<div className="text-Body01 font-SemiBold text-Gray100">
-					{recentReservation.shop.name}
+					{currentReservation.shop.name}
 				</div>
 				<div className="text-Body02 font-SemiBold text-PB100">
 					{timestampFuntion(dataList[0].startTime)}
@@ -190,19 +215,61 @@ function InfoForm({ recentReservation }: ReservationInfoPT) {
 		</div>
 	)
 }
-function InfoButtonFrom({ recentReservation }: ReservationInfoPT) {
+function InfoButtonFrom({
+	currentReservation,
+	setCurrentReservation,
+}: ReservationInfoPT) {
 	return (
 		<div className="flex w-full items-center justify-end pr-[2px]">
-			<InfoButtonList recentReservation={recentReservation} />
+			<InfoButtonList
+				currentReservation={currentReservation}
+				setCurrentReservation={setCurrentReservation}
+			/>
 			<div className="flex h-fit items-center gap-[11px] text-Button font-Medium text-Gray60"></div>
 		</div>
 	)
 }
-function InfoButtonList({ recentReservation }: ReservationInfoPT) {
-	console.log(recentReservation)
+function InfoButtonList({
+	currentReservation,
+	setCurrentReservation,
+}: ReservationInfoPT) {
+	const { updateReservation } = useUpdateReservationMutation(
+		currentReservation.shop.id,
+	)
+	const handleUpdateReservation = async () => {
+		const status: TReservationStatus = "CANCELED"
+
+		const updatedData: TReqBodyUpdateReservation = {
+			status,
+			reservationDetailDtoList: [],
+		}
+		try {
+			await updateReservation({
+				reservationId: currentReservation.reservationId,
+				updated: updatedData,
+			})
+			toast.success("예약 취소 되엇습니다")
+			setCurrentReservation(null)
+		} catch (error) {
+			toast.error("예약 취소 요청이 실패하여 가게로 연락부탁드립니다")
+		}
+	}
+
 	return (
 		<div className="flex gap-[22px]">
-			<NTButton variant="secondary" flexible="fit">
+			<Toaster position="top-center" />
+			<NTButton
+				variant="secondary"
+				flexible="fit"
+				onClick={() =>
+					toast.warning("예약을 취소하시겠습니까?", {
+						action: {
+							label: "예약취소",
+							onClick: handleUpdateReservation,
+						},
+					})
+				}
+			>
 				예약취소
 			</NTButton>
 		</div>
@@ -221,7 +288,7 @@ function PastHistoryForm({
 			<div className="text-Title03 font-SemiBold text-Gray100">
 				다시 돌아보는 지난 네일
 			</div>
-			{PastReservation ? (
+			{PastReservationImage ? (
 				<PastHistoryImageList
 					PastReservationImage={PastReservationImage}
 					PastReservation={PastReservation}
@@ -236,8 +303,9 @@ function PastHistoryForm({
 }
 function PastHistoryImageList({
 	PastReservationImage,
-	PastReservation,
+	PastReservation = [],
 }: PastHistoryFormPT) {
+	const slicePastList = PastReservation.slice(0, 2)
 	console.log("PastReservation", PastReservation)
 	return (
 		<div className="flex gap-[12px]">
@@ -246,17 +314,16 @@ function PastHistoryImageList({
 				<Image
 					src={PastReservationImage[0].image}
 					alt={PastReservationImage[0].month.toString()}
-					layout="fill"
+					fill
 					objectFit="cover"
 					className="rounded-l-[26px]"
 				/>
 				<div className="z-20 flex h-[30px] items-center gap-[3px] text-Title03 font-SemiBold text-White">
 					<span>{PastReservationImage[0].month}월 카타네일</span>
-					<NTIcon icon="expandRight" className="h-[30px] w-[30px] text-White" />
 				</div>
 			</div>
 			<div className="flex w-fit flex-col gap-[8px]">
-				{PastReservation.map((_, idx) => (
+				{slicePastList.map((_, idx) => (
 					<div
 						className="relative z-10 flex h-[106px] w-[106px] items-end pb-[6px] pl-[8.5px]"
 						key={idx}
@@ -265,7 +332,7 @@ function PastHistoryImageList({
 						<Image
 							src={PastReservationImage[idx + 1].image}
 							alt={PastReservationImage[idx + 1].month.toString()}
-							layout="fill"
+							fill
 							objectFit="cover"
 							className="rounded-r-[26px]"
 						/>
