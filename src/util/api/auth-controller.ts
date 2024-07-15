@@ -1,5 +1,8 @@
 import axios from "axios"
+import { getCookie } from "cookies-next"
 
+import { axiosInstance } from "@/config/axios"
+import { REFRESH_TOKEN } from "@/constant/auth-key"
 import type { TSignType } from "@/type/union-option/sign-type"
 
 /** [GET] 로그인 요청 api 호출 */
@@ -13,7 +16,22 @@ export const getLogin = async (code: string, loginType: TSignType) => {
 		)
 		return response.data
 	} catch (error) {
-		console.log(error)
 		throw error
 	}
+}
+
+/** [POST] 리프레쉬 토큰 api 호출 */
+export const postResquestNewToken = async () => {
+	const refreshToken = getCookie(REFRESH_TOKEN)
+
+	const response = await axiosInstance().post(
+		"/auth/refresh",
+		{},
+		{
+			headers: {
+				"Refresh-Token": `Bearer ${refreshToken}`,
+			},
+		},
+	)
+	return response
 }
