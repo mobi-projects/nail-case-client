@@ -27,8 +27,6 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 	const { data: shopInfo } = useShopInfo(shopId!)
 	const { data: shopReviews } = useShopReviews(shopId!)
 
-	if (shopId === null) return <h1>잘못된 샵 ID</h1>
-
 	if (isUndefined(shopInfo)) return <h1>데이터 없음</h1>
 	if (isUndefined(shopReviews)) return <h1>데이터 없음</h1>
 
@@ -204,7 +202,7 @@ function BannerDescription({ nailShopInfo }: { nailShopInfo: TNailShopInfo }) {
 				</p>
 			</div>
 			<p className="w-[500px] whitespace-pre-line text-Body01 text-[18px] font-Regular text-Gray10">
-				✨ {nailShopInfo.overview}
+				{nailShopInfo.overview}
 			</p>
 		</div>
 	)
