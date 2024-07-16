@@ -22,3 +22,17 @@ export type TShopInfo = {
 	guide: TShopGuide
 	operatingTimeArr: TOperating[]
 }
+
+export type TNailShopInfo = {
+	address: string
+	availableSeats: number
+	createdAt: number
+	images: string | null
+	modifiedAt: number
+	overview: string
+	ownerId: string
+	phone: string
+	shopId: number
+	shopName: string
+	tags: string[] | null
+}

@@ -7,21 +7,8 @@ import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import { useShopInfo, useShopReviews } from "@/hook/use-shop-controller"
+import type { TNailShopInfo } from "@/type"
 import { isUndefined } from "@/util/common/type-guard"
-
-type TNailShopInfo = {
-	address: string
-	availableSeats: number
-	createdAt: number
-	images: string | null
-	modifiedAt: number
-	overview: string
-	ownerId: string
-	phone: string
-	shopId: number
-	shopName: string
-	tags: string | null
-}
 
 export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 	const { data: shopInfo } = useShopInfo(shopId!)
