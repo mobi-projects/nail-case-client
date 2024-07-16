@@ -10,6 +10,8 @@ import {
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
 
+import { ErrorComponent, NotFountComponent, PendingComponent } from ".."
+
 import ShopNoticeModal from "./notice-modal"
 
 export type TComment = {
@@ -43,31 +45,18 @@ export default function ShopNoticeList({ shopId }: { shopId: number }) {
 	)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
-	const { data: shopNotice, isError } = useQuery({
+	const {
+		data: shopNotice,
+		isError,
+		isPending,
+	} = useQuery({
 		queryKey: [QUERY_ANNOUNCEMENT_ARR, shopId],
 		queryFn: () => getShopAnnouncement(shopId),
 	})
 
-	if (isUndefined(shopNotice))
-		return (
-			<div className="w-full">
-				<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
-					데이터가 존재하지 않습니다.
-					<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
-				</div>
-			</div>
-		)
-
-	if (isError) {
-		return (
-			<div className="w-full">
-				<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
-					데이터를 불러오는 중에 오류가 발생했습니다.
-					<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
-				</div>
-			</div>
-		)
-	}
+	if (isUndefined(shopNotice)) return <NotFountComponent />
+	if (isError) return <ErrorComponent />
+	if (isPending) return <PendingComponent />
 
 	const shopNoticeList: TShopNewsItem[] = shopNotice.dataList.filter(
 		(item: TShopNewsItem) => item.category === "NOTICE",

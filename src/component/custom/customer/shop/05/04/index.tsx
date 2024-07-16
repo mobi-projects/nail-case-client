@@ -6,6 +6,8 @@ import { CONDITION_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import { getShopReview } from "@/util/api/shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
+import { ErrorComponent, NotFountComponent, PendingComponent } from ".."
+
 type TReview = {
 	accompaniedIn: boolean
 	comments: string[]
@@ -26,33 +28,18 @@ type TReview = {
 }
 
 export default function ShopReviewList({ shopId }: { shopId: number }) {
-	const { data: shopReviews, isError } = useQuery({
+	const {
+		data: shopReviews,
+		isError,
+		isPending,
+	} = useQuery({
 		queryKey: [QUERY_REVIEW_ARR, shopId],
 		queryFn: () => getShopReview(shopId),
 	})
 
-	if (isUndefined(shopReviews))
-		return (
-			<div className="w-full">
-				<p className="font-bold mb-6 text-2xl text-Title02">리뷰</p>
-				<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
-					데이터가 존재하지 않습니다.
-					<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
-				</div>
-			</div>
-		)
-
-	if (isError) {
-		return (
-			<div className="w-full">
-				<p className="font-bold mb-6 text-2xl text-Title02">리뷰</p>
-				<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
-					데이터를 불러오는 중에 오류가 발생했습니다.
-					<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
-				</div>
-			</div>
-		)
-	}
+	if (isUndefined(shopReviews)) return <NotFountComponent />
+	if (isError) return <ErrorComponent />
+	if (isPending) return <PendingComponent />
 
 	const shopReviewList = shopReviews.dataList
 
