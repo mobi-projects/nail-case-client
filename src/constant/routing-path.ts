@@ -6,7 +6,9 @@ export const COMMON_SIGN_ROLE = "/sign/role"
 /* [판매자 접근 허용] */
 export const MANAGER_BASE_HOME = "/manager/base"
 
-export const MANAGER_BASE_SCHEDULE_THIS_MONTH = "/manager/base/schedule"
+export const MANAGER_BASE_SCHEDULE_LIST = "/manager/base/schedule"
+export const MANAGER_BASE_SCHEDULE_THIS_MONTH =
+	"/manager/base/schedule/this-month"
 export const MANAGER_BASE_SCHEDULE_THIS_WEEK =
 	"/manager/base/schedule/this-week"
 export const MANAGER_BASE_SCHEDULE_TODAY = "/manager/base/schedule/today"
