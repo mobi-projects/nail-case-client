@@ -110,7 +110,7 @@ function ReservationForm({
 							<ReservationInfo recentReservation={recentReservation} />
 						</div>
 					</div>
-					<div className="flex h-full w-[640px] flex-col gap-[16.5px] pl-[15px]">
+					<div className="flex h-full w-[640px] flex-col gap-[30px] pl-[15px]">
 						<div className="text-Title03 font-Bold text-Black">
 							요즘 가장 인기 있는 네일샵 둘러보기 🔎
 						</div>
