@@ -8,6 +8,7 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
+import { QUERY_REVIEW_ARR, QUERY_SHOP_INFO } from "@/constant"
 import { getShopById, getShopReview } from "@/util/api/shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
@@ -39,13 +40,13 @@ export default function CustomerShopBanner() {
 	}, [pathname])
 
 	const { data: shopInfo } = useQuery({
-		queryKey: ["shopInfo", shopId],
+		queryKey: [QUERY_SHOP_INFO, shopId],
 		queryFn: () => getShopById(shopId!),
 		enabled: shopId !== null,
 	})
 
 	const { data: shopReviews } = useQuery({
-		queryKey: ["shopReviews", shopId],
+		queryKey: [QUERY_REVIEW_ARR, shopId],
 		queryFn: () => getShopReview(shopId!),
 		enabled: shopId !== null,
 	})
