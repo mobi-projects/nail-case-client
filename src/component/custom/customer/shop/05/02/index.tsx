@@ -1,14 +1,24 @@
 import { useQuery } from "@tanstack/react-query"
 import React, { useState } from "react"
 
+import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
+import NTModal, {
+	ModalContent,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+} from "@/component/common/nt-modal"
 import { QUERY_MONTHLY_ART_ARR } from "@/constant"
 import { getShopMonthlyArt } from "@/util/api/shop-controller"
+import {
+	getMonthFromStamp,
+	getYearFromStamp,
+	padStartToPrinting,
+} from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
 
 import { ErrorComponent, NotFountComponent, PendingComponent } from ".."
-
-import MonthlyArtModal from "./monthly-art-modal"
 
 type TComment = {
 	monthlyCommentId: number
@@ -32,6 +42,13 @@ export type TMonthlyArtItem = {
 	createdAt: number
 	imageUrls: string[]
 	comments: TComment[]
+}
+
+const formatTimeStamp = (createAt: number) => {
+	const year = getYearFromStamp(createAt)
+	const month = getMonthFromStamp(createAt)
+	const date = getMonthFromStamp(createAt)
+	return `${padStartToPrinting("year", year)}.${padStartToPrinting("month", month)}.${padStartToPrinting("date", date)}`
 }
 
 export default function ShopDesignList({ shopId }: { shopId: number }) {
@@ -65,7 +82,6 @@ export default function ShopDesignList({ shopId }: { shopId: number }) {
 
 	return (
 		<div className="flex w-full flex-col">
-			<p className="font-bold mb-6 text-2xl text-Title02">디자인</p>
 			<div className="mt-[15px] grid grid-cols-3 gap-6">
 				{monthlyArtList.map((item: TMonthlyArtItem, idx: number) => (
 					<div
@@ -85,11 +101,24 @@ export default function ShopDesignList({ shopId }: { shopId: number }) {
 					</div>
 				))}
 			</div>
-			<MonthlyArtModal
-				isOpen={isModalOpen}
-				art={selectedArt}
-				onClose={handleCloseModal}
-			/>
+			{isModalOpen && selectedArt && (
+				<NTModal size="large">
+					<ModalContent>
+						<ModalHeader>
+							<h2 className="font-bold mb-4 text-2xl">{selectedArt.title}</h2>
+						</ModalHeader>
+						<ModalBody>
+							<p className="mb-[16px] text-sm">
+								{formatTimeStamp(selectedArt.createdAt)}
+							</p>
+							<p className="mb-[16px]">{selectedArt.contents}</p>
+						</ModalBody>
+						<ModalFooter>
+							<NTButton onClick={handleCloseModal}>닫기</NTButton>
+						</ModalFooter>
+					</ModalContent>
+				</NTModal>
+			)}
 		</div>
 	)
 }

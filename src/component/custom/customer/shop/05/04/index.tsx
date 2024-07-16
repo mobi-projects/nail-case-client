@@ -62,9 +62,10 @@ export default function ShopReviewList({ shopId }: { shopId: number }) {
 		return [...treatmentTags, ...conditionTags]
 	}
 
+	console.log(shopReviewList)
+
 	return (
 		<div className="w-full p-[16px]">
-			<p className="font-bold mb-6 text-2xl text-Title02">리뷰</p>
 			<div className="flex flex-col gap-6">
 				{shopReviewList.map((review: TReview, idx: number) => (
 					<div
