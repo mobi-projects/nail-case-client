@@ -11,11 +11,20 @@ import type { TNailShopInfo } from "@/type"
 import { isUndefined } from "@/util/common/type-guard"
 
 export default function CustomerShopBanner({ shopId }: { shopId: number }) {
-	const { data: shopInfo } = useShopInfo(shopId!)
-	const { data: shopReviews } = useShopReviews(shopId!)
+	const {
+		data: shopInfo,
+		isError: isErrorShopInfo,
+		isPending: isPendingShopInfo,
+	} = useShopInfo(shopId!)
+	const {
+		data: shopReviews,
+		isError: isErrorShopReviews,
+		isPending: isPendingShopReviews,
+	} = useShopReviews(shopId!)
 
-	if (isUndefined(shopInfo)) return <h1>데이터 없음</h1>
-	if (isUndefined(shopReviews)) return <h1>데이터 없음</h1>
+	if (isErrorShopInfo || isErrorShopReviews) return <Error />
+	if (isPendingShopInfo || isPendingShopReviews) return <Pending />
+	if (isUndefined(shopInfo) || isUndefined(shopReviews)) return <NotFound />
 
 	const shopReviewListCount = shopReviews.dataList.length
 
@@ -203,6 +212,39 @@ function HalfStar() {
 			</div>
 			<div className="flex w-[8px] scale-x-[-1] gap-0 overflow-hidden">
 				<NTIcon className="m-0 w-[16px] p-0 text-White" icon="starHalf" />
+			</div>
+		</div>
+	)
+}
+
+function NotFound() {
+	return (
+		<div className="flex h-[480px] w-full items-center justify-center">
+			<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
+				데이터가 존재하지 않습니다.
+				<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
+			</div>
+		</div>
+	)
+}
+
+function Error() {
+	return (
+		<div className="flex h-[480px] w-full items-center justify-center">
+			<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
+				데이터를 불러오는 중에 오류가 발생했습니다.
+				<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
+			</div>
+		</div>
+	)
+}
+
+function Pending() {
+	return (
+		<div className="flex h-[480px] w-full items-center justify-center">
+			<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
+				데이터를 불러오는 중입니다.
+				<p className="py-[50px] text-Gray70">잠시만 기다려 주세요.</p>
 			</div>
 		</div>
 	)
