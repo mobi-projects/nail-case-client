@@ -55,17 +55,12 @@ function ReservationForm({
 	recentReservation,
 	ImageMockList,
 }: ReservationFormPT) {
-	const collectImages = (image: Array<string>) => {
-		return image.flatMap((detail) => detail)
-	}
-	const imageList = collectImages(ImageMockList)
-	console.log(recentReservation)
 	return (
 		<div className="flex h-fit w-[690px] flex-col justify-center gap-[16.5px] rounded-[26px] px-[25px] py-[22px] shadow-customGray60">
 			<div className="text-Title03 font-Bold text-PB100">진행 중인 네일</div>
 			{recentReservation ? (
 				<div className="flex gap-[16px]">
-					<ReservationImageList imageList={imageList} />
+					<ReservationImageList imageList={ImageMockList} />
 					<ReservationInfo recentReservation={recentReservation} />
 				</div>
 			) : (
@@ -258,12 +253,13 @@ function PastHistoryForm({
 	PastReservationImage,
 	PastReservation,
 }: PastHistoryFormPT) {
+	console.log(PastReservation)
 	return (
 		<div className="flex h-fit w-[486px] flex-col justify-center gap-[21.5px] rounded-[26px] px-[21px] pb-[20px] pt-[22px] shadow-customGray60">
 			<div className="text-Title03 font-SemiBold text-Gray100">
 				다시 돌아보는 지난 네일
 			</div>
-			{PastReservationImage ? (
+			{PastReservation && PastReservation.length > 0 ? (
 				<PastHistoryImageList
 					PastReservationImage={PastReservationImage}
 					PastReservation={PastReservation}
@@ -276,12 +272,15 @@ function PastHistoryForm({
 		</div>
 	)
 }
+type PastHistoryImageListPT = {
+	PastReservationImage: Array<{ month: number; image: string }>
+	PastReservation: Array<TResCompletedReservation>
+}
 function PastHistoryImageList({
 	PastReservationImage,
-	PastReservation = [],
-}: PastHistoryFormPT) {
+	PastReservation,
+}: PastHistoryImageListPT) {
 	const slicePastList = PastReservation.slice(0, 2)
-	console.log("PastReservation", PastReservation)
 	return (
 		<div className="flex gap-[12px]">
 			<div className="relative flex h-[220px] w-[326px] items-end pb-[20px] pl-[22px]">

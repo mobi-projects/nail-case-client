@@ -71,7 +71,6 @@ type ShopHoverInfoPT = {
 }
 function ShopHoverInfo({ data }: ShopHoverInfoPT) {
 	const overview = data.overview.replace(/\\n/g, "\n")
-	console.log(data)
 	return (
 		<div className="absolute inset-0 flex flex-col justify-between py-[19px] pl-[29px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
 			<div className="pt-[10]">
