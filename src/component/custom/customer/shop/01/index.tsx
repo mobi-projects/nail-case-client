@@ -1,6 +1,5 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
@@ -8,8 +7,7 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
-import { QUERY_REVIEW_ARR, QUERY_SHOP_INFO } from "@/constant"
-import { getShopById, getShopReview } from "@/util/api/shop-controller"
+import { useShopInfo, useShopReviews } from "@/hook/use-shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
 type TNailShopInfo = {
@@ -39,17 +37,10 @@ export default function CustomerShopBanner() {
 		}
 	}, [pathname])
 
-	const { data: shopInfo } = useQuery({
-		queryKey: [QUERY_SHOP_INFO, shopId],
-		queryFn: () => getShopById(shopId!),
-		enabled: shopId !== null,
-	})
+	const { data: shopInfo } = useShopInfo(shopId!)
+	const { data: shopReviews } = useShopReviews(shopId!)
 
-	const { data: shopReviews } = useQuery({
-		queryKey: [QUERY_REVIEW_ARR, shopId],
-		queryFn: () => getShopReview(shopId!),
-		enabled: shopId !== null,
-	})
+	if (shopId === null) return <h1>잘못된 샵 ID</h1>
 
 	if (isUndefined(shopInfo)) return <h1>데이터 없음</h1>
 	if (isUndefined(shopReviews)) return <h1>데이터 없음</h1>
