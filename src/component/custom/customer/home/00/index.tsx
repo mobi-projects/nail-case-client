@@ -12,7 +12,7 @@ import { LABEL_LIST_FOR_CUSTOMER_BASE_TOOLBAR } from "@/constant/toolbar-list"
 export default function CustomerHeader() {
 	const authUser = false
 	return (
-		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-[114.5px]">
+		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-[34.5px]">
 			<div className="flex h-[51px] w-full items-center justify-between">
 				<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 

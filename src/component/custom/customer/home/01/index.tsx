@@ -33,7 +33,7 @@ export default function CardSlideListForm() {
 					{`${((currentIndex + 2) % dataList.length) + 1}/${dataList.length}`}
 				</NTContent>
 			</div>
-			<div className="absolute left-0 top-[243px] z-0 flex h-[397.5px] w-full justify-center overflow-hidden bg-BGblue01 py-[37px]">
+			<div className="absolute left-0 top-[163px] z-0 flex h-[397.5px] w-full justify-center overflow-hidden bg-BGblue01 py-[37px]">
 				<div className="flex space-x-4">
 					{orderedDataList.map((idx) => (
 						<CardSlide
