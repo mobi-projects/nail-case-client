@@ -1,7 +1,6 @@
 "use client"
 
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
@@ -24,19 +23,7 @@ type TNailShopInfo = {
 	tags: string | null
 }
 
-export default function CustomerShopBanner() {
-	const pathname = usePathname()
-	const [shopId, setShopId] = useState<number | null>(null)
-
-	useEffect(() => {
-		if (pathname) {
-			const id = parseInt(pathname.split("/")[2], 10)
-			if (!isNaN(id)) {
-				setShopId(id)
-			}
-		}
-	}, [pathname])
-
+export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 	const { data: shopInfo } = useShopInfo(shopId!)
 	const { data: shopReviews } = useShopReviews(shopId!)
 
