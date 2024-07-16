@@ -44,7 +44,7 @@ export default function ShopReviewList({ shopId }: { shopId: number }) {
 	const shopReviewList = shopReviews.dataList
 
 	const mapOptionsToReadableStrings = (
-		options: string[] | undefined,
+		options: string[] | null,
 		list: { [key: string]: string },
 	) => {
 		return (options || []).map((option) => list[option] || option)
