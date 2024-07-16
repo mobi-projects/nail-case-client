@@ -100,3 +100,8 @@ export const getListShopNailArtist = async (
 	const response = await axiosInstance().get(`/shops/${shopId}/manager/list`)
 	return response.data
 }
+
+export const getShopReview = async (shopId: number) => {
+	const response = await axiosInstance().get(`/shops/${shopId}/reviews`)
+	return response.data
+}

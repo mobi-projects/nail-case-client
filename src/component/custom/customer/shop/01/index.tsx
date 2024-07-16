@@ -8,7 +8,7 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
-import { axiosInstance } from "@/config/axios"
+import { getShopById, getShopReview } from "@/util/api/shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
 type TNailShopInfo = {
@@ -38,25 +38,15 @@ export default function CustomerShopBanner() {
 		}
 	}, [pathname])
 
-	const fetchShopInfo = async (shopId: number) => {
-		const response = await axiosInstance().get(`/shops/${shopId}`)
-		return response.data
-	}
-
-	const fetchReviews = async (shopId: number) => {
-		const response = await axiosInstance().get(`/shops/${shopId}/reviews`)
-		return response.data
-	}
-
 	const { data: shopInfo } = useQuery({
 		queryKey: ["shopInfo", shopId],
-		queryFn: () => fetchShopInfo(shopId!),
+		queryFn: () => getShopById(shopId!),
 		enabled: shopId !== null,
 	})
 
 	const { data: shopReviews } = useQuery({
 		queryKey: ["shopReviews", shopId],
-		queryFn: () => fetchReviews(shopId!),
+		queryFn: () => getShopReview(shopId!),
 		enabled: shopId !== null,
 	})
 
