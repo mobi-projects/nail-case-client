@@ -30,6 +30,8 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 
 	const nailShopInfo: TNailShopInfo = shopInfo.data
 
+	console.log(nailShopInfo)
+
 	return (
 		<div className="flex h-[480px] w-full">
 			<NTBannerImageCarousel className="absolute left-0 h-[480px] w-full" />
@@ -123,7 +125,7 @@ function ShopBasic({
 	const category = "네일아트 전문"
 	const location = nailShopInfo.address
 	const shopName = nailShopInfo.shopName
-	const starRating = 3.2
+	const starRating = nailShopInfo.shopAvgRatings
 
 	return (
 		<div className="absolute left-64 top-40 h-fit w-fit">
@@ -190,11 +192,12 @@ function ReviewNotice({ reviewCount }: { reviewCount: number }) {
 }
 
 function BannerDescription({ nailShopInfo }: { nailShopInfo: TNailShopInfo }) {
+	const formattedTags = nailShopInfo.tags.map((tag) => `#${tag}`).join(" ")
 	return (
 		<div className="absolute left-64 top-[21rem] flex flex-col gap-4">
 			<div className="flex gap-3">
 				<p className="text-Body01 text-[18px] font-SemiBold text-White">
-					#네일맛집 #주차가능 #오마카세아트
+					{formattedTags}
 				</p>
 			</div>
 			<p className="w-[500px] whitespace-pre-line text-Body01 text-[18px] font-Regular text-Gray10">

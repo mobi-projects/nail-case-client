@@ -34,5 +34,6 @@ export type TNailShopInfo = {
 	phone: string
 	shopId: number
 	shopName: string
-	tags: string[] | null
+	tags: string[]
+	shopAvgRatings: number
 }
