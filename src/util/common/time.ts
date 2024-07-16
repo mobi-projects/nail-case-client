@@ -1,5 +1,6 @@
 /* 시간관련 함수 관리 */
 
+import type { Dayjs, UnitTypeLong } from "dayjs"
 import dayjs from "dayjs"
 
 /** 입력된 타임스탬프 가 millisecond 단위인지 확인 */
@@ -90,6 +91,17 @@ export const getPrevMonthLastDate = (year: number, month: number) =>
 export const getNextMonthFirstDate = (year: number, month: number) =>
 	getKSTStamp(year, month + 1, 1)
 
+/** 입력(타임스탬프)을 "년","월","일","시간","분","초" 로 분해하여 반환 */
+export const decomposeStamp = (timestamp: number) => {
+	timestamp = convertSecondTimestamp(timestamp)
+	const year = getYearFromStamp(timestamp)
+	const month = getMonthFromStamp(timestamp)
+	const date = getDateFromStamp(timestamp)
+	const hour = getHourFromStamp(timestamp)
+	const min = getMonthFromStamp(timestamp)
+	const sec = getSecFromStamp(timestamp)
+	return { year, month, date, hour, min, sec }
+}
 /** 입력(타입스탬프)으로부터 "연도" 반환 */
 export const getYearFromStamp = (timestamp: number): number => {
 	timestamp = convertSecondTimestamp(timestamp)
@@ -303,3 +315,29 @@ export const invalidateTime = (timestamp: number) =>
 		getMonthFromStamp(timestamp),
 		getDateFromStamp(timestamp),
 	)
+
+/**
+ * @param {number} timestamp 기준시각
+ * @param {number} n 가감될 시간
+ * @param {"after" | "before"} division 전/후 구분
+ * @param {"second" | "minute" | "hour" | "day" | "month" | "year"} timeUnit 시간 단위
+ *
+ * @description
+ * - 입력된 시각을 기준으로 n ["년","월","일","시간","분","초"] 전/후 시각을 timestamp 반환
+ * - before 일 경우, n {시간 단위} 이전 시각 반환
+ * - after 일 경우, n {시간 단위} 이후 시각 반환
+ */
+/** 입력된 시각을 기준으로 n ["년","월","일","시간","분","초"] 전/후 시각을 timestamp 반환 */
+export const getBeforeOrAfterN = (
+	timestamp: number,
+	n: number,
+	division: "after" | "before",
+	timeUnit: Exclude<UnitTypeLong, "millisecond" | "date"> = "day",
+) => {
+	timestamp = convertSecondTimestamp(timestamp)
+	let result: Dayjs
+	if (division === "before")
+		result = dayjs.unix(timestamp).subtract(n, timeUnit)
+	else result = dayjs.unix(timestamp).add(n, timeUnit)
+	return result.unix()
+}
