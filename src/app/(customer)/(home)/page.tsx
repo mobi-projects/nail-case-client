@@ -1,7 +1,6 @@
 "use client"
 import { NTButton } from "@/component/common/atom/nt-button"
 import CustomerHeader from "@/component/custom/customer/home/00"
-import CardSlideListForm from "@/component/custom/customer/home/01"
 import UsageForm from "@/component/custom/customer/home/02"
 import ShopListForm from "@/component/custom/customer/home/03"
 import { COMMON_HOME } from "@/constant/routing-path"
@@ -41,7 +40,7 @@ export default function CustomerHome() {
 	return (
 		<div className="flex h-fit flex-col pb-[7px]">
 			<CustomerHeader />
-			<CardSlideListForm />
+			{/* <CardSlideListForm /> */}
 			<UsageForm
 				recentReservation={$responseData.recentReservation}
 				PastReservation={$responseData.max3RecentlyCompletedReservation}
@@ -53,11 +52,13 @@ export default function CustomerHome() {
 					listMockData={AroundShop}
 					formTitle="뉴팁스 추천 네일샵 👣"
 				/>
-				<ShopListForm
-					listData={$responseData.likedShops}
-					listMockData={LikedShop}
-					formTitle="내가 좋아한 네일샵 ✨"
-				/>
+				{$responseData.likedShops && $responseData.likedShops.length > 0 && (
+					<ShopListForm
+						listData={$responseData.likedShops}
+						listMockData={LikedShop}
+						formTitle="내가 좋아한 네일샵 ✨"
+					/>
+				)}
 			</div>
 		</div>
 	)

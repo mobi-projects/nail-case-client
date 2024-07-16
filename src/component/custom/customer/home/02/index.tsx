@@ -35,7 +35,7 @@ export default function UsageForm({
 	PastReservation,
 }: UsageFormPT) {
 	return (
-		<div className="flex h-fit gap-[24px] pb-[45px] pt-[30.5px]">
+		<div className="flex h-fit gap-[24px] pb-[45px]">
 			<ReservationForm
 				recentReservation={recentReservation}
 				ImageMockList={ImageMockList}

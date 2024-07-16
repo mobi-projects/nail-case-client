@@ -27,7 +27,7 @@ export default function CardSlideListForm() {
 		dataList[(currentIndex + 3) % dataList.length],
 	]
 	return (
-		<div className="h-[397.5px] w-full">
+		<div className="h-[428px] w-full">
 			<div className="relative h-full w-full">
 				<NTContent mode="day" className="absolute right-[20px] top-[57px] z-10">
 					{`${((currentIndex + 2) % dataList.length) + 1}/${dataList.length}`}
