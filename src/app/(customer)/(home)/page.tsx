@@ -43,7 +43,9 @@ export default function CustomerHome() {
 			{/* <CardSlideListForm /> */}
 			<UsageForm
 				recentReservation={$responseData.recentReservation}
-				PastReservation={$responseData.max3RecentlyCompletedReservation}
+				pastReservation={$responseData.max3RecentlyCompletedReservation}
+				topListData={$responseData.topPopularShops}
+				topMockData={AroundShop}
 			/>
 			<hr className="w-full bg-Gray10" />
 			<div className="flex h-fit w-full flex-col gap-[52px] pb-[33px] pt-[34px]">

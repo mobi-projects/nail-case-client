@@ -1,5 +1,7 @@
 "use client"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { toast, Toaster } from "sonner"
 
 import {
@@ -8,6 +10,7 @@ import {
 } from "@/app/(customer)/(home)/mockData"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTContent from "@/component/common/nt-content"
+import NTIcon from "@/component/common/nt-icon"
 import { RESERVATION_STATUS } from "@/constant/reservation-status"
 import { REMOVE_LIST, CONDITION_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import { useUpdateReservationMutation } from "@/hook/use-reservation-controller"
@@ -15,6 +18,7 @@ import type { TReqBodyUpdateReservation } from "@/type"
 import type {
 	TRecentReservation,
 	TResCompletedReservation,
+	TResShop,
 } from "@/type/main-page"
 import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 import {
@@ -26,46 +30,117 @@ import {
 	getMonthFromStamp,
 } from "@/util/common"
 
+import type { TShop } from "../03/type"
+
 type UsageFormPT = {
 	recentReservation: TRecentReservation
-	PastReservation: Array<TResCompletedReservation>
+	pastReservation: Array<TResCompletedReservation>
+	topListData: Array<TResShop>
+	topMockData: Array<TShop>
 }
 export default function UsageForm({
 	recentReservation,
-	PastReservation,
+	pastReservation,
+	topListData,
+	topMockData,
 }: UsageFormPT) {
 	return (
 		<div className="flex h-fit gap-[24px] pb-[45px]">
 			<ReservationForm
 				recentReservation={recentReservation}
-				ImageMockList={ImageMockList}
+				imageMockList={ImageMockList}
+				pastReservation={pastReservation}
+				topListData={topListData}
+				topMockData={topMockData}
 			/>
-			<PastHistoryForm
-				PastReservationImage={ImageMockMonthList}
-				PastReservation={PastReservation}
-			/>
+			{pastReservation && pastReservation.length > 0 && (
+				<PastHistoryForm
+					pastReservationImage={ImageMockMonthList}
+					pastReservation={pastReservation}
+				/>
+			)}
 		</div>
 	)
 }
 type ReservationFormPT = {
 	recentReservation: TRecentReservation | null
-	ImageMockList: Array<string>
+	imageMockList: Array<string>
+	pastReservation: Array<TResCompletedReservation>
+	topListData: Array<TResShop>
+	topMockData: Array<TShop>
 }
 function ReservationForm({
 	recentReservation,
-	ImageMockList,
+	imageMockList,
+	pastReservation,
+	topListData,
+	topMockData,
 }: ReservationFormPT) {
 	return (
-		<div className="flex h-fit w-[690px] flex-col justify-center gap-[16.5px] rounded-[26px] px-[25px] py-[22px] shadow-customGray60">
-			<div className="text-Title03 font-Bold text-PB100">진행 중인 네일</div>
-			{recentReservation ? (
-				<div className="flex gap-[16px]">
-					<ReservationImageList imageList={ImageMockList} />
-					<ReservationInfo recentReservation={recentReservation} />
+		<div className="h-fit max-h-[314px] min-h-[198px] w-full justify-center rounded-[26px] py-[22px] shadow-customGray60">
+			{pastReservation && pastReservation.length > 0 ? (
+				recentReservation ? (
+					<div className="flex flex-col gap-[16.5px] px-[25px]">
+						<div className="text-Title03 font-Bold text-PB100">
+							진행 중인 네일
+						</div>
+						<div className="flex gap-[16px]">
+							<ReservationImageList imageList={imageMockList} />
+							<ReservationInfo recentReservation={recentReservation} />
+						</div>
+					</div>
+				) : (
+					<div className="flex flex-col gap-[16.5px] px-[25px]">
+						<div className="text-Title03 font-Bold text-PB100">
+							진행 중인 네일
+						</div>
+						<div className="h-[220px] pt-[80px] text-center text-Title03 text-black">
+							현재 예약한 네일이 없어요
+						</div>
+					</div>
+				)
+			) : recentReservation ? (
+				<div className="flex h-full w-full pl-[25px] pr-[15px]">
+					<div className="flex h-full flex-col gap-[16.5px] border-r-[1.5px] border-Gray20 pr-[40px]">
+						<div className="text-Title03 font-Bold text-PB100">
+							진행 중인 네일
+						</div>
+						<div className="flex gap-[16px]">
+							<ReservationImageList imageList={imageMockList} />
+							<ReservationInfo recentReservation={recentReservation} />
+						</div>
+					</div>
+					<div className="flex h-full w-[640px] flex-col gap-[16.5px] pl-[15px]">
+						<div className="text-Title03 font-Bold text-Black">
+							요즘 가장 인기 있는 네일샵 둘러보기 🔎
+						</div>
+						<TopShopListForm
+							topListData={topListData}
+							topMockData={topMockData}
+						/>
+					</div>
 				</div>
 			) : (
-				<div className="h-[220px] pt-[80px] text-center text-Title03 font-SemiBold text-Gray100">
-					현재 예약 정보가 없습니다
+				<div className="flex justify-between pl-[25px] pr-[44px]">
+					<div className="flex flex-col gap-[27px]">
+						<div className="text-Title03 font-Bold text-PB100">
+							진행 중인 네일
+						</div>
+						<div className="flex flex-col gap-[1px]">
+							<div className="text-Title03 text-black">
+								현재 예약한 네일이 없어요.
+							</div>
+							<div className="text-Title03 font-Bold text-Black">
+								요즘 가장 인기 있는 네일샵 둘러보기 🔎
+							</div>
+						</div>
+					</div>
+					<div className="h-fit w-[650px] border-l-[1.5px] border-Gray20 pl-[33px]">
+						<TopShopListForm
+							topListData={topListData}
+							topMockData={topMockData}
+						/>
+					</div>
 				</div>
 			)}
 		</div>
@@ -154,7 +229,7 @@ function InfoForm({ recentReservation }: InfoFormPT) {
 			.filter((tag) => tag)
 		tags.push(...treatmentTagTranslate)
 
-		return tags.slice(0, 4).join(", ")
+		return tags.slice(0, 5).join(", ")
 	}
 	const timestampFuntion = (timeStamp: number) => {
 		const month = getMonthFromStamp(timeStamp)
@@ -176,7 +251,7 @@ function InfoForm({ recentReservation }: InfoFormPT) {
 	}
 
 	return (
-		<div className="flex flex-col gap-[12px] border-b-[1.5px] border-Gray10 pb-[25px]">
+		<div className="flex h-[152px] flex-col gap-[12px] border-b-[1.5px] border-Gray10 pb-[25px]">
 			<NTContent mode="day" className="px-[15.5px]">
 				{status}
 			</NTContent>
@@ -188,7 +263,9 @@ function InfoForm({ recentReservation }: InfoFormPT) {
 					{timestampFuntion(dataList[0].startTime)}
 					{dataList[0].endTime ? `${endReservation(dataList[0].endTime)}` : ""}
 				</div>
-				<div className="text-Body02 text-Gray100">{tagListFuntion()}</div>
+				<div className="line-clamp-1 text-Body02 text-Gray100">
+					{tagListFuntion()}
+				</div>
 			</div>
 		</div>
 	)
@@ -197,7 +274,7 @@ function InfoButtonFrom({ recentReservation }: ReservationInfoPT) {
 	return (
 		<div className="flex w-full items-center justify-end pr-[2px]">
 			<InfoButtonList recentReservation={recentReservation} />
-			<div className="flex h-fit items-center gap-[11px] text-Button font-Medium text-Gray60"></div>
+			{/* <div className="flex h-fit items-center gap-[11px] text-Button font-Medium text-Gray60">예약상세 바로가기 ></div> */}
 		</div>
 	)
 }
@@ -245,56 +322,100 @@ function InfoButtonList({ recentReservation }: ReservationInfoPT) {
 		</div>
 	)
 }
+type TopShopListFormPT = {
+	topListData: Array<TResShop>
+	topMockData: Array<TShop>
+}
+function TopShopListForm({ topListData = [], topMockData }: TopShopListFormPT) {
+	const router = useRouter()
+	const [currentIndex, setCurrentIndex] = useState(0)
+	const sliceData = topListData.slice(currentIndex, currentIndex + 2)
+	const handleNextClick = () => {
+		setCurrentIndex((prevIndex) => {
+			const newIndex = prevIndex + 2
+			return newIndex >= 4 ? 0 : newIndex
+		})
+	}
+
+	return (
+		<div className="flex w-full items-center justify-between">
+			<div className="flex gap-[15px]">
+				{sliceData.map((data, idx) => (
+					<div
+						className="relative z-10 flex h-[156px] w-[282px] items-end"
+						key={idx}
+					>
+						<div className="absolute inset-0 z-20 rounded-[22px] bg-gradient-to-r from-Black to-White opacity-[0.4]" />
+						<Image
+							src={topMockData[idx].images}
+							alt={data.name}
+							fill
+							priority
+							sizes="282px"
+							className="rounded-[22px]"
+						/>
+						<div
+							className="absolute top-[62.5px] z-20 w-full cursor-pointer text-center text-Headline01 font-Bold text-PY100 hover:text-PY50"
+							onClick={() => {
+								router.push(`shop/${data.id}`)
+							}}
+						>
+							{data.name}
+						</div>
+					</div>
+				))}
+			</div>
+			<NTIcon
+				icon="expandRightLight"
+				className="w-[30px] cursor-pointer hover:text-Gray60"
+				onClick={handleNextClick}
+			></NTIcon>
+		</div>
+	)
+}
 type PastHistoryFormPT = {
-	PastReservationImage: Array<{ month: number; image: string }>
-	PastReservation: Array<TResCompletedReservation>
+	pastReservationImage: Array<{ month: number; image: string }>
+	pastReservation: Array<TResCompletedReservation>
 }
 function PastHistoryForm({
-	PastReservationImage,
-	PastReservation,
+	pastReservationImage,
+	pastReservation,
 }: PastHistoryFormPT) {
-	console.log(PastReservation)
 	return (
-		<div className="flex h-fit w-[486px] flex-col justify-center gap-[21.5px] rounded-[26px] px-[21px] pb-[20px] pt-[22px] shadow-customGray60">
+		<div className="flex h-fit w-fit min-w-[486px] flex-col justify-center gap-[21.5px] rounded-[26px] px-[21px] pb-[20px] pt-[22px] shadow-customGray60">
 			<div className="text-Title03 font-SemiBold text-Gray100">
 				다시 돌아보는 지난 네일
 			</div>
-			{PastReservation && PastReservation.length > 0 ? (
-				<PastHistoryImageList
-					PastReservationImage={PastReservationImage}
-					PastReservation={PastReservation}
-				/>
-			) : (
-				<div className="h-[220px] pt-[80px] text-center text-Title03 font-SemiBold text-Gray100">
-					지난 예약 정보가 없습니다
-				</div>
-			)}
+			<PastHistoryImageList
+				pastReservationImage={pastReservationImage}
+				pastReservation={pastReservation}
+			/>
 		</div>
 	)
 }
 type PastHistoryImageListPT = {
-	PastReservationImage: Array<{ month: number; image: string }>
-	PastReservation: Array<TResCompletedReservation>
+	pastReservationImage: Array<{ month: number; image: string }>
+	pastReservation: Array<TResCompletedReservation>
 }
 function PastHistoryImageList({
-	PastReservationImage,
-	PastReservation,
+	pastReservationImage,
+	pastReservation,
 }: PastHistoryImageListPT) {
-	const slicePastList = PastReservation.slice(0, 2)
+	const slicePastList = pastReservation.slice(0, 2)
 	return (
 		<div className="flex gap-[12px]">
 			<div className="relative flex h-[220px] w-[326px] items-end pb-[20px] pl-[22px]">
 				<div className="absolute inset-0 z-10 rounded-l-[26px] bg-gradient-to-t from-Black to-White opacity-[0.52]" />
 				<Image
-					src={PastReservationImage[0].image}
-					alt={PastReservationImage[0].month.toString()}
+					src={pastReservationImage[0].image}
+					alt={pastReservationImage[0].month.toString()}
 					fill
 					className="rounded-l-[26px]"
 					priority
 					sizes="326px"
 				/>
 				<div className="z-20 flex h-[30px] items-center gap-[3px] text-Title03 font-SemiBold text-White">
-					<span>{PastReservationImage[0].month}월 카타네일</span>
+					<span>{pastReservationImage[0].month}월 카타네일</span>
 				</div>
 			</div>
 			<div className="flex w-fit flex-col gap-[8px]">
@@ -305,15 +426,15 @@ function PastHistoryImageList({
 					>
 						<div className="absolute inset-0 z-20 rounded-r-[26px] bg-gradient-to-t from-Black to-White opacity-[0.52]" />
 						<Image
-							src={PastReservationImage[idx + 1].image}
-							alt={PastReservationImage[idx + 1].month.toString()}
+							src={pastReservationImage[idx + 1].image}
+							alt={pastReservationImage[idx + 1].month.toString()}
 							fill
 							priority
 							sizes="106px"
 							className="rounded-r-[26px]"
 						/>
 						<div className="absolute z-20 text-Headline02 text-Gray10">
-							{PastReservationImage[idx + 1].month}월
+							{pastReservationImage[idx + 1].month}월
 						</div>
 					</div>
 				))}

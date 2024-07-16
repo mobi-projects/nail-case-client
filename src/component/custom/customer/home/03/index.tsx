@@ -75,7 +75,7 @@ function ShopHoverInfo({ data }: ShopHoverInfoPT) {
 		<div className="absolute inset-0 flex flex-col justify-between py-[19px] pl-[29px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
 			<div className="pt-[10]">
 				<div className="text-Headline01 text-PY100">{data.name}</div>
-				<div className="max-w-[280px] whitespace-pre-wrap text-Body01 font-SemiBold">
+				<div className="line-clamp-4 w-[280px] whitespace-pre-wrap text-Body01 font-SemiBold">
 					{overview}
 				</div>
 			</div>
