@@ -1,7 +1,7 @@
 import ManagerBaseHomeBanner from "@/component/custom/manager/base/home/00"
 import ReservationCard from "@/component/custom/manager/base/home/01"
 import ReservationForm from "@/component/custom/manager/base/home/02"
-import CardListForm from "@/component/custom/manager/base/home/03"
+// import CardListForm from "@/component/custom/manager/base/home/03"
 
 export default function ManagerBaseHome() {
 	return (
@@ -15,7 +15,7 @@ export default function ManagerBaseHome() {
 			</div>
 			<ReservationForm />
 			<Divider />
-			<CardListForm />
+			{/* <CardListForm /> */}
 		</div>
 	)
 }
