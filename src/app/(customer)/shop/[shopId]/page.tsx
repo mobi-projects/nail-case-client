@@ -3,8 +3,8 @@
 import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 
+import { NTButton } from "@/component/common/atom/nt-button"
 import CustomerShopBanner from "@/component/custom/customer/shop/01"
-import ReservationSchedule from "@/component/custom/customer/shop/02"
 import { useShopById } from "@/hook/use-shop-controller"
 import { convertStringToInteger } from "@/util/common"
 
@@ -28,6 +28,10 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 		isLoading,
 	} = useShopById(convertStringToInteger(shopId))
 
+	const onClickReservationButton = () => {
+		router.push(`/shop/${shopId}/reservation`)
+	}
+
 	if (isLoading) {
 		return (
 			<div className="flex h-screen items-center justify-center">
@@ -46,10 +50,9 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 				<CustomerShopBanner />
 				<div className="mt-[32px] flex w-full flex-col gap-[32px]">
 					<div className="flex w-full flex-col gap-[20px]">
-						<p className="text-Title02">예약 일시</p>
-						<ReservationSchedule
-							shopId={convertStringToInteger(params.shopId)}
-						/>
+						<NTButton flexible="full" onClick={onClickReservationButton}>
+							예약하기
+						</NTButton>
 					</div>
 					<CustomerShopContent shopId={convertStringToInteger(params.shopId)} />
 				</div>
