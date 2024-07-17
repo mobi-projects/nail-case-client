@@ -9,7 +9,7 @@ import NTSearchfield from "@/component/common/nt-searchfield"
 import NTToolbar from "@/component/common/nt-toolbar"
 import {
 	MANAGER_BASE_MYSHOP_HOME,
-	MANAGER_BASE_SCHEDULE_THIS_MONTH,
+	MANAGER_BASE_SCHEDULE_LIST,
 } from "@/constant/routing-path"
 import {
 	LABEL_LIST_FOR_MANAGER_BASE_TOOLBAR,
@@ -89,7 +89,6 @@ const getFocusedIdx = (
 	schedulePathArr: string[],
 ) => {
 	if (myShopPathArr.includes(pathName)) pathName = MANAGER_BASE_MYSHOP_HOME
-	if (schedulePathArr.includes(pathName))
-		pathName = MANAGER_BASE_SCHEDULE_THIS_MONTH
+	if (schedulePathArr.includes(pathName)) pathName = MANAGER_BASE_SCHEDULE_LIST
 	return toolPathArr.findIndex((toolPath) => toolPath === pathName)
 }
