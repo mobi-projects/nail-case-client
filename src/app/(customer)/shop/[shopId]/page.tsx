@@ -43,7 +43,7 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 	if (!error && shopInfo && shopInfo.success) {
 		return (
 			<div className="h-full w-full">
-				<CustomerShopBanner />
+				<CustomerShopBanner shopId={convertStringToInteger(params.shopId)} />
 				<div className="mt-[32px] flex w-full flex-col gap-[32px]">
 					<div className="flex w-full flex-col gap-[20px]">
 						<p className="text-Title02">예약 일시</p>
