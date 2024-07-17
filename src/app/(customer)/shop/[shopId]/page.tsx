@@ -50,7 +50,7 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 							shopId={convertStringToInteger(params.shopId)}
 						/>
 					</div>
-					<CustomerShopContent />
+					<CustomerShopContent shopId={convertStringToInteger(params.shopId)} />
 				</div>
 			</div>
 		)

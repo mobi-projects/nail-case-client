@@ -35,3 +35,18 @@ export const postResquestNewToken = async () => {
 	)
 	return response
 }
+/** [POST] 로그아웃 요청 api 호출 */
+export const postLogout = async () => {
+	const refreshToken = getCookie(REFRESH_TOKEN)
+
+	const response = await axiosInstance().post(
+		`/auth/logout`,
+		{},
+		{
+			headers: {
+				"Refresh-Token": `Bearer ${refreshToken}`, // Refresh Token (Header로 보내야 함)
+			},
+		},
+	)
+	return response
+}

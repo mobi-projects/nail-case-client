@@ -1,10 +1,10 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
-import { ACCESS_TOKEN, IS_MANAGER } from "./constant/auth-key"
+import { IS_MANAGER, REFRESH_TOKEN } from "./constant/auth-key"
 
 export function middleware(request: NextRequest) {
-	const token = request.cookies.get(ACCESS_TOKEN)
+	const token = request.cookies.get(REFRESH_TOKEN)
 	const isManager = request.cookies.get(IS_MANAGER)?.value === "true"
 	const isAuth = !!token
 

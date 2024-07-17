@@ -9,7 +9,9 @@ import ShopReviewList from "@/component/custom/customer/shop/05/04"
 
 import { useScroll } from "./scroll-context"
 
-export default function CustomerShopContent() {
+type CustomerShopContentPT = { shopId: number }
+
+export default function CustomerShopContent({ shopId }: CustomerShopContentPT) {
 	const {
 		shopInfoRef,
 		designRef,

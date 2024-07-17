@@ -1,22 +1,26 @@
 "use client"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import * as React from "react"
+import { Toaster, toast } from "sonner"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTToolbar from "@/component/common/nt-toolbar"
-import { COMMON_SIGN } from "@/constant/routing-path"
+import { useAuth } from "@/config/auth-provider"
+import { COMMON_HOME, COMMON_SIGN } from "@/constant/routing-path"
 import { LABEL_LIST_FOR_CUSTOMER_BASE_TOOLBAR } from "@/constant/toolbar-list"
+import { postLogout } from "@/util/api/auth-controller"
+import { deleteAllCookies } from "@/util/common/auth"
 
 export default function CustomerHeader() {
-	const authUser = false
+	const { isAuthenticated } = useAuth()
 	return (
 		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-[34.5px]">
 			<div className="flex h-[51px] w-full items-center justify-between">
 				<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
-
-				{authUser ? <CustomerLayoutSubCatalog /> : <LoginButtons />}
+				{isAuthenticated ? <CustomerLayoutSubCatalog /> : <LoginButtons />}
 			</div>
 			<div className="mb-[23px] flex w-full flex-col">
 				<hr className="absolute left-0 z-[-10] w-full border border-Gray10" />
@@ -30,10 +34,25 @@ export default function CustomerHeader() {
 }
 
 function CustomerLayoutSubCatalog() {
+	const handleLogout = async () => {
+		const response = await postLogout()
+		if (response?.status === 200) {
+			deleteAllCookies()
+			toast.success("안녕히 가세요")
+			setTimeout(() => {
+				window.location.href = COMMON_HOME
+			}, 1000)
+		} else {
+			toast.warning("로그아웃에 실패했습니다.")
+		}
+	}
+
 	return (
 		<div className="flex w-[236px] items-center justify-end gap-[12px] pr-[21px]">
+			<Toaster />
 			<NTIcon className="text-Gray90" icon="bellLight" />
 			<div className="h-[50px] w-[50px] rounded-full bg-Gray20" />
+			<button onClick={handleLogout}>로그아웃</button>
 		</div>
 	)
 }
