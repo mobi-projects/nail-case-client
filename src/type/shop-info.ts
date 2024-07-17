@@ -27,7 +27,7 @@ export type TNailShopInfo = {
 	address: string
 	availableSeats: number
 	createdAt: number
-	images: string | null
+	images: string | Array<string>
 	modifiedAt: number
 	overview: string
 	ownerId: string
