@@ -27,4 +27,5 @@ export const deleteAllCookies = () => {
 	deleteCookie(ACCESS_TOKEN)
 	deleteCookie(IS_MANAGER)
 	deleteCookie(REFRESH_TOKEN)
+	deleteCookie("profile-image")
 }
