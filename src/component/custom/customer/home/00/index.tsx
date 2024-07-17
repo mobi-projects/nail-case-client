@@ -1,7 +1,6 @@
 "use client"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { useRef } from "react"
 import * as React from "react"
 import { Toaster, toast } from "sonner"
 
@@ -21,7 +20,6 @@ export default function CustomerHeader() {
 		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-[34.5px]">
 			<div className="flex h-[51px] w-full items-center justify-between">
 				<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
-				<CustomerLayoutSearchfield />
 				{isAuthenticated ? <CustomerLayoutSubCatalog /> : <LoginButtons />}
 			</div>
 			<div className="mb-[23px] flex w-full flex-col">
