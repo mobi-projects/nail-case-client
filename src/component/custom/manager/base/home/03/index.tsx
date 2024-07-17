@@ -97,7 +97,7 @@ function MainCard({ content, srcArr }: MainCardPT) {
 				{srcArr && srcArr[0] && (
 					<Image
 						src={srcArr[0]}
-						alt="Notice Image"
+						alt={srcArr[0]}
 						width={320}
 						height={96}
 						className="h-[96px] rounded-[6px]"
@@ -125,7 +125,7 @@ function SubCard({ createdAt, title, likes, srcArr, comments }: SubCardPT) {
 				{srcArr && (
 					<Image
 						src={srcArr[0]}
-						alt="Notice Image"
+						alt={srcArr[0]}
 						width={282}
 						height={168}
 						className="h-[168px] rounded-[24px]"
