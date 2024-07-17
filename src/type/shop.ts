@@ -99,6 +99,7 @@ export type TResPatchUpdateOverview = {
 	overview: string
 	address: string
 	availableSeats: number
+	shopAvgRatings: number
 	tags: Array<string>
 	images: [] // [TODO] 추후 수정, 타입 미확인
 }
