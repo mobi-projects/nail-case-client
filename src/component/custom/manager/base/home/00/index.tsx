@@ -1,15 +1,26 @@
 "use client"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
+import { useShopById } from "@/hook/use-shop-controller"
+import type { TResGetShopById } from "@/type/shop"
 
 export default function ManagerBaseHomeBanner() {
+	const { data, isError, error, isLoading } = useShopById(1)
+
+	if (isError) {
+		return <div>Error: {error.message}</div>
+	}
+	if (isLoading) {
+		return <div>Loading...</div> // 데이터 로딩 중 처리
+	}
+	const shopData = data?.data as TResGetShopById
 	return (
 		<div className="relative h-[380px] w-full">
 			<NTBannerImageCarousel className="absolute left-0 h-full w-full bg-transparent" />
 			<BannerHeader />
 			<BannerDescription />
 			<NTContent mode="dark" className="absolute right-[78px] top-[62px]">
-				0/0
+				{`${shopData.images?.length.toString() || "0"} /${shopData.images?.length.toString() || 0}`}
 			</NTContent>
 		</div>
 	)
