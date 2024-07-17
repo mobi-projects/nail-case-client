@@ -9,6 +9,7 @@ import type {
 	TReqBodyRegisterReservation,
 	TReqBodyUpdateReservation,
 } from "@/type"
+import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 import {
 	getAvailableTime,
 	getListReservation,
@@ -22,10 +23,12 @@ export const useListReservationQuery = (
 	shopId: number,
 	startTime: number,
 	endTime: number,
+	status: TReservationStatus,
 ) =>
 	useQuery({
-		queryKey: [LIST_RESERVATION_QUERY, shopId, startTime, endTime],
-		queryFn: async () => await getListReservation(shopId, startTime, endTime),
+		queryKey: [LIST_RESERVATION_QUERY, shopId, startTime, endTime, status],
+		queryFn: async () =>
+			await getListReservation(shopId, startTime, endTime, status),
 	})
 
 /** 예약 등록 */
@@ -36,12 +39,6 @@ export const useRegisterReservationMutation = (shopId: number) => {
 	return useMutation({
 		mutationFn: async ({ newReservation }: RegisterReservationPT) =>
 			await postRegisterReservation(shopId, newReservation),
-		onSuccess: (data) => {
-			alert(JSON.stringify(data))
-		},
-		onError: (error) => {
-			alert(JSON.stringify(error))
-		},
 	})
 }
 /** 예약 상세 조회 */
