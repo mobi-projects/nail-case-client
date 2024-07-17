@@ -113,17 +113,14 @@ function ReservationTimeList({ timeRange }: ReservationTimeListPT) {
 		1,
 		timeRange.startTime.getTime() / 1000,
 		timeRange.lastTime.getTime() / 1000,
+		"CONFIRMED",
 	)
 
 	const reservationArr = reservationData?.dataList || []
 
 	const confirmedReservations = reservationArr.reduce<TReservationDetailList[]>(
 		(data, reservation) => {
-			data.push(
-				...reservation.reservationDetailList.filter(
-					(detail) => detail.status === "CONFIRMED",
-				),
-			)
+			data.push(...reservation.reservationDetailList)
 			return data
 		},
 		[],
@@ -327,7 +324,7 @@ function ReservationButtonList({
 	endTime,
 }: ReservationButtonListPT) {
 	const now = new Date()
-	const customDate = new Date(now.getTime() + 30 * 60 * 1000)
+	// const customDate = new Date(now.getTime() + 30 * 60 * 1000)
 	let buttonContent
 	if (now >= startTime && now <= endTime) {
 		buttonContent = (
@@ -341,21 +338,22 @@ function ReservationButtonList({
 				시술 끝
 			</NTButton>
 		)
-	} else if (now >= customDate && now < startTime) {
-		buttonContent = (
-			<NTButton variant="primary" size="medium" flexible="fit">
-				채팅하기
-			</NTButton>
-		)
+		// } else if (now >= customDate && now < startTime) {
+		// 	buttonContent = (
+		// 		<NTButton variant="primary" size="medium" flexible="fit">
+		// 			채팅하기
+		// 		</NTButton>
+		// 	)
+		// }
 	} else {
 		buttonContent = (
 			<>
 				<NTButton variant="secondary" size="medium" flexible="fit">
-					변경하기
+					예약관리
 				</NTButton>
-				<NTButton variant="primary" size="medium" flexible="fit">
+				{/* <NTButton variant="primary" size="medium" flexible="fit">
 					채팅하기
-				</NTButton>
+				</NTButton> */}
 			</>
 		)
 	}

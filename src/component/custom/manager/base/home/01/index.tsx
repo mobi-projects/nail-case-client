@@ -41,36 +41,39 @@ export default function ReservationCard() {
 		),
 	}
 	const {
-		data: reservationData,
-		isError,
-		error,
+		data: pendingData,
+		isError: pendingIsError,
+		error: pendingError,
 	} = useListReservationQuery(
 		1,
 		timeRange.startTime.getTime() / 1000,
 		timeRange.endTime.getTime() / 1000,
+		"PENDING",
 	)
-	const reservationArr = reservationData?.dataList || []
-	if (isError) {
-		return <div>Error: {error.message}</div>
+
+	const {
+		data: confirmData,
+		isError: confirmIsError,
+		error: confirmError,
+	} = useListReservationQuery(
+		1,
+		timeRange.startTime.getTime() / 1000,
+		timeRange.endTime.getTime() / 1000,
+		"CONFIRMED",
+	)
+	const pendingReservation = pendingData?.dataList || []
+	if (pendingIsError) {
+		return <div>Error: {pendingError.message}</div>
 	}
-
-	const confirmedReservations = reservationArr.reduce<TReservationDetailList[]>(
-		(data, reservation) => {
-			data.push(
-				...reservation.reservationDetailList.filter(
-					(detail) => detail.status === "CONFIRMED",
-				),
-			)
-			return data
-		},
-
-		[],
-	)
+	const confirmReservation = confirmData?.dataList || []
+	if (confirmIsError) {
+		return <div>Error: {confirmError.message}</div>
+	}
 	return (
 		<div className="flex h-[240px] w-full justify-between gap-[24px]">
-			<WaitingCard reservationArr={reservationArr} shopName={shopName} />
+			<WaitingCard reservationArr={pendingReservation} shopName={shopName} />
 			<ConfirmedCard
-				confirmedReservationCount={confirmedReservations.length}
+				confirmedReservationCount={confirmReservation.length}
 				shopName={shopName}
 			/>
 		</div>
@@ -83,14 +86,9 @@ type WaitingCardPT = {
 function WaitingCard({ reservationArr, shopName }: WaitingCardPT) {
 	const pendingReservations = reservationArr.reduce<TReservationDetailList[]>(
 		(data, reservation) => {
-			data.push(
-				...reservation.reservationDetailList.filter(
-					(detail) => detail.status === "PENDING",
-				),
-			)
+			data.push(...reservation.reservationDetailList)
 			return data
 		},
-
 		[],
 	)
 	if (pendingReservations.length === 0) {
