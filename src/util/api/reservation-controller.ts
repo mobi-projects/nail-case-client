@@ -27,7 +27,7 @@ export const getListReservation = async (
 	shopId: number,
 	startDate: number,
 	endDate: number,
-	status: TReservationStatus = "CONFIRMED",
+	status: TReservationStatus,
 ): Promise<TResponseData<TResGetListReservation[], "dataList">> => {
 	const response = await axiosInstance().get(
 		`/shops/${shopId}/reservations?status=${status}&startDate=${startDate}&endDate=${endDate}`,

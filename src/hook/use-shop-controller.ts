@@ -9,6 +9,7 @@ export const useListShopNailArtist = (shopId: number) =>
 		queryKey: [QUERY_LIST_SHOP_NAIL_ARTIST, shopId],
 		queryFn: async () => await getListShopNailArtist(shopId),
 	})
+
 export const useShopById = (shopId: number) =>
 	useQuery({
 		queryKey: [QUERY_SHOP_INFO, shopId],

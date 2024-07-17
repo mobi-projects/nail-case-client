@@ -9,6 +9,8 @@ import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import { COMMON_HOME } from "@/constant/routing-path"
 
+import { useScroll } from "../05/scroll-context"
+
 export default function CustomerShopBanner() {
 	return (
 		<div className="flex h-[480px] w-full">
@@ -159,8 +161,15 @@ function FiveStars({ starRating }: { starRating: number }) {
 }
 
 function ReviewNotice({ reviewCount }: { reviewCount: number }) {
+	const { reviewRef, scrollToSection, setFocusedSection } = useScroll()
 	return (
-		<div className="flex items-center hover:cursor-pointer hover:drop-shadow-lg">
+		<div
+			className="flex items-center hover:cursor-pointer hover:drop-shadow-lg"
+			onClick={() => {
+				scrollToSection(reviewRef)
+				setFocusedSection("리뷰")
+			}}
+		>
 			<p className="text-Body02 font-Regular text-Gray10">
 				{reviewCount} 개의 리뷰
 			</p>

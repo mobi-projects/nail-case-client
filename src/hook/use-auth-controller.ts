@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 
-import { COMMON_HOME } from "@/constant/routing-path"
+import { COMMON_HOME, MANAGER_BASE_HOME } from "@/constant/routing-path"
 import type { TSignDataResponse } from "@/type"
 import type { TResponseData } from "@/type/response"
 import type { TSignType } from "@/type/union-option/sign-type"
@@ -15,13 +15,16 @@ export const useGetAuthToken = () => {
 			await getLogin(code, loginType),
 		onSuccess: async ({ data }: TResponseData<TSignDataResponse, "data">) => {
 			initAuthTokens(data)
+			if (data.role === "MANAGER") {
+				window.location.href = MANAGER_BASE_HOME
+			} else {
+				window.location.href = COMMON_HOME
+			}
 		},
 		onError: (error) => {
 			alert("로그인 실패")
-			throw error
-		},
-		onSettled: () => {
 			window.location.href = COMMON_HOME
+			throw error
 		},
 	})
 	return { getAuthToken, ...rest }

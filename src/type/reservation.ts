@@ -51,7 +51,7 @@ export type TReqBodyUpdateReservation = {
 	status: TReservationStatus
 	reservationDetailDtoList: Array<{
 		reservationDetailId: number
-		nailArtistId: number
+		nailArtistId: number | null
 	}>
 }
 /* Response */
