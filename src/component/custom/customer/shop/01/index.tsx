@@ -1,11 +1,15 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
+import { COMMON_HOME } from "@/constant/routing-path"
+
+import { useScroll } from "../05/scroll-context"
 
 export default function CustomerShopBanner() {
 	return (
@@ -23,15 +27,27 @@ export default function CustomerShopBanner() {
 }
 
 function PageRoutingIconButtons() {
+	const router = useRouter()
+
+	const navigateBack = () => {
+		router.back()
+	}
+
+	const navigateHome = () => {
+		router.push(COMMON_HOME)
+	}
+
 	return (
 		<div className="absolute left-64 top-[78px] flex h-full w-7 gap-2">
 			<NTIcon
 				className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
 				icon="back"
+				onClick={navigateBack}
 			/>
 			<NTIcon
 				className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
 				icon="homeLight"
+				onClick={navigateHome}
 			/>
 		</div>
 	)
@@ -145,8 +161,15 @@ function FiveStars({ starRating }: { starRating: number }) {
 }
 
 function ReviewNotice({ reviewCount }: { reviewCount: number }) {
+	const { reviewRef, scrollToSection, setFocusedSection } = useScroll()
 	return (
-		<div className="flex items-center hover:cursor-pointer hover:drop-shadow-lg">
+		<div
+			className="flex items-center hover:cursor-pointer hover:drop-shadow-lg"
+			onClick={() => {
+				scrollToSection(reviewRef)
+				setFocusedSection("리뷰")
+			}}
+		>
 			<p className="text-Body02 font-Regular text-Gray10">
 				{reviewCount} 개의 리뷰
 			</p>

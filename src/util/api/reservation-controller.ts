@@ -9,6 +9,7 @@ import type {
 	TResUpdateReservation,
 } from "@/type"
 import type { TResponseData } from "@/type/response"
+import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 
 /**
  * @컨트롤러 [Reservation Controller]
@@ -24,12 +25,13 @@ import type { TResponseData } from "@/type/response"
 /** [GET] 예약 목록 조회 api 호출 */
 export const getListReservation = async (
 	shopId: number,
-	startTime: number,
-	endTime: number,
+	startDate: number,
+	endDate: number,
+	status: TReservationStatus = "CONFIRMED",
 ): Promise<TResponseData<TResGetListReservation[], "dataList">> => {
-	const response = await axiosInstance().get(`/shops/${shopId}/reservations`, {
-		params: { startTime, endTime },
-	})
+	const response = await axiosInstance().get(
+		`/shops/${shopId}/reservations?status=${status}&startDate=${startDate}&endDate=${endDate}`,
+	)
 	return response.data
 }
 /** [POST] 예약 등록 api 호출 */

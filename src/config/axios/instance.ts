@@ -1,5 +1,10 @@
-import type { AxiosInstance, AxiosRequestConfig } from "axios"
+import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios"
 import axios from "axios"
+import { getCookie } from "cookies-next"
+
+import { ACCESS_TOKEN } from "@/constant/auth-key"
+
+import { handleUnauthorized401 } from "./instance.utll"
 
 const instanceConfig: AxiosRequestConfig = {
 	baseURL: process.env.NEXT_PUBLIC_BACKEND_APP,
@@ -8,6 +13,7 @@ const instanceConfig: AxiosRequestConfig = {
 	},
 	withCredentials: true,
 }
+
 export const axiosInstance = () => {
 	let instance = axios.create(instanceConfig)
 	instance = setRequestInterceptor(instance)
@@ -19,9 +25,10 @@ export const axiosInstance = () => {
 const setRequestInterceptor = (instance: AxiosInstance) => {
 	instance.interceptors.request.use(
 		(config) => {
-			// TODO: 당분간 각자의 토큰 직접 입력
-			config.headers.Authorization =
-				"Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6OTIzMzczNzU1NzQ5ODczLCJlbWFpbCI6IjQ3NjQzZDI1LWJhMjctNGY4Mi05OWJjLWE2YTI1ODI4YzBkNUBzb2NpYWxVc2VyLmNvbSIsIm1lbWJlcklkIjoyMn0.ygMauAZ0TyIen6ojT9wn88xtt0hbDCOOBvuZN-0sBISxQUOp_zui4Eojfh0IacdPOMVtrWPr3ivF9IqjjcMe7Q"
+			const accessToken = getCookie(ACCESS_TOKEN)
+			if (accessToken && config.headers) {
+				config.headers.Authorization = `Bearer ${accessToken}`
+			}
 			return config
 		},
 		(error) => Promise.reject(error),
@@ -33,11 +40,21 @@ const setRequestInterceptor = (instance: AxiosInstance) => {
 	}
 	return instance
 }
+
 /** "응답" 인터셉터 설정 */
 const setResponseInterceptor = (instance: AxiosInstance) => {
 	instance.interceptors.response.use(
 		(response) => response,
-		(error) => Promise.reject(error),
+		async (error: AxiosError) => {
+			const { config, response } = error
+			//**********  401 에러 발생 시 실행 *************//
+			if (response?.status === 401)
+				try {
+					return await handleUnauthorized401(config)
+				} catch (error) {
+					return Promise.reject(error)
+				}
+		},
 	)
 	return instance
 }

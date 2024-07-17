@@ -24,6 +24,7 @@ import type {
 	TReqBodyPutUpdateShop,
 	TResGetListShopNailArtist,
 	TResGetSearchShop,
+	TResGetShopById,
 	TResPatchUpdateOverview,
 	TResPostRegisterShop,
 	TResPutUpdateShop,
@@ -40,7 +41,9 @@ export const deleteShop = async (shopId: number) => {
 	return response
 }
 /** [GET] 매장 정보 조회 api 호출 */
-export const getShopById = async (shopId: number) => {
+export const getShopById = async (
+	shopId: number,
+): Promise<TResponseData<TResGetShopById, "data">> => {
 	const response = await axiosInstance().get(`/shops/${shopId}`)
 	return response.data
 }

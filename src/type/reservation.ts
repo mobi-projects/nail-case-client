@@ -45,9 +45,7 @@ export type TReservationForm = {
 	}>
 }
 export type TReqBodyRegisterReservation = {
-	shopId: number
 	reservationDetailList: Array<TReservationForm>
-	startTime: number
 }
 export type TReqBodyUpdateReservation = {
 	status: TReservationStatus
@@ -59,66 +57,73 @@ export type TReqBodyUpdateReservation = {
 /* Response */
 export type TResGetListReservation = {
 	reservationId: number
-	reservationDetailList: Array<{
-		reservationDetailId: number
-		nailArtistId: number
-		remove: TRemoveOption
-		extend: boolean
-		status: TReservationStatus
-		startTime: number
-		endTime: number
-		conditionList: Array<{
-			conditionId: number
-			option: TNailCondition
-			createdAt: number
-			modifiedAt: number
-			createdBy: string
-			modifiedBy: string
-		}>
-		treatmentList: Array<{
-			option: TNailTreatment
-			imageId: number
-			imageUrl: string
-			createdAt: number
-			modifiedAt: number
-			createdBy: string
-			modifiedBy: string
-		}>
-	}>
-	createAt: number
+	nickname: string
+	reservationDetailList: Array<TReservationDetail>
+	createdAt: number
 	modifiedAt: number
 }
-export type TResPostRegisterReservation = {
-	reservationId: number
-	reservationDetailList: Array<{
-		reservationDetailId: number
-		nailArtistId: number
-		remove: TRemoveOption
-		extend: boolean
-		status: TReservationStatus
-		startTime: number
-		endTime: number
-		conditionList: Array<{
-			conditionId: number
-			option: string
-			Enum: TNailCondition
-			createdAt: number
-			modifiedAt: number
-			createdBy: string
-			modifiedBy: string
-		}>
-		treatmentList: Array<{
-			option: TNailTreatment
-			imageId: number
-			imageUrl: string
-			createdAt: number
-			modifiedAt: number
-			createdBy: string
-			modifiedBy: string
-		}>
+
+export type TListReservationDetail = {
+	reservationDetailId: number
+	nailArtistId: number | null
+	remove: TRemoveOption
+	extend: boolean
+	status: TReservationStatus
+	startTime: number
+	endTime: number | null
+	conditionList: Array<{
+		conditionId: number
+		option: TNailCondition
 		createdAt: number
 		modifiedAt: number
+		createdBy: string
+		modifiedBy: string
 	}>
+	treatmentList: Array<{
+		option: TNailTreatment
+		imageId: number
+		imageUrl: string
+		createdAt: number
+		modifiedAt: number
+		createdBy: string
+		modifiedBy: string
+	}>
+	createdAt: number
+	modifiedAt: number
+}
+
+export type TReservationDetail = {
+	reservationDetailId: number
+	nailArtistId: number
+	remove: TRemoveOption
+	extend: boolean
+	status: TReservationStatus
+	startTime: number
+	endTime: number
+	conditionList: Array<{
+		conditionId: number
+		option: TNailCondition
+		createdAt: number
+		modifiedAt: number
+		createdBy: string
+		modifiedBy: string
+	}>
+	treatmentList: Array<{
+		option: TNailTreatment
+		imageId: number
+		imageUrl: string
+		createdAt: number
+		modifiedAt: number
+		createdBy: string
+		modifiedBy: string
+	}>
+	createdAt: number
+	modifiedAt: number
+}
+
+export type TResPostRegisterReservation = {
+	reservationId: number
+	reservationDetailList: Array<TReservationDetail>
 	createdAt: number
 	modifiedAt: number
 }
