@@ -1,46 +1,89 @@
+import { useQuery } from "@tanstack/react-query"
+import React, { useState } from "react"
+
+import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
+import NTModal, {
+	ModalContent,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+} from "@/component/common/nt-modal"
+import { QUERY_MONTHLY_ART_ARR } from "@/constant"
+import { getShopMonthlyArt } from "@/util/api/shop-controller"
+import {
+	getMonthFromStamp,
+	getYearFromStamp,
+	padStartToPrinting,
+} from "@/util/common"
+import { isUndefined } from "@/util/common/type-guard"
 
-const tempData = [
-	{
-		title: "썸머 나이트 글로우",
-		description:
-			"여름 밤의 낭만을 담은 반짝이는 글로우 네일 아트로, 손끝을 화려하게 빛내보세요.",
-	},
-	{
-		title: "로맨틱 플라워 네일",
-		description:
-			"우아하고 세련된 플라워 패턴 네일 아트로, 손끝에 로맨틱한 감성을 더해보세요.",
-	},
-	{
-		title: "코랄 리프 네일",
-		description:
-			"산호초의 아름다움을 담은 코랄 리프 네일 아트로, 활기찬 여름을 맞이해보세요.",
-	},
-	{
-		title: "골든 트위스트 네일",
-		description:
-			"화려한 금빛 트위스트 패턴으로 손끝에 고급스러움을 더해보세요.",
-	},
-	{
-		title: "블루 오션 네일",
-		description:
-			"깊고 푸른 바다의 색감을 담은 네일 아트로, 시원한 여름을 즐겨보세요.",
-	},
-	{
-		title: "핑크 파스텔 네일",
-		description: "부드러운 파스텔 핑크 톤으로 손끝에 사랑스러움을 더해보세요.",
-	},
-]
+import { ErrorComponent, NotFountComponent, PendingComponent } from ".."
 
-export default function ShopDesignList() {
+type TComment = {
+	monthlyCommentId: number
+	body: string
+	createdAt: number
+	createdBy: number
+	timestampsFromLocalDateTime: string
+}
+
+export type TMonthlyArtItem = {
+	imageIds: number[]
+	memberId: number
+	shopId: number
+	monthlyArtId: number
+	title: string
+	contents: string
+	likes: number
+	views: number
+	liked: boolean
+	commentCount: number
+	createdAt: number
+	imageUrls: string[]
+	comments: TComment[]
+}
+
+const formatTimeStamp = (createAt: number) => {
+	const year = getYearFromStamp(createAt)
+	const month = getMonthFromStamp(createAt)
+	const date = getMonthFromStamp(createAt)
+	return `${padStartToPrinting("year", year)}.${padStartToPrinting("month", month)}.${padStartToPrinting("date", date)}`
+}
+
+export default function ShopDesignList({ shopId }: { shopId: number }) {
+	const [selectedArt, setSelectedArt] = useState<TMonthlyArtItem | null>(null)
+	const [isModalOpen, setIsModalOpen] = useState(false)
+
+	const {
+		data: monthlyArt,
+		isError,
+		isPending,
+	} = useQuery({
+		queryKey: [QUERY_MONTHLY_ART_ARR, shopId],
+		queryFn: () => getShopMonthlyArt(shopId),
+	})
+
+	if (isUndefined(monthlyArt)) return <NotFountComponent />
+	if (isError) return <ErrorComponent />
+	if (isPending) return <PendingComponent />
+
+	const monthlyArtList: TMonthlyArtItem[] = monthlyArt.dataList
+
+	const handleArtClick = (art: TMonthlyArtItem) => {
+		setSelectedArt(art)
+		setIsModalOpen(true)
+	}
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false)
+		setSelectedArt(null)
+	}
+
 	return (
 		<div className="flex w-full flex-col">
-			<div className="flex items-center justify-between">
-				<p className="font-bold mb-6 text-2xl text-Title02">디자인</p>
-				<p className="cursor-pointer text-Gray40">전체보기</p>
-			</div>
 			<div className="mt-[15px] grid grid-cols-3 gap-6">
-				{tempData.map((item, idx) => (
+				{monthlyArtList.map((item: TMonthlyArtItem, idx: number) => (
 					<div
 						key={idx}
 						className="relative flex h-[264px] flex-col justify-center rounded-[26px] bg-Gray40 p-[16px] text-white"
@@ -48,14 +91,34 @@ export default function ShopDesignList() {
 						<h3 className="font-semibold text-Headline01 text-PY80">
 							{item.title}
 						</h3>
-						<p className="mt-[8px] text-Body01">{item.description}</p>
+						<p className="mt-[8px] text-Body01">{item.contents}</p>
 						<div className="mt-[40px] flex cursor-pointer items-center">
-							<p className="text-Body01">자세히 보기</p>
+							<p className="text-Body01" onClick={() => handleArtClick(item)}>
+								자세히 보기
+							</p>
 							<NTIcon icon={"expandRightLight"} className="w-[24px]" />
 						</div>
 					</div>
 				))}
 			</div>
+			{isModalOpen && selectedArt && (
+				<NTModal size="large">
+					<ModalContent>
+						<ModalHeader>
+							<h2 className="font-bold mb-4 text-2xl">{selectedArt.title}</h2>
+						</ModalHeader>
+						<ModalBody>
+							<p className="mb-[16px] text-sm">
+								{formatTimeStamp(selectedArt.createdAt)}
+							</p>
+							<p className="mb-[16px]">{selectedArt.contents}</p>
+						</ModalBody>
+						<ModalFooter>
+							<NTButton onClick={handleCloseModal}>닫기</NTButton>
+						</ModalFooter>
+					</ModalContent>
+				</NTModal>
+			)}
 		</div>
 	)
 }
