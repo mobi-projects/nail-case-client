@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 
 import CustomerShopBanner from "@/component/custom/customer/shop/01"
 import ReservationSchedule from "@/component/custom/customer/shop/02"
-import { useShopInfo } from "@/hook/use-shop-controller"
+import { useShopById } from "@/hook/use-shop-controller"
 import { convertStringToInteger } from "@/util/common"
 
 const CustomerShopContent = dynamic(
@@ -21,11 +21,12 @@ type CustomerShopPT = {
 
 export default function CustomerShop({ params }: CustomerShopPT) {
 	const router = useRouter()
+	const shopId = params.shopId
 	const {
 		data: shopInfo,
 		error,
 		isLoading,
-	} = useShopInfo(convertStringToInteger(params.shopId)!)
+	} = useShopById(convertStringToInteger(shopId))
 
 	if (isLoading) {
 		return (
