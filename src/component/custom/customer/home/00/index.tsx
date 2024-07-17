@@ -8,7 +8,6 @@ import { Toaster, toast } from "sonner"
 import NTLogo from "@/../public/asset/nt-logo.svg"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
-import NTSearchfield from "@/component/common/nt-searchfield"
 import NTToolbar from "@/component/common/nt-toolbar"
 import { useAuth } from "@/config/auth-provider"
 import { COMMON_HOME, COMMON_SIGN } from "@/constant/routing-path"
@@ -19,7 +18,7 @@ import { deleteAllCookies } from "@/util/common/auth"
 export default function CustomerHeader() {
 	const { isAuthenticated } = useAuth()
 	return (
-		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-[114.5px]">
+		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-[34.5px]">
 			<div className="flex h-[51px] w-full items-center justify-between">
 				<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 				<CustomerLayoutSearchfield />
@@ -36,14 +35,6 @@ export default function CustomerHeader() {
 	)
 }
 
-function CustomerLayoutSearchfield() {
-	const searchInputRef = useRef<HTMLInputElement>(null)
-	return (
-		<div className="mx-[70px] h-full w-[690px]">
-			<NTSearchfield size="large" ref={searchInputRef} />
-		</div>
-	)
-}
 function CustomerLayoutSubCatalog() {
 	const handleLogout = async () => {
 		const response = await postLogout()
