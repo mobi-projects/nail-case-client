@@ -8,16 +8,18 @@ import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import { COMMON_HOME } from "@/constant/routing-path"
-import { useShopInfo, useShopReviews } from "@/hook/use-shop-controller"
+import { useShopById, useShopReviews } from "@/hook/use-shop-controller"
 import type { TNailShopInfo } from "@/type"
 import { isUndefined } from "@/util/common/type-guard"
+
+import { useScroll } from "../05/scroll-context"
 
 export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 	const {
 		data: shopInfo,
 		isError: isErrorShopInfo,
 		isPending: isPendingShopInfo,
-	} = useShopInfo(shopId!)
+	} = useShopById(shopId!)
 	const {
 		data: shopReviews,
 		isError: isErrorShopReviews,
