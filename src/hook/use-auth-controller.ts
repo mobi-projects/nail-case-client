@@ -17,7 +17,9 @@ export const useGetAuthToken = () => {
 		onSuccess: async ({ data }: TResponseData<TSignDataResponse, "data">) => {
 			initAuthTokens(data)
 			/** 임시로 쿠키에 저장해서 profileUrl 전달 */
-			setCookie("profile-image", encodeURIComponent(data.profileImgUrl))
+			setCookie("profile-image", encodeURIComponent(data.profileImgUrl), {
+				maxAge: 86400,
+			})
 			if (data.role === "MANAGER") {
 				window.location.href = MANAGER_BASE_HOME
 			} else {
