@@ -2,9 +2,11 @@
 
 import type { VariantProps } from "class-variance-authority"
 import { cva } from "class-variance-authority"
-import React, { useState } from "react"
+import React from "react"
 
 import { cn } from "@/config/tailwind"
+
+import { useScroll } from "../05/scroll-context"
 
 const toolbarVariants = cva(
 	"flex h-full w-fit min-w-[70px] cursor-pointer flex-nowrap justify-center gap-[42px] border-transparent px-[2px] text-Gray50 hover:text-PB50 focus:text-PB100 focus-visible:outline-none",
@@ -39,8 +41,10 @@ export default function CustomerNaviBar({
 	className,
 	onToolClick,
 }: CustomerNaviBarPT) {
-	const [focusedIdx, setFocusedIdx] = useState<number>(0)
+	const { focusedSection } = useScroll()
+
 	const noDuplicatedToolList = [...new Set(toolList)]
+
 	return (
 		<div
 			className={cn(
@@ -48,16 +52,13 @@ export default function CustomerNaviBar({
 				className,
 			)}
 		>
-			{noDuplicatedToolList.map((tool: string, idx: number) => (
+			{noDuplicatedToolList.map((tool: string) => (
 				<div
 					className={cn(
 						toolbarVariants({ size, position }),
-						focusedIdx === idx && "border-PB100 text-PB100",
+						focusedSection === tool && "border-PB100 text-PB100",
 					)}
-					onClick={() => {
-						setFocusedIdx(idx)
-						onToolClick(tool)
-					}}
+					onClick={() => onToolClick(tool)}
 					key={tool}
 				>
 					{tool}
