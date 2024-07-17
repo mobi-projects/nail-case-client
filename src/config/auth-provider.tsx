@@ -1,7 +1,7 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from "react"
 
-import { ACCESS_TOKEN } from "@/constant/auth-key"
+import { REFRESH_TOKEN } from "@/constant/auth-key"
 
 type AuthContextProps = {
 	isAuthenticated: boolean
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			// `ACCESS_TOKEN` 쿠키의 존재 여부로 인증 상태를 확인합니다.
 			const token = document.cookie
 				.split("; ")
-				.find((row) => row.startsWith(`${ACCESS_TOKEN}=`))
+				.find((row) => row.startsWith(`${REFRESH_TOKEN}=`))
 			setIsAuthenticated(!!token)
 		}
 

@@ -78,7 +78,9 @@ function WithoutNoImages() {
 	return (
 		<div className="flex h-full">
 			<div className="flex min-w-0 flex-[0_0_100%] flex-col items-center justify-center gap-5 bg-White">
-				<Image src={NTLogo} alt="brand-logo" width={200} height={70} priority />
+				<div className="relative h-[70px] w-[200px]">
+					<Image src={NTLogo} alt="brand-logo" fill priority />
+				</div>
 				<p className="text-Body01">
 					{'"'}완벽한 손끝을 위한 당신의 새로운 예약 파트너{'"'}
 				</p>
