@@ -12,11 +12,13 @@ import NicknameNTime from "./nickname-n-time"
 import OptionContents from "./options-for-member"
 
 type ReservationItemPT = {
+	shopId: number
 	reservation: TResGetListReservation
 	status: TReservationStatus
 }
 
 export default function ReservationItem({
+	shopId,
 	reservation,
 	status,
 }: ReservationItemPT) {
@@ -25,6 +27,7 @@ export default function ReservationItem({
 	const repNickname = reservation.nickname // 대표자 닉네임
 	const companion = reservation.reservationDetailList.length // 동반인원 (예약인원 확인)
 	const detailList = reservation.reservationDetailList // 모든 동반인원에 대한 예약내용 목록
+	const reservationId = reservation.reservationId
 
 	const rep = detailList[0] // 대표자 예약 상세
 	const startTime = rep.startTime // 시술 시작시간
@@ -59,7 +62,9 @@ export default function ReservationItem({
 					!isSummary && companion !== 1 && "border-Gray20",
 				)}
 			/>
-			<ButtonPair {...{ status, startTime, optionArr, companion }} />
+			<ButtonPair
+				{...{ status, startTime, optionArr, companion, shopId, reservationId }}
+			/>
 		</div>
 	)
 }
