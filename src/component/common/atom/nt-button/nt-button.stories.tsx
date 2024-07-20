@@ -19,7 +19,7 @@ const meta: Meta<typeof NTButton> = {
 		},
 		variant: {
 			control: "inline-radio",
-			options: ["primary", "secondary", "tertiary"],
+			options: ["primary", "secondary", "tertiary", "alert"],
 		},
 		size: {
 			control: "inline-radio",

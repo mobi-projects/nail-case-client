@@ -98,7 +98,7 @@ export const decomposeStamp = (timestamp: number) => {
 	const month = getMonthFromStamp(timestamp)
 	const date = getDateFromStamp(timestamp)
 	const hour = getHourFromStamp(timestamp)
-	const min = getMonthFromStamp(timestamp)
+	const min = getMinFromStamp(timestamp)
 	const sec = getSecFromStamp(timestamp)
 	return { year, month, date, hour, min, sec }
 }
