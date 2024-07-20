@@ -1,3 +1,6 @@
+import OnError from "@/component/custom/manager/base/schedule/list/error-fallback"
+import ExpandableSection from "@/component/custom/manager/base/schedule/list/expandable-section"
+import ReservationList from "@/component/custom/manager/base/schedule/list/reservation-list"
 import type { TResGetListReservation } from "@/type"
 import { getListReservation } from "@/util/api/reservation-controller"
 import {
@@ -10,10 +13,53 @@ import {
 
 export default async function ScheduleList() {
 	//[todo] 추후 수정, shopId 동적 확보
-	const test = serverFetchReservationList(1)
-	//[todo] 추후 삭제, 미사용 변수 사용을 위한 console
-	console.log(test)
-	return <h1>일정 목록</h1>
+	const { isError, pendingList, confirmedList, canceledList, completedList } =
+		await serverFetchReservationList(1)
+
+	const pendingCount = pendingList.length
+	const confirmedCount = confirmedList.length
+	const canceledCount = canceledList.length
+	const completedCount = completedList.length
+
+	return (
+		<div className="flex flex-col gap-[20px]">
+			<ExpandableSection title={`예약대기 (${pendingCount}건)`}>
+				{isError ? (
+					<OnError />
+				) : (
+					<ReservationList reservationList={pendingList} status="PENDING" />
+				)}
+			</ExpandableSection>
+
+			<ExpandableSection title={`예약승인 (${confirmedCount}건)`}>
+				{isError ? (
+					<OnError />
+				) : (
+					<ReservationList reservationList={confirmedList} status="CONFIRMED" />
+				)}
+			</ExpandableSection>
+
+			<ExpandableSection
+				title={`최근 30일동안 완료한 시술 (${canceledCount}건)`}
+			>
+				{isError ? (
+					<OnError />
+				) : (
+					<ReservationList reservationList={canceledList} status="COMPLETED" />
+				)}
+			</ExpandableSection>
+
+			<ExpandableSection
+				title={`최근 30일동안 취소한 예약 (${completedCount}건)`}
+			>
+				{isError ? (
+					<OnError />
+				) : (
+					<ReservationList reservationList={completedList} status="CANCELED" />
+				)}
+			</ExpandableSection>
+		</div>
+	)
 }
 
 const serverFetchReservationList = async (shopId: number) => {

@@ -16,6 +16,8 @@ const ButtonVariants = cva(
 					"bg-BGblue01 text-PB100 hover:bg-BGblue02 active:bg-BGblue01 active:border-PB100 active:border-[1.6px] disabled:bg-BGblue01 disabled:text-PB50",
 				tertiary:
 					"bg-white text-PB100 hover:text-PB80 active:bg-PB80 active:text-White disabled:bg-Gray20 disabled:text-Gray50",
+				alert:
+					"bg-[#FFF6F8] text-[#FF2C45] hover:bg-[#FFC3CA] active:text-[#FFF6F8] active:bg-[#FF2C45] disabled:bg-Gray20",
 			},
 			size: {
 				large: `w-[144px] h-[62px] rounded-[14px] px-[20px] py-[16px] text-Title03`,
