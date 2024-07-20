@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
+import { setCookie } from "cookies-next"
 
 import { COMMON_HOME, MANAGER_BASE_HOME } from "@/constant/routing-path"
 import type { TSignDataResponse } from "@/type"
@@ -15,6 +16,10 @@ export const useGetAuthToken = () => {
 			await getLogin(code, loginType),
 		onSuccess: async ({ data }: TResponseData<TSignDataResponse, "data">) => {
 			initAuthTokens(data)
+			/** 임시로 쿠키에 저장해서 profileUrl 전달 */
+			setCookie("profile-image", encodeURIComponent(data.profileImgUrl), {
+				maxAge: 86400,
+			})
 			if (data.role === "MANAGER") {
 				window.location.href = MANAGER_BASE_HOME
 			} else {
