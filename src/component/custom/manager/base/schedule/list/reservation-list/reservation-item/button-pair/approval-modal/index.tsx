@@ -1,3 +1,5 @@
+import { useMutation } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
@@ -8,27 +10,42 @@ import {
 	ModalHeader,
 } from "@/component/common/nt-modal"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
+import { axiosInstance } from "@/config/axios"
+import getQueryClient from "@/config/tanstack-query/get-query-client"
+import { MANAGER_QUERY } from "@/config/tanstack-query/key-factory"
 import { getBeforeOrAfterN } from "@/util/common"
 
-import ConfirmApproval from "./confirm-approval"
+import ErrorModal from "../error-modal"
+
+import type {
+	ApprovalModalPT,
+	TReservationDetail,
+	TReservationDetailList,
+	useScheduleConfirmMutationFnPT,
+} from "./approval-modal.type"
+import PreApprovalSummary from "./pre-approval-summary"
 import RequiredTimeCounting from "./required-time-counting"
 
-type ApprovalModalPT = {
-	startTime: number
-	optionArr: string[][]
-	companion: number
-}
-
 export default function ApprovalModal({
+	shopId,
+	reservationId,
 	startTime,
 	companion,
+	reservationDetailIdArr,
 }: ApprovalModalPT) {
 	const { onCloseModal } = useModal()
 	const [requiredTime, setRequiredTime] = useState(0)
+	const { mutate: onConfirm } = useScheduleConfirm()
 	const endTime = getBeforeOrAfterN(startTime, requiredTime, "after", "minute")
-	console.log(endTime)
-	console.log(startTime + requiredTime * 60)
 
+	const onClickConfirmButton = () => {
+		const reqBody = createReqBody(startTime, endTime, reservationDetailIdArr)
+		onConfirm({
+			shopId,
+			reservationId,
+			reqBody,
+		})
+	}
 	const onClickIncreasingButton = () => {
 		setRequiredTime((prev) => prev + 10)
 	}
@@ -38,6 +55,7 @@ export default function ApprovalModal({
 			return prev - 10
 		})
 	}
+	const isButtonDisabled = requiredTime === 0
 
 	return (
 		<ModalContent>
@@ -45,7 +63,7 @@ export default function ApprovalModal({
 				[예약 수락]
 			</ModalHeader>
 			<ModalBody className="flex flex-col justify-center gap-[30px] pt-[10px]">
-				<ConfirmApproval {...{ startTime, endTime, companion }} />
+				<PreApprovalSummary {...{ startTime, endTime, companion }} />
 				<RequiredTimeCounting
 					{...{
 						requiredTime,
@@ -65,11 +83,74 @@ export default function ApprovalModal({
 					>
 						돌아가기
 					</NTButton>
-					<NTButton size="small" flexible="fit">
-						거절하기
+					<NTButton
+						size="small"
+						flexible="fit"
+						onClick={onClickConfirmButton}
+						disabled={isButtonDisabled}
+					>
+						수락하기
 					</NTButton>
 				</div>
 			</ModalFooter>
 		</ModalContent>
 	)
+}
+
+const createReqBody = (
+	startTime: number,
+	endTime: number,
+	reservationDetailIdArr: number[],
+): TReservationDetailList => {
+	const reservationDetailList: TReservationDetail[] = []
+	reservationDetailIdArr.map((reservationDetailId) => {
+		reservationDetailList.push({
+			reservationDetailId,
+			startTime,
+			endTime,
+		})
+	})
+	return {
+		reservationDetailList,
+	}
+}
+
+const useScheduleConfirm = () => {
+	const queryClient = getQueryClient()
+	const { onOpenModal, onClearModal } = useModal()
+	const router = useRouter()
+	return useMutation({
+		mutationFn: async ({
+			shopId,
+			reservationId,
+			reqBody,
+		}: useScheduleConfirmMutationFnPT) =>
+			await postScheduleConfirm(shopId, reservationId, reqBody),
+		onSuccess: (_, { shopId }) => {
+			queryClient.invalidateQueries({
+				queryKey: MANAGER_QUERY.scheduleList(shopId).queryKey,
+			})
+			onClearModal()
+		},
+		onError: () => {
+			onClearModal()
+			onOpenModal({
+				children: <ErrorModal bodyText="예약 수락 중, 오류가 발생했습니다." />,
+			})
+		},
+		onSettled: () => {
+			router.refresh()
+		},
+	})
+}
+const postScheduleConfirm = async (
+	shopId: number,
+	reservationId: number,
+	reqBody: TReservationDetailList,
+) => {
+	const response = await axiosInstance().patch(
+		`/shops/${shopId}/reservations/${reservationId}/confirm`,
+		reqBody,
+	)
+	return response.data
 }

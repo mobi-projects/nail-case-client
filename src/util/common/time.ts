@@ -54,6 +54,21 @@ export const getThisMin = () => getMinFromStamp(getNowStamp())
 /** KST 기준, 현재 호출 "분" 를 타임스탬프 로 반환 */
 export const getThisSec = () => getSecFromStamp(getNowStamp())
 
+/** 조회일 기준, 00시 00분 반환 (timestamp)  */
+export const getTodayFirst = () => {
+	const nowStamp = getNowStamp()
+	const { year, month, date } = decomposeStamp(nowStamp)
+	const todayFirstStamp = getThisDayFirst(year, month, date)
+	return todayFirstStamp
+}
+/** 조회일 기준, 23시 59분 59초 반환 (timestamp)  */
+export const getTodayLast = () => {
+	const nowStamp = getNowStamp()
+	const { year, month, date } = decomposeStamp(nowStamp)
+	const todayLastStamp = getThisDayLast(year, month, date)
+	return todayLastStamp
+}
+
 /** 입력받은 "연도", "월", "일" 기준, 당일 00시 00분 00초 반환 (timestamp) */
 export const getThisDayFirst = (year: number, month: number, date: number) =>
 	getKSTStamp(year, month, date)

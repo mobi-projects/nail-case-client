@@ -10,24 +10,41 @@ type ButtonPairPT = {
 	startTime: number
 	optionArr: string[][]
 	companion: number
+	reservationId: number
+	shopId: number
+	reservationDetailIdArr: number[]
 }
 export default function ButtonPair({
 	status,
 	startTime,
 	optionArr,
 	companion,
+	shopId,
+	reservationId,
+	reservationDetailIdArr,
 }: ButtonPairPT) {
 	const { onOpenModal } = useModal()
 	if (status !== "PENDING") return
 
 	const onClickDeclineButton = () => {
 		onOpenModal({
-			children: <DeclineModal />,
+			children: <DeclineModal {...{ shopId, reservationId }} />,
 		})
 	}
 	const onClickApprovalButton = () => {
 		onOpenModal({
-			children: <ApprovalModal {...{ startTime, optionArr, companion }} />,
+			children: (
+				<ApprovalModal
+					{...{
+						shopId,
+						reservationId,
+						startTime,
+						optionArr,
+						companion,
+						reservationDetailIdArr,
+					}}
+				/>
+			),
 		})
 	}
 	return (

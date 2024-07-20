@@ -38,6 +38,7 @@ export default function ReservationItem({
 		reservation.reservationDetailList,
 		companion,
 	)
+	const reservationDetailIdArr = getReservationDetailIdArr(detailList)
 
 	return (
 		<div
@@ -63,7 +64,15 @@ export default function ReservationItem({
 				)}
 			/>
 			<ButtonPair
-				{...{ status, startTime, optionArr, companion, shopId, reservationId }}
+				{...{
+					status,
+					startTime,
+					optionArr,
+					companion,
+					shopId,
+					reservationId,
+					reservationDetailIdArr,
+				}}
 			/>
 		</div>
 	)
@@ -100,4 +109,7 @@ const getOptionsForMemberArr = (
 		})
 	}
 	return optionsForMember
+}
+const getReservationDetailIdArr = (detailList: TReservationDetail[]) => {
+	return detailList.map(({ reservationDetailId }) => reservationDetailId)
 }

@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query"
 
 import NTLoadingSpinner from "@/component/common/nt-loading-spinner"
-import { managerQuery } from "@/config/tanstack-query/key-factory"
+import { MANAGER_QUERY } from "@/config/tanstack-query/key-factory"
 import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 import { isUndefined } from "@/util/common/type-guard"
 
@@ -30,7 +30,7 @@ export default function ReservationList({
 	statusIdx,
 }: ReservationListPT) {
 	const { data, isLoading, isError } = useQuery(
-		managerQuery.scheduleList(shopId),
+		MANAGER_QUERY.scheduleList(shopId),
 	)
 	if (isLoading) {
 		return (

@@ -1,15 +1,12 @@
 import { decomposeStamp, padStartToPrinting } from "@/util/common"
 
-type StartToEndPT = {
-	companion: number
-	startTime: number
-	endTime: number
-}
-export default function ConfirmApproval({
+import type { PreApprovalSummaryPT } from "./pre-approval-summary.type"
+
+export default function PreApprovalSummary({
 	companion,
 	startTime,
 	endTime,
-}: StartToEndPT) {
+}: PreApprovalSummaryPT) {
 	const { yearToDate, hourToMin: startHourToMin } = getFormattedTime(startTime)
 	const { hourToMin: endHourToMin } = getFormattedTime(endTime)
 	return (

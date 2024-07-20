@@ -1,7 +1,7 @@
 import { getListReservation } from "@/util/api/reservation-controller"
 import { getBeforeOrAfterN, getTodayFirst, getTodayLast } from "@/util/common"
 
-export const managerQuery = {
+export const MANAGER_QUERY = {
 	all: null,
 	scheduleList: (shopId: number) => ({
 		queryKey: ["manager-schedule-list", shopId],
@@ -18,4 +18,4 @@ export const managerQuery = {
 			])
 		},
 	}),
-}
+} as const
