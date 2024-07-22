@@ -24,8 +24,8 @@ export const getLogin = async (code: string, loginType: TSignType) => {
 export const postResquestNewToken = async () => {
 	const refreshToken = getCookie(REFRESH_TOKEN)
 
-	const response = await axiosInstance().post(
-		"/auth/refresh",
+	const response = await axios.post(
+		`${process.env.NEXT_PUBLIC_BACKEND_APP}/auth/refresh`,
 		{},
 		{
 			headers: {
@@ -35,6 +35,7 @@ export const postResquestNewToken = async () => {
 	)
 	return response
 }
+
 /** [POST] 로그아웃 요청 api 호출 */
 export const postLogout = async () => {
 	const refreshToken = getCookie(REFRESH_TOKEN)
