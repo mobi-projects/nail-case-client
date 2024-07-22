@@ -1,12 +1,18 @@
 "use client"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import { useRef } from "react"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
+import {
+	NTPulldownContent,
+	NTPulldownItem,
+	NTPulldownLabel,
+	NTPulldownTrigger,
+	useNTPulldown,
+} from "@/component/common/atom/nt-pulldown"
 import NTIcon from "@/component/common/nt-icon"
-import NTSearchfield from "@/component/common/nt-searchfield"
 import NTToolbar from "@/component/common/nt-toolbar"
+import { cn } from "@/config/tailwind"
 import {
 	MANAGER_BASE_MYSHOP_HOME,
 	MANAGER_BASE_SCHEDULE_LIST,
@@ -33,24 +39,61 @@ function ManagerLayoutCatalog() {
 	return (
 		<div className="flex h-[51px] w-full items-center justify-between">
 			<ManagerLayoutPullDown />
-			<ManagerLayoutSearchfield />
+			{/* <ManagerLayoutSearchfield /> */}
 			<ManagerLayoutSubCatalog />
 		</div>
 	)
 }
+
 function ManagerLayoutPullDown() {
+	const { isOpen, clickedIdx, selectIdx } = useNTPulldown()
+	const ShopList = ["모비네일 한남", "다라네일 한남", "마바네일 한남"]
 	return (
-		<div className="h-[45px] w-[134px] bg-Gray10 text-Gray100">pull down</div>
-	)
-}
-function ManagerLayoutSearchfield() {
-	const searchInputRef = useRef<HTMLInputElement>(null)
-	return (
-		<div className="mx-[70px] h-full w-[690px]">
-			<NTSearchfield size="large" ref={searchInputRef} />
+		<div className="relative h-fit w-fit">
+			<NTPulldownTrigger className="flex w-[134px] min-w-[134px] cursor-pointer items-center justify-center gap-x-1 rounded-[6px] border border-transparent bg-Gray10 px-[6px] py-[8px] transition-all duration-500 ease-in-out hover:border-Gray40">
+				<h2 className="truncate text-[16px] font-Medium">
+					{ShopList[clickedIdx]}
+				</h2>
+				<NTIcon
+					icon="expandDownLight"
+					className={cn(
+						"h-6 w-6 text-Gray40 transition-all duration-75",
+						isOpen ? "-rotate-180" : "",
+					)}
+				/>
+			</NTPulldownTrigger>
+			<NTPulldownContent position="left" className="rounded-[14px]">
+				<NTPulldownLabel className="border-b-[1px] border-Gray40 px-2 py-3 text-Body01 font-SemiBold text-Gray80">
+					지점을 선택해주세요
+				</NTPulldownLabel>
+				{ShopList.map((shop, idx) => (
+					<NTPulldownItem
+						className="flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-Gray10"
+						key={idx}
+						onClick={() => selectIdx(idx)}
+					>
+						<p className="truncate text-Body02 text-Gray70">{shop}</p>
+						<NTIcon
+							icon="check"
+							className={cn(
+								"h-6 w-6",
+								clickedIdx === idx ? "opacity-100" : "opacity-0",
+							)}
+						/>
+					</NTPulldownItem>
+				))}
+			</NTPulldownContent>
 		</div>
 	)
 }
+// function ManagerLayoutSearchfield() {
+//    const searchInputRef = useRef<HTMLInputElement>(null)
+//    return (
+//       <div className="mx-[70px] h-full w-[690px]">
+//          <NTSearchfield size="large" ref={searchInputRef} />
+//       </div>
+//    )
+// }
 function ManagerLayoutSubCatalog() {
 	return (
 		<div className="flex w-[236px] items-center justify-end gap-[12px] pr-[21px]">
