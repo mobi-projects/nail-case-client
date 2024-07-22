@@ -8,12 +8,13 @@ export default function ManagerBaseLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<div className="w-full pb-[42px]">
-			<NTPulldownProvider>
+		<NTPulldownProvider>
+			<div className="w-full pb-[42px]">
 				<ManagerBaseHeader />
 				<NTToast />
-			</NTPulldownProvider>
-			{children}
-		</div>
+
+				{children}
+			</div>
+		</NTPulldownProvider>
 	)
 }
