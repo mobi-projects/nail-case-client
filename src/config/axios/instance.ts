@@ -41,19 +41,22 @@ const setRequestInterceptor = (instance: AxiosInstance) => {
 	return instance
 }
 
+type AxiosErrorResponseData = { code: number; error?: null; message: string }
+
 /** "응답" 인터셉터 설정 */
 const setResponseInterceptor = (instance: AxiosInstance) => {
 	instance.interceptors.response.use(
 		(response) => response,
-		async (error: AxiosError) => {
-			const { config, response } = error
-			//**********  401 에러 발생 시 실행 *************//
-			if (response?.status === 401)
+		async ({ config, response }: AxiosError<AxiosErrorResponseData>) => {
+			//-------------  401 에러 발생 시 실행 -----------------//
+			//------------ 만료된 access-token요청 보냈을때 만실행---//
+			if (response?.status === 401 && response.data.code === 1711) {
 				try {
 					return await handleUnauthorized401(config)
 				} catch (error) {
-					return Promise.reject(error)
+					Promise.reject(error)
 				}
+			}
 		},
 	)
 	return instance
