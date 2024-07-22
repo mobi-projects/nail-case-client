@@ -1,4 +1,5 @@
 "use client"
+import { getCookie } from "cookies-next"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import * as React from "react"
@@ -47,11 +48,19 @@ function CustomerLayoutSubCatalog() {
 		}
 	}
 
+	const profileUrl = getCookie("profile-image") || ""
+
 	return (
 		<div className="flex w-[236px] items-center justify-end gap-[12px] pr-[21px]">
 			<Toaster />
 			<NTIcon className="text-Gray90" icon="bellLight" />
-			<div className="h-[50px] w-[50px] rounded-full bg-Gray20" />
+			<Image
+				src={decodeURIComponent(profileUrl)}
+				alt="Profile"
+				width={50}
+				height={50}
+				className="h-[50px] w-[50px] rounded-full bg-Gray20"
+			/>
 			<button onClick={handleLogout}>로그아웃</button>
 		</div>
 	)
