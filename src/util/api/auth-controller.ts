@@ -3,6 +3,8 @@ import { getCookie, hasCookie } from "cookies-next"
 
 import { axiosInstance } from "@/config/axios"
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constant/auth-key"
+import type { TUserInfo } from "@/type"
+import type { TResponseData } from "@/type/response"
 import type { TSignType } from "@/type/union-option/sign-type"
 
 /** [GET] 로그인 요청 api 호출 */
@@ -58,7 +60,9 @@ export const postLogout = async () => {
 }
 
 /** [GET] 유저정보 조회 요청 api 호출 */
-export const getUserInfo = async () => {
+export const getUserInfo = async (): Promise<
+	TResponseData<TUserInfo, "data">
+> => {
 	const response = await axiosInstance().get("/users/info")
 	return response.data
 }

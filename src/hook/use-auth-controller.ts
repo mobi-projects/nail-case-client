@@ -38,11 +38,8 @@ export const useGetAuthToken = () => {
 }
 
 /** 유저정보 조회 useQuery  */
-export const useGetUserInfo = () => {
-	const { data: userInfo, ...rest } = useQuery({
+export const useGetUserInfo = () =>
+	useQuery({
 		queryKey: [QUERY_USER_IFNO],
 		queryFn: getUserInfo,
 	})
-
-	return { userInfo, ...rest }
-}
