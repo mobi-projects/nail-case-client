@@ -122,3 +122,14 @@ export type TResGetListShopNailArtist = {
 	enable: boolean
 	near: number
 }
+export type TResGetShopInfo = {
+	createdAt: number
+	modifiedAt: number
+	shopId: number
+	point: string
+	parkingLotCnt: number
+	availableCnt: number
+	info: string
+	price: string
+	imageUrl: string
+}

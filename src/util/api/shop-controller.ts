@@ -25,6 +25,7 @@ import type {
 	TResGetListShopNailArtist,
 	TResGetSearchShop,
 	TResGetShopById,
+	TResGetShopInfo,
 	TResPatchUpdateOverview,
 	TResPostRegisterShop,
 	TResPutUpdateShop,
@@ -45,6 +46,13 @@ export const getShopById = async (
 	shopId: number,
 ): Promise<TResponseData<TResGetShopById, "data">> => {
 	const response = await axiosInstance().get(`/shops/${shopId}`)
+	return response.data
+}
+/** [GET] 매장 정보 info 조회 api 호출**/
+export const getShopInfo = async (
+	shopId: number,
+): Promise<TResponseData<TResGetShopInfo, "data">> => {
+	const response = await axiosInstance().get(`/shops/${shopId}/info`)
 	return response.data
 }
 /** [GET] 모든 해쉬태그 불러오기 */
