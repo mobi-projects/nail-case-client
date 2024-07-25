@@ -92,12 +92,16 @@ function InfoCardWorkingTime({ workDataList }: InfoCardWorkingTimePT) {
 			if (group[i].dayOfWeek === end + 1) {
 				end = group[i].dayOfWeek
 			} else {
-				ranges.push(start === end ? days[start] : `${days[start]}-${days[end]}`)
+				ranges.push(
+					start === end ? `${days[start]} ` : `${days[start]}-${days[end]}`,
+				)
 				start = group[i].dayOfWeek
 				end = group[i].dayOfWeek
 			}
 		}
-		ranges.push(start === end ? days[start] : `${days[start]}-${days[end]}`)
+		ranges.push(
+			start === end ? `${days[start]} :` : `${days[start]}-${days[end]} :`,
+		)
 
 		const openTime = new Date(group[0].openTime * 1000).toLocaleTimeString([], {
 			hour: "2-digit",
@@ -111,10 +115,10 @@ function InfoCardWorkingTime({ workDataList }: InfoCardWorkingTimePT) {
 		return `${ranges.join(", ")}\n${openTime} ~${closeTime}`
 	})
 	return (
-		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] px-[25px] py-[15px] shadow-customGray80">
+		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] px-[25px] pb-[10px] pt-[15px] shadow-customGray80">
 			<CardHeader title="영업시간" />
-			<div className="ml-[-12px]">
-				<div className="list-disc">
+			<div className="mx-[-12px] h-[100px] overflow-y-scroll">
+				<div className="flex flex-col justify-between">
 					<div className="flex items-center">
 						<NTIcon icon="dot" className="text-Gray60" />
 						{workWeek}
