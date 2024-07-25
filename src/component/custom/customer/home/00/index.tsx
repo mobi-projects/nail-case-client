@@ -3,17 +3,16 @@ import { getCookie } from "cookies-next"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import * as React from "react"
-import { Toaster, toast } from "sonner"
+import { Toaster } from "sonner"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import NTToolbar from "@/component/common/nt-toolbar"
 import { useAuth } from "@/config/auth-provider"
-import { COMMON_HOME, COMMON_SIGN } from "@/constant/routing-path"
+import { COMMON_SIGN } from "@/constant/routing-path"
 import { LABEL_LIST_FOR_CUSTOMER_BASE_TOOLBAR } from "@/constant/toolbar-list"
-import { postLogout } from "@/util/api/auth-controller"
-import { deleteAllCookies } from "@/util/common/auth"
+import { handleLogout } from "@/util/common/auth"
 
 export default function CustomerHeader() {
 	const { isAuthenticated } = useAuth()
@@ -35,19 +34,6 @@ export default function CustomerHeader() {
 }
 
 function CustomerLayoutSubCatalog() {
-	const handleLogout = async () => {
-		const response = await postLogout()
-		if (response?.status === 200) {
-			deleteAllCookies()
-			toast.success("안녕히 가세요")
-			setTimeout(() => {
-				window.location.href = COMMON_HOME
-			}, 1000)
-		} else {
-			toast.warning("로그아웃에 실패했습니다.")
-		}
-	}
-
 	const profileUrl = getCookie("profile-image") || ""
 
 	return (
