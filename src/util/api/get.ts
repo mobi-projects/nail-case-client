@@ -1,20 +1,10 @@
 import { axiosInstance } from "@/config/axios"
-import {
-	createPostArr,
-	createReservationArr,
-	createShopInfo,
-	tmpFetch,
-} from "@/mock"
-import type { TShopInfo } from "@/type"
+import { createPostArr, createReservationArr, tmpFetch } from "@/mock"
 import type { TResGetMainPageHaveToken } from "@/type/main-page"
 import type { TPost } from "@/type/post"
 import type { TReservation } from "@/type/reservation"
 import type { TResponseData } from "@/type/response"
 
-export const getShopInfo = async () => {
-	const response = await tmpFetch<TShopInfo>(createShopInfo()) // TODO: fetching 함수 교체 필요
-	return response
-}
 export const getReservationArr = async (from: number, to: number) => {
 	const response = await tmpFetch<TReservation[]>(
 		createReservationArr(from, to),

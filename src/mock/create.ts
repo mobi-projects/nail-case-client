@@ -1,14 +1,6 @@
 import { faker } from "@faker-js/faker/locale/ko"
 
-import type {
-	TArtist,
-	TNTTime,
-	TOperating,
-	TSchedule,
-	TShopGuide,
-	TShopInfo,
-	TUser,
-} from "@/type"
+import type { TArtist, TNTTime, TOperating, TSchedule, TUser } from "@/type"
 import type { TComment } from "@/type/comment"
 import type { TPost, TPostCategory } from "@/type/post"
 import type { TEssentialForm, TReservation } from "@/type/reservation"
@@ -16,25 +8,6 @@ import type { TNailCondition } from "@/type/union-option/nail-condition"
 import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 import { transToNTTime } from "@/util/common/transform"
 
-export const createShopInfo = (): TShopInfo => {
-	const shopInfo: TShopInfo = {
-		id: faker.string.uuid(),
-		address: faker.location.streetAddress(),
-		shopName: faker.company.name(),
-		overview: faker.lorem.sentence(),
-		todayAccess: faker.number.int(),
-		totalAccess: faker.number.int(),
-		phone: faker.phone.number(),
-		hashtagArr: Array.from({ length: 3 }, () => "#" + faker.lorem.word()),
-		snsArr: Array.from({ length: 4 }, () => faker.internet.url()),
-		srcArr: Array.from({ length: 5 }, () => faker.image.url()),
-		owner: createUser(),
-		specialty: pickRandomOneOfArr(["NAIL", "PADI", "EYEBROW"]),
-		guide: createGuide(),
-		operatingTimeArr: getFakeObjArr(7, createOperating),
-	}
-	return shopInfo
-}
 export const createReservationArr = (
 	from: number,
 	to: number,
@@ -111,14 +84,6 @@ const createUser = (): TUser => {
 		phone: faker.phone.number(),
 	}
 	return user
-}
-const createGuide = (): TShopGuide => {
-	const guide: TShopGuide = {
-		parking: Number(getRandomNumber(3)),
-		companion: Number(getRandomNumber(3)),
-		reservationDeadline: Number(getRandomNumber(3)),
-	}
-	return guide
 }
 const createArtist = (): TArtist => {
 	const user = createUser()

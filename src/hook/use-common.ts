@@ -1,21 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 
-import {
-	QUERY_POST_ARR,
-	QUERY_RESERVATION_ARR,
-	QUERY_SHOP_INFO,
-} from "@/constant"
+import { QUERY_POST_ARR, QUERY_RESERVATION_ARR } from "@/constant"
 import type { TNTTime } from "@/type"
-import { getPostArr, getReservationArr, getShopInfo } from "@/util/api"
+import { getPostArr, getReservationArr } from "@/util/api"
 import { transToTimestamp } from "@/util/common/transform"
 
-export const useShopInfo = () => {
-	const { data: shopInfo } = useQuery({
-		queryKey: [QUERY_SHOP_INFO],
-		queryFn: getShopInfo,
-	})
-	return { shopInfo }
-}
 export const usePostArr = () => {
 	const { data: postArr } = useQuery({
 		queryKey: [QUERY_POST_ARR],
