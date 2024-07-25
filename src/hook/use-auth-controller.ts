@@ -10,7 +10,7 @@ import { getLogin, getUserInfo } from "@/util/api/auth-controller"
 import { initAuthTokens } from "@/util/common/auth"
 
 type UseGetAuthTokenPT = { code: string; loginType: TSignType }
-
+// -------------------------tanstack query 함수 -------------------------------------------//
 /** 로그인 mutation  */
 export const useGetAuthToken = () => {
 	const { mutateAsync: getAuthToken, ...rest } = useMutation({
@@ -22,11 +22,7 @@ export const useGetAuthToken = () => {
 			setCookie("profile-image", encodeURIComponent(data.profileImgUrl), {
 				maxAge: 86400,
 			})
-			if (data.role === "MANAGER") {
-				window.location.href = MANAGER_BASE_HOME
-			} else {
-				window.location.href = COMMON_HOME
-			}
+			routingUser(data)
 		},
 		onError: (error) => {
 			alert("로그인 실패")
@@ -45,4 +41,15 @@ export const useGetUserInfo = () => {
 	})
 
 	return { userInfo, ...rest }
+}
+
+///--------------------------  tanstack qeuery에 사용될 일반 함수  ----------------------- //
+const routingUser = ({ role, hasShop }: TSignDataResponse) => {
+	if (role === "MEMBER") {
+		window.location.href = COMMON_HOME
+	} else if (hasShop && role === "MANAGER") {
+		window.location.href = MANAGER_BASE_HOME
+	} else {
+		window.location.href = "/manager/base/shop-register"
+	}
 }
