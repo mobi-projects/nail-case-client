@@ -133,3 +133,10 @@ export type TResGetShopInfo = {
 	price: string
 	imageUrl: string
 }
+export type TReseGetWortHours = {
+	workHourId: number
+	dayOfWeek: number
+	isOpen: boolean
+	openTime: number
+	closeTime: number
+}

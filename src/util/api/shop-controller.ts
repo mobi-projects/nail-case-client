@@ -22,6 +22,7 @@ import type {
 	TReqBodyPostRegisterShop,
 	TReqBodyPostUploadImage,
 	TReqBodyPutUpdateShop,
+	TReseGetWortHours,
 	TResGetListShopNailArtist,
 	TResGetSearchShop,
 	TResGetShopById,
@@ -124,5 +125,12 @@ export const getShopMonthlyArt = async (shopId: number) => {
 
 export const getShopReview = async (shopId: number) => {
 	const response = await axiosInstance().get(`/shops/${shopId}/reviews`)
+	return response.data
+}
+/** [GET] 매장 운영시간 조회 api 호출**/
+export const getWorkHours = async (
+	shopId: number,
+): Promise<TResponseData<TReseGetWortHours[], "dataList">> => {
+	const response = await axiosInstance().get(`/shops/${shopId}/hours`)
 	return response.data
 }

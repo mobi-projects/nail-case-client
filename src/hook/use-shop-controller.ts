@@ -5,12 +5,14 @@ import {
 	QUERY_REVIEW_ARR,
 	QUERY_SHOP_ID,
 	QUERY_SHOP_INFO,
+	QUERY_SHOP_WORK_HOUR,
 } from "@/constant"
 import {
 	getListShopNailArtist,
 	getShopById,
 	getShopInfo,
 	getShopReview,
+	getWorkHours,
 } from "@/util/api/shop-controller"
 
 /** 매장 아티스트 목록조회 */
@@ -35,4 +37,9 @@ export const useShopInfo = (shopId: number) =>
 	useQuery({
 		queryKey: [QUERY_SHOP_INFO, shopId],
 		queryFn: async () => await getShopInfo(shopId),
+	})
+export const useWorkHours = (shopId: number) =>
+	useQuery({
+		queryKey: [QUERY_SHOP_WORK_HOUR, shopId],
+		queryFn: async () => await getWorkHours(shopId),
 	})
