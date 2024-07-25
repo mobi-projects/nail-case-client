@@ -11,7 +11,7 @@ export const initAuthTokens = ({
 	const isManager = role === "MANAGER"
 	setCookie(ACCESS_TOKEN, accessToken)
 	setCookie(REFRESH_TOKEN, refreshToken, { maxAge: 86400 })
-	setCookie(IS_MANAGER, isManager)
+	setCookie(IS_MANAGER, isManager, { maxAge: 86400 })
 }
 
 /** accessToken, refreshToken cookie에 추가 */

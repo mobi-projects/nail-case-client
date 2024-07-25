@@ -34,6 +34,10 @@ export function middleware(request: NextRequest) {
 	if (!isAuth && pathname.match(/^\/shop\/\d+\/(?!$)/)) {
 		return NextResponse.redirect(new URL("/", request.url))
 	}
+	// 로그인 상테에서 판매자가 사용자 페이지 접근시 판매자 home으로 redirect
+	if (isAuth && isManager && !pathname.startsWith("/manager")) {
+		return NextResponse.redirect(new URL("/manager/base", request.url))
+	}
 
 	// 로그인 상태에서 모든 페이지 접근 허용
 	return NextResponse.next()
