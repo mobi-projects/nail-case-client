@@ -15,8 +15,8 @@ import {
 export const LABEL_LIST_FOR_MANAGER_BASE_TOOLBAR = [
 	"홈",
 	"일정",
-	"채팅",
-	"내 샵",
+	// "채팅",
+	// "내 샵",
 ] as const
 export const PATH_LIST_FOR_MANAGER_BASE_TOOLBAR = [
 	MANAGER_BASE_HOME,

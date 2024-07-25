@@ -4,7 +4,6 @@ import { usePathname, useRouter } from "next/navigation"
 import { useRef } from "react"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
-import NTIcon from "@/component/common/nt-icon"
 import NTSearchfield from "@/component/common/nt-searchfield"
 import NTToolbar from "@/component/common/nt-toolbar"
 import {
@@ -17,6 +16,8 @@ import {
 	PATH_LIST_FOR_MANAGER_BASE_SCHEDULE_TOOLBAR,
 	PATH_LIST_FOR_MANAGER_BASE_TOOLBAR,
 } from "@/constant/toolbar-list"
+
+import HeaderMenu from "../header-menu"
 
 export default function ManagerBaseHeader() {
 	return (
@@ -34,7 +35,7 @@ function ManagerLayoutCatalog() {
 		<div className="flex h-[51px] w-full items-center justify-between">
 			<ManagerLayoutPullDown />
 			<ManagerLayoutSearchfield />
-			<ManagerLayoutSubCatalog />
+			<HeaderMenu />
 		</div>
 	)
 }
@@ -51,14 +52,7 @@ function ManagerLayoutSearchfield() {
 		</div>
 	)
 }
-function ManagerLayoutSubCatalog() {
-	return (
-		<div className="flex w-[236px] items-center justify-end gap-[12px] pr-[21px]">
-			<NTIcon className="text-Gray90" icon="bellLight" />
-			<div className="h-[50px] w-[50px] rounded-full bg-Gray20"></div>
-		</div>
-	)
-}
+
 function ManagerBaseToolbar() {
 	const pathName = usePathname()
 	const router = useRouter()
