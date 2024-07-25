@@ -51,3 +51,9 @@ export const postLogout = async () => {
 	)
 	return response
 }
+
+/** [GET] 유저정보 조회 요청 api 호출 */
+export const getUserInfo = async () => {
+	const response = await axiosInstance().get("/users/info")
+	return response.data
+}

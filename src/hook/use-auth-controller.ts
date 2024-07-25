@@ -1,15 +1,17 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { setCookie } from "cookies-next"
 
+import { QUERY_USER_IFNO } from "@/constant"
 import { COMMON_HOME, MANAGER_BASE_HOME } from "@/constant/routing-path"
 import type { TSignDataResponse } from "@/type"
 import type { TResponseData } from "@/type/response"
 import type { TSignType } from "@/type/union-option/sign-type"
-import { getLogin } from "@/util/api/auth-controller"
+import { getLogin, getUserInfo } from "@/util/api/auth-controller"
 import { initAuthTokens } from "@/util/common/auth"
 
 type UseGetAuthTokenPT = { code: string; loginType: TSignType }
 
+/** 로그인 mutation  */
 export const useGetAuthToken = () => {
 	const { mutateAsync: getAuthToken, ...rest } = useMutation({
 		mutationFn: async ({ code, loginType }: UseGetAuthTokenPT) =>
@@ -33,4 +35,14 @@ export const useGetAuthToken = () => {
 		},
 	})
 	return { getAuthToken, ...rest }
+}
+
+/** 유저정보 조회 useQuery  */
+export const useGetUserInfo = () => {
+	const { data: userInfo, ...rest } = useQuery({
+		queryKey: [QUERY_USER_IFNO],
+		queryFn: getUserInfo,
+	})
+
+	return { userInfo, ...rest }
 }
