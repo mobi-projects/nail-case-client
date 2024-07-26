@@ -1,6 +1,8 @@
 "use client"
 
+import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
+import { COMMON_HOME } from "@/constant/routing-path"
 import {
 	useShopById,
 	useShopInfo,
@@ -11,37 +13,48 @@ import type {
 	TResGetShopById,
 	TResGetShopInfo,
 } from "@/type/shop"
+import { WorkDay, WorkWeek } from "@/util/common/workHour"
 
 type CardHeaderPT = {
 	title: string
 }
 
 export default function MyShopInfo() {
-	const { data, isError, error, isLoading } = useWorkHours(1)
+	const { data, isError, isLoading } = useWorkHours(1)
 	const {
 		data: infoData,
 		isError: infoIsError,
-		error: infoError,
 		isLoading: infoIsLoading,
 	} = useShopInfo(1)
 
-	if (isError) {
-		return <div>Error: {error.message}</div>
-	}
-	if (isLoading) {
+	if (isLoading || infoIsLoading) {
 		return <div>Loading...</div>
 	}
-	if (infoIsError) {
-		return <div>Error: {infoError.message}</div>
-	}
-	if (infoIsLoading) {
-		return <div>Loading...</div>
+	if (isError || infoIsError) {
+		return (
+			<div className="flex h-dvh w-full flex-col items-center justify-center gap-4">
+				<h1 className="text-Title01 font-SemiBold text-PB100">
+					죄송합니다. 접속 중 오류가 발생했습니다.
+				</h1>
+				<p className="text-Body01 text-Gray70">
+					인터넷 연결 상태를 확인하시고 다시 시도해주세요.
+				</p>
+				<p className="text-Body01 text-Gray70">
+					문제가 지속되면 고객 지원팀에 문의해주세요.
+				</p>
+				<NTButton
+					variant={"primary"}
+					size={"medium"}
+					flexible={"fit"}
+					onClick={() => (window.location.href = COMMON_HOME)}
+				>
+					홈으로
+				</NTButton>
+			</div>
+		)
 	}
 	const workDataList = data?.dataList as TReseGetWortHours[]
-	console.log(workDataList)
 	const shopData = infoData?.data as TResGetShopInfo
-
-	console.log(shopData)
 	return (
 		<div className="flex justify-between">
 			<InfoCardWorkingTime workDataList={workDataList} />
@@ -67,53 +80,6 @@ type InfoCardWorkingTimePT = {
 	workDataList: Array<TReseGetWortHours>
 }
 function InfoCardWorkingTime({ workDataList }: InfoCardWorkingTimePT) {
-	const days = ["월", "화", "수", "목", "금", "토", "일"]
-	const openDays = workDataList.filter((data) => data.isOpen)
-	const workWeek = openDays.map((data) => days[data.dayOfWeek]).join(" ")
-	const groupedByHours = openDays.reduce<{
-		[key: string]: TReseGetWortHours[]
-	}>((acc, data) => {
-		const key = `${data.openTime}-${data.closeTime}`
-		if (!acc[key]) {
-			acc[key] = []
-		}
-		acc[key].push(data)
-		return acc
-	}, {})
-
-	const workDay = Object.values(groupedByHours).map((group) => {
-		group.sort((a, b) => a.dayOfWeek - b.dayOfWeek)
-
-		const ranges = []
-		let start = group[0].dayOfWeek
-		let end = group[0].dayOfWeek
-
-		for (let i = 1; i < group.length; i++) {
-			if (group[i].dayOfWeek === end + 1) {
-				end = group[i].dayOfWeek
-			} else {
-				ranges.push(
-					start === end ? `${days[start]} ` : `${days[start]}-${days[end]}`,
-				)
-				start = group[i].dayOfWeek
-				end = group[i].dayOfWeek
-			}
-		}
-		ranges.push(
-			start === end ? `${days[start]} :` : `${days[start]}-${days[end]} :`,
-		)
-
-		const openTime = new Date(group[0].openTime * 1000).toLocaleTimeString([], {
-			hour: "2-digit",
-			minute: "2-digit",
-		})
-		const closeTime = new Date(group[0].closeTime * 1000).toLocaleTimeString(
-			[],
-			{ hour: "2-digit", minute: "2-digit" },
-		)
-
-		return `${ranges.join(", ")}\n${openTime} ~${closeTime}`
-	})
 	return (
 		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] px-[25px] pb-[10px] pt-[15px] shadow-customGray80">
 			<CardHeader title="영업시간" />
@@ -121,9 +87,9 @@ function InfoCardWorkingTime({ workDataList }: InfoCardWorkingTimePT) {
 				<div className="flex flex-col justify-between">
 					<div className="flex items-center">
 						<NTIcon icon="dot" className="text-Gray60" />
-						{workWeek}
+						{WorkWeek(workDataList)}
 					</div>
-					{workDay.map((data, idx) => (
+					{WorkDay(workDataList).map((data, idx) => (
 						<div className="flex items-center" key={idx}>
 							<NTIcon icon="dot" className="text-Gray60" />
 							<span className="text-Body01 text-Gray60">{data}</span>
@@ -135,10 +101,10 @@ function InfoCardWorkingTime({ workDataList }: InfoCardWorkingTimePT) {
 	)
 }
 function InfoCardLocation() {
-	const { data, isError, error, isLoading } = useShopById(1)
+	const { data, isError, isLoading } = useShopById(1)
 
 	if (isError) {
-		return <div>Error: {error.message}</div>
+		return <div>Error</div>
 	}
 	if (isLoading) {
 		return <div>Loading...</div>
