@@ -18,6 +18,7 @@ import {
 } from "@/constant/toolbar-list"
 
 import HeaderMenu from "../header-menu"
+import ShopName from "../shop-name"
 
 export default function ManagerBaseHeader() {
 	return (
@@ -33,17 +34,13 @@ export default function ManagerBaseHeader() {
 function ManagerLayoutCatalog() {
 	return (
 		<div className="flex h-[51px] w-full items-center justify-between">
-			<ManagerLayoutPullDown />
+			<ShopName />
 			<ManagerLayoutSearchfield />
 			<HeaderMenu />
 		</div>
 	)
 }
-function ManagerLayoutPullDown() {
-	return (
-		<div className="h-[45px] w-[134px] bg-Gray10 text-Gray100">pull down</div>
-	)
-}
+
 function ManagerLayoutSearchfield() {
 	const searchInputRef = useRef<HTMLInputElement>(null)
 	return (

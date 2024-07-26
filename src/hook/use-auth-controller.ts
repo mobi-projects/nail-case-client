@@ -34,14 +34,11 @@ export const useGetAuthToken = () => {
 }
 
 /** 유저정보 조회 useQuery  */
-export const useGetUserInfo = () => {
-	const { data: userInfo, ...rest } = useQuery({
+export const useGetUserInfo = () =>
+	useQuery({
 		queryKey: [QUERY_USER_IFNO],
 		queryFn: getUserInfo,
 	})
-
-	return { userInfo, ...rest }
-}
 
 ///--------------------------  tanstack qeuery에 사용될 일반 함수  ----------------------- //
 const routingUser = ({ role, hasShop }: TSignDataResponse) => {
