@@ -98,9 +98,9 @@ export default function ShopRegisterForm() {
 			</InputWrapper>
 
 			<InputWrapper
-				required={false}
+				required={true}
 				label="영업시간"
-				description="요일별, 영업시간을 입력해주세요."
+				description="일주일 중, 최소 하루는 예약을 받을 수 있어야 합니다."
 			>
 				<OpeningHoursForm {...{ workHours, setWorkHours }} />
 			</InputWrapper>

@@ -12,9 +12,12 @@ export const initWorkHours = (): TWorkHour[] => {
 
 export const getIsValidOpeningHours = (workHours: TWorkHour[]): boolean => {
 	let result = true
+	let cntClosedDays = 0
 	workHours.forEach(({ openTime, closeTime, isOpen }) => {
 		if (isOpen) result &&= openTime < closeTime
+		else cntClosedDays++
 	})
+	if (cntClosedDays === 7) return false
 	return result
 }
 /* 샵등록 api 호출 시, 요청에 포함할 FormData 생성*/
