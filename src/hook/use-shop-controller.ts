@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 import {
 	QUERY_LIST_SHOP_NAIL_ARTIST,
@@ -9,6 +9,7 @@ import {
 	getListShopNailArtist,
 	getShopById,
 	getShopReview,
+	postRegisterShop,
 } from "@/util/api/shop-controller"
 
 /** 매장 아티스트 목록조회 */
@@ -28,4 +29,10 @@ export const useShopReviews = (shopId: number) =>
 	useQuery({
 		queryKey: [QUERY_REVIEW_ARR, shopId],
 		queryFn: () => getShopReview(shopId!),
+	})
+
+export const useRegisterShop = () =>
+	useMutation({
+		mutationFn: ({ reqForm }: { reqForm: FormData }) =>
+			postRegisterShop(reqForm),
 	})

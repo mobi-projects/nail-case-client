@@ -12,7 +12,7 @@ type EachDayOfWeekPT = {
 	onHandleIsOpen: (dayOfWeek: number) => void
 	onHandleTimestamp: (
 		dayOfWeek: number,
-		timeType: "startTime" | "endTime",
+		timeType: "openTime" | "closeTime",
 		fluctuationType: "increase" | "decrease",
 	) => void
 }
@@ -24,10 +24,10 @@ export default function EachDayOfWeek({
 }: EachDayOfWeekPT) {
 	const dayOfWeek = workHour.dayOfWeek
 	const dayOfWeekKor = DAY_OF_WEEKS_KOR[dayOfWeek]
-	const startTime = workHour.startTime
-	const endTime = workHour.endTime
+	const openTime = workHour.openTime
+	const closeTime = workHour.closeTime
 	const isOpen = workHour.isOpen
-	const isValid = startTime < endTime
+	const isValid = openTime < closeTime
 	return (
 		<div className="grid grid-rows-[1fr_18px] gap-[5px]">
 			<div className="grid h-[55px] w-full grid-cols-[1fr_12fr_100px] items-center gap-[50px]">
@@ -36,26 +36,26 @@ export default function EachDayOfWeek({
 				</p>
 				<div className="grid h-full w-full grid-cols-[1fr_40px_1fr] items-center gap-[18px]">
 					<TimeSetter
-						timestamp={startTime}
+						timestamp={openTime}
 						isValid={isValid}
 						isOpen={isOpen}
 						onIncreaseTimestamp={() => {
-							onHandleTimestamp(dayOfWeek, "startTime", "increase")
+							onHandleTimestamp(dayOfWeek, "openTime", "increase")
 						}}
 						onDecreaseTimestamp={() => {
-							onHandleTimestamp(dayOfWeek, "startTime", "decrease")
+							onHandleTimestamp(dayOfWeek, "openTime", "decrease")
 						}}
 					/>
 					<hr className="border-Gray w-full border" />
 					<TimeSetter
-						timestamp={endTime}
+						timestamp={closeTime}
 						isValid={isValid}
 						isOpen={isOpen}
 						onIncreaseTimestamp={() => {
-							onHandleTimestamp(dayOfWeek, "endTime", "increase")
+							onHandleTimestamp(dayOfWeek, "closeTime", "increase")
 						}}
 						onDecreaseTimestamp={() => {
-							onHandleTimestamp(dayOfWeek, "endTime", "decrease")
+							onHandleTimestamp(dayOfWeek, "closeTime", "decrease")
 						}}
 					/>
 				</div>

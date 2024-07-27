@@ -5,12 +5,17 @@ import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { NTButton } from "@/component/common/atom/nt-button"
+import { useRegisterShop } from "@/hook/use-shop-controller"
 
 import ImageForm from "./image-form"
 import InputWrapper from "./input-wrapper"
 import { ADDRESS, SHOP_NAME, TELEPHONE } from "./register-form.constant"
 import { SIMPLE_SCHEMA } from "./register-form.schema"
-import { getIsValidOpeningHours, initWorkHours } from "./register-form.util"
+import {
+	createRequestFrom,
+	getIsValidOpeningHours,
+	initWorkHours,
+} from "./register-form.util"
 import type { TWorkHour } from "./register.form.type"
 import SimpleInput from "./simple-form"
 import OpeningHoursForm from "./work-hours-form"
@@ -26,8 +31,9 @@ export default function ShopRegisterForm() {
 		reValidateMode: "onChange",
 	})
 	const [workHours, setWorkHours] = useState<TWorkHour[]>(initWorkHours())
-	const [, setShopProfileFileArr] = useState<Array<File>>([])
-	const [, setPriceListFileArr] = useState<Array<File>>([])
+	const [shopProfileFileArr, setShopProfileFileArr] = useState<Array<File>>([])
+	const [priceListFileArr, setPriceListFileArr] = useState<Array<File>>([])
+	const { mutateAsync } = useRegisterShop()
 
 	const errorMsgForShopName = errors[SHOP_NAME.key]?.message as string
 	const errorMsgForAddress = errors[ADDRESS.key]?.message as string
@@ -39,9 +45,18 @@ export default function ShopRegisterForm() {
 	)
 	const isValidToSubmit = isValidSimple && isValidOpeningHours
 
-	const onClickSubmit = () => {
+	const onClickSubmit = async () => {
 		const { shopName, address, telephone } = getValues()
-		console.log(shopName, address, telephone)
+		const formData = createRequestFrom(
+			shopName,
+			address,
+			telephone,
+			workHours,
+			shopProfileFileArr,
+			priceListFileArr,
+		)
+		const response = await mutateAsync({ reqForm: formData })
+		console.log(response)
 	}
 
 	return (

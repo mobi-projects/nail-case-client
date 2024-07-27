@@ -4,16 +4,37 @@ import type { TWorkHour } from "./register.form.type"
 export const initWorkHours = (): TWorkHour[] => {
 	return DAY_OF_WEEKS_KOR.map((_, idx) => ({
 		dayOfWeek: idx,
-		startTime: DEFAULT_TIMESTAMP,
-		endTime: DEFAULT_TIMESTAMP,
+		openTime: DEFAULT_TIMESTAMP,
+		closeTime: DEFAULT_TIMESTAMP,
 		isOpen: false,
 	}))
 }
 
 export const getIsValidOpeningHours = (workHours: TWorkHour[]): boolean => {
 	let result = true
-	workHours.forEach(({ startTime, endTime, isOpen }) => {
-		if (isOpen) result &&= startTime < endTime
+	workHours.forEach(({ openTime, closeTime, isOpen }) => {
+		if (isOpen) result &&= openTime < closeTime
 	})
 	return result
+}
+/* 샵등록 api 호출 시, 요청에 포함할 FormData 생성*/
+export const createRequestFrom = (
+	shopName: string,
+	address: string,
+	telephone: number,
+	workHours: Array<TWorkHour>,
+	shopProfileFileArr: Array<File>,
+	priceListFileArr: Array<File>,
+): FormData => {
+	const shopData = {
+		shopName,
+		address,
+		phone: telephone,
+		workHours,
+	}
+	const formData = new FormData()
+	formData.append("shopData", JSON.stringify(shopData))
+	shopProfileFileArr.forEach((file) => formData.append("profileImages", file))
+	priceListFileArr.forEach((file) => formData.append("priceImages", file))
+	return formData
 }

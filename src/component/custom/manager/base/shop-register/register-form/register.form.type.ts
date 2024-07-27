@@ -1,6 +1,6 @@
 export type TWorkHour = {
 	dayOfWeek: number
-	startTime: number
-	endTime: number
+	openTime: number
+	closeTime: number
 	isOpen: boolean
 }

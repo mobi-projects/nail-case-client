@@ -30,14 +30,14 @@ export default function OpeningHoursForm({
 	/** 시간 관리 */
 	const onHandleTimestamp = (
 		dayOfWeek: number,
-		timeType: "startTime" | "endTime",
+		timeType: "openTime" | "closeTime",
 		fluctuationType: "increase" | "decrease",
 	) =>
 		setWorkHours((prev) => {
 			const _prev = arrayDeepCopy<TWorkHour>(prev)
-			const startTime = _prev[dayOfWeek][timeType]
+			const openTime = _prev[dayOfWeek][timeType]
 			const resultTime = getBeforeOrAfterN(
-				startTime,
+				openTime,
 				30,
 				fluctuationType === "increase" ? "after" : "before",
 				"minute",
