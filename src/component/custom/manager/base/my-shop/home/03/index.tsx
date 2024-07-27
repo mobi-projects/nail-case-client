@@ -1,7 +1,11 @@
 "use client"
 
+import { useState } from "react"
+
 import NTIcon from "@/component/common/nt-icon"
 import { useShopInfo } from "@/hook/use-common"
+
+import { PriceImageModal } from "./modal"
 
 type CardHeaderPT = {
 	title: string
@@ -110,6 +114,10 @@ function InfoCardNotification() {
 	)
 }
 function InfoCardPrice() {
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const handleArtClick = () => {
+		setIsModalOpen(true)
+	}
 	return (
 		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] py-[15px] shadow-customGray80">
 			<CardHeader title="가격" />
@@ -123,10 +131,16 @@ function InfoCardPrice() {
 					</div>
 					<div className="flex items-center">
 						<NTIcon icon="dot" className="text-Gray60" />
-						가격표 이미지로 보기
+						<span
+							onClick={handleArtClick}
+							className="cursor-pointer hover:text-Gray60 hover:underline"
+						>
+							가격표 이미지로 보기
+						</span>
 					</div>
 				</div>
 			</div>
+			{isModalOpen && <PriceImageModal setIsModalOpen={setIsModalOpen} />}
 		</div>
 	)
 }
