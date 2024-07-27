@@ -10,7 +10,7 @@ export const initWorkHours = (): TWorkHour[] => {
 	}))
 }
 
-export const getIsValidOpeningHours = (workHours: TWorkHour[]): boolean => {
+export const validateOpeningHours = (workHours: TWorkHour[]): boolean => {
 	let result = true
 	let cntClosedDays = 0
 	workHours.forEach(({ openTime, closeTime, isOpen }) => {
@@ -20,6 +20,13 @@ export const getIsValidOpeningHours = (workHours: TWorkHour[]): boolean => {
 	if (cntClosedDays === 7) return false
 	return result
 }
+
+export const validateImageFileArr = (
+	fileCnt: number,
+	minimumCnt: number,
+	maximumCnt: number,
+) => minimumCnt <= fileCnt && fileCnt <= maximumCnt
+
 /* 샵등록 api 호출 시, 요청에 포함할 FormData 생성*/
 export const createRequestFrom = (
 	shopName: string,

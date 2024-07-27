@@ -13,8 +13,9 @@ import { ADDRESS, SHOP_NAME, TELEPHONE } from "./register-form.constant"
 import { SIMPLE_SCHEMA } from "./register-form.schema"
 import {
 	createRequestFrom,
-	getIsValidOpeningHours,
 	initWorkHours,
+	validateImageFileArr,
+	validateOpeningHours,
 } from "./register-form.util"
 import type { TWorkHour } from "./register.form.type"
 import SimpleInput from "./simple-form"
@@ -40,10 +41,22 @@ export default function ShopRegisterForm() {
 	const errorMsgForTelephone = errors[TELEPHONE.key]?.message as string
 
 	const isValidOpeningHours = useMemo<boolean>(
-		() => getIsValidOpeningHours(workHours),
+		() => validateOpeningHours(workHours),
 		[workHours],
 	)
-	const isValidToSubmit = isValidSimple && isValidOpeningHours
+	const isValidShopProfileFileArr = useMemo<boolean>(
+		() => validateImageFileArr(shopProfileFileArr.length, 1, 5),
+		[shopProfileFileArr],
+	)
+	const isValidPriceListFileArr = useMemo<boolean>(
+		() => validateImageFileArr(priceListFileArr.length, 1, 5),
+		[priceListFileArr],
+	)
+	const isValidToSubmit =
+		isValidSimple &&
+		isValidOpeningHours &&
+		isValidShopProfileFileArr &&
+		isValidPriceListFileArr
 
 	const onClickSubmit = async () => {
 		const { shopName, address, telephone } = getValues()
@@ -106,17 +119,17 @@ export default function ShopRegisterForm() {
 			</InputWrapper>
 
 			<InputWrapper
-				required={false}
+				required={true}
 				label="매장 이미지"
-				description="권장 사이즈: 1280 x 540 (최대 5장)"
+				description="권장 사이즈: 1280 x 540 (최소 1장, 최대 5장)"
 			>
 				<ImageForm maxCount={5} setImageFileArr={setShopProfileFileArr} />
 			</InputWrapper>
 
 			<InputWrapper
-				required={false}
+				required={true}
 				label="가격표 (이미지)"
-				description="권장 사이즈: 540 x 675 (최대 5장)"
+				description="권장 사이즈: 540 x 675 (최소 1장, 최대 5장)"
 			>
 				<ImageForm maxCount={5} setImageFileArr={setPriceListFileArr} />
 			</InputWrapper>
