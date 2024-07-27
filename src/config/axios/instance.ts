@@ -8,27 +8,32 @@ import { handleUnauthorized401 } from "./instance.utll"
 
 const instanceConfig: AxiosRequestConfig = {
 	baseURL: process.env.NEXT_PUBLIC_BACKEND_APP,
-	headers: {
-		"Content-Type": "application/json",
-	},
 	withCredentials: true,
 }
 
-export const axiosInstance = () => {
+type TContentType = "multipart/form-data" | "application/json"
+export const axiosInstance = (
+	contentType: TContentType = "application/json",
+) => {
 	let instance = axios.create(instanceConfig)
-	instance = setRequestInterceptor(instance)
+	instance = setRequestInterceptor(instance, contentType)
 	instance = setResponseInterceptor(instance)
 	return instance
 }
 
 /** "요청" 인터셉터 설정 */
-const setRequestInterceptor = (instance: AxiosInstance) => {
+const setRequestInterceptor = (
+	instance: AxiosInstance,
+	contentType: TContentType,
+) => {
 	instance.interceptors.request.use(
 		(config) => {
 			const accessToken = getCookie(ACCESS_TOKEN)
 			if (accessToken && config.headers) {
 				config.headers.Authorization = `Bearer ${accessToken}`
 			}
+
+			config.headers["Content-Type"] = contentType
 			return config
 		},
 		(error) => Promise.reject(error),
