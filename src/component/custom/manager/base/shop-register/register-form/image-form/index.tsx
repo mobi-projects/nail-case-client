@@ -1,16 +1,16 @@
 "use client"
 import Image from "next/image"
-import type { ChangeEvent } from "react"
+import type { ChangeEvent, Dispatch, SetStateAction } from "react"
 import { useRef, useState } from "react"
 
 import { isNull } from "@/util/common/type-guard"
 
 type ImageFormPT = {
+	setImageFileArr: Dispatch<SetStateAction<Array<File>>>
 	maxCount: number
 }
 
-export default function ImageForm({ maxCount }: ImageFormPT) {
-	const [, setImageFileArr] = useState<Array<File>>([])
+export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 	const [previewArr, setPreviewArr] = useState<Array<string>>([])
 	const hiddenFileInput = useRef<HTMLInputElement>(null)
 

@@ -6,7 +6,7 @@ import { cn } from "@/config/tailwind"
 import NTIcon, { type ICON_DATA } from "../../nt-icon"
 
 const ButtonVariants = cva(
-	"flex items-center justify-center drop-shadow border",
+	"flex items-center justify-center drop-shadow border focus-visible:outline-none",
 	{
 		variants: {
 			variant: {
