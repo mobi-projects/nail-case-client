@@ -5,7 +5,7 @@ import { useRef, useState } from "react"
 import { isNull } from "@/util/common/type-guard"
 
 import AddingBox from "./adding-box"
-import { pushNewElemIntoLIFOArr } from "./image-form.util"
+import { deleteElemOneByIdx, pushNewElemIntoLIFOArr } from "./image-form.util"
 import PreviewList from "./preview-list"
 
 type ImageFormPT = {
@@ -18,13 +18,10 @@ export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 	const hiddenInputRef = useRef<HTMLInputElement>(null)
 
 	const onHandleClick = () => hiddenInputRef.current?.click()
-
 	const onUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
 		const uploadedFiles = e.target.files
 		if (isNull(uploadedFiles)) return
-
 		const recentlyFile = uploadedFiles[0]
-
 		setImageFileArr((prev) =>
 			pushNewElemIntoLIFOArr<File>(prev, recentlyFile, maxCount),
 		)
@@ -40,6 +37,10 @@ export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 			)
 		}
 	}
+	const onUnloadFile = (idx: number) => {
+		setImageFileArr((prev) => deleteElemOneByIdx(prev, idx))
+		setPreviewSrcArr((prev) => deleteElemOneByIdx(prev, idx))
+	}
 
 	return (
 		<div className="scrollbar relative flex h-[180px] w-full gap-[10px] overflow-x-auto overflow-y-hidden whitespace-nowrap">
@@ -48,7 +49,7 @@ export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 				onClick={onHandleClick}
 				onUploadFile={onUploadFile}
 			/>
-			<PreviewList previewSrcArr={previewSrcArr} />
+			<PreviewList {...{ previewSrcArr, onUnloadFile }} />
 		</div>
 	)
 }

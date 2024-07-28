@@ -1,8 +1,14 @@
 import Image from "next/image"
+
+import NTIcon from "@/component/common/nt-icon"
 type PreviewList = {
 	previewSrcArr: string[]
+	onUnloadFile: (idx: number) => void
 }
-export default function PreviewList({ previewSrcArr }: PreviewList) {
+export default function PreviewList({
+	previewSrcArr,
+	onUnloadFile,
+}: PreviewList) {
 	return (
 		<>
 			{previewSrcArr.map((previewSrc, idx) => {
@@ -16,6 +22,11 @@ export default function PreviewList({ previewSrcArr }: PreviewList) {
 							alt="preview"
 							fill
 							className="object-cover"
+						/>
+						<NTIcon
+							icon="delete"
+							className="absolute right-2 top-2 h-[20px] w-[20px] rounded-full bg-[#FF2C45] text-White active:bg-[#8d0010]"
+							onClick={() => onUnloadFile(idx)}
 						/>
 					</div>
 				)
