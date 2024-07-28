@@ -1,10 +1,7 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios"
+import type { AxiosInstance, AxiosRequestConfig } from "axios"
 import axios from "axios"
-import { getCookie } from "cookies-next"
 
-import { ACCESS_TOKEN } from "@/constant/auth-key"
-
-import { handleUnauthorized401 } from "./instance.utll"
+import { getAccessToken, getValidAccessToken } from "./instance.utll"
 
 const instanceConfig: AxiosRequestConfig = {
 	baseURL: process.env.NEXT_PUBLIC_BACKEND_APP,
@@ -17,7 +14,7 @@ export const axiosInstance = (
 ) => {
 	let instance = axios.create(instanceConfig)
 	instance = setRequestInterceptor(instance, contentType)
-	instance = setResponseInterceptor(instance)
+
 	return instance
 }
 
@@ -27,10 +24,11 @@ const setRequestInterceptor = (
 	contentType: TContentType,
 ) => {
 	instance.interceptors.request.use(
-		(config) => {
-			const accessToken = getCookie(ACCESS_TOKEN)
-			if (accessToken && config.headers) {
-				config.headers.Authorization = `Bearer ${accessToken}`
+		async (config) => {
+			const accessToken = await getAccessToken() // 실행환경에 맞는 accessToken 저장
+			const validAccessToken = await getValidAccessToken(accessToken) // 토큰 만료여부에 따라서 유효한 토큰 반환
+			if (validAccessToken && config.headers) {
+				config.headers.Authorization = `Bearer ${validAccessToken}`
 			}
 
 			config.headers["Content-Type"] = contentType
@@ -43,26 +41,5 @@ const setRequestInterceptor = (
 		for (const key in paramObj) params.append(key, paramObj[key])
 		return params.toString()
 	}
-	return instance
-}
-
-type AxiosErrorResponseData = { code: number; error?: null; message: string }
-
-/** "응답" 인터셉터 설정 */
-const setResponseInterceptor = (instance: AxiosInstance) => {
-	instance.interceptors.response.use(
-		(response) => response,
-		async ({ config, response }: AxiosError<AxiosErrorResponseData>) => {
-			//-------------  401 에러 발생 시 실행 -----------------//
-			//------------ 만료된 access-token요청 보냈을때 만실행---//
-			if (response?.status === 401 && response.data.code === 1711) {
-				try {
-					return await handleUnauthorized401(config)
-				} catch (error) {
-					Promise.reject(error)
-				}
-			}
-		},
-	)
 	return instance
 }
