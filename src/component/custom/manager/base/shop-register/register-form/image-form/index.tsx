@@ -4,6 +4,7 @@ import { useRef, useState } from "react"
 
 import { isNull } from "@/util/common/type-guard"
 
+import AddingBox from "./adding-box"
 import PreviewList from "./preview-list"
 
 type ImageFormPT = {
@@ -13,9 +14,9 @@ type ImageFormPT = {
 
 export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 	const [previewSrcArr, setPreviewSrcArr] = useState<Array<string>>([])
-	const hiddenFileInput = useRef<HTMLInputElement>(null)
+	const hiddenInputRef = useRef<HTMLInputElement>(null)
 
-	const handleClick = () => hiddenFileInput.current?.click()
+	const onHandleClick = () => hiddenInputRef.current?.click()
 
 	const onUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
 		const uploadedFiles = e.target.files
@@ -41,25 +42,13 @@ export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 	}
 
 	return (
-		<div className="h-[180px] w-full gap-[20px]">
-			<div className="scrollbar relative flex h-full w-full flex-nowrap gap-2 overflow-x-auto overflow-y-hidden whitespace-nowrap">
-				<div
-					className="flex aspect-square h-full cursor-pointer flex-col items-center justify-center rounded-[12px] border border-Gray20 active:bg-Gray10"
-					onClick={handleClick}
-				>
-					<p className="text-center text-Headline01 font-Light text-Gray30">
-						+
-					</p>
-					<input
-						type="file"
-						accept="image/png,image/jpeg,image/jpg,image/webp"
-						ref={hiddenFileInput}
-						onChange={onUploadFile}
-						className="hidden"
-					/>
-				</div>
-				<PreviewList previewSrcArr={previewSrcArr} />
-			</div>
+		<div className="scrollbar relative flex h-[180px] w-full gap-[10px] overflow-x-auto overflow-y-hidden whitespace-nowrap">
+			<AddingBox
+				ref={hiddenInputRef}
+				onClick={onHandleClick}
+				onUploadFile={onUploadFile}
+			/>
+			<PreviewList previewSrcArr={previewSrcArr} />
 		</div>
 	)
 }
