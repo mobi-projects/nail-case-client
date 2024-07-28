@@ -1,3 +1,3 @@
+import getCacheClient from "./get-cache-client"
 import TanstackQueryProvider from "./tanstack-query-provider"
-
-export { TanstackQueryProvider }
+export { TanstackQueryProvider, getCacheClient }
