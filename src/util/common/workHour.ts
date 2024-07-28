@@ -8,7 +8,7 @@ export type TReseGetWortHours = {
 }
 
 export const WorkDay = (workDataList: TReseGetWortHours[]): string[] => {
-	const days = ["월", "화", "수", "목", "금", "토", "일"]
+	const days = ["일", "월", "화", "수", "목", "금", "토"]
 	const openDays = workDataList.filter((data) => data.isOpen)
 
 	const groupedByHours = openDays.reduce<{
@@ -61,7 +61,7 @@ export const WorkDay = (workDataList: TReseGetWortHours[]): string[] => {
 }
 
 export const WorkWeek = (workDataList: TReseGetWortHours[]): string => {
-	const days = ["월", "화", "수", "목", "금", "토", "일"]
+	const days = ["일", "월", "화", "수", "목", "금", "토"]
 	const openDays = workDataList.filter((data) => data.isOpen)
 	return openDays.map((data) => days[data.dayOfWeek]).join(" ")
 }
