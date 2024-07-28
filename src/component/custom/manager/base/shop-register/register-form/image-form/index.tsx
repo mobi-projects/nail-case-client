@@ -5,6 +5,7 @@ import { useRef, useState } from "react"
 import { isNull } from "@/util/common/type-guard"
 
 import AddingBox from "./adding-box"
+import { pushNewElemIntoLIFOArr } from "./image-form.util"
 import PreviewList from "./preview-list"
 
 type ImageFormPT = {
@@ -24,20 +25,19 @@ export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 
 		const recentlyFile = uploadedFiles[0]
 
-		setImageFileArr((prev) => {
-			const _prev = [...prev, recentlyFile]
-			if (_prev.length > maxCount) _prev.shift()
-			return _prev
-		})
-
+		setImageFileArr((prev) =>
+			pushNewElemIntoLIFOArr<File>(prev, recentlyFile, maxCount),
+		)
 		const fileRead = new FileReader()
 		fileRead.readAsDataURL(recentlyFile)
 		fileRead.onload = () => {
-			setPreviewSrcArr((prev) => {
-				const _prev = [...prev, fileRead.result as string]
-				if (_prev.length > maxCount) _prev.shift()
-				return _prev
-			})
+			setPreviewSrcArr((prev) =>
+				pushNewElemIntoLIFOArr<string>(
+					prev,
+					fileRead.result as string,
+					maxCount,
+				),
+			)
 		}
 	}
 
