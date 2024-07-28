@@ -1,9 +1,10 @@
 "use client"
-import Image from "next/image"
 import type { ChangeEvent, Dispatch, SetStateAction } from "react"
 import { useRef, useState } from "react"
 
 import { isNull } from "@/util/common/type-guard"
+
+import PreviewList from "./preview-list"
 
 type ImageFormPT = {
 	setImageFileArr: Dispatch<SetStateAction<Array<File>>>
@@ -11,7 +12,7 @@ type ImageFormPT = {
 }
 
 export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
-	const [previewArr, setPreviewArr] = useState<Array<string>>([])
+	const [previewSrcArr, setPreviewSrcArr] = useState<Array<string>>([])
 	const hiddenFileInput = useRef<HTMLInputElement>(null)
 
 	const handleClick = () => hiddenFileInput.current?.click()
@@ -31,7 +32,7 @@ export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 		const fileRead = new FileReader()
 		fileRead.readAsDataURL(recentlyFile)
 		fileRead.onload = () => {
-			setPreviewArr((prev) => {
+			setPreviewSrcArr((prev) => {
 				const _prev = [...prev, fileRead.result as string]
 				if (_prev.length > maxCount) _prev.shift()
 				return _prev
@@ -57,22 +58,7 @@ export default function ImageForm({ maxCount, setImageFileArr }: ImageFormPT) {
 						className="hidden"
 					/>
 				</div>
-
-				{previewArr.map((preview, idx) => {
-					return (
-						<div
-							key={idx}
-							className="relative flex aspect-square h-full shrink-0 items-center justify-center overflow-hidden rounded-[12px] border border-Gray20"
-						>
-							<Image
-								src={preview}
-								alt="preview"
-								fill
-								className="object-cover"
-							/>
-						</div>
-					)
-				})}
+				<PreviewList previewSrcArr={previewSrcArr} />
 			</div>
 		</div>
 	)
