@@ -10,6 +10,8 @@ import {
 	LABEL_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
 	PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
 } from "@/constant/toolbar-list"
+import { useShopById } from "@/hook/use-shop-controller"
+import type { TResGetShopById } from "@/type/shop"
 
 import EditIntroduction from "../modal/01"
 
@@ -23,7 +25,15 @@ export default function ManagerBaseMyShopBanner() {
 }
 function MyShopBanner() {
 	const { onOpenModal } = useModal()
+	const { data, isError, error, isLoading } = useShopById(1)
+	if (isError) {
+		return <div>Error: {error.message}</div>
+	}
+	if (isLoading) {
+		return <div>Loading...</div>
+	}
 
+	const shopData = data?.data as TResGetShopById
 	const onClickPencil = () => {
 		onOpenModal({
 			size: "small",
@@ -49,36 +59,38 @@ function MyShopBanner() {
 				className="absolute right-12 top-[280px] h-6 w-6 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)]"
 				onClick={onClickPencil}
 			/>
-			<BannerHeader />
-			<BannerDescription />
+			<BannerHeader shopData={shopData} />
+			<BannerDescription shopData={shopData} />
 		</div>
 	)
 }
 
-function BannerHeader() {
+type BannerHeaderPT = { shopData: TResGetShopById }
+function BannerHeader({ shopData }: BannerHeaderPT) {
+	const shopAddress = shopData.address.split(" ").slice(0, 2).join(" ")
 	return (
 		<div className="absolute left-[90px] top-[95px]">
 			<p className="text-Callout text-[14px] font-Light text-White">
-				네일아트 전문 | 서울시 용산구
+				네일아트 전문 | {shopAddress}
 			</p>
 			<h1 className="text-Title01 text-[28px] font-Bold text-White">
-				모비네일 한남
+				{shopData.shopName}
 			</h1>
 		</div>
 	)
 }
 
-function BannerDescription() {
+function BannerDescription({ shopData }: BannerHeaderPT) {
+	const tagList = shopData.tags.map((tag) => `#${tag}`).join(" ")
 	return (
 		<div className="absolute left-[90px] top-[280px] flex flex-col gap-4">
 			<div className="flex gap-3">
 				<p className="text-Body01 text-[18px] font-SemiBold text-White">
-					#네일맛집 #주차가능 #오마카세아트
+					{tagList}
 				</p>
 			</div>
 			<p className="line-clamp-3 w-[500px] whitespace-pre-wrap text-Body01 text-[18px] font-Regular text-Gray10">
-				✨ 매달 네일 오마카세를 제공하는 디자인 맛집 모비네일 {`\n`}
-				🔛 현재 당일 예약 가능합니다.
+				{shopData.overview}
 			</p>
 		</div>
 	)
