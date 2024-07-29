@@ -19,7 +19,6 @@ import { axiosInstance } from "@/config/axios"
 import type { TResponseData } from "@/type/response"
 import type {
 	TReqBodyPatchUpdateOverview,
-	TReqBodyPostRegisterShop,
 	TReqBodyPostUploadImage,
 	TReqBodyPutUpdateShop,
 	TReseGetWortHours,
@@ -63,9 +62,12 @@ export const getTags = async () => {
 }
 /** [POST] 새 매장 등록 */
 export const postRegisterShop = async (
-	reqBody: TReqBodyPostRegisterShop,
+	formData: FormData,
 ): Promise<TResponseData<TResPostRegisterShop, "data">> => {
-	const response = await axiosInstance().post("/shops", reqBody)
+	const response = await axiosInstance("multipart/form-data").post(
+		"/shops",
+		formData,
+	)
 	return response.data
 }
 /** [GET] 매장 검색 */

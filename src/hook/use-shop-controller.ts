@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 import {
 	QUERY_LIST_SHOP_NAIL_ARTIST,
@@ -13,6 +13,7 @@ import {
 	getShopInfo,
 	getShopReview,
 	getWorkHours,
+	postRegisterShop,
 } from "@/util/api/shop-controller"
 
 /** 매장 아티스트 목록조회 */
@@ -42,4 +43,10 @@ export const useWorkHours = (shopId: number) =>
 	useQuery({
 		queryKey: [QUERY_SHOP_WORK_HOUR, shopId],
 		queryFn: async () => await getWorkHours(shopId),
+	})
+
+export const useRegisterShop = () =>
+	useMutation({
+		mutationFn: ({ reqForm }: { reqForm: FormData }) =>
+			postRegisterShop(reqForm),
 	})

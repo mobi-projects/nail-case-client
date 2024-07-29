@@ -1,8 +1,18 @@
 /* Request */
 export type TReqBodyPostRegisterShop = {
-	shopName: string
-	phone: string
-	availableSeats: number
+	shopData: {
+		shopName: string
+		address: string
+		phone: string
+		workHours: Array<{
+			dayOfWeek: number
+			isOpen: boolean
+			openTime: number
+			closeTime: number
+		}>
+	}
+	profileImages: Array<string>
+	priceImages: Array<string>
 }
 export type TReqBodyPatchUpdateOverview = Partial<{
 	overview: string
@@ -36,14 +46,22 @@ export type TResPostRegisterShop = {
 	createdAt: number
 	modifiedAt: number
 	shopId: number
-	ownerId: string
+	ownerId: string | null
 	shopName: string
 	phone: string
-	overview: string
+	overview: string | null
 	address: string
 	availableSeats: number
-	tags: Array<string>
-	images: [] // [TODO] 추후 수정, 타입 미확인
+	tags: Array<string> | null
+	workHours: {
+		closeTime: number
+		dayOfWeek: number
+		isOpen: boolean
+		openTime: number
+	}[]
+	shopAvgRatings: number | null
+	priceImages: { imageId: number; imageUrl: string }[]
+	profileImages: { imageId: number; imageUrl: string }[]
 }
 export type TResGetSearchShop = {
 	totalPages: number

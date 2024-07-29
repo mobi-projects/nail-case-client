@@ -13,7 +13,7 @@ export default function Instruction({
 }: InstructionPT) {
 	return (
 		<div className="flex h-fit max-h-[80px] w-full flex-col gap-[1px]">
-			<section className="grid grid-cols-[15px_1fr]">
+			<section className="flex justify-start gap-[5px]">
 				{required && <span className="text-Body02 text-[#FF2C45]">*</span>}
 				<span className="col-start-2 text-Headline01 text-Gray100">
 					{label}
