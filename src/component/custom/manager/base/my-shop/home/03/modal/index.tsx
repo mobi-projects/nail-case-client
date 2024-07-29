@@ -1,5 +1,4 @@
 import Image from "next/image"
-import type { Dispatch, SetStateAction } from "react"
 import { useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
@@ -9,14 +8,13 @@ import NTModal, {
 	ModalFooter,
 	ModalHeader,
 } from "@/component/common/nt-modal"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { cn } from "@/config/tailwind"
 
 import { PRICE_IMAGE } from "../price_image"
 
-type PriceImageModalPT = {
-	setIsModalOpen: Dispatch<SetStateAction<boolean>>
-}
-export function PriceImageModal({ setIsModalOpen }: PriceImageModalPT) {
+export function PriceImageModal() {
+	const { onCloseModal } = useModal()
 	const [currentIdx, setCurrentIdx] = useState(0)
 	const handlePrev = () => {
 		if (currentIdx > 0) {
@@ -27,9 +25,6 @@ export function PriceImageModal({ setIsModalOpen }: PriceImageModalPT) {
 		if (currentIdx < PRICE_IMAGE.length - 1) {
 			setCurrentIdx(currentIdx + 1)
 		}
-	}
-	const closeModal = () => {
-		setIsModalOpen(false)
 	}
 
 	const prevDisabled = currentIdx === 0
@@ -44,7 +39,7 @@ export function PriceImageModal({ setIsModalOpen }: PriceImageModalPT) {
 					<NTIcon
 						icon="delete"
 						className="cursor-pointer text-Gray20 hover:text-Gray80"
-						onClick={closeModal}
+						onClick={onCloseModal}
 					/>
 				</ModalHeader>
 				<ModalBody className="flex h-full w-full items-center justify-center">

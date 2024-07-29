@@ -1,8 +1,7 @@
 "use client"
 
-import { useState } from "react"
-
 import NTIcon from "@/component/common/nt-icon"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { useShopInfo } from "@/hook/use-common"
 
 import { PriceImageModal } from "./modal"
@@ -114,9 +113,12 @@ function InfoCardNotification() {
 	)
 }
 function InfoCardPrice() {
-	const [isModalOpen, setIsModalOpen] = useState(false)
+	const { onOpenModal } = useModal()
+	// const [isModalOpen, setIsModalOpen] = useState(false)
 	const handleArtClick = () => {
-		setIsModalOpen(true)
+		onOpenModal({
+			children: <PriceImageModal />,
+		})
 	}
 	return (
 		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] py-[15px] shadow-customGray80">
@@ -140,7 +142,6 @@ function InfoCardPrice() {
 					</div>
 				</div>
 			</div>
-			{isModalOpen && <PriceImageModal setIsModalOpen={setIsModalOpen} />}
 		</div>
 	)
 }
