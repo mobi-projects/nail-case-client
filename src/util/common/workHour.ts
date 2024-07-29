@@ -1,17 +1,11 @@
-// utils.ts
-export type TReseGetWortHours = {
-	workHourId: number
-	dayOfWeek: number
-	isOpen: boolean
-	openTime: number
-	closeTime: number
-}
+import type { TReseGetWortHours } from "@/type/shop"
 
-export const WorkDay = (workDataList: TReseGetWortHours[]): string[] => {
-	const days = ["일", "월", "화", "수", "목", "금", "토"]
-	const openDays = workDataList.filter((data) => data.isOpen)
+import { formTime } from "./time"
 
-	const groupedByHours = openDays.reduce<{
+export const groupedByHourList = (
+	workDataList: TReseGetWortHours[],
+): { [key: string]: TReseGetWortHours[] } =>
+	workDataList.reduce<{
 		[key: string]: TReseGetWortHours[]
 	}>((acc, data) => {
 		const key = `${data.openTime}-${data.closeTime}`
@@ -21,47 +15,67 @@ export const WorkDay = (workDataList: TReseGetWortHours[]): string[] => {
 		acc[key].push(data)
 		return acc
 	}, {})
+export const separateHourList = (workDataList: TReseGetWortHours[]) => {
+	const groupedData = groupedByHourList(workDataList)
+	const singleList: { [key: string]: TReseGetWortHours }[] = []
+	const multipleList: { [key: string]: TReseGetWortHours[] }[] = []
 
-	return Object.values(groupedByHours).map((group) => {
-		group.sort((a, b) => a.dayOfWeek - b.dayOfWeek)
+	Object.keys(groupedData).forEach((key) => {
+		const group = groupedData[key]
+		if (group.length === 1) {
+			singleList.push({ [key]: group[0] })
+		} else {
+			multipleList.push({ [key]: group })
+		}
+	})
+	return { singleList, multipleList }
+}
+export const MultipleHourList = (
+	list: { [key: string]: TReseGetWortHours[] }[],
+): string[] => {
+	const days = ["일", "월", "화", "수", "목", "금", "토"]
+	const result: string[] = []
+	list.forEach((data) => {
+		const key = Object.keys(data)[0]
+		const value = data[key]
+		const orderWeek = value.map((data) => data.dayOfWeek).sort((a, b) => a - b)
+		const start = orderWeek[0]
+		let end = orderWeek[0]
+		let isOtherDay = false
 
-		const ranges = []
-		let start = group[0].dayOfWeek
-		let end = group[0].dayOfWeek
-
-		for (let i = 1; i < group.length; i++) {
-			if (group[i].dayOfWeek === end + 1) {
-				end = group[i].dayOfWeek
+		for (let i = 1; i < orderWeek.length; i++) {
+			if (orderWeek[i] === end + 1) {
+				end = orderWeek[i]
 			} else {
-				ranges.push(
-					start === end ? `${days[start]} ` : `${days[start]}-${days[end]}`,
-				)
-				start = group[i].dayOfWeek
-				end = group[i].dayOfWeek
+				isOtherDay = true
+				break
 			}
 		}
-		ranges.push(
-			start === end ? `${days[start]} :` : `${days[start]}-${days[end]} :`,
-		)
 
-		const openTime = new Date(group[0].openTime * 1000).toLocaleTimeString([], {
-			hour: "2-digit",
-			minute: "2-digit",
-		})
-		const closeTime = new Date(group[0].closeTime * 1000).toLocaleTimeString(
-			[],
-			{
-				hour: "2-digit",
-				minute: "2-digit",
-			},
-		)
-
-		return `${ranges.join(", ")}\n${openTime} ~${closeTime}`
+		if (!isOtherDay) {
+			result.push(
+				`${days[start]}-${days[end]}  ${formTime(value[0].openTime)} ~ ${formTime(value[0].closeTime)}`,
+			)
+		} else {
+			const ranges = orderWeek.map((index) => days[index]).join(", ")
+			result.push(
+				`${ranges}  ${formTime(value[0].openTime)} ~ ${formTime(value[0].closeTime)}`,
+			)
+		}
 	})
+	return result
 }
-
-export const WorkWeek = (workDataList: TReseGetWortHours[]): string => {
+export const SingleHourList = (
+	list: { [key: string]: TReseGetWortHours }[],
+): string[] => {
 	const days = ["일", "월", "화", "수", "목", "금", "토"]
-	const openDays = workDataList.filter((data) => data.isOpen)
-	return openDays.map((data) => days[data.dayOfWeek]).join(" ")
+	const result: string[] = []
+	list.forEach((data) => {
+		const key = Object.keys(data)[0]
+		const value = data[key]
+		result.push(
+			`${days[value.dayOfWeek]}  ${formTime(value.openTime)} ~ ${formTime(value.closeTime)}`,
+		)
+	})
+	return result
 }

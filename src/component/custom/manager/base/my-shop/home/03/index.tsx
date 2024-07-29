@@ -13,7 +13,11 @@ import type {
 	TResGetShopById,
 	TResGetShopInfo,
 } from "@/type/shop"
-import { WorkDay, WorkWeek } from "@/util/common/workHour"
+import {
+	MultipleHourList,
+	separateHourList,
+	SingleHourList,
+} from "@/util/common/workHour"
 
 type CardHeaderPT = {
 	title: string
@@ -80,6 +84,14 @@ type InfoCardWorkingTimePT = {
 	workDataList: Array<TReseGetWortHours>
 }
 function InfoCardWorkingTime({ workDataList }: InfoCardWorkingTimePT) {
+	const days = ["일", "월", "화", "수", "목", "금", "토"]
+	const openDays = workDataList.filter((data) => data.isOpen)
+	const workWeek = openDays.map((data) => days[data.dayOfWeek]).join(" ")
+	const { singleList, multipleList } = separateHourList(openDays)
+	const formHourList = [
+		...MultipleHourList(multipleList),
+		...SingleHourList(singleList),
+	] as string[]
 	return (
 		<div className="flex h-[164px] w-[282px] flex-col rounded-[26px] px-[25px] pb-[10px] pt-[15px] shadow-customGray80">
 			<CardHeader title="영업시간" />
@@ -87,9 +99,9 @@ function InfoCardWorkingTime({ workDataList }: InfoCardWorkingTimePT) {
 				<div className="flex flex-col justify-between">
 					<div className="flex items-center">
 						<NTIcon icon="dot" className="text-Gray60" />
-						{WorkWeek(workDataList)}
+						{workWeek}
 					</div>
-					{WorkDay(workDataList).map((data, idx) => (
+					{formHourList.map((data, idx) => (
 						<div className="flex items-center" key={idx}>
 							<NTIcon icon="dot" className="text-Gray60" />
 							<span className="text-Body01 text-Gray60">{data}</span>
