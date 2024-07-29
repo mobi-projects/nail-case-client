@@ -17,7 +17,7 @@ import type { TResGetShopById } from "@/type/shop"
 
 import EditIntroduction from "../modal/01"
 
-import { bannerImage } from "./banner-image"
+import { BANNER_IMAGE } from "./banner-image"
 
 export default function ManagerBaseMyShopBanner() {
 	return (
@@ -34,7 +34,7 @@ function MyShopBanner() {
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setCurrentIdx((prevIdx) => (prevIdx + 1) % bannerImage.length)
+			setCurrentIdx((prevIdx) => (prevIdx + 1) % BANNER_IMAGE.length)
 		}, 10000)
 
 		return () => clearInterval(interval)
@@ -58,7 +58,7 @@ function MyShopBanner() {
 	return (
 		<div className="relative h-[432.47px] w-full">
 			{/* <NTBannerImageCarousel className="absolute left-0 h-full w-full bg-transparent" /> */}
-			{bannerImage.map((image, index) => {
+			{BANNER_IMAGE.map((image, index) => {
 				return (
 					<div
 						key={index}
@@ -81,7 +81,7 @@ function MyShopBanner() {
 				미리보기
 			</NTContent>
 			<NTContent mode="dark" className="absolute left-[205px] top-10">
-				{`${currentIdx + 1}/${bannerImage.length}`}
+				{`${currentIdx + 1}/${BANNER_IMAGE.length}`}
 			</NTContent>
 			<NTIcon
 				icon="setting"
