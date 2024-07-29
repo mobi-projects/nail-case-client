@@ -9,8 +9,9 @@ import NTModal, {
 	ModalFooter,
 	ModalHeader,
 } from "@/component/common/nt-modal"
+import { cn } from "@/config/tailwind"
 
-import { PriceImage } from "../priceImage"
+import { PRICE_IMAGE } from "../price_image"
 
 type PriceImageModalPT = {
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>
@@ -23,7 +24,7 @@ export function PriceImageModal({ setIsModalOpen }: PriceImageModalPT) {
 		}
 	}
 	const handleNext = () => {
-		if (currentIdx < PriceImage.length - 1) {
+		if (currentIdx < PRICE_IMAGE.length - 1) {
 			setCurrentIdx(currentIdx + 1)
 		}
 	}
@@ -32,7 +33,7 @@ export function PriceImageModal({ setIsModalOpen }: PriceImageModalPT) {
 	}
 
 	const prevDisabled = currentIdx === 0
-	const nextDisabled = currentIdx === PriceImage.length - 1
+	const nextDisabled = currentIdx === PRICE_IMAGE.length - 1
 	return (
 		<NTModal size="small" isX={false}>
 			<ModalContent>
@@ -49,13 +50,16 @@ export function PriceImageModal({ setIsModalOpen }: PriceImageModalPT) {
 				<ModalBody className="flex h-full w-full items-center justify-center">
 					<NTIcon
 						icon="expandLeftLight"
-						className={`h-[120px] w-[60px] cursor-pointer ${prevDisabled ? "text-Gray20" : "text-Gray20 hover:text-Gray80"}`}
+						className={cn(
+							"h-[120px] w-[60px] cursor-pointer text-Gray20",
+							prevDisabled || "hover:text-Gray80",
+						)}
 						onClick={handlePrev}
 					/>
 					<div className="relative h-[570px] w-[456px]">
 						<Image
-							src={PriceImage[currentIdx]}
-							alt={currentIdx.toString()}
+							src={PRICE_IMAGE[currentIdx]}
+							alt={PRICE_IMAGE[currentIdx]}
 							fill
 							priority
 							sizes="456px"
@@ -63,7 +67,10 @@ export function PriceImageModal({ setIsModalOpen }: PriceImageModalPT) {
 					</div>
 					<NTIcon
 						icon="expandRightLight"
-						className={`h-[120px] w-[60px] cursor-pointer ${nextDisabled ? "text-Gray20" : "text-Gray20 hover:text-Gray80"}`}
+						className={cn(
+							"h-[120px] w-[60px] cursor-pointer text-Gray20",
+							nextDisabled || "hover:text-Gray80",
+						)}
 						onClick={handleNext}
 					/>
 				</ModalBody>
