@@ -134,6 +134,7 @@ export const getHourFromStamp = (timestamp: number) => {
 	const ktcStamp = getKSTStampByStamp(timestamp)
 	return new Date(ktcStamp * 1000).getHours()
 }
+//
 /** 입력(타임스탬프)으로부터 "12시간제 시간" 반환 */
 export const get12HourFromStamp = (timestamp: number) => {
 	const hour = getHourFromStamp(timestamp)
@@ -145,6 +146,7 @@ export const getMinFromStamp = (timestamp: number) => {
 	const ktcStamp = getKSTStampByStamp(timestamp)
 	return new Date(ktcStamp * 1000).getMinutes()
 }
+//
 /** 입력(타입스탬프)으로부터 "초" 반환 */
 export const getSecFromStamp = (timestamp: number) => {
 	timestamp = convertSecondTimestamp(timestamp)
@@ -340,4 +342,11 @@ export const getBeforeOrAfterN = (
 		result = dayjs.unix(timestamp).subtract(n, timeUnit)
 	else result = dayjs.unix(timestamp).add(n, timeUnit)
 	return result.unix()
+}
+/** 입력된 시각을 기준으로 `오전/오후 "시간":"분" ` 이 반환 **/
+export const formTime = (timestamp: number): string => {
+	const hour = get12HourFromStamp(timestamp)
+	const minute = getMinFromStamp(timestamp).toString().padStart(2, "0")
+	const dayDivision = getDayDivisionInKor(timestamp)
+	return `${dayDivision} ${hour}:${minute}`
 }
