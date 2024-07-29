@@ -1,11 +1,13 @@
 "use client"
+import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
-import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import NTIcon from "@/component/common/nt-icon"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTToolbar from "@/component/common/nt-toolbar"
+import { cn } from "@/config/tailwind"
 import {
 	LABEL_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
 	PATH_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR,
@@ -14,6 +16,8 @@ import { useShopById } from "@/hook/use-shop-controller"
 import type { TResGetShopById } from "@/type/shop"
 
 import EditIntroduction from "../modal/01"
+
+import { bannerImage } from "./banner-image"
 
 export default function ManagerBaseMyShopBanner() {
 	return (
@@ -24,8 +28,18 @@ export default function ManagerBaseMyShopBanner() {
 	)
 }
 function MyShopBanner() {
+	const [currentIdx, setCurrentIdx] = useState(0)
 	const { onOpenModal } = useModal()
 	const { data, isError, error, isLoading } = useShopById(1)
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCurrentIdx((prevIdx) => (prevIdx + 1) % bannerImage.length)
+		}, 10000)
+
+		return () => clearInterval(interval)
+	}, [])
+
 	if (isError) {
 		return <div>Error: {error.message}</div>
 	}
@@ -43,12 +57,31 @@ function MyShopBanner() {
 
 	return (
 		<div className="relative h-[432.47px] w-full">
-			<NTBannerImageCarousel className="absolute left-0 h-full w-full bg-transparent" />
+			{/* <NTBannerImageCarousel className="absolute left-0 h-full w-full bg-transparent" /> */}
+			{bannerImage.map((image, index) => {
+				return (
+					<div
+						key={index}
+						className={cn(
+							"absolute left-0 top-0 h-full w-full transition-opacity duration-500",
+							index === currentIdx ? "opacity-100" : "opacity-0",
+						)}
+					>
+						<Image
+							src={Object.values(image)[0]}
+							alt={Object.values(image)[0]}
+							layout="fill"
+							objectFit="cover"
+							priority={index === currentIdx}
+						/>
+					</div>
+				)
+			})}
 			<NTContent mode="dark" className="absolute left-[90px] top-10">
 				미리보기
 			</NTContent>
 			<NTContent mode="dark" className="absolute left-[205px] top-10">
-				0/0
+				{`${currentIdx + 1}/${bannerImage.length}`}
 			</NTContent>
 			<NTIcon
 				icon="setting"
@@ -64,7 +97,6 @@ function MyShopBanner() {
 		</div>
 	)
 }
-
 type BannerHeaderPT = { shopData: TResGetShopById }
 function BannerHeader({ shopData }: BannerHeaderPT) {
 	const shopAddress = shopData.address.split(" ").slice(0, 2).join(" ")
