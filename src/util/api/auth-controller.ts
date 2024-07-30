@@ -1,9 +1,10 @@
+import type { AxiosResponse } from "axios"
 import axios from "axios"
 import { getCookie, hasCookie } from "cookies-next"
 
 import { axiosInstance } from "@/config/axios"
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constant/auth-key"
-import type { TUserInfo } from "@/type"
+import type { TRefreshDataResponse, TUserInfo } from "@/type"
 import type { TResponseData } from "@/type/response"
 import type { TSignType } from "@/type/union-option/sign-type"
 
@@ -23,7 +24,9 @@ export const getLogin = async (code: string, loginType: TSignType) => {
 }
 
 /** [POST] 리프레쉬 토큰 api 호출 */
-export const postResquestNewToken = async () => {
+export const postResquestNewToken = async (): Promise<
+	AxiosResponse<TRefreshDataResponse>
+> => {
 	const refreshToken = getCookie(REFRESH_TOKEN)
 
 	const response = await axios.post(
@@ -35,6 +38,7 @@ export const postResquestNewToken = async () => {
 			},
 		},
 	)
+
 	return response
 }
 
