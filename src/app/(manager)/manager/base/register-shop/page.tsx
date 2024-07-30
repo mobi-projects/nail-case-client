@@ -1,5 +1,5 @@
-import ShopRegisterHeader from "@/component/custom/manager/base/shop-register/header"
-import ShopRegisterForm from "@/component/custom/manager/base/shop-register/register-form"
+import ShopRegisterHeader from "@/component/custom/manager/base/register-shop/header"
+import ShopRegisterForm from "@/component/custom/manager/base/register-shop/register-form"
 
 export default function ManagerBaseShopRegister() {
 	return (
