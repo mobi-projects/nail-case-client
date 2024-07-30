@@ -4,8 +4,6 @@ import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 import NTContent from "@/component/common/nt-content"
-import NTIcon from "@/component/common/nt-icon"
-import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import NTToolbar from "@/component/common/nt-toolbar"
 import { cn } from "@/config/tailwind"
 import {
@@ -14,8 +12,6 @@ import {
 } from "@/constant/toolbar-list"
 import { useShopById } from "@/hook/use-shop-controller"
 import type { TResGetShopById } from "@/type/shop"
-
-import EditIntroduction from "../modal/01"
 
 import { BANNER_IMAGE } from "./banner-image"
 
@@ -29,7 +25,6 @@ export default function ManagerBaseMyShopBanner() {
 }
 function MyShopBanner() {
 	const [currentIdx, setCurrentIdx] = useState(0)
-	const { onOpenModal } = useModal()
 	const { data, isError, error, isLoading } = useShopById(1)
 
 	useEffect(() => {
@@ -48,12 +43,6 @@ function MyShopBanner() {
 	}
 
 	const shopData = data?.data as TResGetShopById
-	const onClickPencil = () => {
-		onOpenModal({
-			size: "small",
-			children: <EditIntroduction />,
-		})
-	}
 
 	return (
 		<div className="relative h-[432.47px] w-full">
@@ -83,17 +72,11 @@ function MyShopBanner() {
 			<NTContent mode="dark" className="absolute left-[205px] top-10">
 				{`${currentIdx + 1}/${BANNER_IMAGE.length}`}
 			</NTContent>
-			<NTIcon
+			{/* <NTIcon
 				icon="setting"
 				className="absolute right-12 top-10 h-6 w-6 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)]"
-			/>
-			<NTIcon
-				icon="pencil"
-				className="absolute right-12 top-[280px] h-6 w-6 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)]"
-				onClick={onClickPencil}
-			/>
+			/> */}
 			<BannerHeader shopData={shopData} />
-			<BannerDescription shopData={shopData} />
 		</div>
 	)
 }
@@ -108,22 +91,6 @@ function BannerHeader({ shopData }: BannerHeaderPT) {
 			<h1 className="text-Title01 text-[28px] font-Bold text-White">
 				{shopData.shopName}
 			</h1>
-		</div>
-	)
-}
-
-function BannerDescription({ shopData }: BannerHeaderPT) {
-	const tagList = shopData.tags.map((tag) => `#${tag}`).join(" ")
-	return (
-		<div className="absolute left-[90px] top-[280px] flex flex-col gap-4">
-			<div className="flex gap-3">
-				<p className="text-Body01 text-[18px] font-SemiBold text-White">
-					{tagList}
-				</p>
-			</div>
-			<p className="line-clamp-3 w-[500px] whitespace-pre-wrap text-Body01 text-[18px] font-Regular text-Gray10">
-				{shopData.overview}
-			</p>
 		</div>
 	)
 }
