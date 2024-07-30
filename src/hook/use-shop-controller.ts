@@ -1,10 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 import {
 	QUERY_LIST_SHOP_NAIL_ARTIST,
 	QUERY_REVIEW_ARR,
 	QUERY_SHOP_INFO,
 } from "@/constant"
+import { MANAGER_BASE_HOME } from "@/constant/routing-path"
 import {
 	getListShopNailArtist,
 	getShopById,
@@ -31,8 +34,14 @@ export const useShopReviews = (shopId: number) =>
 		queryFn: () => getShopReview(shopId!),
 	})
 
-export const useRegisterShop = () =>
-	useMutation({
+export const useRegisterShop = () => {
+	const router = useRouter()
+	return useMutation({
 		mutationFn: ({ reqForm }: { reqForm: FormData }) =>
 			postRegisterShop(reqForm),
+		onSuccess: () => {
+			toast.success("매장이 정상적으로 등록되었습니다.")
+			router.replace(MANAGER_BASE_HOME)
+		},
 	})
+}

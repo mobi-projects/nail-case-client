@@ -3,6 +3,7 @@ import localFont from "next/font/local"
 
 import { ModalProvider } from "@/component/common/nt-modal/nt-modal.context"
 import { SheetProvider } from "@/component/common/nt-sheet/nt-sheet.context"
+import NTToast from "@/component/common/nt-toast"
 import { AuthProvider } from "@/config/auth-provider"
 import { TanstackQueryProvider } from "@/config/tanstack-query"
 import "../config/tailwind/global.css"
@@ -50,6 +51,7 @@ export default function RootLayout({
 										{children}
 									</main>
 								</div>
+								<NTToast />
 							</ModalProvider>
 						</SheetProvider>
 					</AuthProvider>

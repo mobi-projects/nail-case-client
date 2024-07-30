@@ -34,7 +34,7 @@ export default function ShopRegisterForm() {
 	const [workHours, setWorkHours] = useState<TWorkHour[]>(initWorkHours())
 	const [shopProfileFileArr, setShopProfileFileArr] = useState<Array<File>>([])
 	const [priceListFileArr, setPriceListFileArr] = useState<Array<File>>([])
-	const { mutateAsync } = useRegisterShop()
+	const { mutate } = useRegisterShop()
 
 	const errorMsgForShopName = errors[SHOP_NAME.key]?.message as string
 	const errorMsgForAddress = errors[ADDRESS.key]?.message as string
@@ -68,8 +68,7 @@ export default function ShopRegisterForm() {
 			shopProfileFileArr,
 			priceListFileArr,
 		)
-		const response = await mutateAsync({ reqForm: formData })
-		console.log(response)
+		mutate({ reqForm: formData })
 	}
 
 	return (
