@@ -15,29 +15,25 @@ import { getServerCookie } from "./get-server-cookie"
 let refreshPromise: Promise<AxiosResponse<TRefreshDataResponse>> | null = null
 
 /** 토큰의 만료 여부에 따라서 만료가 안 됐다면 기존 토큰 사용, 만료된 토큰이라면 토큰 갱신 후 갱신된 accessToken 반환 */
-export const getValidAccessToken = async (
-	token: CookieValueTypes,
-): Promise<string> => {
-	if (isExpired(token) && !isServer()) {
-		if (isNull(refreshPromise)) {
-			try {
-				refreshPromise = postResquestNewToken()
-				const { data: newTokens } = await refreshPromise
-				setAuthTokens(newTokens) // 새로운 토큰 설정
-				return newTokens.accessToken // 갱신된 액세스 토큰 반환
-			} catch (error) {
-				handleRefreshingError()
-				return Promise.reject(error)
-			} finally {
-				refreshPromise = null
-			}
-		} else {
-			const { data: newTokens } = await refreshPromise
-			return newTokens.accessToken // 기존 요청중인 토큰 갱신을 기다린후 새로발급된 accessToken을 반환
-		}
-	}
+export const getValidAccessToken = async (token: CookieValueTypes) => {
+	if (!isExpired(token)) return token as string // 유효한 토큰이라면 그대로 반환
 
-	return token as string // 기존 accessToken정보 반환
+	if (isNull(refreshPromise)) {
+		try {
+			refreshPromise = postResquestNewToken()
+			const { data: newTokens } = await refreshPromise
+			setAuthTokens(newTokens) // 새로운 토큰 설정
+			return newTokens.accessToken // 갱신된 액세스 토큰 반환
+		} catch (error) {
+			handleRefreshingError()
+			return Promise.reject(error)
+		} finally {
+			refreshPromise = null
+		}
+	} else {
+		const { data: newTokens } = await refreshPromise
+		return newTokens.accessToken // 기존 요청중인 토큰 갱신을 기다린후 새로발급된 accessToken을 반환
+	}
 }
 
 /** 에러 발생시 세션만료 & 사용자 홈으로 redirect */
