@@ -58,8 +58,8 @@ function MyShopBanner() {
 					>
 						<Image
 							src={Object.values(image)[0]}
-							alt={Object.values(image)[0]}
-							layout="fill"
+							alt={`bannerImage-${index}`}
+							fill
 							objectFit="cover"
 							priority={index === currentIdx}
 						/>
