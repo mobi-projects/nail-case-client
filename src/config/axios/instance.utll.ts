@@ -16,6 +16,7 @@ let refreshPromise: Promise<AxiosResponse<TRefreshDataResponse>> | null = null
 
 /** 토큰의 만료 여부에 따라서 만료가 안 됐다면 기존 토큰 사용, 만료된 토큰이라면 토큰 갱신 후 갱신된 accessToken 반환 */
 export const getValidAccessToken = async (token: CookieValueTypes) => {
+	if (isServer()) return token as string
 	if (!isExpired(token)) return token as string // 유효한 토큰이라면 그대로 반환
 
 	if (isNull(refreshPromise)) {
