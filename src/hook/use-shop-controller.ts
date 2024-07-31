@@ -8,7 +8,7 @@ import {
 	QUERY_SHOP_INFO,
 	QUERY_SHOP_INFO_QUERY,
 } from "@/constant"
-import { MANAGER_BASE_HOME } from "@/constant/routing-path"
+import { COMMON_HOME, MANAGER_BASE_HOME } from "@/constant/routing-path"
 import {
 	getListShopNailArtist,
 	getShopById,
@@ -16,6 +16,7 @@ import {
 	postRegisterShop,
 } from "@/util/api/shop-controller"
 import { getShopInfo } from "@/util/api_v2/get-shop-Info"
+import { deleteAllCookies } from "@/util/common/auth"
 
 /** 매장 아티스트 목록조회 */
 export const useListShopNailArtist = (shopId: number) =>
@@ -44,6 +45,11 @@ export const useRegisterShop = () => {
 		onSuccess: () => {
 			toast.success("매장이 정상적으로 등록되었습니다.")
 			router.replace(MANAGER_BASE_HOME)
+		},
+		onError: () => {
+			toast.error("매장 등록에 실패했습니다. 다시 로그인해주세요.")
+			deleteAllCookies()
+			setTimeout(() => (window.location.href = COMMON_HOME), 1000)
 		},
 	})
 }
