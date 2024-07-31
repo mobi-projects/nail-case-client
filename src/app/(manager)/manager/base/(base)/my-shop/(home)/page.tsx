@@ -1,27 +1,34 @@
-import MyShopInfo from "@/component/custom/manager/base/my-shop/home/03"
-import RequiredReservationInfo from "@/component/custom/manager/base/my-shop/home/04"
-import NoticeBoard from "@/component/custom/manager/base/my-shop/home/05"
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
 
-export default function Home() {
+import ManagerBanner from "@/component/custom/manager/base/my-shop/home/banner"
+import InfoCardList from "@/component/custom/manager/base/my-shop/home/info-card"
+import RequiredReservationInfo from "@/component/custom/manager/base/my-shop/home/required-reservation-form"
+import { getCacheClient } from "@/config/tanstack-query"
+import { QUERY_SHOP_INFO_QUERY } from "@/constant"
+import { getShopInfo } from "@/util/api_v2/get-shop-Info"
+
+export default async function Home() {
+	const queryClient = getCacheClient()
+
+	await queryClient.prefetchQuery({
+		queryKey: [QUERY_SHOP_INFO_QUERY, 1],
+		queryFn: async () => await getShopInfo(1),
+	})
 	return (
-		<div className="flex flex-col">
-			<div className="flex flex-col gap-[20px] pb-[30px] pt-[20px]">
-				<p className="text-Title03">내 샵 정보</p>
-				<MyShopInfo />
-			</div>
-			<hr className="h-[1.5px] w-full border-Gray10" />
-			<div className="flex flex-col gap-[20px] pt-[20px]">
-				<p className="text-Title03">필수 예약 사항</p>
-				<RequiredReservationInfo />
-			</div>
-			<hr className="h-[1.5px] w-full border-Gray10" />
-			<div className="flex flex-col gap-[20px] pt-[20px]">
-				<div className="h-hit flex w-full items-center justify-between">
-					<p className="text-Title03">공지</p>
-					<p className="text-Headline02 text-Gray40">전체보기</p>
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<ManagerBanner />
+			<div className="flex flex-col">
+				<div className="flex flex-col gap-[20px] pb-[30px] pt-[20px]">
+					<p className="text-Title03">내 샵 정보</p>
+					<InfoCardList />
 				</div>
-				<NoticeBoard />
+				<hr className="h-[1.5px] w-full border-Gray10" />
+				<div className="flex flex-col gap-[20px] pt-[20px]">
+					<p className="text-Title03">필수 예약 사항</p>
+					<RequiredReservationInfo />
+				</div>
+				<hr className="h-[1.5px] w-full border-Gray10" />
 			</div>
-		</div>
+		</HydrationBoundary>
 	)
 }

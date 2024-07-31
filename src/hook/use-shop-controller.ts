@@ -6,6 +6,7 @@ import {
 	QUERY_LIST_SHOP_NAIL_ARTIST,
 	QUERY_REVIEW_ARR,
 	QUERY_SHOP_INFO,
+	QUERY_SHOP_INFO_QUERY,
 } from "@/constant"
 import { COMMON_HOME, MANAGER_BASE_HOME } from "@/constant/routing-path"
 import {
@@ -14,6 +15,7 @@ import {
 	getShopReview,
 	postRegisterShop,
 } from "@/util/api/shop-controller"
+import { getShopInfo } from "@/util/api_v2/get-shop-Info"
 import { deleteAllCookies } from "@/util/common/auth"
 
 /** 매장 아티스트 목록조회 */
@@ -51,3 +53,8 @@ export const useRegisterShop = () => {
 		},
 	})
 }
+export const useShopInfo = (shopId: number) =>
+	useQuery({
+		queryKey: [QUERY_SHOP_INFO_QUERY, shopId],
+		queryFn: async () => await getShopInfo(shopId),
+	})
