@@ -13,11 +13,11 @@ import type { TResGetShopInfo } from "@/util/api_v2/get-shop-Info"
 
 import { getPriceImageProps } from "./price-modal.util"
 type PriceImageModalPT = {
-	InfoData: TResGetShopInfo
+	infoData: TResGetShopInfo
 }
-export function PriceImageModal({ InfoData }: PriceImageModalPT) {
+export function PriceImageModal({ infoData }: PriceImageModalPT) {
 	const [currentIdx, setCurrentIdx] = useState(0)
-	const imageArray = getPriceImageProps(InfoData.profileImages)
+	const imageArray = getPriceImageProps(infoData.profileImages)
 	const handlePrev = () => {
 		if (currentIdx > 0) {
 			setCurrentIdx(currentIdx - 1)

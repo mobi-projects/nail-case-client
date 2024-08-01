@@ -17,11 +17,11 @@ export default function InfoCardList() {
 	if (isLoading) {
 		return <div>...Loding</div>
 	}
-	const InfoData = data as TResGetShopInfo
+	const infoData = data as TResGetShopInfo
 
 	const handleArtClick = () => {
 		onOpenModal({
-			children: <PriceImageModal InfoData={InfoData} />,
+			children: <PriceImageModal infoData={infoData} />,
 			size: "small",
 			isX: false,
 		})
@@ -32,7 +32,7 @@ export default function InfoCardList() {
 				<WorkingTime />
 			</CardForm>
 			<CardForm title="위치">
-				<LocationForm InfoData={InfoData} />
+				<LocationForm infoData={infoData} />
 			</CardForm>
 			<CardForm title="가격" onClick={handleArtClick}>
 				<PriceForm />
