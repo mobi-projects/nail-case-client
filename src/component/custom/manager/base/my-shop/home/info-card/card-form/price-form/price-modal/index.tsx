@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
 import {
@@ -11,26 +10,16 @@ import {
 import { cn } from "@/config/tailwind"
 import type { TResGetShopInfo } from "@/util/api_v2/get-shop-Info"
 
+import { useModalHook } from "./modal-hook"
 import { getPriceImageProps } from "./price-modal.util"
 type PriceImageModalPT = {
 	infoData: TResGetShopInfo
 }
 export function PriceImageModal({ infoData }: PriceImageModalPT) {
-	const [currentIdx, setCurrentIdx] = useState(0)
 	const imageArray = getPriceImageProps(infoData.profileImages)
-	const handlePrev = () => {
-		if (currentIdx > 0) {
-			setCurrentIdx(currentIdx - 1)
-		}
-	}
-	const handleNext = () => {
-		if (currentIdx < imageArray.length - 1) {
-			setCurrentIdx(currentIdx + 1)
-		}
-	}
+	const { currentIdx, handlePrev, handleNext, prevDisabled, nextDisabled } =
+		useModalHook(imageArray)
 
-	const prevDisabled = currentIdx === 0
-	const nextDisabled = currentIdx === imageArray.length - 1
 	return (
 		<ModalContent>
 			<ModalHeader className="flex h-[74.5px] w-full justify-between px-[15px]">
