@@ -2,7 +2,6 @@ import type { AxiosResponse } from "axios"
 import { type CookieValueTypes } from "cookies-next"
 import { jwtDecode } from "jwt-decode"
 
-import { COMMON_HOME } from "@/constant/routing-path"
 import type { TRefreshDataResponse } from "@/type"
 import { postResquestNewToken } from "@/util/api/auth-controller"
 import { getNowStamp } from "@/util/common"
@@ -40,7 +39,6 @@ export const getValidAccessToken = async (token: CookieValueTypes) => {
 /** 에러 발생시 세션만료 & 사용자 홈으로 redirect */
 const handleRefreshingError = () => {
 	deleteAllCookies()
-	window.location.href = COMMON_HOME
 }
 
 /** 전달받은 accessToken을 현재 timeStamp와 비교해서 만료된 토큰 여부 판단 */
