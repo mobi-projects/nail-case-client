@@ -6,7 +6,6 @@ import type { TResGetShopInfo } from "@/util/api_v2/get-shop-Info"
 
 import { CardForm } from "./card-form"
 import { LocationForm } from "./card-form/location-form"
-import { PriceForm } from "./card-form/price-form"
 import { PriceImageModal } from "./card-form/price-form/price-modal"
 import { WorkingTime } from "./card-form/working-time-form"
 
@@ -34,9 +33,7 @@ export default function InfoCardList() {
 			<CardForm title="위치">
 				<LocationForm infoData={infoData} />
 			</CardForm>
-			<CardForm title="가격" onClick={handleArtClick}>
-				<PriceForm />
-			</CardForm>
+			<CardForm title="가격" onClick={handleArtClick}></CardForm>
 		</div>
 	)
 }
