@@ -1,8 +1,8 @@
-import { CATEGORIES } from "./mock"
 import RequirementsDetail from "./requirements-detail"
+import { CATEGORIES } from "./requirements.const"
 
 export default function ReservationRequirements() {
-	const lastIdx = CATEGORIES.length
+	const categoriesLength = CATEGORIES.length
 	return (
 		<div className="flex h-full w-[600px] flex-col justify-center rounded-[26px] px-5 shadow-customGray70">
 			{CATEGORIES.map((category, idx) => (
@@ -10,7 +10,7 @@ export default function ReservationRequirements() {
 					<RequirementsDetail
 						title={category.title}
 						options={category.options}
-						isLastItem={lastIdx === idx + 1}
+						isLastItem={categoriesLength === idx + 1}
 					/>
 				</div>
 			))}
