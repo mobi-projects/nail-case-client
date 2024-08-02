@@ -1,8 +1,7 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
 
 import ManagerBanner from "@/component/custom/manager/base/my-shop/home/banner"
-import InfoCardList from "@/component/custom/manager/base/my-shop/home/info-card"
-import RequiredReservationInfo from "@/component/custom/manager/base/my-shop/home/required-reservation-form"
+import ShopInformaion from "@/component/custom/manager/base/my-shop/home/shop-information"
 import { getCacheClient } from "@/config/tanstack-query"
 import { QUERY_SHOP_INFO_QUERY } from "@/constant"
 import { getShopInfo } from "@/util/api_v2/get-shop-Info"
@@ -17,18 +16,7 @@ export default async function Home() {
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<ManagerBanner />
-			<div className="flex flex-col">
-				<div className="flex flex-col gap-[20px] pb-[30px] pt-[20px]">
-					<p className="text-Title03">내 샵 정보</p>
-					<InfoCardList />
-				</div>
-				<hr className="h-[1.5px] w-full border-Gray10" />
-				<div className="flex flex-col gap-[20px] pt-[20px]">
-					<p className="text-Title03">필수 예약 사항</p>
-					<RequiredReservationInfo />
-				</div>
-				<hr className="h-[1.5px] w-full border-Gray10" />
-			</div>
+			<ShopInformaion />
 		</HydrationBoundary>
 	)
 }
