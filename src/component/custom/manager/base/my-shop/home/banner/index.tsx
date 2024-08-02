@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import { useShopInfo } from "@/hook/use-shop-controller"
-import type { TResGetShopInfo } from "@/util/api_v2/get-shop-info"
+import type { TResGetShopInfo } from "@/util/api-v2/get-shop-info"
 
 import NTContent from "../../../../../../common/nt-content/index"
 

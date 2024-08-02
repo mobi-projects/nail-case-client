@@ -2,7 +2,7 @@
 
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { useShopInfo } from "@/hook/use-shop-controller"
-import type { TResGetShopInfo } from "@/util/api_v2/get-shop-info"
+import type { TResGetShopInfo } from "@/util/api-v2/get-shop-info"
 
 import { CardForm } from "./card-form"
 import { LocationForm } from "./card-form/location-form"

@@ -5,7 +5,7 @@ import InfoCardList from "@/component/custom/manager/base/my-shop/home/info-card
 import RequiredReservationInfo from "@/component/custom/manager/base/my-shop/home/required-reservation-form"
 import { getCacheClient } from "@/config/tanstack-query"
 import { QUERY_SHOP_INFO_QUERY } from "@/constant"
-import { getShopInfo } from "@/util/api_v2/get-shop-info"
+import { getShopInfo } from "@/util/api-v2/get-shop-info"
 
 export default async function Home() {
 	const queryClient = getCacheClient()

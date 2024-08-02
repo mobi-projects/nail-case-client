@@ -1,4 +1,4 @@
-import type { TWorkHours } from "@/util/api_v2/get-shop-info"
+import type { TWorkHours } from "@/util/api-v2/get-shop-info"
 import {
 	get12HourFromStamp,
 	getDayDivisionInKor,
