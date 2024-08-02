@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { cn } from "@/config/tailwind"
 import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
@@ -13,16 +13,22 @@ type ReservationListPT = {
 	listTitle: string
 	status: TReservationStatus
 	reservationList: TReservation[]
+	initIsExpanded?: boolean
 }
 export default function ReservationList({
 	listTitle,
 	status,
 	reservationList,
+	initIsExpanded = false,
 }: ReservationListPT) {
-	const [isExpanded, setIsExpanded] = useState(false)
+	const [isExpanded, setIsExpanded] = useState(initIsExpanded)
 	const [animationClass, setAnimationClass] = useState<string>(
 		CHILDREN_ANIMATION.idle,
 	)
+
+	useEffect(() => {
+		if (isExpanded) setAnimationClass(CHILDREN_ANIMATION.entered)
+	}, [isExpanded])
 
 	const listSize = reservationList.length
 
