@@ -1,7 +1,7 @@
 import {
 	MOCKING_CONFIRMED_RESERVATION_LIST,
 	MOCKING_PENDING_RESERVATION_LIST,
-} from "./list-container.constant"
+} from "./list-container.mock"
 import ReservationList from "./reservation-list"
 
 export default function ListContainer() {
