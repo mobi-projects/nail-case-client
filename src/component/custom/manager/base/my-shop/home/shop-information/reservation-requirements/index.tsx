@@ -1,5 +1,5 @@
 import RequirementsDetail from "./requirements-detail"
-import { CATEGORIES } from "./requirements.const"
+import { CATEGORIES } from "./requirements.constant"
 
 export default function ReservationRequirements() {
 	const categoriesLength = CATEGORIES.length
