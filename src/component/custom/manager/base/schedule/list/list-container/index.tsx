@@ -16,6 +16,7 @@ export default function ListContainer() {
 				listTitle="대기 중인 예약"
 				status="PENDING"
 				reservationList={pendingList}
+				initIsExpanded={true}
 			/>
 			<ReservationList
 				listTitle="승인된 예약"
