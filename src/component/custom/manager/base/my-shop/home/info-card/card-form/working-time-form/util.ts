@@ -1,5 +1,9 @@
 import type { TWorkHours } from "@/util/api_v2/get-shop-Info"
-import { formTime } from "@/util/common"
+import {
+	get12HourFromStamp,
+	getDayDivisionInKor,
+	getMinFromStamp,
+} from "@/util/common"
 
 export const groupedByHourList = (
 	workDataList: TWorkHours[],
@@ -29,6 +33,12 @@ export const separateHourList = (workDataList: TWorkHours[]) => {
 	})
 	return { singleList, multipleList }
 }
+const workingTimeForm = (timestamp: number) => {
+	const hour = get12HourFromStamp(timestamp)
+	const minute = getMinFromStamp(timestamp).toString().padStart(2, "0")
+	const dayDivision = getDayDivisionInKor(timestamp)
+	return `${dayDivision} ${hour}:${minute}`
+}
 export const MultipleHourList = (
 	list: { [key: string]: TWorkHours[] }[],
 ): { day: string; time: string }[] => {
@@ -54,13 +64,13 @@ export const MultipleHourList = (
 		if (!isOtherDay) {
 			result.push({
 				day: `${days[start]} - ${days[end]}`,
-				time: `${formTime(value[0].openTime)} ~ ${formTime(value[0].closeTime)}`,
+				time: `${workingTimeForm(value[0].openTime)} ~ ${workingTimeForm(value[0].closeTime)}`,
 			})
 		} else {
 			const ranges = orderWeek.map((index) => days[index]).join(", ")
 			result.push({
 				day: ranges,
-				time: `${formTime(value[0].openTime)} ~ ${formTime(value[0].closeTime)}`,
+				time: `${workingTimeForm(value[0].openTime)} ~ ${workingTimeForm(value[0].closeTime)}`,
 			})
 		}
 	})
@@ -76,7 +86,7 @@ export const SingleHourList = (
 		const value = data[key]
 		result.push({
 			day: days[value.dayOfWeek],
-			time: `${formTime(value.openTime)} ~ ${formTime(value.closeTime)}`,
+			time: `${workingTimeForm(value.openTime)} ~ ${workingTimeForm(value.closeTime)}`,
 		})
 	})
 	return result

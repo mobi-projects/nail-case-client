@@ -341,10 +341,3 @@ export const getBeforeOrAfterN = (
 	else result = dayjs.unix(timestamp).add(n, timeUnit)
 	return result.unix()
 }
-/** 입력된 시각을 기준으로 `오전/오후 "시간":"분" ` 이 반환 **/
-export const formTime = (timestamp: number): string => {
-	const hour = get12HourFromStamp(timestamp)
-	const minute = getMinFromStamp(timestamp).toString().padStart(2, "0")
-	const dayDivision = getDayDivisionInKor(timestamp)
-	return `${dayDivision} ${hour}:${minute}`
-}
