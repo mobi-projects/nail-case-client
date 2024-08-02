@@ -37,7 +37,7 @@ export default function ManagerBanner() {
 			<NTContent mode="dark" className="absolute left-[205px] top-10">
 				{`${selectedIdx + 1}/${profileImageLength.toString()}`}
 			</NTContent>
-			<BannerTitle InfoData={InfoData} />
+			<BannerTitle infoData={InfoData} />
 		</div>
 	)
 }

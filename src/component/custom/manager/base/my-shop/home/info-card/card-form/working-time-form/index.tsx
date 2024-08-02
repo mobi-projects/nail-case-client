@@ -5,7 +5,7 @@ import {
 	bulidMultipleHourList,
 	separateHourList,
 	bulidSingleHourList,
-} from "./util"
+} from "./time-form.util"
 type WorkingTimeFormPT = {
 	InfoData: TResGetShopInfo
 }
