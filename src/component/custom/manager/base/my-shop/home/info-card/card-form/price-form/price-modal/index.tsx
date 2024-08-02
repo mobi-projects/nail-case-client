@@ -8,7 +8,7 @@ import {
 	ModalHeader,
 } from "@/component/common/nt-modal"
 import { cn } from "@/config/tailwind"
-import type { TResGetShopInfo } from "@/util/api_v2/get-shop-Info"
+import type { TResGetShopInfo } from "@/util/api_v2/get-shop-info"
 
 import { useModalHook } from "./modal-hook"
 import { getPriceImageProps } from "./price-modal.util"

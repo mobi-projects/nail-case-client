@@ -15,7 +15,7 @@ import {
 	getShopReview,
 	postRegisterShop,
 } from "@/util/api/shop-controller"
-import { getShopInfo } from "@/util/api_v2/get-shop-Info"
+import { getShopInfo } from "@/util/api_v2/get-shop-info"
 import { deleteAllCookies } from "@/util/common/auth"
 
 /** 매장 아티스트 목록조회 */

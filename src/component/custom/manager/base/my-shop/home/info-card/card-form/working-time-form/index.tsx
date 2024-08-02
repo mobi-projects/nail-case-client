@@ -1,7 +1,11 @@
 import NTIcon from "@/component/common/nt-icon"
-import type { TResGetShopInfo } from "@/util/api_v2/get-shop-Info"
+import type { TResGetShopInfo } from "@/util/api_v2/get-shop-info"
 
-import { MultipleHourList, separateHourList, SingleHourList } from "./util"
+import {
+	bulidMultipleHourList,
+	separateHourList,
+	bulidSingleHourList,
+} from "./util"
 type WorkingTimeFormPT = {
 	InfoData: TResGetShopInfo
 }
@@ -11,8 +15,8 @@ export function WorkingTimeForm({ InfoData }: WorkingTimeFormPT) {
 	const workWeek = openDays.map((data) => days[data.dayOfWeek]).join(" ")
 	const { singleList, multipleList } = separateHourList(openDays)
 	const formHourList = [
-		...MultipleHourList(multipleList),
-		...SingleHourList(singleList),
+		...bulidMultipleHourList(multipleList),
+		...bulidSingleHourList(singleList),
 	] as { day: string; time: string }[]
 	return (
 		<div className="h-[100px] w-full overflow-y-scroll px-[12px]">

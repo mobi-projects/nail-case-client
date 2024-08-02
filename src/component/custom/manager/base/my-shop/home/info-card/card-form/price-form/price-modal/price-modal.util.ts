@@ -1,4 +1,4 @@
-import type { TInfoImages } from "@/util/api_v2/get-shop-Info"
+import type { TInfoImages } from "@/util/api_v2/get-shop-info"
 
 /** api 를 통해서 받는 데이터를 image를 사용하는 형태로 객체화 **/
 export const getPriceImageProps = (imageArr: Array<TInfoImages>) => {

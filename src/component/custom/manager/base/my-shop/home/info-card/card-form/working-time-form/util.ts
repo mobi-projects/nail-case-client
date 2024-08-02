@@ -1,4 +1,4 @@
-import type { TWorkHours } from "@/util/api_v2/get-shop-Info"
+import type { TWorkHours } from "@/util/api_v2/get-shop-info"
 import {
 	get12HourFromStamp,
 	getDayDivisionInKor,
@@ -39,7 +39,7 @@ const workingTimeForm = (timestamp: number) => {
 	const dayDivision = getDayDivisionInKor(timestamp)
 	return `${dayDivision} ${hour}:${minute}`
 }
-export const MultipleHourList = (
+export const bulidMultipleHourList = (
 	list: { [key: string]: TWorkHours[] }[],
 ): { day: string; time: string }[] => {
 	const days = ["일", "월", "화", "수", "목", "금", "토"]
@@ -76,7 +76,7 @@ export const MultipleHourList = (
 	})
 	return result
 }
-export const SingleHourList = (
+export const bulidSingleHourList = (
 	list: { [key: string]: TWorkHours }[],
 ): { day: string; time: string }[] => {
 	const days = ["일", "월", "화", "수", "목", "금", "토"]
