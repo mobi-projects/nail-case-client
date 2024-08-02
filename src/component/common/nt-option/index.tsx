@@ -1,3 +1,5 @@
+"use client"
+
 import type { VariantProps } from "class-variance-authority"
 import { cva } from "class-variance-authority"
 
@@ -58,6 +60,7 @@ export default function NTOption({
 							size,
 							isPressed: selectedIdxArr.includes(idx),
 						}),
+						onSelect ? "cursor-pointer" : "cursor-default",
 					)}
 					disabled={disabledIdxArr.includes(idx)}
 					onClick={() => {
