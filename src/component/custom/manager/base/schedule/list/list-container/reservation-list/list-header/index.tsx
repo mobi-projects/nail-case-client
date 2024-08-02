@@ -1,18 +1,20 @@
-import type { PropsWithChildren } from "react"
-
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
 
-type SectionHeaderPT = PropsWithChildren & {
+type SectionHeaderPT = {
+	listCnt: number
+	listTitle: string
 	isExpanded: boolean
 	onHandleExpansion: VoidFunction
 }
 
-export default function SectionHeader({
-	children,
+export default function ListHeader({
+	listTitle,
+	listCnt,
 	isExpanded,
 	onHandleExpansion,
 }: SectionHeaderPT) {
+	const printedTitle = getPrintedTitle(listTitle, listCnt)
 	return (
 		<header
 			className={cn(
@@ -21,7 +23,7 @@ export default function SectionHeader({
 				!isExpanded && "bg-BGblue01 text-PB100",
 			)}
 		>
-			<p className="text-Title03 font-SemiBold">{children}</p>
+			<p className="text-Title03 font-SemiBold">{printedTitle}</p>
 			<NTIcon
 				className={cn(
 					"h-full transition-transform",
@@ -33,3 +35,6 @@ export default function SectionHeader({
 		</header>
 	)
 }
+
+const getPrintedTitle = (listTitle: string, listCnt: number) =>
+	[listTitle, `(${listCnt} 건)`].join(" ")
