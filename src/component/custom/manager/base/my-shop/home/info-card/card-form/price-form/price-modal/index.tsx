@@ -4,7 +4,6 @@ import NTIcon from "@/component/common/nt-icon"
 import {
 	ModalBody,
 	ModalContent,
-	ModalFooter,
 	ModalHeader,
 } from "@/component/common/nt-modal"
 import { cn } from "@/config/tailwind"
@@ -22,39 +21,40 @@ export function PriceImageModal({ infoData }: PriceImageModalPT) {
 
 	return (
 		<ModalContent>
-			<ModalHeader className="flex h-[74.5px] w-full justify-between px-[15px]">
-				<div className="flex flex-1 justify-center text-2xl text-Title01">
+			<ModalHeader className="mb-2 flex h-16 w-full justify-between border-b-2 px-[15px]">
+				<div className="flex flex-1 justify-center text-2xl text-Body01">
 					<span>가격표 이미지</span>
 				</div>
 			</ModalHeader>
-			<ModalBody className="flex h-full w-full items-center justify-center">
+			<ModalBody className="relative my-5 flex h-full w-full items-center justify-center">
+				<div className="absolute right-8 top-3 z-10 text-Gray10 opacity-60">{`${currentIdx + 1} / ${imageArray.length}`}</div>
 				<NTIcon
 					icon="expandLeftLight"
 					className={cn(
-						"h-[120px] w-[60px] text-Gray20",
-						prevDisabled || "cursor-pointer hover:text-Gray80",
+						"absolute left-0 top-48 z-10 h-[120px] w-[60px] text-Gray10 opacity-30",
+						prevDisabled || "cursor-pointer hover:text-Gray60 hover:opacity-80",
 					)}
 					onClick={handlePrev}
 				/>
-				<div className="relative h-[570px] w-[456px]">
+				<NTIcon
+					icon="expandRightLight"
+					className={cn(
+						"absolute right-0 top-48 z-10 h-[120px] w-[60px] text-Gray10 opacity-30",
+						nextDisabled || "cursor-pointer hover:text-Gray60 hover:opacity-80",
+					)}
+					onClick={handleNext}
+				/>
+				<div className="relative h-full w-full rounded-[26px]">
 					<Image
 						src={imageArray[currentIdx].src}
 						alt={imageArray[currentIdx].alt}
 						fill
 						priority
-						sizes="456px"
+						sizes="456px "
+						className="rounded-[26px]"
 					/>
 				</div>
-				<NTIcon
-					icon="expandRightLight"
-					className={cn(
-						"h-[120px] w-[60px] text-Gray20",
-						nextDisabled || "cursor-pointer hover:text-Gray80",
-					)}
-					onClick={handleNext}
-				/>
 			</ModalBody>
-			<ModalFooter className="h-[50px]" />
 		</ModalContent>
 	)
 }
