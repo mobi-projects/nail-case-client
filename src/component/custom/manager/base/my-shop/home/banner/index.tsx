@@ -3,10 +3,9 @@
 import { useState } from "react"
 
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
+import NTContent from "@/component/common/nt-content"
 import { useShopInfo } from "@/hook/use-shop-controller"
 import type { TResGetShopInfo } from "@/util/api-v2/get-shop-info"
-
-import NTContent from "../../../../../../common/nt-content/index"
 
 import { BannerTitle } from "./banner-title"
 import { getEssestialImageProps } from "./util"
