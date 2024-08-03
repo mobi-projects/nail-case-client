@@ -1,10 +1,9 @@
 import { useState } from "react"
 
-type TUseModalHook = {
-	alt: string
-	src: string
-}
-export function useModalHook(images: Array<TUseModalHook>) {
+import type { TInfoImages } from "@/util/api_v2/get-shop-Info"
+
+type UseModalHookPT = { priceImages: Array<TInfoImages> }
+export function useModalHook({ priceImages }: UseModalHookPT) {
 	const [currentIdx, setCurrentIdx] = useState(0)
 
 	const handlePrev = () => {
@@ -14,13 +13,13 @@ export function useModalHook(images: Array<TUseModalHook>) {
 	}
 
 	const handleNext = () => {
-		if (currentIdx < images.length - 1) {
+		if (currentIdx < priceImages.length - 1) {
 			setCurrentIdx(currentIdx + 1)
 		}
 	}
 
 	const prevDisabled = currentIdx === 0
-	const nextDisabled = currentIdx === images.length - 1
+	const nextDisabled = currentIdx === priceImages.length - 1
 
 	return { currentIdx, handlePrev, handleNext, prevDisabled, nextDisabled }
 }
