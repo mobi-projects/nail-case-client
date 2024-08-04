@@ -3,10 +3,9 @@
 import { useState } from "react"
 
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
+import NTContent from "@/component/common/nt-content"
 import { useShopInfo } from "@/hook/use-shop-controller"
-import type { TResGetShopInfo } from "@/util/api_v2/get-shop-Info"
-
-import NTContent from "../../../../../../common/nt-content/index"
+import type { TResGetShopInfo } from "@/util/api-v2/get-shop-info"
 
 import { BannerTitle } from "./banner-title"
 import { getEssestialImageProps } from "./util"
@@ -37,7 +36,7 @@ export default function ManagerBanner() {
 			<NTContent mode="dark" className="absolute left-[205px] top-10">
 				{`${selectedIdx + 1}/${profileImageLength.toString()}`}
 			</NTContent>
-			<BannerTitle InfoData={InfoData} />
+			<BannerTitle infoData={InfoData} />
 		</div>
 	)
 }

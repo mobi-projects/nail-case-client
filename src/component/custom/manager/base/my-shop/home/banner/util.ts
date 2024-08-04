@@ -1,4 +1,4 @@
-import type { TInfoImages } from "@/util/api_v2/get-shop-Info"
+import type { TInfoImages } from "@/util/api-v2/get-shop-info"
 
 export const getEssestialImageProps = (imageArr: Array<TInfoImages>) => {
 	return Array.from({ length: imageArr.length }, (_, idx) => ({

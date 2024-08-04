@@ -1,5 +1,5 @@
 import NTIcon from "@/component/common/nt-icon"
-import type { TResGetShopInfo } from "@/util/api_v2/get-shop-Info"
+import type { TResGetShopInfo } from "@/util/api-v2/get-shop-info"
 
 import { HourFrom } from "./hours-form/index"
 import { bulidWorkingTimeFormList, unixTimeForm } from "./hours.util"
