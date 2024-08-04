@@ -2,43 +2,43 @@ export const MOCK_DATA = {
 	workHours: [
 		{
 			closeTime: 1722448800, //오후6시
-			opneTime: 1722420000, //오전 10시
+			openTime: 1722420000, //오전 10시
 			isOpen: false,
 			dayOfWeek: 0,
 		},
 		{
 			closeTime: 1722448800, //오후6시
-			opneTime: 1722420000, //오전10시
+			openTime: 1722420000, //오전10시
 			isOpen: true,
 			dayOfWeek: 1,
 		},
 		{
 			closeTime: 1722445200, //오후5시
-			opneTime: 1722416400, // 오전9시
+			openTime: 1722416400, // 오전9시
 			isOpen: true,
 			dayOfWeek: 2,
 		},
 		{
 			closeTime: 1722445200, // 오후5시
-			opneTime: 1722416400, // 오전9시
+			openTime: 1722416400, // 오전9시
 			isOpen: true,
 			dayOfWeek: 3,
 		},
 		{
 			closeTime: 1722448800, // 오후 6시
-			opneTime: 1722420000, // 오전 10시
+			openTime: 1722420000, // 오전 10시
 			isOpen: true,
 			dayOfWeek: 4,
 		},
 		{
 			closeTime: 1722448800, // 오후 6시
-			opneTime: 1722416400, // 오전 10시
+			openTime: 1722416400, // 오전 10시
 			isOpen: true,
 			dayOfWeek: 5,
 		},
 		{
 			closeTime: 1722448800, // 오후 6시
-			opneTime: 1722416400, // 오전 10시
+			openTime: 1722416400, // 오전 10시
 			isOpen: false,
 			dayOfWeek: 6,
 		},

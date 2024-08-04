@@ -1,6 +1,6 @@
 import NTIcon from "@/component/common/nt-icon"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
-import type { TResGetShopInfo } from "@/util/api_v2/get-shop-Info"
+import type { TResGetShopInfo } from "@/util/api-v2/get-shop-info"
 
 import PriceImageModal from "./price-image-modal"
 

@@ -19,7 +19,7 @@ export type TResGetShopInfo = {
 
 export type TWorkHours = {
 	closeTime: number
-	opneTime: number
+	openTime: number
 	isOpen: boolean
 	dayOfWeek: number
 }
