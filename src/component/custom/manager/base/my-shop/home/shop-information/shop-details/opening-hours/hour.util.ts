@@ -10,7 +10,7 @@ export const bulidWorkingTimeFormList = (data: TWorkHours) => {
 	return { unixDay, openTime, closeTime }
 }
 
-export const unixTimeForm = (time: number) => {
+export const getUnixTimeToOpeningHours = (time: number) => {
 	const hour = getHourFromStamp(time)
 	const minite = getMinFromStamp(time).toString().padStart(2, "0")
 	return `${hour} : ${minite}`
