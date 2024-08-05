@@ -1,10 +1,10 @@
-import type { TWorkHours } from "@/util/api_v2/get-shop-Info"
+import type { TWorkHours } from "@/util/api-v2/get-shop-info"
 import { getHourFromStamp, getMinFromStamp } from "@/util/common"
 
 export const bulidWorkingTimeFormList = (data: TWorkHours) => {
 	const day = ["일", "월", "화", "수", "목", "금", "토"]
 	const unixDay = day[data.dayOfWeek]
-	const openTime = data.opneTime
+	const openTime = data.openTime
 	const closeTime = data.closeTime
 
 	return { unixDay, openTime, closeTime }
