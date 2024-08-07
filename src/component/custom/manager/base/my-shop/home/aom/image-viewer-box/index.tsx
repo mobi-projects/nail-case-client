@@ -14,7 +14,7 @@ type IageUploadBoxPT = {
 	focusedIdx: number
 }
 
-export default function ImageUploadBox({
+export default function ImageViewerdBox({
 	aomInfoArr,
 	focusedIdx,
 }: IageUploadBoxPT) {
