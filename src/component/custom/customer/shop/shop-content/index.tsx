@@ -1,6 +1,6 @@
 import ShopInfoCardList from "@/component/custom/customer/shop/04"
 
-import { ReservationList } from "./button-list/indest"
+import { ButtonList } from "./button-list/indest"
 import { useScroll } from "./scroll-context"
 
 type CustomerShopContentPT = { shopId: number }
@@ -12,7 +12,7 @@ export default function CustomerShopContent({ shopId }: CustomerShopContentPT) {
 		<div className="flex w-full flex-col">
 			<div ref={shopInfoRef} className="flex w-full flex-col gap-5 pt-8">
 				<ShopInfoCardList />
-				<ReservationList shopId={shopId} />
+				<ButtonList shopId={shopId} />
 			</div>
 		</div>
 	)
