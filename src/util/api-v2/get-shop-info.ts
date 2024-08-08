@@ -1,4 +1,4 @@
-import { MOCK_DATA } from "@/app/(manager)/manager/base/(base)/my-shop/(home)/mock"
+import { MOCK_DATA } from "@/app/(manager)/manager/base/(base)/(home)/mock"
 import { tmpFetch } from "@/mock"
 //import { axiosInstance } from "@/config/axios"
 

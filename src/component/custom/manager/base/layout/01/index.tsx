@@ -18,12 +18,10 @@ import {
 } from "@/constant/toolbar-list"
 
 import HeaderMenu from "../header-menu"
-import ShopName from "../shop-name"
 
 export default function ManagerBaseHeader() {
 	return (
 		<div className="flex h-fit w-full flex-col gap-[8.5px] pb-[14px] pt-[68px]">
-			<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 			<div className="flex h-fit w-full flex-col gap-[16.5px]">
 				<ManagerLayoutCatalog />
 				<ManagerBaseToolbar />
@@ -34,7 +32,8 @@ export default function ManagerBaseHeader() {
 function ManagerLayoutCatalog() {
 	return (
 		<div className="flex h-[51px] w-full items-center justify-between">
-			<ShopName />
+			{/* <ShopName /> */}
+			<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 			<ManagerLayoutSearchfield />
 			<HeaderMenu />
 		</div>

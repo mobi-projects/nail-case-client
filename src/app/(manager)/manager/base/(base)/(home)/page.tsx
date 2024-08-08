@@ -1,29 +1,22 @@
-import ManagerBaseHomeBanner from "@/component/custom/manager/base/home/00"
-import ReservationCard from "@/component/custom/manager/base/home/01"
-import ReservationForm from "@/component/custom/manager/base/home/02"
-// import CardListForm from "@/component/custom/manager/base/home/03"
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
 
-export default function ManagerBaseHome() {
-	return (
-		<div className="flex flex-col gap-[40px]">
-			<ManagerBaseHomeBanner />
-			<div className="flex flex-col gap-[20px]">
-				<p className="text-Title03 text-Gray100">
-					오늘 하루 예약 일정을 살펴볼게요.
-				</p>
-				<ReservationCard />
-			</div>
-			<ReservationForm />
-			<Divider />
-			{/* <CardListForm /> */}
-		</div>
-	)
-}
+import ManagerBanner from "@/component/custom/manager/base/my-shop/home/banner"
+import ShopInformaion from "@/component/custom/manager/base/my-shop/home/shop-information"
+import { getCacheClient } from "@/config/tanstack-query"
+import { QUERY_SHOP_INFO_QUERY } from "@/constant"
+import { getShopInfo } from "@/util/api-v2/get-shop-info"
 
-function Divider() {
+export default async function Home() {
+	const queryClient = getCacheClient()
+
+	await queryClient.prefetchQuery({
+		queryKey: [QUERY_SHOP_INFO_QUERY, 1],
+		queryFn: async () => await getShopInfo(1),
+	})
 	return (
-		<div className="h-[12px] w-full">
-			<div className="absolute left-0 h-[12px] w-full border border-b-PB50/40 border-t-PB50/40 bg-White" />
-		</div>
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<ManagerBanner />
+			<ShopInformaion />
+		</HydrationBoundary>
 	)
 }

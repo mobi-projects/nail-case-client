@@ -47,6 +47,6 @@ const routingUser = ({ role, hasShop }: TSignDataResponse) => {
 	} else if (hasShop && role === "MANAGER") {
 		window.location.href = MANAGER_BASE_HOME
 	} else {
-		window.location.href = "/manager/base/shop-register"
+		window.location.href = "/manager/base/register-shop"
 	}
 }
