@@ -12,7 +12,7 @@ export function BannerButtonList() {
 		setIsModalOpen(true)
 	}
 	return (
-		<div className="flex w-full justify-between">
+		<div className="flex h-8 w-full justify-between">
 			<RoutingButtonList />
 			<div className="flex gap-3">
 				<Wishbutton />

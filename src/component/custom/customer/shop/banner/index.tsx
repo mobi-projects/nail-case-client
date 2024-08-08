@@ -30,13 +30,13 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 	console.log(nailShopInfo)
 
 	return (
-		<div className="flex h-[30rem] w-full justify-center px-[75px] pt-20">
+		<div className="flex h-[30rem] w-full flex-col gap-12 px-[75px] pt-20">
 			<NTBannerImageCarousel className="absolute left-0 top-0 z-[-10] h-[30rem] w-full" />
 			<BannerButtonList />
-			<NTContent mode="dark" className="absolute right-64 top-40">
-				0/0
-			</NTContent>
-			<BannerTitle nailShopInfo={nailShopInfo} />
+			<div className="flex h-fit w-full justify-between">
+				<BannerTitle nailShopInfo={nailShopInfo} />
+				<NTContent mode="dark">0/0</NTContent>
+			</div>
 		</div>
 	)
 }
