@@ -1,4 +1,4 @@
-export const aomImageArr = [
+export const aomImageArr: Array<{ imageUrl: string; imageId: number }> = [
 	{ imageUrl: "https://loremflickr.com/320/320/nail", imageId: 1 },
 	{ imageUrl: "https://loremflickr.com/320/320/nailart", imageId: 2 },
 	{ imageUrl: "https://loremflickr.com/320/320/man", imageId: 3 },
