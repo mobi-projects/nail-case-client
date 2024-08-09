@@ -17,7 +17,7 @@ import {
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
 
-import { ErrorComponent, NotFountComponent, PendingComponent } from ".."
+import { StatusMessage } from "../status-message"
 
 export type TComment = {
 	postCommentId: number
@@ -65,10 +65,15 @@ export default function ShopNoticeList({ shopId }: { shopId: number }) {
 		queryKey: [QUERY_ANNOUNCEMENT_ARR, shopId],
 		queryFn: () => getShopAnnouncement(shopId),
 	})
-
-	if (isUndefined(shopNotice)) return <NotFountComponent />
-	if (isError) return <ErrorComponent />
-	if (isPending) return <PendingComponent />
+	if (isError || isPending || isUndefined(shopNotice)) {
+		return (
+			<StatusMessage
+				isError={isError}
+				isPending={isPending}
+				isUndefined={isUndefined(shopNotice)}
+			/>
+		)
+	}
 
 	const shopNoticeList: TShopNewsItem[] = shopNotice.dataList.filter(
 		(item: TShopNewsItem) => item.category === "NOTICE",
