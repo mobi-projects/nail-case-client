@@ -12,7 +12,7 @@ import { useShopById, useShopReviews } from "@/hook/use-shop-controller"
 import type { TNailShopInfo } from "@/type"
 import { isUndefined } from "@/util/common/type-guard"
 
-import { useScroll } from "../05/scroll-context"
+import { useScroll } from "../shop-content/scroll-context"
 
 export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 	const {
@@ -48,7 +48,7 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 				nailShopInfo={nailShopInfo}
 				reviewCount={shopReviewListCount}
 			/>
-			<BannerDescription nailShopInfo={nailShopInfo} />
+			{/* <BannerDescription nailShopInfo={nailShopInfo} /> */}
 		</div>
 	)
 }
@@ -214,21 +214,21 @@ function ReviewNotice({ reviewCount }: { reviewCount: number }) {
 	)
 }
 
-function BannerDescription({ nailShopInfo }: { nailShopInfo: TNailShopInfo }) {
-	const formattedTags = nailShopInfo.tags.map((tag) => `#${tag}`).join(" ")
-	return (
-		<div className="absolute left-64 top-[21rem] flex flex-col gap-4">
-			<div className="flex gap-3">
-				<p className="text-Body01 text-[18px] font-SemiBold text-White">
-					{formattedTags}
-				</p>
-			</div>
-			<p className="w-[500px] whitespace-pre-line text-Body01 text-[18px] font-Regular text-Gray10">
-				{nailShopInfo.overview}
-			</p>
-		</div>
-	)
-}
+// function BannerDescription({ nailShopInfo }: { nailShopInfo: TNailShopInfo }) {
+// 	const formattedTags = nailShopInfo.tags.map((tag) => `#${tag}`).join(" ")
+// 	return (
+// 		<div className="absolute left-64 top-[21rem] flex flex-col gap-4">
+// 			<div className="flex gap-3">
+// 				<p className="text-Body01 text-[18px] font-SemiBold text-White">
+// 					{formattedTags}
+// 				</p>
+// 			</div>
+// 			<p className="w-[500px] whitespace-pre-line text-Body01 text-[18px] font-Regular text-Gray10">
+// 				{nailShopInfo.overview}
+// 			</p>
+// 		</div>
+// 	)
+// }
 
 function HalfStar() {
 	return (

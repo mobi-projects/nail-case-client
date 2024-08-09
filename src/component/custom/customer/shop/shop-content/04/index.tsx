@@ -6,7 +6,7 @@ import { CONDITION_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import { getShopReview } from "@/util/api/shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
-import { ErrorComponent, NotFountComponent, PendingComponent } from ".."
+import { StatusMessage } from "../status-message"
 
 type TReview = {
 	accompaniedIn: boolean
@@ -36,10 +36,15 @@ export default function ShopReviewList({ shopId }: { shopId: number }) {
 		queryKey: [QUERY_REVIEW_ARR, shopId],
 		queryFn: () => getShopReview(shopId),
 	})
-
-	if (isUndefined(shopReviews)) return <NotFountComponent />
-	if (isError) return <ErrorComponent />
-	if (isPending) return <PendingComponent />
+	if (isError || isPending || isUndefined(shopReviews)) {
+		return (
+			<StatusMessage
+				isError={isError}
+				isPending={isPending}
+				isUndefined={isUndefined(shopReviews)}
+			/>
+		)
+	}
 
 	const shopReviewList = shopReviews.dataList
 

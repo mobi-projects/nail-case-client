@@ -6,7 +6,7 @@ import React from "react"
 
 import { cn } from "@/config/tailwind"
 
-import { useScroll } from "../05/scroll-context"
+import { useScroll } from "../shop-content/scroll-context"
 
 const toolbarVariants = cva(
 	"flex h-full w-fit min-w-[70px] cursor-pointer flex-nowrap justify-center gap-[42px] border-transparent px-[2px] text-Gray50 hover:text-PB50 focus:text-PB100 focus-visible:outline-none",

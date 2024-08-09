@@ -1,4 +1,4 @@
-import { ScrollProvider } from "@/component/custom/customer/shop/05/scroll-context"
+import { ScrollProvider } from "@/component/custom/customer/shop/shop-content/scroll-context"
 
 export default function ShopLayout({
 	children,

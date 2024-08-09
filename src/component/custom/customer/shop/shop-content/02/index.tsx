@@ -18,7 +18,7 @@ import {
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
 
-import { ErrorComponent, NotFountComponent, PendingComponent } from ".."
+import { StatusMessage } from "../status-message"
 
 type TComment = {
 	monthlyCommentId: number
@@ -63,10 +63,15 @@ export default function ShopDesignList({ shopId }: { shopId: number }) {
 		queryKey: [QUERY_MONTHLY_ART_ARR, shopId],
 		queryFn: () => getShopMonthlyArt(shopId),
 	})
-
-	if (isUndefined(monthlyArt)) return <NotFountComponent />
-	if (isError) return <ErrorComponent />
-	if (isPending) return <PendingComponent />
+	if (isError || isPending || isUndefined(monthlyArt)) {
+		return (
+			<StatusMessage
+				isError={isError}
+				isPending={isPending}
+				isUndefined={isUndefined(monthlyArt)}
+			/>
+		)
+	}
 
 	const monthlyArtList: TMonthlyArtItem[] = monthlyArt.dataList
 
