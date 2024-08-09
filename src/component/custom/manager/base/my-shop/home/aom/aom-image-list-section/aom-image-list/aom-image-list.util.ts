@@ -1,16 +1,20 @@
-export const isOverFiveImages = (
+export const isArrayLengthOver = (
 	imageArr: Array<{
 		imageUrl: string
 		imageId: number
 	}>,
+	threshold: number,
 ) => {
-	return imageArr.length > 5
+	return imageArr.length > threshold
 }
 
-export const isFocusedIdxOverFive = (focusedIdx: number) => {
-	return focusedIdx > 4
+export const isFocusedIdxNumberOver = (
+	focusedIdx: number,
+	threshold: number,
+) => {
+	return focusedIdx > threshold
 }
 
 export const getSlideCss = (focusedIdx: number) => {
-	return isFocusedIdxOverFive(focusedIdx) ? `-translate-x-[36rem]` : ""
+	return isFocusedIdxNumberOver(focusedIdx, 4) ? `-translate-x-[36rem]` : ""
 }

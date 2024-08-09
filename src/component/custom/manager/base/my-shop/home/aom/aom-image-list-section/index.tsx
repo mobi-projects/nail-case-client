@@ -1,10 +1,12 @@
 import type { Dispatch, SetStateAction } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 
 import { hasAOMImages } from "../aom.utils"
 
 import AOMImageList from "./aom-image-list"
+import AOMManageModal from "./aom-manage-modal"
 
 type AOMImageListPT = {
 	aomInfoArr: Array<{
@@ -20,6 +22,11 @@ export default function AOMImageListSection({
 	focusedIdx,
 	setFocusedIdx,
 }: AOMImageListPT) {
+	const { onOpenModal } = useModal()
+	const onClickEditBtn = () => {
+		onOpenModal({ size: "large", isX: true, children: <AOMManageModal /> })
+	}
+
 	return hasAOMImages(aomInfoArr) ? (
 		<div className="flex h-full w-full flex-col gap-y-2 border-l-2 border-l-Gray20 pl-8">
 			<p className="text-Title03 font-SemiBold">등록된 사진</p>
@@ -30,7 +37,7 @@ export default function AOMImageListSection({
 				setFocusedIdx={setFocusedIdx}
 			/>
 
-			<NTButton flexible={"fit"} size={"exSmall"}>
+			<NTButton flexible={"fit"} size={"exSmall"} onClick={onClickEditBtn}>
 				편집하기
 			</NTButton>
 		</div>
