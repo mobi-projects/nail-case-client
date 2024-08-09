@@ -14,6 +14,7 @@ const ModalVariants = cva(
 	{
 		variants: {
 			size: {
+				exSmall: "h-[25vh] min-w-[500px] max-w-[90dvw] p-4 aspect-[8/11]",
 				small:
 					"h-[80dvh] aspect-[8/11] min-w-[300px] max-w-[90dvw] py-[28px] px-[28px]",
 				large: "h-[85dvh] aspect-[18/19] min-w-[400px] max-w-[90dvw] p-[46px]",

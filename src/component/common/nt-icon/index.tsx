@@ -66,5 +66,6 @@ export const ICON_DATA = {
 	arrowUp: "uit:arrow-up-right",
 	back: "lets-icons:arrow-left-light",
 	share: "ep:share",
+	whishFull: "lets-icons:bookmark-duotone",
 	camera: "ion:camera-outline",
 } as const
