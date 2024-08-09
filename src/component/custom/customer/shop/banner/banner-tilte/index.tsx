@@ -5,13 +5,11 @@ export function BannerTitle({ nailShopInfo }: { nailShopInfo: TNailShopInfo }) {
 	const shopName = nailShopInfo.shopName
 
 	return (
-		<div className="">
-			<div className="flex flex-col gap-[6px]">
-				<p className="text-Callout font-Light text-White">
-					{`네일아트 전문 | ${location}`}
-				</p>
-				<p className="text-Title01 font-Bold text-White">{shopName}</p>
-			</div>
+		<div className="flex flex-col gap-[6px]">
+			<p className="text-Callout font-Light text-White">
+				{`네일아트 전문 | ${location}`}
+			</p>
+			<p className="text-Title01 font-Bold text-White">{shopName}</p>
 		</div>
 	)
 }
