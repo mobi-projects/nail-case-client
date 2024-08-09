@@ -2,12 +2,13 @@
 
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
-import { useShopById, useShopReviews } from "@/hook/use-shop-controller"
+import { useShopById } from "@/hook/use-shop-controller"
 import type { TNailShopInfo } from "@/type"
 import { isUndefined } from "@/util/common/type-guard"
 
-import { BannerButtonList } from "./banner-button-list/indext"
+import { BannerButtonList } from "./banner-button-list"
 import { BannerTitle } from "./banner-tilte"
+import { StatusMessage } from "./status-message"
 
 export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 	const {
@@ -15,17 +16,18 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 		isError: isErrorShopInfo,
 		isPending: isPendingShopInfo,
 	} = useShopById(shopId!)
-	const {
-		data: shopReviews,
-		isError: isErrorShopReviews,
-		isPending: isPendingShopReviews,
-	} = useShopReviews(shopId!)
 
-	if (isErrorShopInfo || isErrorShopReviews) return <Error />
-	if (isPendingShopInfo || isPendingShopReviews) return <Pending />
-	if (isUndefined(shopInfo) || isUndefined(shopReviews)) return <NotFound />
+	if (isErrorShopInfo || isPendingShopInfo || !shopInfo) {
+		return (
+			<StatusMessage
+				isError={isErrorShopInfo}
+				isPending={isPendingShopInfo}
+				isUndefined={isUndefined(shopInfo)}
+			/>
+		)
+	}
 
-	const nailShopInfo: TNailShopInfo = shopInfo.data
+	const nailShopInfo: TNailShopInfo = shopInfo!.data
 
 	console.log(nailShopInfo)
 
@@ -36,39 +38,6 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 			<div className="flex h-fit w-full justify-between">
 				<BannerTitle nailShopInfo={nailShopInfo} />
 				<NTContent mode="dark">0/0</NTContent>
-			</div>
-		</div>
-	)
-}
-
-function NotFound() {
-	return (
-		<div className="flex h-[480px] w-full items-center justify-center">
-			<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
-				데이터가 존재하지 않습니다.
-				<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
-			</div>
-		</div>
-	)
-}
-
-function Error() {
-	return (
-		<div className="flex h-[480px] w-full items-center justify-center">
-			<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
-				데이터를 불러오는 중에 오류가 발생했습니다.
-				<p className="py-[50px] text-Gray70">잠시 후 다시 시도해주세요.</p>
-			</div>
-		</div>
-	)
-}
-
-function Pending() {
-	return (
-		<div className="flex h-[480px] w-full items-center justify-center">
-			<div className="mt-[50px] flex h-[100px] flex-col items-center justify-center text-Headline02 text-PB100">
-				데이터를 불러오는 중입니다.
-				<p className="py-[50px] text-Gray70">잠시만 기다려 주세요.</p>
 			</div>
 		</div>
 	)
