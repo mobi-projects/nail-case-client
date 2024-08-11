@@ -4,6 +4,7 @@ import type { Dispatch, SetStateAction } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
+import type { TResAOM } from "@/util/api-v2/list-monthly-art"
 
 import {
 	getSlideCss,
@@ -13,10 +14,7 @@ import {
 import AOMImageSingle from "./aom-image-single"
 
 type AOMImageSectionPT = {
-	aomInfoArr: Array<{
-		imageUrl: string
-		imageId: number
-	}>
+	aomInfoArr: TResAOM
 	focusedIdx: number
 	setFocusedIdx: Dispatch<SetStateAction<number>>
 }

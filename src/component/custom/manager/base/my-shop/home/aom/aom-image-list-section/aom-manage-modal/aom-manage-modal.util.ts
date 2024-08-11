@@ -1,12 +1,9 @@
-export const isAOMImageArrayFull = (
-	arr: Array<{ imageUrl: string; imageId: number }>,
-	treshold: number,
-) => {
+import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+
+export const isAOMImageArrayFull = (arr: TResAOM, treshold: number) => {
 	return arr.length === treshold
 }
-export const isAOMImageArryEmpty = (
-	arr: Array<{ imageUrl: string; imageId: number }>,
-) => {
+export const isAOMImageArryEmpty = (arr: TResAOM) => {
 	return arr.length === 0
 }
 

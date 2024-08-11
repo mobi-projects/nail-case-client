@@ -2,6 +2,7 @@ import type { Dispatch, SetStateAction } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
+import type { TResAOM } from "@/util/api-v2/list-monthly-art"
 
 import { hasAOMImages } from "../aom.utils"
 
@@ -9,10 +10,7 @@ import AOMImageList from "./aom-image-list"
 import AOMManageModal from "./aom-manage-modal"
 
 type AOMImageListPT = {
-	aomInfoArr: Array<{
-		imageUrl: string
-		imageId: number
-	}>
+	aomInfoArr: TResAOM
 	focusedIdx: number
 	setFocusedIdx: Dispatch<SetStateAction<number>>
 }

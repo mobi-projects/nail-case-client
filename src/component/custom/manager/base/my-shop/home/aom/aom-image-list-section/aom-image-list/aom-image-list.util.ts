@@ -1,10 +1,6 @@
-export const isArrayLengthOver = (
-	imageArr: Array<{
-		imageUrl: string
-		imageId: number
-	}>,
-	threshold: number,
-) => {
+import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+
+export const isArrayLengthOver = (imageArr: TResAOM, threshold: number) => {
 	return imageArr.length > threshold
 }
 

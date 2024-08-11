@@ -4,15 +4,13 @@ import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { cn } from "@/config/tailwind"
+import type { TResAOM } from "@/util/api-v2/list-monthly-art"
 
 import AOMHandleModal from "../aom-image-list-section/aom-manage-modal"
 import { hasAOMImages } from "../aom.utils"
 
 type IageUploadBoxPT = {
-	aomInfoArr: Array<{
-		imageUrl: string
-		imageId: number
-	}>
+	aomInfoArr: TResAOM
 	focusedIdx: number
 }
 
