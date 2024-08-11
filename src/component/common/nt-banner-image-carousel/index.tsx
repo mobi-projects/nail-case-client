@@ -65,6 +65,8 @@ function ImageList({ essentialImagePropArr = [], objectFit }: ImageListPT) {
 				>
 					<Image
 						fill
+						priority
+						sizes="100vw"
 						src={essentialImageProp.src}
 						alt={essentialImageProp.alt}
 						className={cn(`${objectFit}`, "object-center")}
