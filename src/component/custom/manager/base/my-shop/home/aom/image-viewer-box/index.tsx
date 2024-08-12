@@ -2,8 +2,10 @@ import Image from "next/image"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { cn } from "@/config/tailwind"
 
+import AOMHandleModal from "../aom-image-list-section/aom-manage-modal"
 import { hasAOMImages } from "../aom.utils"
 
 type IageUploadBoxPT = {
@@ -18,6 +20,10 @@ export default function ImageViewerdBox({
 	aomInfoArr,
 	focusedIdx,
 }: IageUploadBoxPT) {
+	const { onOpenModal } = useModal()
+	const onClickRegisterBtn = () => {
+		onOpenModal({ size: "large", isX: true, children: <AOMHandleModal /> })
+	}
 	return (
 		<div
 			className={cn(
@@ -41,7 +47,9 @@ export default function ImageViewerdBox({
 						사진을 등록하세요.
 					</p>
 					<p className="text-Body02"> 최대 10장까지 첨부 가능해요.</p>
-					<NTButton flexible={"fit"}>이달의 아트 등록</NTButton>
+					<NTButton flexible={"fit"} onClick={onClickRegisterBtn}>
+						이달의 아트 등록
+					</NTButton>
 				</>
 			)}
 		</div>

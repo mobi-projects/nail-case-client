@@ -7,8 +7,8 @@ import { cn } from "@/config/tailwind"
 
 import {
 	getSlideCss,
-	isFocusedIdxOverFive,
-	isOverFiveImages,
+	isArrayLengthOver,
+	isFocusedIdxNumberOver,
 } from "./aom-image-list.util"
 import AOMImageSingle from "./aom-image-single"
 
@@ -27,13 +27,20 @@ export default function AOMImageList({
 	setFocusedIdx,
 }: AOMImageSectionPT) {
 	const slideCss = getSlideCss(focusedIdx)
-
+	const lengthThreshold = 5
+	const idxThreshold = lengthThreshold - 1
 	const handleNextIcon = () => {
-		if (isOverFiveImages(aomInfoArr) && !isFocusedIdxOverFive(focusedIdx))
+		if (
+			isArrayLengthOver(aomInfoArr, lengthThreshold) &&
+			!isFocusedIdxNumberOver(focusedIdx, idxThreshold)
+		)
 			setFocusedIdx(5)
 	}
 	const handlePrevIcon = () => {
-		if (isOverFiveImages(aomInfoArr) && isFocusedIdxOverFive(focusedIdx))
+		if (
+			isArrayLengthOver(aomInfoArr, lengthThreshold) &&
+			isFocusedIdxNumberOver(focusedIdx, idxThreshold)
+		)
 			setFocusedIdx(4)
 	}
 
@@ -43,7 +50,8 @@ export default function AOMImageList({
 				icon="expandLeft"
 				className={cn(
 					"h-6 w-6 text-Gray50 transition-all hover:text-Gray80",
-					isOverFiveImages(aomInfoArr) && isFocusedIdxOverFive(focusedIdx)
+					isArrayLengthOver(aomInfoArr, lengthThreshold) &&
+						isFocusedIdxNumberOver(focusedIdx, idxThreshold)
 						? "cursor-pointer opacity-100"
 						: "cursor-default opacity-0",
 				)}
@@ -75,7 +83,8 @@ export default function AOMImageList({
 				icon="expandRight"
 				className={cn(
 					"h-6 w-6 cursor-pointer text-Gray50 transition-all hover:text-Gray80",
-					isOverFiveImages(aomInfoArr) && !isFocusedIdxOverFive(focusedIdx)
+					isArrayLengthOver(aomInfoArr, lengthThreshold) &&
+						!isFocusedIdxNumberOver(focusedIdx, idxThreshold)
 						? "cursor-pointer opacity-100"
 						: "cursor-default opacity-0",
 				)}

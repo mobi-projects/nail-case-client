@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 
-import CustomerShopBanner from "@/component/custom/customer/shop/01"
+import CustomerShopBanner from "@/component/custom/customer/shop/banner"
 import { useShopById } from "@/hook/use-shop-controller"
 import { convertStringToInteger } from "@/util/common"
 
