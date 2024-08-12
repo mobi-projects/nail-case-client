@@ -43,7 +43,10 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 		return (
 			<div className="h-full w-full">
 				<CustomerShopBanner shopId={convertStringToInteger(params.shopId)} />
-				<CustomerShopContent shopId={convertStringToInteger(params.shopId)} />
+				<CustomerShopContent
+					shopId={convertStringToInteger(params.shopId)}
+					phoneNumber={shopInfo.data.phone}
+				/>
 			</div>
 		)
 	} else {
