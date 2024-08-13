@@ -28,11 +28,12 @@ export const handleExceedMaxCnt = () => {
 	return toast.error("최대 업로드 개수를 초과했습니다.")
 }
 
-/** FileList 를 배열로 변환 */
+/** FileList 를 배열로 변환 & 원본 file 객체 저장 */
 export const createFileListToArr = (newImages: FileList) => {
 	const generateImageId = () => Math.floor(Math.random() * 100000)
 	return Array.from(newImages).map((file) => ({
 		imageUrl: URL.createObjectURL(file),
 		imageId: generateImageId(),
+		file,
 	}))
 }

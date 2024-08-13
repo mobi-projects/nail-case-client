@@ -1,4 +1,4 @@
-import { useState } from "react"
+import type { Dispatch, SetStateAction } from "react"
 
 import { ModalBody } from "@/component/common/nt-modal"
 import { cn } from "@/config/tailwind"
@@ -16,12 +16,19 @@ import { AOMPreViewBox } from "./aom-preview-box"
 
 type EditAOMPT = {
 	isGuideVisible: boolean
-	aomInfoArr: TResAOM
+	previewImageArr: TResAOM
+	setPreviewImageArr: Dispatch<SetStateAction<TResAOM>>
+	keepIdArr: Array<number>
+	removeIdArr: Array<number>
 }
-export function EditAOM({ isGuideVisible, aomInfoArr }: EditAOMPT) {
+export function EditAOM({
+	isGuideVisible,
+	previewImageArr,
+	setPreviewImageArr,
+	keepIdArr,
+	removeIdArr,
+}: EditAOMPT) {
 	const slideCss = getSlideCss(isGuideVisible)
-
-	const [previewImageArr, setPreviewImageArr] = useState(aomInfoArr)
 
 	return (
 		<ModalBody
@@ -38,6 +45,8 @@ export function EditAOM({ isGuideVisible, aomInfoArr }: EditAOMPT) {
 								key={info.imageId}
 								aomInfo={info}
 								setPreviewImageArr={setPreviewImageArr}
+								keepIdArr={keepIdArr}
+								removeIdArr={removeIdArr}
 							/>
 						))
 					: null}
