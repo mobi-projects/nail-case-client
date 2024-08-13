@@ -4,18 +4,27 @@ import type { Dispatch, SetStateAction } from "react"
 import NTIcon from "@/component/common/nt-icon"
 import type { TAOMImage, TResAOM } from "@/util/api-v2/list-monthly-art"
 
+import {
+	filterImagesByIdx,
+	handleOldImageRemoval,
+} from "./aom-preview-box.util"
+
 type AOMPreViewBoxPT = {
 	aomInfo: TAOMImage
 	setPreviewImageArr: Dispatch<SetStateAction<TResAOM>>
+	keepIdArr: Array<number>
+	removeIdArr: Array<number>
 }
 export function AOMPreViewBox({
 	aomInfo,
 	setPreviewImageArr,
+	keepIdArr,
+	removeIdArr,
 }: AOMPreViewBoxPT) {
 	const onClickDeleteIcon = () => {
-		setPreviewImageArr((prevArr) =>
-			prevArr.filter((data) => data.imageId !== aomInfo.imageId),
-		)
+		const curIdx = aomInfo.imageId
+		setPreviewImageArr((prevArr) => filterImagesByIdx(prevArr, curIdx))
+		handleOldImageRemoval(curIdx, keepIdArr, removeIdArr)
 	}
 	return (
 		<div className="relative h-24 w-24 rounded-lg bg-White shadow-customGray80">
