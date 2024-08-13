@@ -8,9 +8,10 @@ export const getMonthlyArtList = async (
 	const response = await axiosInstance().get(
 		`/shops/${shopId}/monthly-art/images`,
 	)
+
 	return response.data
 }
 
 export type TResAOM = Array<TAOMImage>
 
-export type TAOMImage = { imageUrl: string; imageId: number }
+export type TAOMImage = { imageUrl: string; imageId: number; file?: File }

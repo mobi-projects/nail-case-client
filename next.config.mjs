@@ -20,6 +20,12 @@ const nextConfig = {
 				port: "",
 				pathname: "/**",
 			},
+			{
+				protocol: "https",
+				hostname: "newtips-bucket-azxwettoqoqaaz.s3.amazonaws.com",
+				port: "",
+				pathname: "/**",
+			},
 		],
 	},
 }
