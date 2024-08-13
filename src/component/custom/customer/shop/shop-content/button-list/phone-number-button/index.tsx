@@ -1,3 +1,5 @@
+import { toast } from "sonner"
+
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 
@@ -14,7 +16,8 @@ export function PhoneNumberButton({ phoneNumber }: PhoneNumberButtonPT) {
 				isX: false,
 			})
 		} else {
-			console.log("로딩중")
+			toast.dismiss(0)
+			toast.error("샵정보 데이터 로딩중입니다")
 		}
 	}
 
