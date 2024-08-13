@@ -11,6 +11,6 @@ export const getMonthlyArtList = async (
 	return response.data
 }
 
-export type TResAOM = Array<AOMImage>
+export type TResAOM = Array<TAOMImage>
 
-export type AOMImage = { imageUrl: string; imageId: number }
+export type TAOMImage = { imageUrl: string; imageId: number }
