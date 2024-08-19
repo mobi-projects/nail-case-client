@@ -7,10 +7,10 @@ import {
 	ModalHeader,
 } from "@/component/common/nt-modal"
 
-import { customPhoneNumber } from "./phone-number.util"
+import { customerPhoneNumber } from "./phone-number.util"
 type NumberModalPT = { phoneNumber: string }
 export function NumberModal({ phoneNumber }: NumberModalPT) {
-	const customNumber = customPhoneNumber(phoneNumber)
+	const customNumber = customerPhoneNumber(phoneNumber)
 	const handleCopyUrl = () => {
 		navigator.clipboard.writeText(customNumber).then(() => {
 			toast.message(" 클립보드에 복사 되었습니다 ")

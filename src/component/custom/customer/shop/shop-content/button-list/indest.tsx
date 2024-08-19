@@ -3,7 +3,7 @@ import { ReservationButton } from "./reservation-button"
 
 type ReservationListPT = {
 	shopId: number
-	phoneNumber?: string
+	phoneNumber: string
 }
 export function ButtonList({ shopId, phoneNumber }: ReservationListPT) {
 	return (

@@ -29,8 +29,6 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 
 	const nailShopInfo: TNailShopInfo = shopInfo!.data
 
-	console.log(nailShopInfo)
-
 	return (
 		<div className="flex h-[30rem] w-full flex-col gap-12 px-[75px] pt-20">
 			<NTBannerImageCarousel className="absolute left-0 top-0 z-[-10] h-[30rem] w-full" />

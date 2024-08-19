@@ -1,24 +1,17 @@
-import { toast } from "sonner"
-
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 
 import { NumberModal } from "./number-modal"
-type PhoneNumberButtonPT = { phoneNumber?: string }
+type PhoneNumberButtonPT = { phoneNumber: string }
 export function PhoneNumberButton({ phoneNumber }: PhoneNumberButtonPT) {
 	const { onOpenModal } = useModal()
 
 	const handlePhoneButton = () => {
-		if (phoneNumber) {
-			onOpenModal({
-				children: <NumberModal phoneNumber={phoneNumber} />,
-				size: "exSmall",
-				isX: false,
-			})
-		} else {
-			toast.dismiss(0)
-			toast.error("샵정보 데이터 로딩중입니다")
-		}
+		onOpenModal({
+			children: <NumberModal phoneNumber={phoneNumber} />,
+			size: "exSmall",
+			isX: false,
+		})
 	}
 
 	return (

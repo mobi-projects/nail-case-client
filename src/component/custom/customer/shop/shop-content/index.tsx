@@ -5,7 +5,7 @@ import { useScroll } from "./scroll-context"
 
 type CustomerShopContentPT = {
 	shopId: number
-	phoneNumber?: string
+	phoneNumber: string
 }
 
 export default function CustomerShopContent({
