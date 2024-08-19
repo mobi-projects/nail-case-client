@@ -13,9 +13,11 @@ import {
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
 
-export default function ReservationCheck() {
+type ReservationCheckPT = { params: { shopId: number } }
+export default function ReservationCheck({ params }: ReservationCheckPT) {
+	const shopId = params.shopId
 	const { data: oneReservationInfo, isPending: isPendingViewReservation } =
-		useViewReservationQuery(1, 23)
+		useViewReservationQuery(shopId, 23)
 
 	if (isPendingViewReservation)
 		return (

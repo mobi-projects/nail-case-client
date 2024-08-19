@@ -6,17 +6,20 @@ import { getCacheClient } from "@/config/tanstack-query"
 import { QUERY_SHOP_INFO_QUERY } from "@/constant"
 import { getShopInfo } from "@/util/api-v2/get-shop-info"
 
-export default async function Home() {
+type HomePT = { params: { shopId: number } }
+
+export default async function Home({ params }: HomePT) {
+	const shopId = params.shopId
 	const queryClient = getCacheClient()
 
 	await queryClient.prefetchQuery({
-		queryKey: [QUERY_SHOP_INFO_QUERY, 1],
-		queryFn: async () => await getShopInfo(1),
+		queryKey: [QUERY_SHOP_INFO_QUERY, shopId],
+		queryFn: async () => await getShopInfo(shopId),
 	})
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<ManagerBanner />
-			<ShopInformaion />
+			<ShopInformaion shopId={shopId} />
 		</HydrationBoundary>
 	)
 }

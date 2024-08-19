@@ -9,9 +9,10 @@ import AOMImageList from "./aom-image-list-section"
 import AOMSkelton from "./aom-skelton"
 import ImageViewerdBox from "./image-viewer-box"
 
-export default function AOM() {
+type AOMPT = { shopId: number }
+export default function AOM({ shopId }: AOMPT) {
 	const [foucsedIdx, setFocusedIdx] = useState(0)
-	const { data: AOMData, isLoading, isError } = useGetMonthlyArtList(1)
+	const { data: AOMData, isLoading, isError } = useGetMonthlyArtList(shopId)
 	if (isLoading) return <AOMSkelton />
 	if (isError || isUndefined(AOMData)) return <AOMError />
 	return (
