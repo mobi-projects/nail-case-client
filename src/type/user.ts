@@ -12,10 +12,3 @@ export type TArtist = TUser & {
 	scheduleArr: TSchedule[]
 }
 export type TCustomer = TUser
-
-export type TUserInfo = {
-	shopId: number | null
-	shopName: string | null
-	profileImage: string
-	role: "MANAGER" | "MEMBER"
-}
