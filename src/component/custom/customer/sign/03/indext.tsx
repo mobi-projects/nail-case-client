@@ -17,7 +17,7 @@ export default function CheckMessage({ loginType }: CheckMessaPT) {
 		<p className="group mb-2 text-center text-Body02 font-Regular text-Gray50">
 			{AlertMessage}
 			<Link href={`${COMMON_SIGN}/${anotherLoginPath}`}>
-				<span className="px-1 font-SemiBold text-Gray80 group-hover:underline">
+				<span className="px-1 font-SemiBold text-PB100 group-hover:underline">
 					여기
 				</span>
 			</Link>

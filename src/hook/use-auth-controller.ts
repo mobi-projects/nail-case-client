@@ -2,11 +2,12 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { setCookie } from "cookies-next"
 
 import { QUERY_USER_IFNO } from "@/constant"
-import { COMMON_HOME, MANAGER_BASE_HOME } from "@/constant/routing-path"
+import { COMMON_HOME, MANAGER_BASE } from "@/constant/routing-path"
 import type { TSignDataResponse } from "@/type"
 import type { TResponseData } from "@/type/response"
 import type { TSignType } from "@/type/union-option/sign-type"
-import { getLogin, getUserInfo } from "@/util/api/auth-controller"
+import { getLogin } from "@/util/api/auth-controller"
+import { getUserInfo } from "@/util/api-v2/get-user-info"
 import { initAuthTokens } from "@/util/common/auth"
 
 type UseGetAuthTokenPT = { code: string; loginType: TSignType }
@@ -22,6 +23,7 @@ export const useGetAuthToken = () => {
 			setCookie("profile-image", encodeURIComponent(data.profileImgUrl), {
 				maxAge: 86400,
 			})
+			console.log(data.shopId)
 			routingUser(data)
 		},
 		onError: (error) => {
@@ -41,12 +43,12 @@ export const useGetUserInfo = () =>
 	})
 
 ///--------------------------  tanstack qeuery에 사용될 일반 함수  ----------------------- //
-const routingUser = ({ role, hasShop }: TSignDataResponse) => {
+const routingUser = ({ role, hasShop, shopId }: TSignDataResponse) => {
 	if (role === "MEMBER") {
 		window.location.href = COMMON_HOME
-	} else if (hasShop && role === "MANAGER") {
-		window.location.href = MANAGER_BASE_HOME
+	} else if (hasShop && role === "MANAGER" && shopId) {
+		window.location.href = `${MANAGER_BASE}/${shopId}`
 	} else {
-		window.location.href = "/manager/base/register-shop"
+		window.location.href = "/manager/register-shop"
 	}
 }

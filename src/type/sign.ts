@@ -1,7 +1,7 @@
 export type TSignDataResponse = {
 	accessToken: string
 	refreshToken: string
-	shopIds: null | Array<number>
+	shopId: null | string
 	hasShop: boolean
 	profileImgUrl: string
 	role: "MEMBER" | "MANAGER"

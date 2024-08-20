@@ -1,5 +1,6 @@
-import { MOCK_DATA } from "@/app/(manager)/manager/base/(base)/(home)/mock"
 import { tmpFetch } from "@/mock"
+import { MOCK_DATA } from "@/util/api-v2/mock"
+
 //import { axiosInstance } from "@/config/axios"
 
 /** 추후 수정 : 가상데이터 환경에서 shopInfo api호출  */
