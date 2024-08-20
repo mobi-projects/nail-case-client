@@ -8,7 +8,7 @@ import {
 	QUERY_SHOP_INFO,
 	QUERY_SHOP_INFO_QUERY,
 } from "@/constant"
-import { COMMON_HOME, MANAGER_BASE_HOME } from "@/constant/routing-path"
+import { COMMON_HOME, MANAGER_BASE } from "@/constant/routing-path"
 import {
 	getListShopNailArtist,
 	getShopById,
@@ -44,7 +44,7 @@ export const useRegisterShop = () => {
 			postRegisterShop(reqForm),
 		onSuccess: () => {
 			toast.success("매장이 정상적으로 등록되었습니다.")
-			router.replace(MANAGER_BASE_HOME)
+			router.replace(MANAGER_BASE) // shopId를 추가해야한다!!!
 		},
 		onError: () => {
 			toast.error("매장 등록에 실패했습니다. 다시 로그인해주세요.")
