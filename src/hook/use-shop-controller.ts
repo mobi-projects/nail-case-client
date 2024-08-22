@@ -7,6 +7,7 @@ import {
 	QUERY_REVIEW_ARR,
 	QUERY_SHOP_INFO,
 	QUERY_SHOP_INFO_QUERY,
+	QUERY_SHOP_TOGGLE_LIKED,
 } from "@/constant"
 import { COMMON_HOME, MANAGER_BASE } from "@/constant/routing-path"
 import {
@@ -16,6 +17,7 @@ import {
 	postRegisterShop,
 } from "@/util/api/shop-controller"
 import { getShopInfo } from "@/util/api-v2/get-shop-info"
+import { postShopToggleLiked } from "@/util/api-v2/patch-shop-liked"
 import { deleteAllCookies } from "@/util/common/auth"
 
 /** 매장 아티스트 목록조회 */
@@ -57,4 +59,9 @@ export const useShopInfo = (shopId: number) =>
 	useQuery({
 		queryKey: [QUERY_SHOP_INFO_QUERY, shopId],
 		queryFn: async () => await getShopInfo(shopId),
+	})
+export const useShopToggleLiked = (shopId: number) =>
+	useQuery({
+		queryKey: [QUERY_SHOP_TOGGLE_LIKED, shopId],
+		queryFn: async () => await postShopToggleLiked(shopId),
 	})
