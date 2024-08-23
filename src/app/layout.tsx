@@ -46,7 +46,7 @@ export default function RootLayout({
 					<AuthProvider>
 						<SheetProvider>
 							<ModalProvider>
-								<div className="flex w-full justify-center">
+								<div className="flex w-full justify-center overflow-x-hidden">
 									<main className="w-[1200px] text-wrap break-all">
 										{children}
 									</main>

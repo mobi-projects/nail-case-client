@@ -3,7 +3,6 @@ import { getCookie } from "cookies-next"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import * as React from "react"
-import { Toaster } from "sonner"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
 import { NTButton } from "@/component/common/atom/nt-button"
@@ -17,7 +16,7 @@ import { handleLogout } from "@/util/common/auth"
 export default function CustomerHeader() {
 	const { isAuthenticated } = useAuth()
 	return (
-		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-[34.5px]">
+		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-10">
 			<div className="flex h-[51px] w-full items-center justify-between">
 				<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
 				{isAuthenticated ? <CustomerLayoutSubCatalog /> : <LoginButtons />}
@@ -38,7 +37,6 @@ function CustomerLayoutSubCatalog() {
 
 	return (
 		<div className="flex w-[236px] items-center justify-end gap-[12px] pr-[21px]">
-			<Toaster />
 			<NTIcon className="text-Gray90" icon="bellLight" />
 			<Image
 				src={decodeURIComponent(profileUrl)}
