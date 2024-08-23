@@ -21,15 +21,15 @@ export type TReservationInfo = {
 export type TMainPageShop = {
 	id: number
 	name: string
+	imageSrc: string
 }
 export type TMainPageDetail = {
 	reservationDetailsId: number
 	startTime: number
-	endTime: number
-	treatmentOptions: Array<TTreatmentOptions>
+	endTime: number | null
+	treatmentOption: Array<TTreatmentOption> // 중복선택 x 배열안에 원소1개로
 	removeOption: TRemoveOption
 	conditionOptions: Array<TconditionOption>
-	accompanied: boolean
 	status: Tstatus
 }
 export type TconditionOption = "REPAIR" | "AS" | "WOUND_CARE" | "CORRECTION"
@@ -41,4 +41,4 @@ export type Tstatus =
 	| "COMPLETED"
 export type TRemoveOption = "IN_SHOP" | "ELSE_WHERE" | "NO_NEED"
 
-export type TTreatmentOptions = "AOM" | "CARE" | "ONE" | "MEMBER_IMAGE"
+export type TTreatmentOption = "AOM" | "CARE" | "ONE" | "MEMBER_IMAGE"
