@@ -14,6 +14,9 @@ export default async function CustomerHome() {
 			<CustomerHeader />
 			<PromotionSection />
 			{isLoggedIn && <ReservationSummary />}
+			<div className="mb-4 w-full border-b border-t-Gray20 pb-8 text-Title03 font-SemiBold">
+				NewTips 추천 샵
+			</div>
 			<RecomendShopList />
 		</div>
 	)
