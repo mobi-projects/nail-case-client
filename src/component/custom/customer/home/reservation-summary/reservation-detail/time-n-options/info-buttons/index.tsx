@@ -13,9 +13,8 @@ import type {
 type InfoButtonsPT = { recentReservation: TReservationInfo }
 
 export default function InfoButtons({ recentReservation }: InfoButtonsPT) {
-	const { updateReservation } = useUpdateReservationMutation(
-		recentReservation.shop.id,
-	)
+	const { shop, reservationId } = recentReservation
+	const { updateReservation } = useUpdateReservationMutation(shop.id)
 	const handleUpdateReservation = async () => {
 		const status: Tstatus = "CANCELED"
 
@@ -25,7 +24,7 @@ export default function InfoButtons({ recentReservation }: InfoButtonsPT) {
 		}
 		try {
 			await updateReservation({
-				reservationId: recentReservation.reservationId,
+				reservationId: reservationId,
 				updated: updatedData,
 			})
 			toast.success("예약 취소 되었습니다")
@@ -48,16 +47,10 @@ export default function InfoButtons({ recentReservation }: InfoButtonsPT) {
 		})
 	}
 	return (
-		<div className="flex w-full items-center justify-end pr-[2px]">
-			<div className="flex gap-[22px]">
-				<NTButton
-					variant="secondary"
-					flexible="fit"
-					onClick={onClickCloseToast}
-				>
-					예약취소
-				</NTButton>
-			</div>
+		<div className="flex w-full items-center pr-[2px]">
+			<NTButton variant="secondary" flexible="fit" onClick={onClickCloseToast}>
+				예약취소
+			</NTButton>
 		</div>
 	)
 }
