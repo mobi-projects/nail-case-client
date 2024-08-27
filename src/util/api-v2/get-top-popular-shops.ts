@@ -1,21 +1,14 @@
 import { axiosInstance } from "@/config/axios"
 import type { TResponseData } from "@/type/response"
 
-export const getTopPopularShops = async ({
-	page = 0,
-	size,
-}: TReqGetPopularShops): Promise<
-	TResponseData<TResGetPopularShops, "data">
-> => {
+export const getTopPopularShops = async (
+	page: number = 0,
+	size: number = 6,
+): Promise<TResponseData<TResGetPopularShops, "data">> => {
 	const response = await axiosInstance().get(
 		`/main/shopsList?size=${size}&page=${page}`,
 	)
 	return response.data
-}
-
-export type TReqGetPopularShops = {
-	page?: number
-	size?: number
 }
 
 export type TResGetPopularShops = {
