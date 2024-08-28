@@ -11,7 +11,7 @@ export default async function CustomerHome() {
 	const isLoggedIn = !!getCookie(REFRESH_TOKEN, { cookies }) // CustomerHome은 server 컴포넌트이기 때문에 serverCookie로 설정했습니다.
 	return (
 		<div className="flex h-fit flex-col pb-[7px]">
-			<CustomerHeader />
+			<CustomerHeader isLoggedIn={isLoggedIn} />
 			<PromotionSection />
 			{isLoggedIn && <ReservationSummary />}
 			<div className="mb-4 w-full border-b border-t-Gray20 pb-8 text-Title03 font-SemiBold">

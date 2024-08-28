@@ -22,9 +22,12 @@ export default function AOMImageListSection({
 }: AOMImageListPT) {
 	const { onOpenModal } = useModal()
 	const onClickEditBtn = () => {
-		onOpenModal({ size: "large", isX: true, children: <AOMManageModal /> })
+		onOpenModal({
+			size: "large",
+			isX: true,
+			children: <AOMManageModal />,
+		})
 	}
-
 	return hasAOMImages(aomInfoArr) ? (
 		<div className="flex h-full w-full flex-col gap-y-2 border-l-2 border-l-Gray20 pl-8">
 			<p className="text-Title03 font-SemiBold">등록된 사진</p>

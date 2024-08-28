@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { setCookie } from "cookies-next"
 
 import { QUERY_USER_IFNO } from "@/constant"
 import { COMMON_HOME, MANAGER_BASE } from "@/constant/routing-path"
@@ -19,10 +18,6 @@ export const useGetAuthToken = () => {
 			await getLogin(code, loginType),
 		onSuccess: async ({ data }: TResponseData<TSignDataResponse, "data">) => {
 			initAuthTokens(data)
-			/** 임시로 쿠키에 저장해서 profileUrl 전달 */
-			setCookie("profile-image", encodeURIComponent(data.profileImgUrl), {
-				maxAge: 86400,
-			})
 			routingUser(data)
 		},
 		onError: (error) => {
@@ -34,9 +29,9 @@ export const useGetAuthToken = () => {
 }
 
 /** 유저정보 조회 useQuery  */
-export const useGetUserInfo = () =>
+export const useGetUserInfo = (type: "MANAGER" | "MEMBER") =>
 	useQuery({
-		queryKey: [QUERY_USER_IFNO],
+		queryKey: [QUERY_USER_IFNO, type],
 		queryFn: getUserInfo,
 	})
 

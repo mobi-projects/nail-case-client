@@ -9,7 +9,7 @@ type NameNImagePT = {
 export default function NameNImage({ shop }: NameNImagePT) {
 	return (
 		<div className="flex h-full w-fit flex-col items-center justify-center gap-y-3 py-2">
-			<div className="w-48 max-w-48 truncate text-Title03 font-Bold text-PB100">
+			<div className="w-48 max-w-48 truncate pl-4 text-Callout">
 				{shop.name}
 			</div>
 			<div className="relative h-48 w-48 rounded-3xl">

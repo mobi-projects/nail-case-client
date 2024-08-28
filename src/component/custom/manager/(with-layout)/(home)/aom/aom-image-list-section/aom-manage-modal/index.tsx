@@ -1,3 +1,4 @@
+import { usePathname } from "next/navigation"
 import { useRef, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
@@ -13,13 +14,15 @@ import {
 	createAOMFormData,
 	createInitIdsArr,
 	getAOMModalBtnText,
+	getShopIdFromUrl,
 } from "./aom-manage-modal.util"
 import { EditAOM } from "./edit-aom"
 import { RegisterGuide } from "./register-guide"
 
 export default function AOMManageModal() {
 	const [isGuideVisible, setIsGuideVisible] = useState(true)
-
+	const pathName = usePathname()
+	const shopId = getShopIdFromUrl(pathName)
 	const { data: AOMData, isLoading } = useGetMonthlyArtList(1)
 	const { mutate: AOMMutate } = useMutateAOM()
 
@@ -38,7 +41,7 @@ export default function AOMManageModal() {
 			keepIdArr.current,
 			removeIdArr.current,
 		)
-		AOMMutate({ shopId: 1, formData: formData })
+		AOMMutate({ shopId: shopId, formData: formData })
 	}
 
 	return (

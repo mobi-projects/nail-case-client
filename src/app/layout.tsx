@@ -4,7 +4,6 @@ import localFont from "next/font/local"
 import { ModalProvider } from "@/component/common/nt-modal/nt-modal.context"
 import { SheetProvider } from "@/component/common/nt-sheet/nt-sheet.context"
 import NTToast from "@/component/common/nt-toast"
-import { AuthProvider } from "@/config/auth-provider"
 import { TanstackQueryProvider } from "@/config/tanstack-query"
 import "../config/tailwind/global.css"
 
@@ -43,18 +42,16 @@ export default function RootLayout({
 		<html lang="kr">
 			<body className={suit.className}>
 				<TanstackQueryProvider>
-					<AuthProvider>
-						<SheetProvider>
-							<ModalProvider>
-								<div className="flex w-full justify-center overflow-x-hidden">
-									<main className="w-[1200px] text-wrap break-all">
-										{children}
-									</main>
-								</div>
-								<NTToast />
-							</ModalProvider>
-						</SheetProvider>
-					</AuthProvider>
+					<SheetProvider>
+						<ModalProvider>
+							<div className="flex w-full justify-center overflow-x-hidden">
+								<main className="w-[1200px] text-wrap break-all">
+									{children}
+								</main>
+							</div>
+							<NTToast />
+						</ModalProvider>
+					</SheetProvider>
 				</TanstackQueryProvider>
 			</body>
 		</html>

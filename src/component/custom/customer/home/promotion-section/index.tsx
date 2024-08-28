@@ -8,8 +8,8 @@ import PromotionCard from "./promotion-card"
 
 export default function PromotionSection() {
 	return (
-		<div className="relative flex h-[300px] w-full items-center">
-			<div className="absolute left-1/2 flex h-full w-dvw max-w-[2100px] -translate-x-1/2 scale-110 items-center justify-center gap-x-12 overflow-x-hidden bg-BGblue02/80">
+		<div className="relative flex h-[400px] w-full items-center">
+			<div className="absolute left-1/2 flex h-[300px] w-dvw max-w-[2100px] -translate-x-1/2 scale-110 items-center justify-center gap-x-12 overflow-x-hidden bg-BGblue02/80">
 				<PromotionCard src={PromotionImage01} />
 				<PromotionCard
 					src={PromotionImage02}
