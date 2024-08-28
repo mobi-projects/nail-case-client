@@ -1,6 +1,6 @@
 export function ShopListSkeleton() {
 	return (
-		<div className="flex h-fit w-full flex-wrap gap-4 pt-4">
+		<div className="flex h-fit w-full flex-wrap items-start justify-center gap-4 pt-4">
 			{Array.from({ length: 6 }, (_, idx) => (
 				<SkeletonCard key={idx} />
 			))}

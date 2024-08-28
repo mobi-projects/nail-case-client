@@ -2,8 +2,8 @@ import { getCookie } from "cookies-next"
 import { cookies } from "next/headers"
 
 import CustomerHeader from "@/component/custom/customer/home/customer-header"
+import RecomendShopList from "@/component/custom/customer/home/popular-shop-list"
 import PromotionSection from "@/component/custom/customer/home/promotion-section"
-import RecomendShopList from "@/component/custom/customer/home/recomend-shop-list"
 import ReservationSummary from "@/component/custom/customer/home/reservation-summary"
 import { REFRESH_TOKEN } from "@/constant/auth-key"
 
