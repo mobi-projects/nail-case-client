@@ -14,7 +14,7 @@ type UseGetAuthTokenPT = { code: string; loginType: TSignType }
 // -------------------------tanstack query 함수 -------------------------------------------//
 /** 로그인 mutation  */
 export const useGetAuthToken = () => {
-	const { mutateAsync: getAuthToken, ...rest } = useMutation({
+	return useMutation({
 		mutationFn: async ({ code, loginType }: UseGetAuthTokenPT) =>
 			await getLogin(code, loginType),
 		onSuccess: async ({ data }: TResponseData<TSignDataResponse, "data">) => {
@@ -23,7 +23,6 @@ export const useGetAuthToken = () => {
 			setCookie("profile-image", encodeURIComponent(data.profileImgUrl), {
 				maxAge: 86400,
 			})
-			console.log(data.shopId)
 			routingUser(data)
 		},
 		onError: (error) => {
@@ -32,7 +31,6 @@ export const useGetAuthToken = () => {
 			throw error
 		},
 	})
-	return { getAuthToken, ...rest }
 }
 
 /** 유저정보 조회 useQuery  */
@@ -43,11 +41,11 @@ export const useGetUserInfo = () =>
 	})
 
 ///--------------------------  tanstack qeuery에 사용될 일반 함수  ----------------------- //
-const routingUser = ({ role, hasShop, shopId }: TSignDataResponse) => {
+const routingUser = ({ role, hasShop, shopIds }: TSignDataResponse) => {
 	if (role === "MEMBER") {
 		window.location.href = COMMON_HOME
-	} else if (hasShop && role === "MANAGER" && shopId) {
-		window.location.href = `${MANAGER_BASE}/${shopId}`
+	} else if (hasShop && role === "MANAGER" && shopIds.length) {
+		window.location.href = `${MANAGER_BASE}/${shopIds[0]}`
 	} else {
 		window.location.href = "/manager/register-shop"
 	}

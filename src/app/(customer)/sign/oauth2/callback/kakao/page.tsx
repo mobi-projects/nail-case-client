@@ -22,7 +22,7 @@ function KakaoLoginLanding() {
 	const loginType = useSearchParams().get("state")
 
 	const hasFetched = useRef(false) // stric mode에서 useEffect 2번 실행에 의한 오류를 막기위해 ref선언
-	const { getAuthToken, isError, isPending } = useGetAuthToken()
+	const { mutate: getAuthToken, isError, isPending } = useGetAuthToken()
 
 	useEffect(() => {
 		if (permissionCode && !hasFetched.current && loginType) {
