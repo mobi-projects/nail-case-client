@@ -27,7 +27,6 @@ export default function PopularShopList() {
 					className="flex h-24 w-full flex-col items-center justify-center gap-y-3"
 				>
 					<NTLoadingSpinner size="medium" />
-					<div className="text-Title03">Loading...</div>
 				</div>
 			)}
 		</div>
