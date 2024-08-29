@@ -3,7 +3,7 @@
 import { useGetUserInfo } from "@/hook/use-auth-controller"
 
 export default function ShopName() {
-	const { data: userInfo } = useGetUserInfo()
+	const { data: userInfo } = useGetUserInfo("MANAGER")
 
 	const shopName = userInfo?.data.shopName
 	return (

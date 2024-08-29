@@ -17,7 +17,7 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	const { data, isLoading } = useShopInfo(shopId)
 	if (isLoading) {
 		return (
-			<div className="relative h-[432.47px] w-full bg-Gray20 transition-all" />
+			<div className="relative h-[432.47px] w-full animate-pulse bg-Gray20 transition-all" />
 		)
 	}
 	const InfoData = data as TResGetShopInfo

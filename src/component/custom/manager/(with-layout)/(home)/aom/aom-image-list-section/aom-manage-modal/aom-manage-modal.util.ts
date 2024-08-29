@@ -45,3 +45,9 @@ export const createAOMFormData = (
 	}
 	return formData
 }
+
+export const getShopIdFromUrl = (path: string) => {
+	const pathArr = path.split("/")
+	const lastIdx = pathArr.length - 1
+	return parseInt(pathArr[lastIdx])
+}

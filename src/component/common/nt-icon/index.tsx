@@ -68,4 +68,5 @@ export const ICON_DATA = {
 	share: "ep:share",
 	whishFull: "lets-icons:bookmark-duotone",
 	camera: "ion:camera-outline",
+	like: "wpf:like",
 } as const
