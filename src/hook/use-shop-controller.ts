@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
@@ -60,8 +60,54 @@ export const useShopInfo = (shopId: number) =>
 		queryKey: [QUERY_SHOP_INFO_QUERY, shopId],
 		queryFn: async () => await getShopInfo(shopId),
 	})
-export const useShopToggleLiked = (shopId: number) =>
-	useQuery({
-		queryKey: [QUERY_SHOP_TOGGLE_LIKED, shopId],
-		queryFn: async () => await postShopToggleLiked(shopId),
+
+export const useShopToggleLiked = (shopId: number) => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		mutationFn: async () => await postShopToggleLiked(shopId),
+
+		onMutate: async (data: { shopLiked: boolean }) => {
+			await queryClient.cancelQueries({
+				queryKey: [QUERY_SHOP_TOGGLE_LIKED, shopId],
+			})
+
+			const previousShopLiked = queryClient.getQueryData<boolean>([
+				QUERY_SHOP_TOGGLE_LIKED,
+				shopId,
+			])
+			if (previousShopLiked) {
+				await queryClient.setQueryData(
+					[QUERY_SHOP_TOGGLE_LIKED, shopId],
+					!previousShopLiked,
+				)
+				return { previousShopLiked }
+			} else {
+				await queryClient.setQueryData(
+					[QUERY_SHOP_TOGGLE_LIKED, shopId],
+					!data.shopLiked,
+				)
+				return { data }
+			}
+		},
+
+		onError: async (err, variables, context) => {
+			if (context) {
+				setTimeout(async () => {
+					console.log("context if문 안쪽에서 실행", context.prevLiked)
+					await queryClient.setQueryData(
+						[QUERY_SHOP_TOGGLE_LIKED, shopId],
+						context.prevLiked,
+					)
+				}, 2000)
+			}
+		},
+
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: [QUERY_SHOP_TOGGLE_LIKED, shopId],
+			})
+			console.log("낙관적 업데이트 성공했음 ^_^")
+		},
 	})
+}
