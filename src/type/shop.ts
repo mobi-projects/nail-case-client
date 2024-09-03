@@ -42,27 +42,7 @@ export type TResGetShopById = {
 	tags: Array<string>
 	images: [] // [TODO] 추후 수정, 타입 미확인
 }
-export type TResPostRegisterShop = {
-	createdAt: number
-	modifiedAt: number
-	shopId: number
-	ownerId: string | null
-	shopName: string
-	phone: string
-	overview: string | null
-	address: string
-	availableSeats: number
-	tags: Array<string> | null
-	workHours: {
-		closeTime: number
-		dayOfWeek: number
-		isOpen: boolean
-		openTime: number
-	}[]
-	shopAvgRatings: number | null
-	priceImages: { imageId: number; imageUrl: string }[]
-	profileImages: { imageId: number; imageUrl: string }[]
-}
+
 export type TResGetSearchShop = {
 	totalPages: number
 	totalElements: number
