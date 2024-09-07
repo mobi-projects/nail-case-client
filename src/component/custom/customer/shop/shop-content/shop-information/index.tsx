@@ -3,7 +3,6 @@ import ShopDetails from "./shop-details"
 
 type ShopInformationPT = { shopId: number }
 export default function ShopInformation({ shopId }: ShopInformationPT) {
-	console.log(shopId)
 	return (
 		<div>
 			<div className="flex min-h-[586px] w-full justify-between gap-2 px-2 py-5">
