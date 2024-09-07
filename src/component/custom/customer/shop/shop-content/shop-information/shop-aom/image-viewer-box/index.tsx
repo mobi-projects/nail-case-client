@@ -24,6 +24,7 @@ export default function ImageViewerdBox({
 				alt="이달의 아트"
 				fill
 				priority
+				sizes="60vh"
 				className="rounded-3xl"
 			/>
 		</div>
