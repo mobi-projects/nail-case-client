@@ -1,6 +1,5 @@
 import Image from "next/image"
 
-import { cn } from "@/config/tailwind"
 import type { TResAOM } from "@/util/api-v2/list-monthly-art"
 
 import { hasAOMImages } from "../aom.utils"
@@ -16,19 +15,16 @@ export default function ImageViewerdBox({
 }: IageUploadBoxPT) {
 	return hasAOMImages(aomInfoArr) ? (
 		<div
-			className={cn(
-				"relative flex h-[26rem] w-[22rem] min-w-80 flex-col items-center justify-center gap-y-3 rounded-3xl border-[1.5px] bg-Black text-Gray70",
-				hasAOMImages(aomInfoArr) ? "border-transparent" : "border-PB50",
-			)}
+			className={
+				"relative flex h-[26rem] w-[22rem] min-w-80 flex-col items-center justify-center gap-y-3 rounded-3xl text-Gray70 shadow-customGray80"
+			}
 		>
 			<Image
 				src={aomInfoArr[focusedIdx].imageUrl}
 				alt="이달의 아트"
 				fill
-				sizes="60vw"
 				priority
 				className="rounded-3xl"
-				style={{ objectFit: "contain" }}
 			/>
 		</div>
 	) : (
