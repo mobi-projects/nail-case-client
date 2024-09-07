@@ -23,7 +23,9 @@ export const initAuthTokens = ({
 	setCookie(ACCESS_TOKEN, accessToken)
 	setCookie(REFRESH_TOKEN, refreshToken, { maxAge: 86400 })
 	setCookie(IS_MANAGER, isManager, { maxAge: 86400 })
-	setCookie(SHOP_ID, shopIds[0], { maxAge: 86400 })
+	if (isManager) {
+		setCookie(SHOP_ID, shopIds[0], { maxAge: 86400 })
+	}
 }
 
 /** accessToken, refreshToken cookie에 추가 */

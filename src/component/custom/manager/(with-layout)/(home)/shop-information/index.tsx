@@ -17,7 +17,7 @@ export default function ShopInformation({ shopId }: ShopInformation) {
 					<ReservationRequirements />
 				</div>
 			</div>
-			<div className="flex flex-col gap-[20px] pb-20">
+			<div className="ml-2 flex flex-col gap-[20px] pb-20">
 				<p className="text-Title03">이달의 아트</p>
 				<AOM shopId={shopId} />
 			</div>
