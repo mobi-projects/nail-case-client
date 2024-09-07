@@ -13,7 +13,9 @@ export function DigitalFormat({
 	return (
 		<span className="flex w-full justify-start gap-4 text-Body01">
 			<p className="text-Gray60">{title}</p>
-			{isOpen ? `${hour} : ${minute}` : "휴 무"}
+			<p className="text-Headline02 text-Black">
+				{isOpen ? `${hour} : ${minute}` : "휴 무"}
+			</p>
 		</span>
 	)
 }

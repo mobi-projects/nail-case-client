@@ -25,7 +25,6 @@ import type {
 	TResGetSearchShop,
 	TResGetShopById,
 	TResPatchUpdateOverview,
-	TResPostRegisterShop,
 	TResPutUpdateShop,
 } from "@/type/shop"
 
@@ -51,16 +50,7 @@ export const getTags = async () => {
 	const response = await axiosInstance().get("/shops/tags")
 	return response.data
 }
-/** [POST] 새 매장 등록 */
-export const postRegisterShop = async (
-	formData: FormData,
-): Promise<TResponseData<TResPostRegisterShop, "data">> => {
-	const response = await axiosInstance("multipart/form-data").post(
-		"/shops",
-		formData,
-	)
-	return response.data
-}
+
 /** [GET] 매장 검색 */
 export const getSearchShop = async (
 	keyword: string,
