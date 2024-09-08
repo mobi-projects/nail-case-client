@@ -122,7 +122,11 @@ export default function ShopRegisterForm() {
 				label="매장 이미지"
 				description="권장 사이즈: 1280 x 540 (최소 1장, 최대 5장)"
 			>
-				<ImageForm maxCount={5} setImageFileArr={setShopProfileFileArr} />
+				<ImageForm
+					maxCount={5}
+					setImageFileArr={setShopProfileFileArr}
+					imageFileArr={shopProfileFileArr}
+				/>
 			</InputWrapper>
 
 			<InputWrapper
@@ -130,7 +134,11 @@ export default function ShopRegisterForm() {
 				label="가격표 (이미지)"
 				description="권장 사이즈: 540 x 675 (최소 1장, 최대 5장)"
 			>
-				<ImageForm maxCount={5} setImageFileArr={setPriceListFileArr} />
+				<ImageForm
+					maxCount={5}
+					setImageFileArr={setPriceListFileArr}
+					imageFileArr={priceListFileArr}
+				/>
 			</InputWrapper>
 
 			<div className="flex h-fit w-full items-center justify-center">
