@@ -56,7 +56,7 @@ export const MOCK_DATA = {
 		{ imageId: 0, imageUrl: "https://picsum.photos/id/199/1300/800" },
 		{ imageId: 1, imageUrl: "https://picsum.photos/id/201/1300/800" },
 		{ imageId: 2, imageUrl: "https://picsum.photos/id/202/1300/800" },
-		{ imageId: 3, imageUrl: "https://picsum.photos/id/205/1300/800" },
+		{ imageId: 3, imageUrl: "https://picsum.photos/id/210/1300/800" },
 		{ imageId: 4, imageUrl: "https://picsum.photos/id/294/1300/800" },
 	],
 }

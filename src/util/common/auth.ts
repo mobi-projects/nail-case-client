@@ -2,7 +2,12 @@ import { isAxiosError } from "axios"
 import { deleteCookie, setCookie } from "cookies-next"
 import { toast } from "sonner"
 
-import { ACCESS_TOKEN, IS_MANAGER, REFRESH_TOKEN } from "@/constant/auth-key"
+import {
+	ACCESS_TOKEN,
+	IS_MANAGER,
+	REFRESH_TOKEN,
+	SHOP_ID,
+} from "@/constant/auth-key"
 import { COMMON_HOME } from "@/constant/routing-path"
 import type { TSignDataResponse, TRefreshDataResponse } from "@/type"
 
@@ -12,11 +17,15 @@ export const initAuthTokens = ({
 	accessToken,
 	role,
 	refreshToken,
+	shopIds,
 }: TSignDataResponse) => {
 	const isManager = role === "MANAGER"
 	setCookie(ACCESS_TOKEN, accessToken)
 	setCookie(REFRESH_TOKEN, refreshToken, { maxAge: 86400 })
 	setCookie(IS_MANAGER, isManager, { maxAge: 86400 })
+	if (isManager) {
+		setCookie(SHOP_ID, shopIds[0], { maxAge: 86400 })
+	}
 }
 
 /** accessToken, refreshToken cookie에 추가 */

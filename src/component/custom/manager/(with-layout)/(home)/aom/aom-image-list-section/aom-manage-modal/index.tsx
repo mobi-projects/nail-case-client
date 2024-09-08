@@ -23,7 +23,7 @@ export default function AOMManageModal() {
 	const [isGuideVisible, setIsGuideVisible] = useState(true)
 	const pathName = usePathname()
 	const shopId = getShopIdFromUrl(pathName)
-	const { data: AOMData, isLoading } = useGetMonthlyArtList(1)
+	const { data: AOMData, isLoading } = useGetMonthlyArtList(shopId)
 	const { mutate: AOMMutate } = useMutateAOM()
 
 	const [previewImageArr, setPreviewImageArr] = useState(

@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { setCookie } from "cookies-next"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
@@ -14,10 +15,10 @@ import {
 	getListShopNailArtist,
 	getShopById,
 	getShopReview,
-	postRegisterShop,
 } from "@/util/api/shop-controller"
 import { getShopInfo } from "@/util/api-v2/get-shop-info"
 import { postShopToggleLiked } from "@/util/api-v2/patch-shop-liked"
+import { postRegisterShop } from "@/util/api-v2/post-register-shop"
 import { deleteAllCookies } from "@/util/common/auth"
 
 /** 매장 아티스트 목록조회 */
@@ -44,9 +45,10 @@ export const useRegisterShop = () => {
 	return useMutation({
 		mutationFn: ({ reqForm }: { reqForm: FormData }) =>
 			postRegisterShop(reqForm),
-		onSuccess: () => {
+		onSuccess: ({ data }) => {
 			toast.success("매장이 정상적으로 등록되었습니다.")
-			router.replace(MANAGER_BASE) // shopId를 추가해야한다!!!
+			setCookie("shopId", data.shopIds[0])
+			router.replace(`${MANAGER_BASE}/${data.shopIds[0]}`)
 		},
 		onError: () => {
 			toast.error("매장 등록에 실패했습니다. 다시 로그인해주세요.")

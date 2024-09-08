@@ -39,7 +39,7 @@ export const useGetUserInfo = (type: "MANAGER" | "MEMBER") =>
 const routingUser = ({ role, hasShop, shopIds }: TSignDataResponse) => {
 	if (role === "MEMBER") {
 		window.location.href = COMMON_HOME
-	} else if (hasShop && role === "MANAGER" && shopIds.length) {
+	} else if (hasShop) {
 		window.location.href = `${MANAGER_BASE}/${shopIds[0]}`
 	} else {
 		window.location.href = "/manager/register-shop"
