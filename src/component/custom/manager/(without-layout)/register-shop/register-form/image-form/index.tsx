@@ -3,9 +3,8 @@ import type { Dispatch, SetStateAction } from "react"
 import { useRef } from "react"
 
 import AddingBox from "./adding-box"
-
-import PreviewList from "./preview-list"
 import { useHandleRegisterShopImages } from "./image-form.hook"
+import PreviewList from "./preview-list"
 
 type ImageFormPT = {
 	imageFileArr: Array<File>
