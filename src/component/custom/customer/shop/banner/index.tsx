@@ -3,7 +3,7 @@
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import { useShopById } from "@/hook/use-shop-controller"
-import type { TResGetShop } from "@/util/api-v2/get-shop-by-id"
+import type { TNailShopInfo } from "@/type"
 import { isUndefined } from "@/util/common/type-guard"
 
 import { BannerButtonList } from "./banner-button-list"
@@ -15,7 +15,7 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 		data: shopInfo,
 		isError: isErrorShopInfo,
 		isPending: isPendingShopInfo,
-	} = useShopById(shopId)
+	} = useShopById(shopId!)
 
 	if (isErrorShopInfo || isPendingShopInfo || !shopInfo) {
 		return (
@@ -27,7 +27,9 @@ export default function CustomerShopBanner({ shopId }: { shopId: number }) {
 		)
 	}
 
-	const nailShopInfo: TResGetShop = shopInfo
+	const nailShopInfo: TNailShopInfo = shopInfo!.data
+
+	console.log(nailShopInfo)
 
 	return (
 		<div className="flex h-[30rem] w-full flex-col gap-12 px-[75px] pt-20">
