@@ -5,7 +5,6 @@
  * @함수목록
  *   - deleteCoverImage()
  *   - deleteShop()
- *   - getShopById()
  *   - getTags()
  *   - postRegisterShop()
  *   - getSearchShop()
@@ -23,7 +22,6 @@ import type {
 	TReqBodyPutUpdateShop,
 	TResGetListShopNailArtist,
 	TResGetSearchShop,
-	TResGetShopById,
 	TResPatchUpdateOverview,
 	TResPutUpdateShop,
 } from "@/type/shop"
@@ -38,13 +36,7 @@ export const deleteShop = async (shopId: number) => {
 	const response = await axiosInstance().delete(`/shops/${shopId}`)
 	return response
 }
-/** [GET] 매장 정보 조회 api 호출 */
-export const getShopById = async (
-	shopId: number,
-): Promise<TResponseData<TResGetShopById, "data">> => {
-	const response = await axiosInstance().get(`/shops/${shopId}`)
-	return response.data
-}
+
 /** [GET] 모든 해쉬태그 불러오기 */
 export const getTags = async () => {
 	const response = await axiosInstance().get("/shops/tags")
