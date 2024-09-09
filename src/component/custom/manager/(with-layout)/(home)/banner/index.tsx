@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
-import { useShopInfo } from "@/hook/use-shop-controller"
+import { useShopById } from "@/hook/use-shop-controller"
 import type { TResGetShopInfo } from "@/util/api-v2/get-shop-info"
 
 import { BannerTitle } from "./banner-title"
@@ -14,7 +14,7 @@ type ManagerBannerPT = { shopId: number }
 export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	const [selectedIdx, setSelectedIdx] = useState(0)
 
-	const { data, isLoading } = useShopInfo(shopId)
+	const { data, isLoading } = useShopById(shopId)
 	if (isLoading) {
 		return (
 			<div className="relative h-[432.47px] w-full animate-pulse bg-Gray20 transition-all" />
