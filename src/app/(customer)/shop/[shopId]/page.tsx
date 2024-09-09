@@ -39,7 +39,7 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 		)
 	}
 
-	if (!error && shopInfo && shopInfo.success) {
+	if (!error && shopInfo) {
 		return (
 			<div className="h-full w-full">
 				<CustomerShopBanner shopId={convertStringToInteger(params.shopId)} />
