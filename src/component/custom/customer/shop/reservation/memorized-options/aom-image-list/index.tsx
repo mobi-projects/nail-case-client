@@ -25,12 +25,14 @@ export default function AOMImageList({
 }: AOMImageListPT) {
 	const { data, isLoading } = useGetMonthlyArtList(shopId)
 	if (isLoading || isUndefined(data)) return
-
+	const delayCss = setTimeout(() => {
+		return isSelectedAOM ? "h-30" : "h-0"
+	}, 200)
 	return (
 		<div
 			className={cn(
 				"flex h-fit w-full flex-wrap items-center gap-x-3 transition-all",
-				isSelectedAOM ? "h-30" : "h-0",
+				delayCss,
 			)}
 		>
 			{data.dataList.map((image) => (
