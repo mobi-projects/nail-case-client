@@ -17,7 +17,7 @@ export function BannerButtonList() {
 		})
 	}
 	return (
-		<div className="flex h-8 w-full justify-between">
+		<div className="z-10 flex h-8 w-full justify-between">
 			<RoutingButtonList />
 			<div className="flex gap-3">
 				<Wishbutton />
