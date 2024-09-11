@@ -9,7 +9,7 @@ export default function ShopInformation({
 }: CustomerShopContentPT) {
 	return (
 		<div>
-			<div className="flex min-h-[586px] w-full justify-between gap-2 px-2 py-5">
+			<div className="flex min-h-[586px] w-full justify-between gap-2 px-2 pt-5">
 				<div className="flex w-full flex-col items-center gap-9">
 					<p className="text-Title03 font-SemiBold">내 샵 정보</p>
 					<ShopDetails shopInfoData={data} />

@@ -1,9 +1,8 @@
-import type { CustomerShopBannerTitlePT } from ".."
-
-export function BannerTitle({
-	shopAddress,
-	shopName,
-}: CustomerShopBannerTitlePT) {
+export type BannerTitlePT = {
+	shopAddress: string
+	shopName: string
+}
+export function BannerTitle({ shopAddress, shopName }: BannerTitlePT) {
 	return (
 		<div className="flex flex-col gap-[6px]">
 			<p className="text-Callout font-Light text-White">
