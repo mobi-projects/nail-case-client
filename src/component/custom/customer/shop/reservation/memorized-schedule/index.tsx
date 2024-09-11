@@ -1,4 +1,9 @@
-import { useState, type Dispatch, type SetStateAction } from "react"
+import React, {
+	memo,
+	useState,
+	type Dispatch,
+	type SetStateAction,
+} from "react"
 
 import { cn } from "@/config/tailwind"
 import {
@@ -14,10 +19,7 @@ export type SchedulePT = {
 	setSelectedStamp: Dispatch<SetStateAction<number>>
 }
 
-export default function Schedule({
-	selectedStamp,
-	setSelectedStamp,
-}: SchedulePT) {
+function Schedule({ selectedStamp, setSelectedStamp }: SchedulePT) {
 	const printedTime = getPrintedTime(selectedStamp)
 	const [isThisMonth, setIsThisMonth] = useState(true)
 	return (
@@ -52,6 +54,10 @@ export default function Schedule({
 		</div>
 	)
 }
+
+const MemoizedSchedule = memo(Schedule)
+
+export default MemoizedSchedule
 
 const getPrintedTime = (timestamp: number) => {
 	const month = getMonthFromStamp(timestamp)

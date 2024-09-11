@@ -12,16 +12,17 @@ import {
 
 import FocusingCard from "./common/focusing-card"
 import SectionDivider from "./common/section-divider"
+import type { TReservationForm } from "./memorized-options"
+import MemorizedOptions from "./memorized-options"
+import MemoizedSchedule from "./memorized-schedule"
 import ReservationCheckModal from "./modal/reservation-check-modal"
-import Schedule from "./schedule"
-import type { TReservationForm } from "./treatment-n-condition"
-import TreatmentNCondition from "./treatment-n-condition"
+import { getIntialReservationForm } from "./reservation.uitl"
 
 type ReservationNewPT = { shopId: number }
 
 export default function Reservation({ shopId }: ReservationNewPT) {
 	const [reservationForm, setReservationForm] = useState<TReservationForm>(
-		initialReservationForm,
+		getIntialReservationForm(shopId),
 	)
 	const [selectedStamp, setSelectedStamp] = useState(
 		invalidateTime(getNowStamp()),
@@ -42,7 +43,8 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 	return (
 		<div className="flex h-fit w-full flex-col gap-[50px] py-[33px]">
 			<FocusingCard title="시술 세부 내용">
-				<TreatmentNCondition
+				<MemorizedOptions
+					shopId={shopId}
 					reservationForm={reservationForm}
 					setReservationForm={setReservationForm}
 				/>
@@ -51,11 +53,9 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 			<div className="flex h-fit w-full flex-col gap-[18px]">
 				<p className="px-[40px] text-[22px] font-SemiBold">시술 일시</p>
 				<FocusingCard>
-					<Schedule
-						{...{
-							selectedStamp,
-							setSelectedStamp,
-						}}
+					<MemoizedSchedule
+						selectedStamp={selectedStamp}
+						setSelectedStamp={setSelectedStamp}
 					/>
 				</FocusingCard>
 			</div>
@@ -71,13 +71,4 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 			</div>
 		</div>
 	)
-}
-
-const initialReservationForm: TReservationForm = {
-	shopId: -1,
-	startTime: -1,
-	remove: "NO_NEED",
-	extend: false,
-	conditionList: [],
-	treatment: { option: null, imageId: 0 },
 }

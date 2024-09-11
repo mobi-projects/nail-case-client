@@ -12,7 +12,7 @@ import type { TNailTreatment } from "@/type/union-option/nail-treatment"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
 import type { TconditionOption } from "@/util/api-v2/get-main-page-data"
 
-import type { TReservationForm } from "../../treatment-n-condition"
+import type { TReservationForm } from "../../memorized-options"
 
 type ReservationCheckModalPT = {
 	shopId?: number
@@ -39,7 +39,6 @@ export default function ReservationCheckModal({
 	// 	})
 	// 	onCloseModal()
 	// }
-
 	const treatment = reservationForm.treatment.option as TNailTreatment
 	const remove = reservationForm.remove
 	const extend = reservationForm.extend
