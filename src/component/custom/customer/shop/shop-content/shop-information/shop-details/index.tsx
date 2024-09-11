@@ -10,11 +10,12 @@ type ShopDetails = {
 	shopInfoData: TResGetShop
 }
 export default function ShopDetails({ shopInfoData }: ShopDetails) {
+	const { workHours, address, priceImages } = shopInfoData
 	return (
 		<div className="flex h-full w-[550px] flex-col justify-start rounded-[26px] px-5 py-2 shadow-customGray70">
-			<WeeklyHoursDisplay workHours={shopInfoData.workHours} />
-			<Loaction address={shopInfoData.address} />
-			<Price priceImages={shopInfoData.priceImages} />
+			<WeeklyHoursDisplay workHours={workHours} />
+			<Loaction address={address} />
+			<Price priceImages={priceImages} />
 		</div>
 	)
 }
