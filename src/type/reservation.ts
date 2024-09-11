@@ -45,7 +45,7 @@ export type TReservationForm = {
 	}>
 }
 export type TReqBodyRegisterReservation = {
-	reservationDetailList: Array<TReservationForm>
+	reservationDetailList: TReservationForm
 }
 export type TReqBodyUpdateReservation = {
 	status: TReservationStatus

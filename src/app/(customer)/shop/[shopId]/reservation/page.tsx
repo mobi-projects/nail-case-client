@@ -1,5 +1,5 @@
+import Reservation from "@/component/custom/customer/shop/reservation"
 import Header from "@/component/custom/customer/shop/reservation/header"
-import ReservationForm from "@/component/custom/customer/shop/reservation/reservation-form"
 import { getShopById } from "@/util/api-v2/get-shop-by-id"
 
 type CustomerShopPT = {
@@ -31,7 +31,7 @@ export default async function CustomerShopReservation({
 		<main className="flex h-fit w-full flex-col gap-[35px] py-[80px]">
 			<Header {...{ shopId, shopName, address, category }} />
 			<hr className="h-[1.5px] w-full border-Gray20" />
-			<ReservationForm {...{ shopId }} />
+			<Reservation shopId={shopId} />
 		</main>
 	)
 }

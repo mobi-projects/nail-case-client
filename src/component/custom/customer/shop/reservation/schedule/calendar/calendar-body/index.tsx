@@ -1,52 +1,51 @@
+import dayjs from "dayjs"
 import type { Dispatch, SetStateAction } from "react"
 
 import { cn } from "@/config/tailwind"
 import {
 	getDateFromStamp,
 	getNowStamp,
-	isAfter,
-	isBefore,
+	invalidateTime,
 	isSame,
 } from "@/util/common"
 
 type CalendarBodyPT = {
 	selectedStamp: number
 	setSelectedStamp: Dispatch<SetStateAction<number>>
-	focusedStampArr?: number[]
-	setIsTimeSelected: Dispatch<SetStateAction<boolean>>
+	focusedStampArr: number[]
 }
 
 export default function CalendarBody({
 	focusedStampArr = [],
 	selectedStamp,
 	setSelectedStamp,
-	setIsTimeSelected,
 }: CalendarBodyPT) {
+	const nowStamp = invalidateTime(getNowStamp())
+	const nextMonthStamp = invalidateTime(dayjs().add(1, "month").unix())
+
 	return (
 		<tr className="grid h-full w-full grid-cols-7">
 			{focusedStampArr.map((stamp: number) => {
-				const nowStamp = getNowStamp()
-				const isPrevDay = isBefore(stamp, nowStamp)
+				const isInRange = isInCurrentMonthRange(stamp, nowStamp, nextMonthStamp)
 				const isToday = isSame(stamp, nowStamp)
-				const isNextMonth = isAfter(stamp, nowStamp, "month")
 				const isFocused = isSame(stamp, selectedStamp)
 				return (
 					<th
 						className="flex h-full w-full items-center justify-center"
 						onClick={() => {
-							setSelectedStamp(stamp)
-							setIsTimeSelected(false)
+							if (isInRange) {
+								setSelectedStamp(stamp)
+							}
 						}}
 						key={stamp}
 					>
 						<p
 							className={cn(
-								"flex h-[36px] w-[36px] cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Body02 text-Gray100 transition-all hover:scale-150",
-								isToday && "text-[16px] text-PB100",
-								isFocused && "bg-PY100",
-								isNextMonth && "text-Gray60",
-								isPrevDay &&
-									"cursor-default bg-White text-Gray40 hover:scale-100",
+								"flex h-9 w-9 cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Gray70 transition-all hover:scale-110 hover:bg-Gray10",
+								isToday && "text-PB100",
+								isFocused && "bg-PY100 hover:bg-PY100",
+								!isInRange &&
+									"cursor-default bg-White text-Gray20 hover:scale-100 hover:bg-White",
 							)}
 						>
 							{getDateFromStamp(stamp)}
@@ -56,4 +55,12 @@ export default function CalendarBody({
 			})}
 		</tr>
 	)
+}
+
+const isInCurrentMonthRange = (
+	stamp: number,
+	startStamp: number,
+	endStamp: number,
+): boolean => {
+	return stamp >= startStamp && stamp < endStamp
 }

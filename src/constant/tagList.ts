@@ -10,7 +10,7 @@ export const CONDITION_LIST: { [key in TNailCondition]: string } = {
 } as const
 export const TREATMENT_LIST: { [key in TNailTreatment]: string } = {
 	AOM: "이달의 아트",
-	CARE: "관리",
+	CARE: "케어",
 	ONE: "원 컬러",
 	MEMBER_IMAGE: "등록된사진",
 } as const

@@ -33,7 +33,7 @@ export default function NTHoverCard({
 			{isExpanded && (
 				<div
 					className={cn(
-						"absolute z-30 mt-5 min-w-[263px] max-w-[388px] rounded-[12px] bg-white p-4 text-Callout text-Gray100 shadow-customGray60",
+						"absolute z-30 rounded-[12px] bg-white p-4 text-Callout text-Gray100 shadow-customGray60",
 						className,
 					)}
 				>

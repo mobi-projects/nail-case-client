@@ -3,11 +3,11 @@ import Image from "next/image"
 import NTLoginImage from "@/../public/asset/nt-login.svg"
 import type { TSignType } from "@/type/union-option/sign-type"
 
-type LoginLogowithWelcomeMessagePT = { loginType: TSignType }
+type LoginWelcomeMessagePT = { loginType: TSignType }
 
-export default function LoginLogowithWelcomeMessage({
+export default function LoginWelcomeMessage({
 	loginType,
-}: LoginLogowithWelcomeMessagePT) {
+}: LoginWelcomeMessagePT) {
 	const WelcomeMessageMain = isCustomer(loginType)
 		? "완벽한 손끝을 위한 당신의 새로운 예약 파트너"
 		: "	 여러분의 샵을 NewTips에 등록하고 더 많은 고객을 만나세요"
