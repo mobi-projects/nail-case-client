@@ -4,17 +4,14 @@ import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
-import {
-	convertStringToInteger,
-	getNowStamp,
-	invalidateTime,
-} from "@/util/common"
+import { convertStringToInteger, getNowStamp } from "@/util/common"
 
 import FocusingCard from "./common/focusing-card"
 import SectionDivider from "./common/section-divider"
 import type { TReservationForm } from "./memorized-options"
 import MemorizedOptions from "./memorized-options"
 import MemoizedSchedule from "./memorized-schedule"
+import MemorizedTimeSelection from "./memorized-time-selection"
 import ReservationCheckModal from "./modal/reservation-check-modal"
 import { getIntialReservationForm } from "./reservation.uitl"
 
@@ -24,10 +21,8 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 	const [reservationForm, setReservationForm] = useState<TReservationForm>(
 		getIntialReservationForm(shopId),
 	)
-	const [selectedStamp, setSelectedStamp] = useState(
-		invalidateTime(getNowStamp()),
-	)
-
+	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
+	const [selectedTime, setSelectedTime] = useState(getNowStamp())
 	const { onOpenModal } = useModal()
 	const onOpenReservationCheckModal = () => {
 		onOpenModal({
@@ -56,11 +51,23 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 					<MemoizedSchedule
 						selectedStamp={selectedStamp}
 						setSelectedStamp={setSelectedStamp}
+						shopId={shopId}
 					/>
 				</FocusingCard>
 			</div>
 			<SectionDivider />
-
+			<div className="flex h-fit w-full flex-col gap-[18px]">
+				<p className="px-[40px] text-[22px] font-SemiBold">시간 선택</p>
+				<FocusingCard>
+					<MemorizedTimeSelection
+						shopId={shopId}
+						selectedStamp={selectedStamp}
+						selectedTime={selectedTime}
+						setSelectedTime={setSelectedTime}
+					/>
+				</FocusingCard>
+			</div>
+			<SectionDivider />
 			<div className="flex h-fit w-full items-center justify-center">
 				<NTButton
 					onClick={onOpenReservationCheckModal}

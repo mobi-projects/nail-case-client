@@ -33,6 +33,7 @@ type NTOptionPT = VariantProps<typeof OptionVariants> & {
 	selectedIdxArr?: number[]
 	disabledIdxArr?: number[]
 	className?: string
+	optionClassName?: string
 }
 export default function NTOption({
 	optionArr,
@@ -40,6 +41,7 @@ export default function NTOption({
 	selectedIdxArr = [],
 	disabledIdxArr = [],
 	className,
+	optionClassName,
 	size,
 }: NTOptionPT) {
 	const onClickOption = (idx: number) => {
@@ -63,6 +65,7 @@ export default function NTOption({
 						onSelect
 							? "cursor-pointer active:border-PB100 active:bg-BGblue02 active:text-PB110 active:shadow-[0_0_16_0_rgba(128,214,248,0.4)]"
 							: "cursor-default",
+						optionClassName,
 					)}
 					disabled={disabledIdxArr.includes(idx)}
 					onClick={() => {

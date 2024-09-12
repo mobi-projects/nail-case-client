@@ -341,3 +341,17 @@ export const getBeforeOrAfterN = (
 	else result = dayjs.unix(timestamp).add(n, timeUnit)
 	return result.unix()
 }
+
+export const getClosest30MinuteInterval = (timestamp: number) => {
+	const currentTime = dayjs(timestamp) // 타임스탬프를 바로 dayjs로 변환
+	const minutes = currentTime.minute()
+
+	// 1분 ~ 30분 -> 30분으로 맞추기
+	// 31분 ~ 59분 -> 다음 시간의 00분으로 맞추기
+	if (minutes > 0 && minutes <= 30) {
+		return currentTime.minute(30).second(0).millisecond(0).unix() // 30분으로 설정
+	} else {
+		// 31분 ~ 59분인 경우
+		return currentTime.add(1, "hour").minute(0).second(0).millisecond(0).unix() // 다음 시간의 00분으로 설정
+	}
+}
