@@ -1,29 +1,27 @@
 "use client"
 
+import { NTButton } from "@/component/common/atom/nt-button"
 import {
 	ModalBody,
 	ModalContent,
 	ModalFooter,
 	ModalHeader,
 } from "@/component/common/nt-modal"
-import NTOption from "@/component/common/nt-option"
-import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
-import type { TNailTreatment } from "@/type/union-option/nail-treatment"
-import type { TRemoveOption } from "@/type/union-option/remove-option"
-import type { TconditionOption } from "@/util/api-v2/get-main-page-data"
 
 import type { TReservationForm } from "../../memorized-options"
 
+import ConditionListConfirm from "./condition-list-comfirm"
+import ExtensionConfirm from "./extension-confirm"
+import RemoveConfirm from "./remove-confirm"
+import ReseravtionTimeConfirm from "./reservation-time-confirm"
+import TreatmentConfirm from "./treatment-comfirm"
+
 type ReservationCheckModalPT = {
-	shopId?: number
 	reservationForm: TReservationForm
-	reservationTimestamp?: number
 }
 
 export default function ReservationCheckModal({
-	// shopId,
 	reservationForm,
-	// reservationTimestamp,
 }: ReservationCheckModalPT) {
 	// const { onOpenSheet } = useSheet()
 	// const { onCloseModal } = useModal()
@@ -39,12 +37,15 @@ export default function ReservationCheckModal({
 	// 	})
 	// 	onCloseModal()
 	// }
-	const treatment = reservationForm.treatment.option as TNailTreatment
+
+	const treatment = reservationForm.treatment
 	const remove = reservationForm.remove
 	const extend = reservationForm.extend
 	const conditionList = reservationForm.conditionList.map(
 		({ option }) => option,
 	)
+	const startTime = reservationForm.startTime
+
 	return (
 		<ModalContent>
 			<ModalHeader className="flex w-full items-center justify-center border-b-[1.5px] border-b-Gray20 pb-5">
@@ -52,71 +53,23 @@ export default function ReservationCheckModal({
 					예약 내용 확인
 				</p>
 			</ModalHeader>
-			<ModalBody className="flex h-[55px] w-full flex-col border-b-Gray20">
-				<TreatmentConfirm treatment={treatment} />
+
+			<ModalBody className="scrollbar grid h-full w-full grid-cols-1 overflow-y-scroll border-b-Gray20">
+				<TreatmentConfirm
+					treatment={treatment}
+					shopId={reservationForm.shopId}
+				/>
 				<RemoveConfirm remove={remove} />
 				<ExtensionConfirm extend={extend} />
 				<ConditionListConfirm conditionList={conditionList} />
+				<ReseravtionTimeConfirm startTime={startTime} />
 			</ModalBody>
 
-			<ModalFooter className="flex h-[115px] w-full flex-col items-center justify-between">
+			<ModalFooter className="flex min-h-36 w-full flex-col items-center justify-evenly">
 				<ListInfo />
-				{/* <NTButton onClick={onClickPostReservationButton} size="medium">
-					예약 요청하기
-				</NTButton> */}
+				<NTButton size="medium">예약 요청하기</NTButton>
 			</ModalFooter>
 		</ModalContent>
-	)
-}
-
-function TreatmentConfirm({ treatment }: { treatment: TNailTreatment }) {
-	return (
-		<div className="grid h-fit min-h-[110px] w-full grid-cols-[1fr_3fr] items-center border-b-[2px] border-b-Gray10 py-2">
-			<p className="text-Body02 font-SemiBold text-Gray80">시술 내용</p>
-			<NTOption
-				optionArr={[TREATMENT_LIST[treatment]]}
-				className="gap-x-[8px] gap-y-[4px]"
-			/>
-		</div>
-	)
-}
-function RemoveConfirm({ remove }: { remove: TRemoveOption }) {
-	return (
-		<div className="grid h-fit min-h-[92px] w-full grid-cols-[1fr_3fr] items-center border-b-[2px] border-b-Gray10 py-2">
-			<p className="text-Body02 font-SemiBold text-Gray80">네일 제거 유무</p>
-			<NTOption
-				optionArr={[REMOVE_LIST[remove]]}
-				className="gap-x-[8px] gap-y-[4px]"
-			/>
-		</div>
-	)
-}
-function ExtensionConfirm({ extend }: { extend: boolean }) {
-	return (
-		<div className="grid h-fit min-h-[92px] w-full grid-cols-[1fr_3fr] items-center border-b-[2px] border-b-Gray10 py-2">
-			<p className="text-Body02 font-SemiBold text-Gray80">연장 유무</p>
-			<NTOption
-				optionArr={[extend ? "연장 필요" : "연장 필요 없음"]}
-				className="gap-x-[8px] gap-y-[4px]"
-			/>
-		</div>
-	)
-}
-
-function ConditionListConfirm({
-	conditionList,
-}: {
-	conditionList: Array<TconditionOption>
-}) {
-	const conditionListArr = conditionList.map((option) => CONDITION_LIST[option])
-	return (
-		<div className="grid h-fit min-h-[92px] grid-cols-[1fr_3fr] items-center border-b-[2px] border-b-Gray10 py-2">
-			<p className="text-Body02 font-SemiBold text-Gray80">컨디션</p>
-			<NTOption
-				optionArr={conditionListArr}
-				className="gap-x-[8px] gap-y-[4px]"
-			/>
-		</div>
 	)
 }
 
