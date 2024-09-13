@@ -9,11 +9,12 @@ export function Wishbutton({ shopId }: WishbuttonPT) {
 	const isLiked = data?.likedByUser
 	return (
 		<NTIcon
-			icon="whishFull"
+			icon="like"
 			className={cn(
 				isLiked
 					? "text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)]"
-					: "text-Black drop-shadow-[0_0_1px_rgba(0,0,0,0.9)]",
+					: "text-PY50 drop-shadow-[0_0_1px_rgba(0,0,0,0.9)]",
+				"cursor-pointer",
 			)}
 			onClick={() => {
 				mutate({ shopLiked: !isLiked ?? false })
