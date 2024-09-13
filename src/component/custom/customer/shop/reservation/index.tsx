@@ -22,8 +22,9 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 		getIntialReservationForm(shopId),
 	)
 	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
-	const [selectedTime, setSelectedTime] = useState(getNowStamp())
+	const [selectedTime, setSelectedTime] = useState(-1)
 	const { onOpenModal } = useModal()
+
 	const onOpenReservationCheckModal = () => {
 		onOpenModal({
 			children: (
@@ -46,7 +47,7 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 			</FocusingCard>
 			<SectionDivider />
 			<div className="flex h-fit w-full flex-col gap-[18px]">
-				<p className="px-[40px] text-[22px] font-SemiBold">시술 일시</p>
+				<p className="px-[40px] text-[22px] font-SemiBold">날짜 선택</p>
 				<FocusingCard>
 					<MemoizedSchedule
 						selectedStamp={selectedStamp}

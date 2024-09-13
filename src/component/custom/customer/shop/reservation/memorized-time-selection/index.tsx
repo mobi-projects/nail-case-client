@@ -1,12 +1,12 @@
-import dayjs from "dayjs"
-import { memo, useMemo, type Dispatch, type SetStateAction } from "react"
+import { memo, type Dispatch, type SetStateAction } from "react"
 
-import NTOption from "@/component/common/nt-option"
 import { dayOfWeekArr } from "@/component/custom/manager/(with-layout)/(home)/shop-information/shop-details/weekly-hours-display/daily-opening-hours/daily-opening-hours.util"
 import { useShopById } from "@/hook/use-shop-controller"
-import type { TWorkHour } from "@/util/api-v2/get-shop-by-id"
 import { getDayOfWeekFromStamp } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
+
+import AvailableTimes from "./available-times"
+import ClosedDay from "./closed-day"
 
 type TimeSelectionPT = {
 	shopId: number
@@ -22,47 +22,39 @@ function TimeSelection({
 	setSelectedTime,
 }: TimeSelectionPT) {
 	const { data, isLoading, isError } = useShopById(shopId)
-	if (isLoading) return "로드중"
-	if (isError || isUndefined(data)) return "데이터에러"
+
+	if (isLoading) return <div className="h-[400px] w-full" />
+
+	if (isError || isUndefined(data))
+		return (
+			<div className="flex h-[400px] w-full items-center justify-center text-Title01 text-Gray60">
+				죄송합니다, 인터넷 문제로 오류가 발생했습니다.
+			</div>
+		)
+
 	const { workHours } = data
-
-	return (
-		<div className="grid w-full grid-rows-[1fr_2fr_1fr_2fr] pl-3">
-			<div className="w-full text-Title03 font-SemiBold text-Gray70">오전</div>
-			{/* <NTOption optionArr={timeOptions} optionClassName="min-w-[6rem]" /> */}
-			<div className="w-full text-Title03 font-SemiBold text-Gray70">오후</div>
-			<NTOption
-				optionArr={["1:00", "2:00", "3:00", "4:00", "5:00"]}
-				optionClassName="min-w-[6rem]"
-			/>
-		</div>
-	)
-}
-
-// 30분 간격으로 배열을 생성하는 함수
-const getTimeRangeArr = (
-	workHours: Array<TWorkHour>,
-	selectedStamp: number,
-) => {
 	const dayOfWeekNum = dayOfWeekArr.findIndex(
 		(day) => day === getDayOfWeekFromStamp(selectedStamp),
 	)
 	const targetDay = workHours.findIndex(
 		(workhour) => workhour.dayOfWeek === dayOfWeekNum,
 	)
-	if (!workHours[targetDay].isOpen) return ["휴무일 입니다."]
+	const selectedDate = workHours[targetDay]
 
-	const { openTime, closeTime } = workHours[targetDay]
-
-	const timeOptions: Array<number> = []
-
-	let currentStamp = openTime
-	while (currentStamp < closeTime) {
-		timeOptions.push(currentStamp)
-		currentStamp = dayjs.unix(currentStamp).add(30, "minute").unix()
-	}
-
-	return timeOptions
+	return (
+		<div>
+			{selectedDate.isOpen ? (
+				<AvailableTimes
+					selectedDate={selectedDate}
+					selectedTime={selectedTime}
+					selectedStamp={selectedStamp}
+					setSelectedTime={setSelectedTime}
+				/>
+			) : (
+				<ClosedDay />
+			)}
+		</div>
+	)
 }
 
 const MemorizedTimeSelection = memo(TimeSelection)
