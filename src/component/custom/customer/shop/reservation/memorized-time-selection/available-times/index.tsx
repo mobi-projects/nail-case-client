@@ -1,4 +1,4 @@
-import { useEffect, type Dispatch, type SetStateAction } from "react"
+import { type Dispatch, type SetStateAction } from "react"
 
 import NTOption from "@/component/common/nt-option"
 import type { TWorkHour } from "@/util/api-v2/get-shop-by-id"
@@ -58,10 +58,6 @@ export default function AvailableTimes({
 	const onClickPM = (idx: number) => {
 		setSelectedTime(timeRangeArr[pmStartIdx + idx])
 	}
-
-	useEffect(() => {
-		setSelectedTime(-1)
-	}, [selectedDate, setSelectedTime])
 
 	return (
 		<div className="grid h-[400px] w-full grid-rows-[1fr_1fr_1fr_3fr] pl-3">

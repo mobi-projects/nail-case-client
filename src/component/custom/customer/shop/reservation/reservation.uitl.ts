@@ -10,3 +10,8 @@ export const getIntialReservationForm = (shopId: number): TReservationForm => {
 		treatment: { option: null },
 	}
 }
+
+export const isValidReservationForm = (time: number, form: TReservationForm) =>
+	time === -1 ||
+	form.conditionList.length === 0 ||
+	form.treatment.option === null

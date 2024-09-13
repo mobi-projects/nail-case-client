@@ -1,4 +1,4 @@
-import { memo, type Dispatch, type SetStateAction } from "react"
+import { memo, useEffect, type Dispatch, type SetStateAction } from "react"
 
 import { dayOfWeekArr } from "@/component/custom/manager/(with-layout)/(home)/shop-information/shop-details/weekly-hours-display/daily-opening-hours/daily-opening-hours.util"
 import { useShopById } from "@/hook/use-shop-controller"
@@ -23,8 +23,11 @@ function TimeSelection({
 }: TimeSelectionPT) {
 	const { data, isLoading, isError } = useShopById(shopId)
 
-	if (isLoading) return <div className="h-[400px] w-full" />
+	useEffect(() => {
+		setSelectedTime(-1)
+	}, [selectedStamp, setSelectedTime])
 
+	if (isLoading) return <div className="h-[400px] w-full" />
 	if (isError || isUndefined(data))
 		return (
 			<div className="flex h-[400px] w-full items-center justify-center text-Title01 text-Gray60">

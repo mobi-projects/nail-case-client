@@ -13,7 +13,10 @@ import MemorizedOptions from "./memorized-options"
 import MemoizedSchedule from "./memorized-schedule"
 import MemorizedTimeSelection from "./memorized-time-selection"
 import ReservationCheckModal from "./modal/reservation-check-modal"
-import { getIntialReservationForm } from "./reservation.uitl"
+import {
+	getIntialReservationForm,
+	isValidReservationForm,
+} from "./reservation.uitl"
 
 type ReservationNewPT = { shopId: number }
 
@@ -23,6 +26,9 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 	)
 	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
 	const [selectedTime, setSelectedTime] = useState(-1)
+
+	const isButtonDisabled = isValidReservationForm(selectedTime, reservationForm)
+
 	const { onOpenModal } = useModal()
 
 	const onOpenReservationCheckModal = () => {
@@ -72,7 +78,7 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 			<div className="flex h-fit w-full items-center justify-center">
 				<NTButton
 					onClick={onOpenReservationCheckModal}
-					// disabled={isButtonDisabled}
+					disabled={isButtonDisabled}
 				>
 					예약하기
 				</NTButton>
