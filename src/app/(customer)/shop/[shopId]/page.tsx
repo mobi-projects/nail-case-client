@@ -1,16 +1,12 @@
 "use client"
 
-import dynamic from "next/dynamic"
-import { useRouter } from "next/navigation"
-
 import CustomerShopBanner from "@/component/custom/customer/shop/banner"
+import CustomerShopContent from "@/component/custom/customer/shop/shop-content"
+import ShopError from "@/component/custom/customer/shop/shop-error"
+import ShopLoading from "@/component/custom/customer/shop/shop-loading"
 import { useShopById } from "@/hook/use-shop-controller"
 import { convertStringToInteger } from "@/util/common"
-
-const CustomerShopContent = dynamic(
-	() => import("@/component/custom/customer/shop/shop-content/index"),
-	{ ssr: false },
-)
+import { isUndefined } from "@/util/common/type-guard"
 
 type CustomerShopPT = {
 	params: {
@@ -19,37 +15,25 @@ type CustomerShopPT = {
 }
 
 export default function CustomerShop({ params }: CustomerShopPT) {
-	const router = useRouter()
 	const shopId = params.shopId
-	const {
-		data: shopInfo,
-		error,
-		isLoading,
-	} = useShopById(convertStringToInteger(shopId))
 
-	if (isLoading) {
-		return (
-			<div className="flex h-screen items-center justify-center">
-				<div className="flex items-center space-x-2">
-					<div className="h-6 w-6 animate-spin rounded-full border-4 border-solid border-PB100 border-t-transparent"></div>
-					<p className="font-medium text-lg">Loading...</p>
-				</div>
-				<CustomerShopContent shopId={convertStringToInteger(params.shopId)} />
-			</div>
-		)
-	}
+	const { data, isLoading, isError } = useShopById(shopId)
 
-	if (!error && shopInfo && shopInfo.success) {
-		return (
-			<div className="h-full w-full">
-				<CustomerShopBanner shopId={convertStringToInteger(params.shopId)} />
-				<CustomerShopContent shopId={convertStringToInteger(params.shopId)} />
-			</div>
-		)
-	} else {
-		if (typeof window !== "undefined") {
-			router.push("/404")
-		}
-		return null
-	}
+	if (isLoading) return <ShopLoading />
+
+	if (isError || isUndefined(data)) return <ShopError />
+	const { shopName, address, profileImages } = data
+	return (
+		<div className="h-full w-full">
+			<CustomerShopBanner
+				shopName={shopName}
+				shopAddress={address}
+				profileImages={profileImages}
+			/>
+			<CustomerShopContent
+				shopId={convertStringToInteger(params.shopId)}
+				data={data}
+			/>
+		</div>
+	)
 }

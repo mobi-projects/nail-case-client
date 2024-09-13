@@ -18,10 +18,10 @@ export default function AOMImageList({
 	setFocusedIdx,
 }: AOMImageSectionPT) {
 	return (
-		<div className="flex h-full w-full flex-col items-center">
+		<div className="flex h-full w-full items-center">
 			<div
 				className={
-					"relative flex h-full w-full transform items-center gap-x-5 overflow-x-hidden transition-transform duration-300"
+					"scrollbar relative flex h-full w-full transform items-center gap-x-5 overflow-x-hidden transition-transform duration-300"
 				}
 			>
 				<div

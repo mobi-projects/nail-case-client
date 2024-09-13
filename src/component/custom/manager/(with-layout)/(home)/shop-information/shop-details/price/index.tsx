@@ -8,11 +8,13 @@ type PricePT = { priceImages: Array<TInfoImages> }
 export default function Price({ priceImages }: PricePT) {
 	const { onOpenModal } = useModal()
 	const handleArtClick = () => {
-		onOpenModal({
-			children: <PriceImageModal priceImages={priceImages} />,
-			size: "small",
-			isX: false,
-		})
+		if (priceImages.length > 0) {
+			onOpenModal({
+				children: <PriceImageModal priceImages={priceImages} />,
+				size: "small",
+				isX: false,
+			})
+		}
 	}
 
 	return (

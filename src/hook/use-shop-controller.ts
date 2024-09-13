@@ -13,9 +13,9 @@ import {
 import { COMMON_HOME, MANAGER_BASE } from "@/constant/routing-path"
 import {
 	getListShopNailArtist,
-	getShopById,
 	getShopReview,
 } from "@/util/api/shop-controller"
+import { getShopById } from "@/util/api-v2/get-shop-by-id"
 import { getShopInfo } from "@/util/api-v2/get-shop-info"
 import { postShopToggleLiked } from "@/util/api-v2/patch-shop-liked"
 import { postRegisterShop } from "@/util/api-v2/post-register-shop"
@@ -26,12 +26,6 @@ export const useListShopNailArtist = (shopId: number) =>
 	useQuery({
 		queryKey: [QUERY_LIST_SHOP_NAIL_ARTIST, shopId],
 		queryFn: async () => await getListShopNailArtist(shopId),
-	})
-
-export const useShopById = (shopId: number) =>
-	useQuery({
-		queryKey: [QUERY_SHOP_INFO, shopId],
-		queryFn: async () => await getShopById(shopId),
 	})
 
 export const useShopReviews = (shopId: number) =>
@@ -113,3 +107,8 @@ export const useShopToggleLiked = (shopId: number) => {
 		},
 	})
 }
+export const useShopById = (shopId: number) =>
+	useQuery({
+		queryKey: [QUERY_SHOP_INFO, shopId],
+		queryFn: async () => await getShopById(shopId),
+	})

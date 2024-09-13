@@ -3,12 +3,13 @@ import { ReservationButton } from "./reservation-button"
 
 type ReservationListPT = {
 	shopId: number
+	phone: string
 }
-export function ButtonList({ shopId }: ReservationListPT) {
+export function ButtonList({ shopId, phone }: ReservationListPT) {
 	return (
 		<div className="flex gap-6">
 			<ReservationButton shopId={shopId} />
-			<PhoneNumberButton />
+			<PhoneNumberButton phone={phone} />
 		</div>
 	)
 }

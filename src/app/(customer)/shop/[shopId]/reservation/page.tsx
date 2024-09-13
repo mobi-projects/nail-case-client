@@ -1,6 +1,6 @@
 import Header from "@/component/custom/customer/shop/reservation/header"
 import ReservationForm from "@/component/custom/customer/shop/reservation/reservation-form"
-import { getShopById } from "@/util/api/shop-controller"
+import { getShopById } from "@/util/api-v2/get-shop-by-id"
 
 type CustomerShopPT = {
 	params: {
@@ -13,8 +13,8 @@ const serverFetchShopById = async (shopId: number) => {
 	const category: string = "네일아트 전문"
 	try {
 		const response = await getShopById(shopId)
-		shopName = response.data.shopName
-		address = response.data.address
+		shopName = response.shopName
+		address = response.address
 	} catch {
 		shopName = "매장이름을 찾지 못했습니다."
 		address = "매장 주소를 찾지 못했습니다."

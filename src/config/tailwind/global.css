@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 @layer utilities {
+	.scrollbar-none::-webkit-scrollbar {
+		@apply hidden;
+	}
 	.scrollbar::-webkit-scrollbar {
 		@apply w-[14px];
 	}
