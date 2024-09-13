@@ -16,7 +16,7 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 	if (isLoading) return <AOMSkelton />
 	if (isError || isUndefined(AOMData)) return <AOMError />
 	return (
-		<div className="flex h-full w-[550px] justify-center rounded-[26px] py-12 pl-8 shadow-customGray70">
+		<div className="flex h-full w-[550px] justify-center rounded-[26px] py-12 shadow-customGray70">
 			<ImageViewerdBox aomInfoArr={AOMData.dataList} focusedIdx={foucsedIdx} />
 			<AOMImageList
 				aomInfoArr={AOMData.dataList}

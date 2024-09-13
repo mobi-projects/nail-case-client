@@ -1,15 +1,21 @@
+import type { TResGetShop } from "@/util/api-v2/get-shop-by-id"
+
 import { ButtonList } from "./button-list/indest"
-import { useScroll } from "./scroll-context"
 import ShopInformation from "./shop-information"
 
-type CustomerShopContentPT = { shopId: number }
+export type CustomerShopContentPT = {
+	shopId: number
+	data: TResGetShop
+}
 
-export default function CustomerShopContent({ shopId }: CustomerShopContentPT) {
-	const { shopInfoRef } = useScroll()
+export default function CustomerShopContent({
+	shopId,
+	data,
+}: CustomerShopContentPT) {
 	return (
-		<div ref={shopInfoRef} className="flex w-full flex-col gap-5 pt-5">
-			<ShopInformation shopId={shopId} />
-			<ButtonList shopId={shopId} />
+		<div className="flex w-full flex-col gap-5 pb-10 pt-5">
+			<ShopInformation shopId={shopId} data={data} />
+			<ButtonList shopId={shopId} phone={data.phone} />
 		</div>
 	)
 }
