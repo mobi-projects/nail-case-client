@@ -12,7 +12,7 @@ export default function ShopError() {
 			<div className="flex items-center space-x-2">
 				<p className="font-medium text-lg">네트워크 오류가 발생했습니다 </p>
 				<NTButton variant="secondary" flexible="fit" onClick={navigateBack}>
-					홈으로
+					이전으로
 				</NTButton>
 			</div>
 		</div>
