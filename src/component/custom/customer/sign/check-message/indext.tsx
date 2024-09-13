@@ -3,7 +3,7 @@ import Link from "next/link"
 import { COMMON_SIGN } from "@/constant/routing-path"
 import type { TSignType } from "@/type/union-option/sign-type"
 
-import { isCustomer } from "../01"
+import { isCustomer } from "../login-welcome-message"
 
 type CheckMessaPT = { loginType: TSignType }
 
