@@ -5,7 +5,11 @@ import { ShareAddressModal } from "../../share-modal"
 
 import { RoutingButtonList } from "./routing-buuton-list"
 import { Wishbutton } from "./wish-button"
-export function BannerButtonList() {
+
+type BannerButtonListPT = {
+	shopId: number
+}
+export function BannerButtonList({ shopId }: BannerButtonListPT) {
 	const { onOpenModal } = useModal()
 
 	const handleShareClick = () => {
@@ -20,7 +24,7 @@ export function BannerButtonList() {
 		<div className="z-10 flex h-8 w-full justify-between">
 			<RoutingButtonList />
 			<div className="flex gap-3">
-				<Wishbutton />
+				<Wishbutton shopId={shopId} />
 				<NTIcon
 					className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
 					icon="share"

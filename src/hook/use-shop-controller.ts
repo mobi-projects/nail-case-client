@@ -8,7 +8,6 @@ import {
 	QUERY_REVIEW_ARR,
 	QUERY_SHOP_INFO,
 	QUERY_SHOP_INFO_QUERY,
-	QUERY_SHOP_TOGGLE_LIKED,
 } from "@/constant"
 import { COMMON_HOME, MANAGER_BASE } from "@/constant/routing-path"
 import {
@@ -57,6 +56,12 @@ export const useShopInfo = (shopId: number) =>
 		queryFn: async () => await getShopInfo(shopId),
 	})
 
+export const useShopById = (shopId: number) =>
+	useQuery({
+		queryKey: [QUERY_SHOP_INFO, shopId],
+		queryFn: async () => await getShopById(shopId),
+	})
+
 export const useShopToggleLiked = (shopId: number) => {
 	const queryClient = useQueryClient()
 
@@ -65,22 +70,22 @@ export const useShopToggleLiked = (shopId: number) => {
 
 		onMutate: async (data: { shopLiked: boolean }) => {
 			await queryClient.cancelQueries({
-				queryKey: [QUERY_SHOP_TOGGLE_LIKED, shopId],
+				queryKey: [QUERY_SHOP_INFO, shopId],
 			})
 
 			const previousShopLiked = queryClient.getQueryData<boolean>([
-				QUERY_SHOP_TOGGLE_LIKED,
+				QUERY_SHOP_INFO,
 				shopId,
 			])
 			if (previousShopLiked) {
 				await queryClient.setQueryData(
-					[QUERY_SHOP_TOGGLE_LIKED, shopId],
+					[QUERY_SHOP_INFO, shopId],
 					!previousShopLiked,
 				)
 				return { previousShopLiked }
 			} else {
 				await queryClient.setQueryData(
-					[QUERY_SHOP_TOGGLE_LIKED, shopId],
+					[QUERY_SHOP_INFO, shopId],
 					!data.shopLiked,
 				)
 				return { data }
@@ -90,25 +95,15 @@ export const useShopToggleLiked = (shopId: number) => {
 		onError: async (err, variables, context) => {
 			if (context) {
 				setTimeout(async () => {
-					console.log("context if문 안쪽에서 실행", context.prevLiked)
-					await queryClient.setQueryData(
-						[QUERY_SHOP_TOGGLE_LIKED, shopId],
-						context.prevLiked,
-					)
+					await queryClient.setQueryData([QUERY_SHOP_INFO, shopId], context)
 				}, 2000)
 			}
 		},
 
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: [QUERY_SHOP_TOGGLE_LIKED, shopId],
+				queryKey: [QUERY_SHOP_INFO, shopId],
 			})
-			console.log("낙관적 업데이트 성공했음 ^_^")
 		},
 	})
 }
-export const useShopById = (shopId: number) =>
-	useQuery({
-		queryKey: [QUERY_SHOP_INFO, shopId],
-		queryFn: async () => await getShopById(shopId),
-	})
