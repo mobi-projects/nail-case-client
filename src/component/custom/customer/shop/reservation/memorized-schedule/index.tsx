@@ -17,6 +17,7 @@ import Calendar from "./calendar"
 export type SchedulePT = {
 	selectedStamp: number
 	setSelectedStamp: Dispatch<SetStateAction<number>>
+	shopId: number
 }
 
 function Schedule({ selectedStamp, setSelectedStamp }: SchedulePT) {
