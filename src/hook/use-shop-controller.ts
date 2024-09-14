@@ -68,7 +68,7 @@ export const useShopToggleLiked = (shopId: number) => {
 	return useMutation({
 		mutationFn: async () => await postShopToggleLiked(shopId),
 
-		onMutate: async (data: { shopLiked: boolean }) => {
+		onMutate: async () => {
 			await queryClient.cancelQueries({
 				queryKey: [QUERY_SHOP_INFO, shopId],
 			})
@@ -77,25 +77,27 @@ export const useShopToggleLiked = (shopId: number) => {
 				QUERY_SHOP_INFO,
 				shopId,
 			])
-			if (previousShopLiked) {
-				await queryClient.setQueryData(
-					[QUERY_SHOP_INFO, shopId],
-					!previousShopLiked,
-				)
-				return { previousShopLiked }
-			} else {
-				await queryClient.setQueryData(
-					[QUERY_SHOP_INFO, shopId],
-					!data.shopLiked,
-				)
-				return { data }
-			}
+
+			queryClient.setQueryData(
+				[QUERY_SHOP_INFO, shopId],
+				(prevData: { likedByUser: boolean }) => {
+					return {
+						...prevData,
+						likedByUser: !prevData.likedByUser,
+					}
+				},
+			)
+
+			return { previousShopLiked }
 		},
 
 		onError: async (err, variables, context) => {
-			if (context) {
+			if (context?.previousShopLiked) {
 				setTimeout(async () => {
-					await queryClient.setQueryData([QUERY_SHOP_INFO, shopId], context)
+					await queryClient.setQueryData(
+						[QUERY_SHOP_INFO, shopId],
+						context.previousShopLiked,
+					)
 				}, 2000)
 			}
 		},
