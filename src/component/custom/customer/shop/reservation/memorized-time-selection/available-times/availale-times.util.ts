@@ -1,6 +1,6 @@
 import {
+	get12HourFromStamp,
 	getDateFromStamp,
-	getHourFromStamp,
 	getMinFromStamp,
 	getNowStamp,
 	padStartToPrinting,
@@ -36,7 +36,7 @@ export const getPMSelectedIdx = (curIdx: number, arr: Array<string>) => {
 
 export const generateFromattedTimeOptionArr = (timeStampArr: Array<number>) =>
 	timeStampArr.map((time) => {
-		const hour = getHourFromStamp(time)
+		const hour = get12HourFromStamp(time)
 		const min = getMinFromStamp(time)
 		const formattedHour = padStartToPrinting("time", hour)
 		const formattedMin = padStartToPrinting("time", min)
