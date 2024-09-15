@@ -1,5 +1,11 @@
 import NTOption from "@/component/common/nt-option"
-import { decomposeStamp, padStartToPrinting } from "@/util/common"
+import {
+	decomposeStamp,
+	get12HourFromStamp,
+	getDayDivisionInKor,
+	getDayOfWeekFromStamp,
+	padStartToPrinting,
+} from "@/util/common"
 
 type ReseravtionTimeConfirmPT = {
 	startTime: number
@@ -21,7 +27,10 @@ export default function ReseravtionTimeConfirm({
 
 const getFormattedTime = (timeStamp: number) => {
 	const { date, hour, min, month, year } = decomposeStamp(timeStamp)
-	const formattedHour = padStartToPrinting("time", hour)
+	const dayOfWeek = getDayOfWeekFromStamp(timeStamp)
+	const division = getDayDivisionInKor(timeStamp)
+	const convertedHour = get12HourFromStamp(hour)
+	const formattedHour = padStartToPrinting("time", convertedHour)
 	const formattedMin = padStartToPrinting("time", min)
-	return `${year}년 ${month}월 ${date}일 ${formattedHour}시 ${formattedMin}분`
+	return `${year}년 ${month}월 ${date}일 (${dayOfWeek}) ${division} ${formattedHour}시 ${formattedMin}분`
 }
