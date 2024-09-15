@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
-import { convertStringToInteger, getNowStamp } from "@/util/common"
+import { getNowStamp } from "@/util/common"
 
 import FocusingCard from "./common/focusing-card"
 import SectionDivider from "./common/section-divider"
@@ -13,7 +13,11 @@ import MemorizedOptions from "./memorized-options"
 import MemoizedSchedule from "./memorized-schedule"
 import MemorizedTimeSelection from "./memorized-time-selection"
 import ReservationCheckModal from "./modal/reservation-check-modal"
-import { getIntialReservationForm } from "./reservation.uitl"
+import {
+	createReservationForm,
+	getIntialReservationForm,
+	isValidReservationForm,
+} from "./reservation.uitl"
 
 type ReservationNewPT = { shopId: number }
 
@@ -23,17 +27,20 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 	)
 	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())
 	const [selectedTime, setSelectedTime] = useState(-1)
+
+	const isButtonDisabled = isValidReservationForm(selectedTime, reservationForm)
+
 	const { onOpenModal } = useModal()
+	const reqReservationForm = createReservationForm(
+		selectedStamp,
+		selectedTime,
+		reservationForm,
+		shopId,
+	)
 
 	const onOpenReservationCheckModal = () => {
 		onOpenModal({
-			children: (
-				<ReservationCheckModal
-					shopId={convertStringToInteger(shopId)}
-					reservationForm={reservationForm}
-					reservationTimestamp={selectedStamp}
-				/>
-			),
+			children: <ReservationCheckModal reservationForm={reqReservationForm} />,
 		})
 	}
 	return (
@@ -72,7 +79,7 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 			<div className="flex h-fit w-full items-center justify-center">
 				<NTButton
 					onClick={onOpenReservationCheckModal}
-					// disabled={isButtonDisabled}
+					disabled={isButtonDisabled}
 				>
 					예약하기
 				</NTButton>
