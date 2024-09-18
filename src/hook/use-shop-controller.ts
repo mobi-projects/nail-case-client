@@ -16,8 +16,8 @@ import {
 } from "@/util/api/shop-controller"
 import { getShopById } from "@/util/api-v2/get-shop-by-id"
 import { getShopInfo } from "@/util/api-v2/get-shop-info"
-import { postShopToggleLiked } from "@/util/api-v2/patch-shop-liked"
 import { postRegisterShop } from "@/util/api-v2/post-register-shop"
+import { postShopToggleLiked } from "@/util/api-v2/post-shop-liked"
 import { deleteAllCookies } from "@/util/common/auth"
 
 /** 매장 아티스트 목록조회 */
