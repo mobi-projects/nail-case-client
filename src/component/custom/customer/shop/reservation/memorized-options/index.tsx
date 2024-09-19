@@ -1,9 +1,7 @@
 import { memo, useState, type Dispatch, type SetStateAction } from "react"
 
 import NTOption from "@/component/common/nt-option"
-import type { TNailCondition } from "@/type/union-option/nail-condition"
-import type { TNailTreatment } from "@/type/union-option/nail-treatment"
-import type { TRemoveOption } from "@/type/union-option/remove-option"
+import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
 
 import {
 	CONDITION_OPTIONS,
@@ -17,8 +15,8 @@ import SectionTitle from "./section-title"
 
 type TreatmentNConditionPT = {
 	shopId: number
-	reservationForm: TReservationForm
-	setReservationForm: Dispatch<SetStateAction<TReservationForm>>
+	reservationForm: TReqReservationForm
+	setReservationForm: Dispatch<SetStateAction<TReqReservationForm>>
 }
 
 function TreatmentNCondition({
@@ -145,17 +143,3 @@ function TreatmentNCondition({
 
 const MemorizedOptions = memo(TreatmentNCondition)
 export default MemorizedOptions
-
-export type TReservationForm = {
-	shopId: number
-	startTime: number
-	remove: TRemoveOption
-	extend: boolean
-	conditionList: Array<{
-		option: TNailCondition
-	}>
-	treatment: {
-		option: TNailTreatment | null
-		imageId?: number
-	}
-}

@@ -2,9 +2,8 @@ import type { Dispatch, SetStateAction } from "react"
 
 import { cn } from "@/config/tailwind"
 import { useGetMonthlyArtList } from "@/hook/use-aom"
+import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
 import { isUndefined } from "@/util/common/type-guard"
-
-import type { TReservationForm } from ".."
 
 import AOMImageSingle from "./aom-image-single"
 
@@ -13,7 +12,7 @@ type AOMImageListPT = {
 	shopId: number
 	clickedId: number
 	setClickedId: Dispatch<SetStateAction<number>>
-	setReservationForm: Dispatch<SetStateAction<TReservationForm>>
+	setReservationForm: Dispatch<SetStateAction<TReqReservationForm>>
 }
 
 export default function AOMImageList({
