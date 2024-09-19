@@ -29,6 +29,7 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 				shopName={shopName}
 				shopAddress={address}
 				profileImages={profileImages}
+				shopId={convertStringToInteger(params.shopId)}
 			/>
 			<CustomerShopContent
 				shopId={convertStringToInteger(params.shopId)}

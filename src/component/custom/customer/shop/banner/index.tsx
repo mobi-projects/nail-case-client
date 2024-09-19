@@ -14,11 +14,13 @@ export type CustomerShopBannerTitlePT = {
 	shopAddress: string
 	shopName: string
 	profileImages: Array<TShopImage>
+	shopId: number
 }
 export default function CustomerShopBanner({
 	shopAddress,
 	shopName,
 	profileImages,
+	shopId,
 }: CustomerShopBannerTitlePT) {
 	const [currentIndex, setCurrentIndex] = useState(0)
 	const imageArray = getEssestialImageProps(profileImages)
@@ -33,7 +35,7 @@ export default function CustomerShopBanner({
 				essentialImagePropArr={imageArray}
 				accessSelected={handleImageSelect}
 			/>
-			<BannerButtonList />
+			<BannerButtonList shopId={shopId} />
 			<div className="z-10 flex h-fit w-full justify-between">
 				<BannerTitle shopAddress={shopAddress} shopName={shopName} />
 				<NTContent mode="dark">

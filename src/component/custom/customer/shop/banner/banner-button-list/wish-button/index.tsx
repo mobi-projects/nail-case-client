@@ -1,10 +1,23 @@
 import NTIcon from "@/component/common/nt-icon"
+import { cn } from "@/config/tailwind"
+import { useShopById, useShopToggleLiked } from "@/hook/use-shop-controller"
 
-export function Wishbutton() {
+type WishbuttonPT = { shopId: number }
+export function Wishbutton({ shopId }: WishbuttonPT) {
+	const { data } = useShopById(shopId)
+	const { mutate } = useShopToggleLiked(shopId)
+	const isLiked = data?.likedByUser
+
 	return (
 		<NTIcon
-			icon="whishFull"
-			className="text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)]"
+			icon="like"
+			className={cn(
+				isLiked ? "text-PY50" : "text-White",
+				"cursor-pointer drop-shadow-[0_0_1px_rgba(0,0,0,0.9)]",
+			)}
+			onClick={() => {
+				mutate()
+			}}
 		/>
 	)
 }

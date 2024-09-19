@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { setCookie } from "cookies-next"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -17,6 +17,7 @@ import {
 import { getShopById } from "@/util/api-v2/get-shop-by-id"
 import { getShopInfo } from "@/util/api-v2/get-shop-info"
 import { postRegisterShop } from "@/util/api-v2/post-register-shop"
+import { postShopToggleLiked } from "@/util/api-v2/post-shop-liked"
 import { deleteAllCookies } from "@/util/common/auth"
 
 /** 매장 아티스트 목록조회 */
@@ -60,3 +61,51 @@ export const useShopById = (shopId: number) =>
 		queryKey: [QUERY_SHOP_INFO, shopId],
 		queryFn: async () => await getShopById(shopId),
 	})
+
+export const useShopToggleLiked = (shopId: number) => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		mutationFn: async () => await postShopToggleLiked(shopId),
+
+		onMutate: async () => {
+			await queryClient.cancelQueries({
+				queryKey: [QUERY_SHOP_INFO, shopId],
+			})
+
+			const previousShopLiked = queryClient.getQueryData<boolean>([
+				QUERY_SHOP_INFO,
+				shopId,
+			])
+
+			queryClient.setQueryData(
+				[QUERY_SHOP_INFO, shopId],
+				(prevData: { likedByUser: boolean }) => {
+					return {
+						...prevData,
+						likedByUser: !prevData.likedByUser,
+					}
+				},
+			)
+
+			return { previousShopLiked }
+		},
+
+		onError: async (err, variables, context) => {
+			if (context?.previousShopLiked) {
+				setTimeout(async () => {
+					await queryClient.setQueryData(
+						[QUERY_SHOP_INFO, shopId],
+						context.previousShopLiked,
+					)
+				}, 2000)
+			}
+		},
+
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: [QUERY_SHOP_INFO, shopId],
+			})
+		},
+	})
+}
