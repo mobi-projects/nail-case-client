@@ -3,15 +3,14 @@ import type { Dispatch, SetStateAction } from "react"
 
 import { cn } from "@/config/tailwind"
 import type { TAOMImage } from "@/util/api-v2/list-monthly-art"
-
-import type { TReservationForm } from "../.."
+import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
 
 type AOMImageSinglePT = {
 	imageInfo: TAOMImage
 	isSelectedAOM: boolean
 	isClicked: boolean
 	setClickedId: Dispatch<SetStateAction<number>>
-	setReservationForm: Dispatch<SetStateAction<TReservationForm>>
+	setReservationForm: Dispatch<SetStateAction<TReqReservationForm>>
 }
 
 export default function AOMImageSingle({

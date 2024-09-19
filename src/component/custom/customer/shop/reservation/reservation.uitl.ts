@@ -1,8 +1,9 @@
+import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
 import { decomposeStamp, getKSTStamp } from "@/util/common"
 
-import type { TReservationForm } from "./memorized-options"
-
-export const getIntialReservationForm = (shopId: number): TReservationForm => {
+export const getIntialReservationForm = (
+	shopId: number,
+): TReqReservationForm => {
 	return {
 		shopId: shopId,
 		startTime: -1,
@@ -13,7 +14,10 @@ export const getIntialReservationForm = (shopId: number): TReservationForm => {
 	}
 }
 /** 예약정보 유효성검사  */
-export const isValidReservationForm = (time: number, form: TReservationForm) =>
+export const isValidReservationForm = (
+	time: number,
+	form: TReqReservationForm,
+) =>
 	time === -1 ||
 	form.conditionList.length === 0 ||
 	form.treatment.option === null
@@ -22,9 +26,9 @@ export const isValidReservationForm = (time: number, form: TReservationForm) =>
 export const createReservationForm = (
 	dateStamp: number,
 	timeStamp: number,
-	form: TReservationForm,
+	form: TReqReservationForm,
 	shopId: number,
-): TReservationForm => {
+): TReqReservationForm => {
 	const { year, month, date } = decomposeStamp(dateStamp)
 	const { hour, min } = decomposeStamp(timeStamp)
 	const combinedStamp = getKSTStamp(year, month, date, hour, min)

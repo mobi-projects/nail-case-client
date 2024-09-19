@@ -4,11 +4,11 @@ import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
+import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
 import { getNowStamp } from "@/util/common"
 
 import FocusingCard from "./common/focusing-card"
 import SectionDivider from "./common/section-divider"
-import type { TReservationForm } from "./memorized-options"
 import MemorizedOptions from "./memorized-options"
 import MemoizedSchedule from "./memorized-schedule"
 import MemorizedTimeSelection from "./memorized-time-selection"
@@ -22,7 +22,7 @@ import {
 type ReservationNewPT = { shopId: number }
 
 export default function Reservation({ shopId }: ReservationNewPT) {
-	const [reservationForm, setReservationForm] = useState<TReservationForm>(
+	const [reservationForm, setReservationForm] = useState<TReqReservationForm>(
 		getIntialReservationForm(shopId),
 	)
 	const [selectedStamp, setSelectedStamp] = useState(getNowStamp())

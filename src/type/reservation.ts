@@ -28,25 +28,6 @@ export type TCustomForm = {
 	// TODO: 추후작성
 }
 
-/* Request */
-export type TReservationForm = {
-	shopId: number
-	nailArtistId: number | null
-	startTime: number
-	remove: TRemoveOption
-	extend: boolean
-	conditionList: Array<{
-		option: TNailCondition
-	}>
-	treatmentList: Array<{
-		option: TNailTreatment
-		imageId: number
-		imageUrl: string
-	}>
-}
-export type TReqBodyRegisterReservation = {
-	reservationDetailList: TReservationForm
-}
 export type TReqBodyUpdateReservation = {
 	status: TReservationStatus
 	reservationDetailDtoList: Array<{

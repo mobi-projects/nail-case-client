@@ -1,11 +1,8 @@
 import { axiosInstance } from "@/config/axios"
 import type {
-	TReqBodyRegisterReservation,
 	TReqBodyUpdateReservation,
-	TResGetListAvailableTime,
 	TResGetListReservation,
 	TResGetViewReservation,
-	TResPostRegisterReservation,
 	TResUpdateReservation,
 } from "@/type"
 import type { TResponseData } from "@/type/response"
@@ -17,7 +14,6 @@ import type { TReservationStatus } from "@/type/union-option/resesrvation-status
  * @API명세 https://mobi-projects.github.io/nail-case-server/#api-ReservationController
  * @함수목록
  *   - getListReservation()
- *   - postRegisterReservation()
  *   - patchUpdateReservation()
  *   - getViewReservation()
  */
@@ -34,17 +30,7 @@ export const getListReservation = async (
 	)
 	return response.data
 }
-/** [POST] 예약 등록 api 호출 */
-export const postRegisterReservation = async (
-	shopId: number,
-	reqBody: TReqBodyRegisterReservation,
-): Promise<TResponseData<TResPostRegisterReservation, "data">> => {
-	const response = await axiosInstance().post(
-		`/shops/${shopId}/reservations`,
-		reqBody,
-	)
-	return response.data
-}
+
 /** [GET] 예약 상세 조회 api 호출 */
 export const getViewReservation = async (
 	shopId: number,
@@ -64,18 +50,6 @@ export const patchUpdateReservation = async (
 	const response = await axiosInstance().patch(
 		`/shops/${shopId}/reservations/${reservationId}`,
 		reqBody,
-	)
-	return response.data
-}
-/** [GET] 예약 중, "예약 가능 시간" & "아티스트" api 호출 */
-export const getAvailableTime = async (
-	shopId: number,
-	artistIds: number[],
-	date: number,
-): Promise<TResponseData<TResGetListAvailableTime[], "dataList">> => {
-	const response = await axiosInstance().get(
-		`/shops/${shopId}/reservations/time`,
-		{ params: { artistIds, date } },
 	)
 	return response.data
 }
