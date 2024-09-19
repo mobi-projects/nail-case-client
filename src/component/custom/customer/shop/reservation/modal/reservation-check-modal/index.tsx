@@ -7,8 +7,11 @@ import {
 	ModalFooter,
 	ModalHeader,
 } from "@/component/common/nt-modal"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
+import { useSheet } from "@/component/common/nt-sheet/nt-sheet.context"
+import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
 
-import type { TReservationForm } from "../../memorized-options"
+import ReservationResponseSheet from "../../rservation-response-sheet"
 
 import ConditionListConfirm from "./condition-list-comfirm"
 import ExtensionConfirm from "./extension-confirm"
@@ -17,26 +20,23 @@ import ReseravtionTimeConfirm from "./reservation-time-confirm"
 import TreatmentConfirm from "./treatment-comfirm"
 
 type ReservationCheckModalPT = {
-	reservationForm: TReservationForm
+	reservationForm: TReqReservationForm
 }
 
 export default function ReservationCheckModal({
 	reservationForm,
 }: ReservationCheckModalPT) {
-	// const { onOpenSheet } = useSheet()
-	// const { onCloseModal } = useModal()
+	const { onOpenSheet } = useSheet()
+	const { onCloseModal } = useModal()
 
-	// const onClickPostReservationButton = async () => {
-	// 	const newReservation = createNewReservation(
-	// 		shopId,
-	// 		reservationForm,
-	// 		reservationTimestamp,
-	// 	)
-	// 	onOpenSheet({
-	// 		children: <ReservationResponseSheet {...{ shopId, newReservation }} />,
-	// 	})
-	// 	onCloseModal()
-	// }
+	const onClickPostReservationButton = (
+		reservationForm: TReqReservationForm,
+	) => {
+		onOpenSheet({
+			children: <ReservationResponseSheet newReservation={reservationForm} />,
+		})
+		onCloseModal()
+	}
 
 	const treatment = reservationForm.treatment
 	const remove = reservationForm.remove
@@ -67,7 +67,12 @@ export default function ReservationCheckModal({
 
 			<ModalFooter className="flex min-h-36 w-full flex-col items-center justify-evenly">
 				<ListInfo />
-				<NTButton size="medium">예약 요청하기</NTButton>
+				<NTButton
+					size="medium"
+					onClick={() => onClickPostReservationButton(reservationForm)}
+				>
+					예약 요청하기
+				</NTButton>
 			</ModalFooter>
 		</ModalContent>
 	)
@@ -81,32 +86,3 @@ function ListInfo() {
 		</ul>
 	)
 }
-// const createNewReservation = (
-// 	shopId: number,
-// 	reservationForm: TReservationForm,
-// 	reservationTimestamp: number,
-// ): TReqBodyRegisterReservation => {
-// 	const adjustedFormArr = adjustShopIdNReservationTime(
-// 		shopId,
-// 		reservationForm,
-// 		reservationTimestamp,
-// 	)
-// 	const newReservation: TReqBodyRegisterReservation = {
-// 		reservationDetailList: adjustedFormArr,
-// 	}
-// 	return newReservation
-// }
-
-/** 모든 form 에 "매장 id" 과 "예약시간" 을 통일 */
-// const adjustShopIdNReservationTime = (
-// 	shopId: number,
-// 	reservationFormArr: TReservationForm[],
-// 	reservationTimestamp: number,
-// ) => {
-// 	return reservationFormArr.map((reservationForm) => {
-// 		const _reservationForm = { ...reservationForm }
-// 		_reservationForm.shopId = shopId
-// 		_reservationForm.startTime = reservationTimestamp
-// 		return _reservationForm
-// 	})
-// }
