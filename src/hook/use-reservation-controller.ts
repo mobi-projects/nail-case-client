@@ -1,22 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import {
-	LIST_RESERVATION_QUERY,
-	QUERY_LIST_AVAILABLE_TIME,
-	VIEW_RESERVATION_QUERY,
-} from "@/constant"
-import type {
-	TReqBodyRegisterReservation,
-	TReqBodyUpdateReservation,
-} from "@/type"
+import { LIST_RESERVATION_QUERY, VIEW_RESERVATION_QUERY } from "@/constant"
+import type { TReqBodyUpdateReservation } from "@/type"
 import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 import {
-	getAvailableTime,
 	getListReservation,
 	getViewReservation,
 	patchUpdateReservation,
-	postRegisterReservation,
 } from "@/util/api/reservation-controller"
+import {
+	postRegisterReservation,
+	type TReqReservationForm,
+} from "@/util/api-v2/post-register-reservation"
 
 /** 예약 목록조회 */
 export const useListReservationQuery = (
@@ -32,15 +27,13 @@ export const useListReservationQuery = (
 	})
 
 /** 예약 등록 */
-type RegisterReservationPT = {
-	newReservation: TReqBodyRegisterReservation
-}
-export const useRegisterReservationMutation = (shopId: number) => {
-	return useMutation({
-		mutationFn: async ({ newReservation }: RegisterReservationPT) =>
-			await postRegisterReservation(shopId, newReservation),
+
+export const useRegisterReservationMutation = () =>
+	useMutation({
+		mutationFn: ({ newReservation }: { newReservation: TReqReservationForm }) =>
+			postRegisterReservation(newReservation),
 	})
-}
+
 /** 예약 상세 조회 */
 export const useViewReservationQuery = (
 	shopId: number,
@@ -68,13 +61,3 @@ export const useUpdateReservationMutation = (shopId: number) => {
 	})
 	return { updateReservation, ...rest }
 }
-/** 예약 중, "예약 가능 시간" & "아티스트" 조회 */
-export const useAvailableTimeQuery = (
-	shopId: number,
-	artistIds: number[],
-	timestamp: number,
-) =>
-	useQuery({
-		queryKey: [QUERY_LIST_AVAILABLE_TIME, artistIds.length, shopId, timestamp],
-		queryFn: async () => await getAvailableTime(shopId, artistIds, timestamp),
-	})
