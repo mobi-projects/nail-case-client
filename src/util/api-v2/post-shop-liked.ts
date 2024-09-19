@@ -5,6 +5,6 @@ import type { TResponseData } from "@/type/response"
 export const postShopToggleLiked = async (
 	shopId: number,
 ): Promise<TResponseData<boolean, "data">> => {
-	const response = await axiosInstance().post(`/shops/${shopId}/toggle-liked`)
+	const response = await axiosInstance().post(`/shops/${shopId}/toggle-like`)
 	return response.data
 }
