@@ -1,5 +1,7 @@
 import { cva } from "class-variance-authority"
 
+import { cn } from "@/config/tailwind"
+
 import NTIcon from "../nt-icon"
 
 import {
@@ -17,6 +19,8 @@ type NTPaginationPT = {
 	perPage: number
 	totPage: number
 	onChangePage?: (nxtPage: number) => void
+	boxClassName?: string
+	arrowClassName?: string
 }
 
 export default function Pagination({
@@ -24,30 +28,37 @@ export default function Pagination({
 	perPage,
 	totPage,
 	onChangePage,
+	boxClassName,
+	arrowClassName,
 }: NTPaginationPT) {
 	const front = getFront(curPage, perPage)
 	const back = getBack(front, perPage, totPage)
 	const pageArr = getPages(front, back)
 
 	return (
-		<div className="align-center flex h-fit w-full justify-center gap-[2px]">
+		<div
+			className={cn(
+				"align-center flex h-fit w-full justify-center gap-[2px]",
+				boxClassName,
+			)}
+		>
 			{isLeftArrow(pageArr) && (
-				<LeftArrow {...{ curPage, onChangePage, perPage }} />
+				<LeftArrow {...{ curPage, onChangePage, perPage, arrowClassName }} />
 			)}
 			<PageButtonList {...{ totPage, pageArr, curPage, onChangePage }} />
 			{isRightArrow(pageArr, totPage) && (
-				<RightArrow {...{ curPage, onChangePage, perPage }} />
+				<RightArrow {...{ curPage, onChangePage, perPage, arrowClassName }} />
 			)}
 		</div>
 	)
 }
 const PaginationButtonVariants = cva(
-	"flex h-[30px] w-[31px] items-center justify-center rounded-[3px] text-Body02",
+	"flex h-[30px] w-[31px] items-center justify-center  rounded-[3px] text-Body02 transition-all ",
 	{
 		variants: {
 			isActive: {
 				true: "text-white bg-PB100",
-				false: "bg-transparent text-Gray30",
+				false: "bg-transparent text-Gray70",
 			},
 		},
 		defaultVariants: {
@@ -60,7 +71,7 @@ type PageButtonListPT = Pick<NTPaginationPT, "curPage" | "onChangePage"> & {
 }
 function PageButtonList({ pageArr, curPage, onChangePage }: PageButtonListPT) {
 	return (
-		<>
+		<div className="flex gap-x-2">
 			{pageArr.map((page) => {
 				return (
 					<button
@@ -74,12 +85,19 @@ function PageButtonList({ pageArr, curPage, onChangePage }: PageButtonListPT) {
 					</button>
 				)
 			})}
-		</>
+		</div>
 	)
 }
 
-type ArrowPT = Pick<NTPaginationPT, "curPage" | "onChangePage" | "perPage">
-function LeftArrow({ curPage, perPage, onChangePage }: ArrowPT) {
+type ArrowPT = Pick<NTPaginationPT, "curPage" | "onChangePage" | "perPage"> & {
+	arrowClassName?: string
+}
+function LeftArrow({
+	curPage,
+	perPage,
+	onChangePage,
+	arrowClassName,
+}: ArrowPT) {
 	return (
 		<button
 			className={PaginationButtonVariants()}
@@ -88,11 +106,16 @@ function LeftArrow({ curPage, perPage, onChangePage }: ArrowPT) {
 				onChangePage && onChangePage(prevBack)
 			}}
 		>
-			<NTIcon icon="expandLeftLight" />
+			<NTIcon icon="expandLeft" className={arrowClassName} />
 		</button>
 	)
 }
-function RightArrow({ curPage, perPage, onChangePage }: ArrowPT) {
+function RightArrow({
+	curPage,
+	perPage,
+	onChangePage,
+	arrowClassName,
+}: ArrowPT) {
 	return (
 		<button
 			className={PaginationButtonVariants()}
@@ -101,7 +124,7 @@ function RightArrow({ curPage, perPage, onChangePage }: ArrowPT) {
 				onChangePage && onChangePage(nextFront)
 			}}
 		>
-			<NTIcon icon="expandRightLight" />
+			<NTIcon icon="expandRight" className={arrowClassName} />
 		</button>
 	)
 }
