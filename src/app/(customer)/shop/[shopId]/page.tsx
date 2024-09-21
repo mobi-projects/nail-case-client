@@ -1,28 +1,31 @@
-"use client"
-
 import CustomerShopBanner from "@/component/custom/customer/shop/banner"
 import CustomerShopContent from "@/component/custom/customer/shop/shop-content"
 import ShopError from "@/component/custom/customer/shop/shop-error"
-import ShopLoading from "@/component/custom/customer/shop/shop-loading"
-import { useShopById } from "@/hook/use-shop-controller"
+import { getShopById } from "@/util/api-v2/get-shop-by-id"
 import { convertStringToInteger } from "@/util/common"
-import { isUndefined } from "@/util/common/type-guard"
 
 type CustomerShopPT = {
 	params: {
 		shopId: number
 	}
 }
+const serverFetchShopById = async (shopId: number) => {
+	let shopData
+	try {
+		const response = await getShopById(shopId)
+		shopData = response
+	} catch {
+		shopData = null
+	}
+	return shopData
+}
+export default async function CustomerShop({ params }: CustomerShopPT) {
+	const { shopId } = params
+	const shopData = await serverFetchShopById(shopId)
 
-export default function CustomerShop({ params }: CustomerShopPT) {
-	const shopId = params.shopId
+	if (!shopData) return <ShopError />
 
-	const { data, isLoading, isError } = useShopById(shopId)
-
-	if (isLoading) return <ShopLoading />
-
-	if (isError || isUndefined(data)) return <ShopError />
-	const { shopName, address, profileImages } = data
+	const { shopName, address, profileImages } = shopData
 	return (
 		<div className="h-full w-full">
 			<CustomerShopBanner
@@ -33,7 +36,7 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 			/>
 			<CustomerShopContent
 				shopId={convertStringToInteger(params.shopId)}
-				data={data}
+				data={shopData}
 			/>
 		</div>
 	)
