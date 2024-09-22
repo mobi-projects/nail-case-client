@@ -1,14 +1,20 @@
 import { getNowStamp } from "@/util/common"
 
+import type { TStatusExcludeCanceled } from "../reservations.type"
+
 import PaginationController from "./pagination-controller"
 import ReservationItem from "./reservation-item"
 import ReservationListCard from "./reservation-list-card"
 import ReservationTableHeader from "./reservation-table-header"
 
-export default function ReservationList() {
+type ReservationListPT = {
+	focusedStatus: TStatusExcludeCanceled
+}
+
+export default function ReservationList({ focusedStatus }: ReservationListPT) {
 	return (
 		<ReservationListCard>
-			<ReservationTableHeader />
+			<ReservationTableHeader focusedStatus={focusedStatus} />
 			{Array.from({ length: 10 }, (_, idx) => (
 				<ReservationItem
 					order={idx + 1}

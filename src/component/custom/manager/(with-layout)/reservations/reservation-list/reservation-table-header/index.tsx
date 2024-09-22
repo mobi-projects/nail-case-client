@@ -1,10 +1,20 @@
 import NTNameBox from "@/component/common/nt-name-box"
 
-export default function ReservationTableHeader() {
+import type { TStatusExcludeCanceled } from "../../reservations.type"
+
+type ReservationTableHeaderPT = {
+	focusedStatus: TStatusExcludeCanceled
+}
+
+export default function ReservationTableHeader({
+	focusedStatus,
+}: ReservationTableHeaderPT) {
 	return (
 		<div className="grid w-full grid-cols-[1fr_2fr_2fr_2fr] py-3">
 			<div className="flex items-center justify-center">
-				<NTNameBox bgColor={"BGblue"}>요청</NTNameBox>
+				<NTNameBox bgColor={"BGblue"}>
+					{translateStatusToKor(focusedStatus)}
+				</NTNameBox>
 			</div>
 			<p className="text-center text-Body01 font-SemiBold text-Gray80">이름</p>
 			<p className="text-center text-Body01 font-SemiBold text-Gray80">
@@ -13,4 +23,11 @@ export default function ReservationTableHeader() {
 			<p className="text-center text-Body01 font-SemiBold text-Gray80">시간</p>
 		</div>
 	)
+}
+
+const translateStatusToKor = (status: TStatusExcludeCanceled) => {
+	if (status === "COMPLETED") return "완료"
+	if (status === "CONFIRMED") return "확정"
+	if (status === "PENDING") return "요청"
+	if (status === "REJECTED") return "취소"
 }

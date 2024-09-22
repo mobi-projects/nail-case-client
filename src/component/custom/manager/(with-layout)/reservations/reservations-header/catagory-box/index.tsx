@@ -1,17 +1,16 @@
 import { cva } from "class-variance-authority"
 import type { Dispatch, SetStateAction } from "react"
 
+import { translateStatus } from "@/app/manager/(with-layout)/[shopId]/reservations/page"
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
-import type { Tstatus } from "@/util/api-v2/get-main-page-data"
 
-import { STATUS_WITHOUT_CANCELED_ARR } from "../../reservations.constant"
 import type { TStatusExcludeCanceled } from "../../reservations.type"
 
 type CategoryBoxPT = {
 	status: TStatusExcludeCanceled
 	isClicked: boolean
-	setClickedIx: Dispatch<SetStateAction<number>>
+	setFocusedStatus: Dispatch<SetStateAction<TStatusExcludeCanceled>>
 }
 
 const titleVarinats = cva("text-Title02 font-Bold transition-all ", {
@@ -38,7 +37,7 @@ const iconVarinats = cva("h-10 w-10 transition-all", {
 export default function CategoryBox({
 	status,
 	isClicked,
-	setClickedIx,
+	setFocusedStatus,
 }: CategoryBoxPT) {
 	const icon = getLowerCasedStatus(status)
 	return (
@@ -51,13 +50,7 @@ export default function CategoryBox({
 				isClicked && status === "COMPLETED" && "bg-[#69C893]",
 				!isClicked && "hover:bg-Gray10",
 			)}
-			onClick={() =>
-				setClickedIx(
-					STATUS_WITHOUT_CANCELED_ARR.findIndex(
-						(element) => element === status,
-					),
-				)
-			}
+			onClick={() => setFocusedStatus(status)}
 		>
 			<div
 				className={cn(
@@ -65,7 +58,7 @@ export default function CategoryBox({
 					isClicked && "text-White",
 				)}
 			>
-				{getBoxTitle(status)}
+				{translateStatus(status)}
 			</div>
 			<div className="h-fit w-fit rounded-full bg-White/20 p-2">
 				<NTIcon
@@ -80,8 +73,6 @@ export default function CategoryBox({
 	)
 }
 
-const getBoxTitle = (status: Exclude<Tstatus, "CANCELED">) => STATUS[status]
-
 const getLowerCasedStatus = (
 	status: TStatusExcludeCanceled,
 ): "rejected" | "completed" | "pending" | "confirmed" => {
@@ -91,10 +82,4 @@ const getLowerCasedStatus = (
 		| "pending"
 		| "confirmed"
 	return lowerCaseStatus
-}
-const STATUS = {
-	PENDING: "예약 요청",
-	COMPLETED: "시술 완료",
-	REJECTED: "취소된 요청",
-	CONFIRMED: "예약 확정",
 }

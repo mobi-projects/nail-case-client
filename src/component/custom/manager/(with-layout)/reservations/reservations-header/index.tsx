@@ -1,26 +1,27 @@
 import type { Dispatch, SetStateAction } from "react"
 
 import { STATUS_WITHOUT_CANCELED_ARR } from "../reservations.constant"
+import type { TStatusExcludeCanceled } from "../reservations.type"
 
 import CategoryBox from "./catagory-box"
 
 type ReservationsHeaderPT = {
-	clickedIdx: number
-	setClickedIx: Dispatch<SetStateAction<number>>
+	focusedStatus: TStatusExcludeCanceled
+	setFocusedStatus: Dispatch<SetStateAction<TStatusExcludeCanceled>>
 }
 
 export default function ReservationsHeader({
-	clickedIdx,
-	setClickedIx,
+	focusedStatus,
+	setFocusedStatus,
 }: ReservationsHeaderPT) {
 	return (
 		<div className="mt-10 flex w-full items-center justify-between pb-8">
-			{STATUS_WITHOUT_CANCELED_ARR.map((status, idx) => (
+			{STATUS_WITHOUT_CANCELED_ARR.map((status) => (
 				<CategoryBox
 					status={status}
 					key={status}
-					isClicked={clickedIdx === idx}
-					setClickedIx={setClickedIx}
+					isClicked={focusedStatus === status}
+					setFocusedStatus={setFocusedStatus}
 				/>
 			))}
 		</div>
