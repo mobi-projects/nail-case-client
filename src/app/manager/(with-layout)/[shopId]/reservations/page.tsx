@@ -11,7 +11,7 @@ export default function Reservations() {
 	return (
 		<>
 			<ReservationsHeader clickedIdx={clickedIdx} setClickedIx={setClickedIx} />
-			<div className="grid w-full grid-cols-[1.2fr_1fr] gap-x-6">
+			<div className="mt-6 grid w-full grid-cols-[1.2fr_1fr] gap-x-6">
 				<div>
 					<p className="pb-4 text-Title01 font-SemiBold text-Gray70">
 						예약 요청

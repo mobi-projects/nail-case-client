@@ -14,7 +14,7 @@ export default function ReservationsHeader({
 	setClickedIx,
 }: ReservationsHeaderPT) {
 	return (
-		<div className="flex w-full items-center justify-between pb-8 pt-2">
+		<div className="mt-10 flex w-full items-center justify-between pb-8">
 			{STATUS_WITHOUT_CANCELED_ARR.map((status, idx) => (
 				<CategoryBox
 					status={status}
