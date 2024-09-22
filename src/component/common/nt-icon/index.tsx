@@ -69,4 +69,8 @@ export const ICON_DATA = {
 	whishFull: "lets-icons:bookmark-duotone",
 	camera: "ion:camera-outline",
 	like: "wpf:like",
+	rejected: "iconoir:cancel",
+	completed: "ant-design:file-done-outlined",
+	pending: "iconoir:new-tab",
+	confirmed: "jam:check",
 } as const

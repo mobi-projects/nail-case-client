@@ -1,9 +1,9 @@
-import { MANAGER_BASE, MANAGER_SCHEDULE } from "./routing-path"
+import { MANAGER_BASE, MANAGER_RESERVATIONS } from "./routing-path"
 
-export const LABEL_LIST_FOR_MANAGER_BASE_TOOLBAR = ["홈", "일정"] as const
+export const LABEL_LIST_FOR_MANAGER_BASE_TOOLBAR = ["홈", "예약 관리"] as const
 export const PATH_LIST_FOR_MANAGER_BASE_TOOLBAR = [
 	MANAGER_BASE,
-	MANAGER_SCHEDULE,
+	MANAGER_RESERVATIONS,
 ] as const
 
 export const LABEL_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR = [
