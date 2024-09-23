@@ -1,30 +1,38 @@
-"use client"
+import type { Metadata } from "next"
 
 import CustomerShopBanner from "@/component/custom/customer/shop/banner"
 import CustomerShopContent from "@/component/custom/customer/shop/shop-content"
 import ShopError from "@/component/custom/customer/shop/shop-error"
-import ShopLoading from "@/component/custom/customer/shop/shop-loading"
-import { useShopById } from "@/hook/use-shop-controller"
+import { getShopById } from "@/util/api-v2/get-shop-by-id"
 import { convertStringToInteger } from "@/util/common"
-import { isUndefined } from "@/util/common/type-guard"
 
 type CustomerShopPT = {
 	params: {
 		shopId: number
 	}
 }
+export async function Metadata({ params }: CustomerShopPT): Promise<Metadata> {
+	const shopData = await getShopById(params.shopId)
+	const { shopName, address, profileImages } = shopData
+	return {
+		title: `${shopName} - 상세 페이지`,
+		description: `매장명은 ${shopName}이고 주소는 ${address}입니다`,
+		openGraph: {
+			title: shopName,
+			description: `매장명은 ${shopName}이고 주소는 ${address}입니다`,
+			images: profileImages[0].imageUrl,
+		},
+	}
+}
+export default async function CustomerShop({ params }: CustomerShopPT) {
+	const shopData = await getShopById(params.shopId)
 
-export default function CustomerShop({ params }: CustomerShopPT) {
-	const shopId = params.shopId
+	if (!shopData) return <ShopError />
 
-	const { data, isLoading, isError } = useShopById(shopId)
+	const { shopName, address, profileImages } = shopData
 
-	if (isLoading) return <ShopLoading />
-
-	if (isError || isUndefined(data)) return <ShopError />
-	const { shopName, address, profileImages } = data
 	return (
-		<div className="h-full w-full">
+		<div>
 			<CustomerShopBanner
 				shopName={shopName}
 				shopAddress={address}
@@ -33,7 +41,7 @@ export default function CustomerShop({ params }: CustomerShopPT) {
 			/>
 			<CustomerShopContent
 				shopId={convertStringToInteger(params.shopId)}
-				data={data}
+				data={shopData}
 			/>
 		</div>
 	)
