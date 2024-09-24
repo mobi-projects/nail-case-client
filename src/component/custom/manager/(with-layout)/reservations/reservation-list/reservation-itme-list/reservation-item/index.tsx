@@ -1,21 +1,21 @@
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
+import type { TReservationListPagination } from "@/util/api-v2/get-list-reservation"
 
 import { getDecomposedDate, getDecomposedHour } from "./reservation-item.util"
 
 type ReservationItemPT = {
 	order: number
-	name: string
-	time: number
+	reservation: TReservationListPagination
 	isClicked: boolean
 }
 
 export default function ReservationItem({
 	order,
-	name,
-	time,
+	reservation,
 	isClicked,
 }: ReservationItemPT) {
+	const { customerName, startTime } = reservation
 	return (
 		<div
 			className={cn(
@@ -26,11 +26,11 @@ export default function ReservationItem({
 			<p className="text-center text-Body01 font-SemiBold text-Gray50">
 				{order}
 			</p>
-			<p className="text-center text-Callout">{name}</p>
+			<p className="text-center text-Callout">{customerName}</p>
 			<p className="text-center text-Callout text-Gray50">
-				{getDecomposedDate(time)}
+				{getDecomposedDate(startTime)}
 			</p>
-			<p className="text-center text-Callout">{getDecomposedHour(time)}</p>
+			<p className="text-center text-Callout">{getDecomposedHour(startTime)}</p>
 			<NTIcon
 				icon="expandRight"
 				className={cn(

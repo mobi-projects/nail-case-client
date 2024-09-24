@@ -1,32 +1,30 @@
 "use client"
 
-import { useState } from "react"
-
 import ReservationDetail from "@/component/custom/manager/(with-layout)/reservations/reservation-detail"
 import ReservationList from "@/component/custom/manager/(with-layout)/reservations/reservation-list"
+import { translateStatus } from "@/component/custom/manager/(with-layout)/reservations/reservations,util"
 import ReservationsHeader from "@/component/custom/manager/(with-layout)/reservations/reservations-header"
-import {
-	STATUS_PAIR,
-	STATUS_WITHOUT_CANCELED_ARR,
-} from "@/component/custom/manager/(with-layout)/reservations/reservations.constant"
 import type { TStatusExcludeCanceled } from "@/component/custom/manager/(with-layout)/reservations/reservations.type"
 
-export default function Reservations() {
-	const [focusedStatus, setFocusedStatus] = useState<TStatusExcludeCanceled>(
-		STATUS_WITHOUT_CANCELED_ARR[0],
-	)
+type ReservationsPT = {
+	params: { shopId: string; page: string; status: TStatusExcludeCanceled }
+}
+
+export default function Reservations({ params }: ReservationsPT) {
+	const { page, shopId, status } = params
 	return (
 		<>
-			<ReservationsHeader
-				focusedStatus={focusedStatus}
-				setFocusedStatus={setFocusedStatus}
-			/>
+			<ReservationsHeader status={status} />
 			<div className="mt-6 grid w-full grid-cols-[1.2fr_1fr] gap-x-6">
 				<div>
 					<p className="pb-4 text-Title01 font-SemiBold text-Gray60">
-						{translateStatus(focusedStatus)}
+						{translateStatus(status)}
 					</p>
-					<ReservationList focusedStatus={focusedStatus} />
+					<ReservationList
+						status={status}
+						page={parseInt(page) - 1}
+						shopId={parseInt(shopId)}
+					/>
 				</div>
 				<div>
 					<p className="pb-4 text-Title01 font-SemiBold text-Gray60">
@@ -38,6 +36,3 @@ export default function Reservations() {
 		</>
 	)
 }
-
-export const translateStatus = (status: TStatusExcludeCanceled) =>
-	STATUS_PAIR[status]

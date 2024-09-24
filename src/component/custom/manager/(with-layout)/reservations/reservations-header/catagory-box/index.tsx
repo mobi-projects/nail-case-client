@@ -1,16 +1,16 @@
 import { cva } from "class-variance-authority"
-import type { Dispatch, SetStateAction } from "react"
+import { usePathname, useRouter } from "next/navigation"
 
-import { translateStatus } from "@/app/manager/(with-layout)/[shopId]/reservations/page"
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
+import { MANAGER_BASE, MANAGER_RESERVATIONS } from "@/constant/routing-path"
 
+import { translateStatus } from "../../reservations,util"
 import type { TStatusExcludeCanceled } from "../../reservations.type"
 
 type CategoryBoxPT = {
 	status: TStatusExcludeCanceled
 	isClicked: boolean
-	setFocusedStatus: Dispatch<SetStateAction<TStatusExcludeCanceled>>
 }
 
 const titleVarinats = cva("text-Title02 font-Bold transition-all ", {
@@ -34,12 +34,11 @@ const iconVarinats = cva("h-10 w-10 transition-all", {
 	},
 })
 
-export default function CategoryBox({
-	status,
-	isClicked,
-	setFocusedStatus,
-}: CategoryBoxPT) {
+export default function CategoryBox({ status, isClicked }: CategoryBoxPT) {
 	const icon = getLowerCasedStatus(status)
+	const router = useRouter()
+	const pathName = usePathname()
+	const shopId = pathName.split("/")[2]
 	return (
 		<div
 			className={cn(
@@ -50,7 +49,11 @@ export default function CategoryBox({
 				isClicked && status === "COMPLETED" && "bg-[#69C893]",
 				!isClicked && "hover:bg-Gray10",
 			)}
-			onClick={() => setFocusedStatus(status)}
+			onClick={() =>
+				router.push(
+					`${MANAGER_BASE}/${shopId}${MANAGER_RESERVATIONS}/${status}/1`,
+				)
+			}
 		>
 			<div
 				className={cn(

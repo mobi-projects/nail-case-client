@@ -11,7 +11,7 @@ export default function ReservationTableHeader({
 }: ReservationTableHeaderPT) {
 	return (
 		<div className="grid w-full grid-cols-[1fr_2fr_2fr_2fr] py-3">
-			<div className="flex items-center justify-center">
+			<div className="flex h-fit items-center justify-center">
 				<NTNameBox bgColor={"BGblue"}>
 					{translateStatusToKor(focusedStatus)}
 				</NTNameBox>
