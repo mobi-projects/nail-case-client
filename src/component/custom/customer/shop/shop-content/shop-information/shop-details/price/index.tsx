@@ -1,3 +1,4 @@
+"use client"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import type { TInfoImages } from "@/util/api-v2/get-shop-info"
 
