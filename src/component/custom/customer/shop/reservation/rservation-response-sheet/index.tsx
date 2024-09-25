@@ -23,7 +23,7 @@ export default function ReservationResponseSheet({
 	const [reservationContents, setReservationContents] = useState<
 		TResReservation | undefined
 	>(undefined)
-
+	console.log(newReservation)
 	const { mutateAsync, status } = useRegisterReservationMutation()
 	const fetchMutateResponse = useCallback(async () => {
 		try {

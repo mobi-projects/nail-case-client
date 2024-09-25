@@ -1,29 +1,37 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { LIST_RESERVATION_QUERY, VIEW_RESERVATION_QUERY } from "@/constant"
-import type { TReqBodyUpdateReservation } from "@/type"
-import type { TReservationStatus } from "@/type/union-option/resesrvation-status"
 import {
-	getListReservation,
+	LIST_RESERVATION_QUERY,
+	QUERY_LIST_RESERVATIONS,
+	VIEW_RESERVATION_QUERY,
+} from "@/constant"
+import type { TReqBodyUpdateReservation } from "@/type"
+import {
 	getViewReservation,
 	patchUpdateReservation,
 } from "@/util/api/reservation-controller"
+import {
+	getListReservation,
+	type TReqListReservationPT,
+} from "@/util/api-v2/get-list-reservation"
 import {
 	postRegisterReservation,
 	type TReqReservationForm,
 } from "@/util/api-v2/post-register-reservation"
 
 /** 예약 목록조회 */
-export const useListReservationQuery = (
-	shopId: number,
-	startTime: number,
-	endTime: number,
-	status: TReservationStatus,
-) =>
+export const useListReservation = ({
+	shopId,
+	endDate,
+	startDate,
+	status,
+	page,
+	size,
+}: TReqListReservationPT) =>
 	useQuery({
-		queryKey: [LIST_RESERVATION_QUERY, shopId, startTime, endTime, status],
-		queryFn: async () =>
-			await getListReservation(shopId, startTime, endTime, status),
+		queryKey: [QUERY_LIST_RESERVATIONS, shopId, page, status],
+		queryFn: () =>
+			getListReservation({ shopId, status, endDate, startDate, page, size }),
 	})
 
 /** 예약 등록 */
