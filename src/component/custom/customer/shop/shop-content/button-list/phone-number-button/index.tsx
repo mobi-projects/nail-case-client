@@ -1,4 +1,3 @@
-"use client"
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 

@@ -1,4 +1,3 @@
-"use client"
 import { useRouter } from "next/navigation"
 
 import { NTButton } from "@/component/common/atom/nt-button"

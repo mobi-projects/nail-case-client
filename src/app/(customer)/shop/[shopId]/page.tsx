@@ -14,7 +14,9 @@ type CustomerShopPT = {
 		shopId: number
 	}
 }
-export async function Metadata({ params }: CustomerShopPT): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+}: CustomerShopPT): Promise<Metadata> {
 	const shopData = await getShopById(params.shopId)
 	const { shopName, address, profileImages } = shopData
 	return {

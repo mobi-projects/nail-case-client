@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
