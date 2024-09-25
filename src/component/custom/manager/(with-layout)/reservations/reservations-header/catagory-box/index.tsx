@@ -1,17 +1,16 @@
 import { cva } from "class-variance-authority"
-import type { Dispatch, SetStateAction } from "react"
+import { usePathname, useRouter } from "next/navigation"
 
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
-import type { Tstatus } from "@/util/api-v2/get-main-page-data"
+import { MANAGER_BASE, MANAGER_RESERVATIONS } from "@/constant/routing-path"
 
-import { STATUS_WITHOUT_CANCELED_ARR } from "../../reservations.constant"
+import { translateStatus } from "../../reservations,util"
 import type { TStatusExcludeCanceled } from "../../reservations.type"
 
 type CategoryBoxPT = {
 	status: TStatusExcludeCanceled
 	isClicked: boolean
-	setClickedIx: Dispatch<SetStateAction<number>>
 }
 
 const titleVarinats = cva("text-Title02 font-Bold transition-all ", {
@@ -35,12 +34,11 @@ const iconVarinats = cva("h-10 w-10 transition-all", {
 	},
 })
 
-export default function CategoryBox({
-	status,
-	isClicked,
-	setClickedIx,
-}: CategoryBoxPT) {
+export default function CategoryBox({ status, isClicked }: CategoryBoxPT) {
 	const icon = getLowerCasedStatus(status)
+	const router = useRouter()
+	const pathName = usePathname()
+	const shopId = pathName.split("/")[2]
 	return (
 		<div
 			className={cn(
@@ -52,10 +50,8 @@ export default function CategoryBox({
 				!isClicked && "hover:bg-Gray10",
 			)}
 			onClick={() =>
-				setClickedIx(
-					STATUS_WITHOUT_CANCELED_ARR.findIndex(
-						(element) => element === status,
-					),
+				router.push(
+					`${MANAGER_BASE}/${shopId}${MANAGER_RESERVATIONS}/${status}/1`,
 				)
 			}
 		>
@@ -65,7 +61,7 @@ export default function CategoryBox({
 					isClicked && "text-White",
 				)}
 			>
-				{getBoxTitle(status)}
+				{translateStatus(status)}
 			</div>
 			<div className="h-fit w-fit rounded-full bg-White/20 p-2">
 				<NTIcon
@@ -80,8 +76,6 @@ export default function CategoryBox({
 	)
 }
 
-const getBoxTitle = (status: Exclude<Tstatus, "CANCELED">) => STATUS[status]
-
 const getLowerCasedStatus = (
 	status: TStatusExcludeCanceled,
 ): "rejected" | "completed" | "pending" | "confirmed" => {
@@ -91,10 +85,4 @@ const getLowerCasedStatus = (
 		| "pending"
 		| "confirmed"
 	return lowerCaseStatus
-}
-const STATUS = {
-	PENDING: "예약 요청",
-	COMPLETED: "시술 완료",
-	REJECTED: "취소된 요청",
-	CONFIRMED: "예약 확정",
 }
