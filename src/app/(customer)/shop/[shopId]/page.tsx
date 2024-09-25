@@ -1,10 +1,13 @@
+import {
+	dehydrate,
+	HydrationBoundary,
+	QueryClient,
+} from "@tanstack/react-query"
 import type { Metadata } from "next"
 
-import CustomerShopBanner from "@/component/custom/customer/shop/banner"
-import CustomerShopContent from "@/component/custom/customer/shop/shop-content"
-import ShopError from "@/component/custom/customer/shop/shop-error"
+import { CustomerShopPage } from "@/component/custom/customer/shop/customer-shop"
+import { QUERY_SHOP_INFO } from "@/constant"
 import { getShopById } from "@/util/api-v2/get-shop-by-id"
-import { convertStringToInteger } from "@/util/common"
 
 type CustomerShopPT = {
 	params: {
@@ -25,24 +28,18 @@ export async function Metadata({ params }: CustomerShopPT): Promise<Metadata> {
 	}
 }
 export default async function CustomerShop({ params }: CustomerShopPT) {
-	const shopData = await getShopById(params.shopId)
+	const queryClient = new QueryClient()
 
-	if (!shopData) return <ShopError />
+	await queryClient.prefetchQuery({
+		queryKey: [QUERY_SHOP_INFO, params.shopId],
+		queryFn: async () => await getShopById(params.shopId),
+	})
 
-	const { shopName, address, profileImages } = shopData
+	const dehydratedState = dehydrate(queryClient)
 
 	return (
-		<div>
-			<CustomerShopBanner
-				shopName={shopName}
-				shopAddress={address}
-				profileImages={profileImages}
-				shopId={convertStringToInteger(params.shopId)}
-			/>
-			<CustomerShopContent
-				shopId={convertStringToInteger(params.shopId)}
-				data={shopData}
-			/>
-		</div>
+		<HydrationBoundary state={dehydratedState}>
+			<CustomerShopPage shopId={params.shopId} />
+		</HydrationBoundary>
 	)
 }
