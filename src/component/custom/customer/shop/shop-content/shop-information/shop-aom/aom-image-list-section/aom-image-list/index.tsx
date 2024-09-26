@@ -1,5 +1,3 @@
-"use client"
-
 import type { Dispatch, SetStateAction } from "react"
 
 import type { TResAOM } from "@/util/api-v2/list-monthly-art"

@@ -17,13 +17,13 @@ export default function AOMImageListSection({
 	focusedIdx,
 	setFocusedIdx,
 }: AOMImageListPT) {
-	return hasAOMImages(aomInfoArr) ? (
-		<AOMImageList
-			aomInfoArr={aomInfoArr}
-			focusedIdx={focusedIdx}
-			setFocusedIdx={setFocusedIdx}
-		/>
-	) : (
-		<></>
+	return (
+		hasAOMImages(aomInfoArr) && (
+			<AOMImageList
+				aomInfoArr={aomInfoArr}
+				focusedIdx={focusedIdx}
+				setFocusedIdx={setFocusedIdx}
+			/>
+		)
 	)
 }
