@@ -1,5 +1,3 @@
-"use client"
-
 import type { TResGetShop } from "@/util/api-v2/get-shop-by-id"
 
 import Loaction from "./location"

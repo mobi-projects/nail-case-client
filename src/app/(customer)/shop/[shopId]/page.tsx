@@ -1,40 +1,44 @@
-"use client"
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
+import type { Metadata } from "next"
 
-import CustomerShopBanner from "@/component/custom/customer/shop/banner"
-import CustomerShopContent from "@/component/custom/customer/shop/shop-content"
-import ShopError from "@/component/custom/customer/shop/shop-error"
-import ShopLoading from "@/component/custom/customer/shop/shop-loading"
-import { useShopById } from "@/hook/use-shop-controller"
-import { convertStringToInteger } from "@/util/common"
-import { isUndefined } from "@/util/common/type-guard"
+import { CustomerShopPage } from "@/component/custom/customer/shop/customer-shop"
+import { getCacheClient } from "@/config/tanstack-query"
+import { QUERY_SHOP_INFO } from "@/constant"
+import { getShopById } from "@/util/api-v2/get-shop-by-id"
 
 type CustomerShopPT = {
 	params: {
 		shopId: number
 	}
 }
+export const generateMetadata = async ({
+	params,
+}: CustomerShopPT): Promise<Metadata> => {
+	const shopData = await getShopById(params.shopId)
+	const { shopName, address, profileImages } = shopData
+	return {
+		title: `${shopName} - 네일 예약페이지`,
+		description: `매장명은 ${shopName}이고 주소는 ${address}입니다`,
+		openGraph: {
+			title: `${shopName} - 네일 예약페이지`,
+			description: `매장명은 ${shopName}이고 주소는 ${address}입니다`,
+			images: profileImages[0].imageUrl,
+		},
+	}
+}
+export default async function CustomerShop({ params }: CustomerShopPT) {
+	const queryClient = getCacheClient()
 
-export default function CustomerShop({ params }: CustomerShopPT) {
-	const shopId = params.shopId
+	await queryClient.prefetchQuery({
+		queryKey: [QUERY_SHOP_INFO, params.shopId],
+		queryFn: async () => await getShopById(params.shopId),
+	})
 
-	const { data, isLoading, isError } = useShopById(shopId)
+	const dehydratedState = dehydrate(queryClient)
 
-	if (isLoading) return <ShopLoading />
-
-	if (isError || isUndefined(data)) return <ShopError />
-	const { shopName, address, profileImages } = data
 	return (
-		<div className="h-full w-full">
-			<CustomerShopBanner
-				shopName={shopName}
-				shopAddress={address}
-				profileImages={profileImages}
-				shopId={convertStringToInteger(params.shopId)}
-			/>
-			<CustomerShopContent
-				shopId={convertStringToInteger(params.shopId)}
-				data={data}
-			/>
-		</div>
+		<HydrationBoundary state={dehydratedState}>
+			<CustomerShopPage shopId={params.shopId} />
+		</HydrationBoundary>
 	)
 }
