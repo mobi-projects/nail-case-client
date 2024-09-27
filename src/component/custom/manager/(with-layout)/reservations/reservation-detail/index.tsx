@@ -1,9 +1,21 @@
 import { NTButton } from "@/component/common/atom/nt-button"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 
 import DeatailBox from "./detail-box"
 import ReservationOption from "./reservation-option"
+import ReservationRefuseModal from "./reservation-refuse-modal"
 
 export default function ReservationDetail() {
+	const { onOpenModal } = useModal()
+
+	const onClickRefuseBtn = () => {
+		onOpenModal({
+			size: "small",
+			isX: false,
+			children: <ReservationRefuseModal />,
+		})
+	}
+
 	return (
 		<div className="grid h-[610px] max-h-[610px] min-h-[610px] w-full grid-rows-[1fr_6fr_1fr_1fr] rounded-md border border-Gray20 bg-White p-6 shadow-customGray80">
 			<DeatailBox title="이름(예약자)">
@@ -37,7 +49,7 @@ export default function ReservationDetail() {
 				<NTButton variant="secondary" size="small">
 					수락
 				</NTButton>
-				<NTButton variant="alert" size="small">
+				<NTButton variant="alert" size="small" onClick={onClickRefuseBtn}>
 					거절
 				</NTButton>
 			</div>
