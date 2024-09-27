@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import { useViewReservationDetail } from "@/util/api-v2/get-reservation-detail"
 import { isUndefined } from "@/util/common/type-guard"
@@ -9,6 +10,7 @@ import DeatailBox from "./detail-box"
 import ReservationDetailSkeleton from "./reservation-detail-skeleton"
 import { formatTreatmentRequestTime } from "./reservation-detail.util"
 import ReservationOption from "./reservation-option"
+import ReservationRefuseModal from "./reservation-refuse-modal"
 
 type ReservationDetailPT = {
 	selectedId: number
@@ -19,6 +21,15 @@ export default function ReservationDetail({
 	selectedId,
 	shopId,
 }: ReservationDetailPT) {
+	const { onOpenModal } = useModal()
+
+	const onClickRefuseBtn = () => {
+		onOpenModal({
+			size: "small",
+			isX: false,
+			children: <ReservationRefuseModal />,
+		})
+	}
 	const { data, isLoading } = useViewReservationDetail(shopId, selectedId)
 	const [showSkeleton, setShowSkeleton] = useState(false)
 
@@ -88,7 +99,7 @@ export default function ReservationDetail({
 				<NTButton variant="secondary" size="small">
 					수락
 				</NTButton>
-				<NTButton variant="alert" size="small">
+				<NTButton variant="alert" size="small" onClick={onClickRefuseBtn}>
 					거절
 				</NTButton>
 			</div>
