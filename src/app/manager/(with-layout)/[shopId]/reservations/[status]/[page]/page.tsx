@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+
 import ReservationDetail from "@/component/custom/manager/(with-layout)/reservations/reservation-detail"
 import ReservationList from "@/component/custom/manager/(with-layout)/reservations/reservation-list"
 import { translateStatus } from "@/component/custom/manager/(with-layout)/reservations/reservations,util"
@@ -12,6 +14,7 @@ type ReservationsPT = {
 
 export default function Reservations({ params }: ReservationsPT) {
 	const { page, shopId, status } = params
+	const [selectedId, setSelectedId] = useState(-1)
 	return (
 		<>
 			<ReservationsHeader status={status} />
@@ -24,13 +27,18 @@ export default function Reservations({ params }: ReservationsPT) {
 						status={status}
 						page={parseInt(page) - 1}
 						shopId={parseInt(shopId)}
+						selectedId={selectedId}
+						setSelectedId={setSelectedId}
 					/>
 				</div>
 				<div>
 					<p className="pb-4 text-Title01 font-SemiBold text-Gray60">
 						예약 상세
 					</p>
-					<ReservationDetail />
+					<ReservationDetail
+						selectedId={selectedId}
+						shopId={parseInt(shopId)}
+					/>
 				</div>
 			</div>
 		</>
