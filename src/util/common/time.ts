@@ -137,8 +137,9 @@ export const getHourFromStamp = (timestamp: number) => {
 /** 입력(타임스탬프)으로부터 "12시간제 시간" 반환 */
 export const get12HourFromStamp = (timestamp: number) => {
 	const hour = getHourFromStamp(timestamp)
-	return hour === 12 ? 12 : hour % 12
+	return hour === 0 ? 12 : hour > 12 ? hour % 12 : hour
 }
+
 /** 입력(타입스탬프)으로부터 "분" 반환 */
 export const getMinFromStamp = (timestamp: number) => {
 	timestamp = convertSecondTimestamp(timestamp)

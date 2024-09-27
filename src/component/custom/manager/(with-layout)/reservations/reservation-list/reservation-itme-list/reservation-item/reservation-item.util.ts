@@ -3,6 +3,7 @@ import {
 	get12HourFromStamp,
 	getDayDivisionInKor,
 	getDayOfWeekFromStamp,
+	getMinFromStamp,
 	padStartToPrinting,
 } from "@/util/common"
 
@@ -13,11 +14,9 @@ export const getDecomposedDate = (timeStamp: number) => {
 	return `${month}월 ${date}일 (${dayOfWeek}) `
 }
 
-export const getDecomposedHour = (timeStamp: number) => {
-	const { hour, min } = decomposeStamp(timeStamp)
-	const division = getDayDivisionInKor(hour)
-	const divisionHour = get12HourFromStamp(hour)
-	const formattedHour = padStartToPrinting("time", divisionHour)
-	const formattedMin = padStartToPrinting("time", min)
-	return `${formattedHour}시 ${formattedMin}분 (${division})`
+export const getDecomposedTIme = (timeStamp: number) => {
+	const min = getMinFromStamp(timeStamp) === 0 ? "00" : "30"
+	const division = getDayDivisionInKor(timeStamp) === "오전" ? "AM" : "PM"
+	const hour = padStartToPrinting("time", get12HourFromStamp(timeStamp))
+	return { min, division, hour }
 }
