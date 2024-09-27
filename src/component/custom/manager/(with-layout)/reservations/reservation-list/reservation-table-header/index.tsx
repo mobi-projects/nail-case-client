@@ -16,7 +16,9 @@ export default function ReservationTableHeader({
 					{translateStatusToKor(focusedStatus)}
 				</NTNameBox>
 			</div>
-			<p className="text-center text-Body01 font-SemiBold text-Gray80">이름</p>
+			<p className="text-center text-Body01 font-SemiBold text-Gray80">
+				예약자
+			</p>
 			<p className="text-center text-Body01 font-SemiBold text-Gray80">
 				날짜(요일)
 			</p>
