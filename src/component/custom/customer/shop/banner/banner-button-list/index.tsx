@@ -1,7 +1,6 @@
-import NTIcon from "@/component/common/nt-icon"
-import { useModal } from "@/component/common/nt-modal/nt-modal.context"
+import { toast } from "sonner"
 
-import { ShareAddressModal } from "../../share-modal"
+import NTIcon from "@/component/common/nt-icon"
 
 import { RoutingButtonList } from "./routing-buuton-list"
 import { Wishbutton } from "./wish-button"
@@ -10,14 +9,11 @@ type BannerButtonListPT = {
 	shopId: number
 }
 export function BannerButtonList({ shopId }: BannerButtonListPT) {
-	const { onOpenModal } = useModal()
-
+	const currentUrl = window.location.href
 	const handleShareClick = () => {
-		const currentUrl = window.location.href
-		onOpenModal({
-			children: <ShareAddressModal data={currentUrl} text={"URL이"} />,
-			size: "exSmall",
-			isX: false,
+		toast.dismiss()
+		navigator.clipboard.writeText(currentUrl).then(() => {
+			toast.success("주소가 복사되었습니다")
 		})
 	}
 	return (
