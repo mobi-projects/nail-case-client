@@ -1,15 +1,18 @@
-import type { ReactNode } from "react"
+import NTIcon from "@/component/common/nt-icon"
 
 type DeatailBoxPT = {
-	children: ReactNode
+	content: string
 	title: string
 }
 
-export default function DeatailBox({ children, title }: DeatailBoxPT) {
+export default function DeatailBox({ content, title }: DeatailBoxPT) {
 	return (
-		<div className="grid w-full grid-cols-[1fr_3.5fr]">
-			<p className="text-Body02 font-SemiBold">{title}</p>
-			{children}
+		<div className="w-full border-b border-Gray20">
+			<p className="text-Body02 font-SemiBold text-Gray70">{title}</p>
+			<div className="flex items-center">
+				<NTIcon icon="dot" className="text-Gray30" />
+				<p className="text-Body02 font-Bold text-PB90">{content}</p>
+			</div>
 		</div>
 	)
 }
