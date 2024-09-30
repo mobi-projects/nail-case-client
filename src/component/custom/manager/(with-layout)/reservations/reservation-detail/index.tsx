@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
-
+import { useViewReservationDetail } from "@/hook/use-reservation-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
 import DeatailBox from "./detail-box"
@@ -11,7 +11,6 @@ import ReservationDetailSkeleton from "./reservation-detail-skeleton"
 import { formatTreatmentRequestTime } from "./reservation-detail.util"
 import ReservationOption from "./reservation-option"
 import ReservationRefuseModal from "./reservation-refuse-modal"
-import { useViewReservationDetail } from "@/hook/use-reservation-controller"
 
 type ReservationDetailPT = {
 	selectedId: number
