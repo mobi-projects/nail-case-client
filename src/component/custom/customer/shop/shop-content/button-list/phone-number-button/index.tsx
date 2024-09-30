@@ -7,6 +7,7 @@ export function PhoneNumberButton({ phone, shopName }: PhoneNumberButtonPT) {
 	const formatPhoneNumer = `${phone.slice(0, 3)}-${phone.slice(3, 7)}-${phone.slice(7)}`
 
 	const handleShareClick = () => {
+		toast.dismiss()
 		toast(`${shopName} : ${formatPhoneNumer}`, {
 			action: {
 				label: "복사하기",
