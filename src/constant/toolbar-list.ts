@@ -14,4 +14,7 @@ export const LABEL_LIST_FOR_MANAGER_BASE_MYSHOP_TOOLBAR = [
 	"통계",
 ] as const
 
-export const LABEL_LIST_FOR_CUSTOMER_BASE_TOOLBAR = ["홈"] as const
+export const LABEL_LIST_FOR_CUSTOMER_BASE_TOOLBAR = [
+	"홈",
+	"이달의 아트",
+] as const
