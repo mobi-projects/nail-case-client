@@ -1,5 +1,3 @@
-import { useQuery } from "@tanstack/react-query"
-
 import type { TStatusExcludeCanceled } from "@/component/custom/manager/(with-layout)/reservations/reservations.type"
 import { axiosInstance } from "@/config/axios"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
@@ -13,19 +11,8 @@ export const getReservationDetail = async (
 	const response = await axiosInstance().get(
 		`/shops/${shopId}/reservations/${reservationId}`,
 	)
-	console.log(response.data.data)
 	return response.data.data
 }
-
-export const useViewReservationDetail = (
-	shopId: number,
-	reservationId: number,
-) =>
-	useQuery({
-		queryKey: ["예약상세", shopId, reservationId],
-		queryFn: () => getReservationDetail(shopId, reservationId),
-		enabled: reservationId !== -1,
-	})
 
 export type TResViewReservation = {
 	reservationId: number
@@ -49,5 +36,5 @@ export type TResViewReservation = {
 		openTime: number
 		closeTime: number
 	}
-	cancelReason: string | null
+	rejectReason: string | null
 }

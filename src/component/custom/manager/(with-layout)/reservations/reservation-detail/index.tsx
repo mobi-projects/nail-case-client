@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
-import { useViewReservationDetail } from "@/util/api-v2/get-reservation-detail"
+import { useViewReservationDetail } from "@/hook/use-reservation-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
 import DeatailBox from "./detail-box"
@@ -21,17 +21,19 @@ export default function ReservationDetail({
 	selectedId,
 	shopId,
 }: ReservationDetailPT) {
+	const { data, isLoading } = useViewReservationDetail(shopId, selectedId)
+	const [showSkeleton, setShowSkeleton] = useState(false)
 	const { onOpenModal } = useModal()
 
 	const onClickRefuseBtn = () => {
 		onOpenModal({
 			size: "small",
 			isX: false,
-			children: <ReservationRefuseModal />,
+			children: (
+				<ReservationRefuseModal reservationId={selectedId} shopId={shopId} />
+			),
 		})
 	}
-	const { data, isLoading } = useViewReservationDetail(shopId, selectedId)
-	const [showSkeleton, setShowSkeleton] = useState(false)
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
