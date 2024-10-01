@@ -1,6 +1,7 @@
 import {
 	get12HourFromStamp,
 	getDateFromStamp,
+	getHourFromStamp,
 	getMinFromStamp,
 	getNowStamp,
 	padStartToPrinting,
@@ -34,9 +35,13 @@ export const getPMSelectedIdx = (curIdx: number, arr: Array<string>) => {
 	return curIdx < arr.length ? -1 : curIdx - pmStartIdx
 }
 
-export const generateFromattedTimeOptionArr = (timeStampArr: Array<number>) =>
+export const generateFromattedTimeOptionArr = (
+	timeStampArr: Array<number>,
+	divison: "full" | "half" = "half",
+) =>
 	timeStampArr.map((time) => {
-		const hour = get12HourFromStamp(time)
+		const hour =
+			divison === "half" ? get12HourFromStamp(time) : getHourFromStamp(time)
 		const min = getMinFromStamp(time)
 		const formattedHour = padStartToPrinting("time", hour)
 		const formattedMin = padStartToPrinting("time", min)
