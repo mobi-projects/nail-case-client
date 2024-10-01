@@ -16,13 +16,17 @@ export const generateMetadata = async ({
 }: CustomerShopPT): Promise<Metadata> => {
 	const shopData = await getShopById(params.shopId)
 	const { shopName, address, profileImages } = shopData
+	const imageUrl =
+		profileImages && profileImages.length > 0
+			? profileImages[0].imageUrl
+			: "/default-image.jpg"
 	return {
 		title: `${shopName} - 네일 예약페이지`,
 		description: `매장명은 ${shopName}이고 주소는 ${address}입니다`,
 		openGraph: {
 			title: `${shopName} - 네일 예약페이지`,
 			description: `매장명은 ${shopName}이고 주소는 ${address}입니다`,
-			images: profileImages[0].imageUrl,
+			images: imageUrl,
 		},
 	}
 }
