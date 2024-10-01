@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
 
 import {
 	LIST_RESERVATION_QUERY,
@@ -14,6 +15,10 @@ import {
 	getListReservation,
 	type TReqListReservationPT,
 } from "@/util/api-v2/get-list-reservation"
+import {
+	patchConfrimReservation,
+	type TReqConfrimReservation,
+} from "@/util/api-v2/patch-confirm-reservation"
 import {
 	postRegisterReservation,
 	type TReqReservationForm,
@@ -68,4 +73,31 @@ export const useUpdateReservationMutation = (shopId: number) => {
 			}),
 	})
 	return { updateReservation, ...rest }
+}
+
+/** 예약 승인 */
+export const useMutateConfirmReservation = (
+	shopId: number,
+	reservationId: number,
+) => {
+	const queryClient = useQueryClient()
+	return useMutation({
+		mutationFn: (reqBody: TReqConfrimReservation) =>
+			patchConfrimReservation(shopId, reservationId, reqBody),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				predicate: (query) => {
+					const queryKey = query.queryKey
+					return (
+						queryKey[0] === QUERY_LIST_RESERVATIONS &&
+						queryKey[1] === shopId &&
+						(queryKey[3] === "PENDING" || queryKey[3] === "CONFIRMED")
+					)
+				},
+			})
+		},
+		onError: () => {
+			toast.error("요청이 실패했습니다. 문제가 지속되면 문의해주세요.")
+		},
+	})
 }
