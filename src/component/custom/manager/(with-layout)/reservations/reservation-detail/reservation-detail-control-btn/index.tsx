@@ -9,18 +9,24 @@ import ReservationRefuseModal from "../reservation-refuse-modal"
 type ReservationDetailControlBtnPT = {
 	isAccepting: boolean
 	setIsAccepting: Dispatch<SetStateAction<boolean>>
+	reservationId: number
+	shopId: number
 }
 
 export default function ReservationDetailControlBtn({
 	isAccepting,
 	setIsAccepting,
+	reservationId,
+	shopId,
 }: ReservationDetailControlBtnPT) {
 	const { onOpenModal } = useModal()
 	const onClickRefuseBtn = () => {
 		onOpenModal({
 			size: "small",
 			isX: false,
-			children: <ReservationRefuseModal />,
+			children: (
+				<ReservationRefuseModal reservationId={reservationId} shopId={shopId} />
+			),
 		})
 	}
 	const onClickPermissionBtn = () => {

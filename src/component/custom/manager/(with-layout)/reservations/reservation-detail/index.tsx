@@ -1,8 +1,10 @@
 import type { FormEvent } from "react"
 import { useEffect, useRef, useState } from "react"
 
-import { useMutateConfirmReservation } from "@/hook/use-reservation-controller"
-import { useViewReservationDetail } from "@/util/api-v2/get-reservation-detail"
+import {
+	useViewReservationDetail,
+	useMutateConfirmReservation,
+} from "@/hook/use-reservation-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
 import ReservationDetailControlBtn from "./reservation-detail-control-btn"
@@ -97,6 +99,8 @@ export default function ReservationDetail({
 			<ReservationDetailControlBtn
 				isAccepting={isAccepting}
 				setIsAccepting={setIsAccepting}
+				shopId={shopId}
+				reservationId={selectedId}
 			/>
 
 			<div ref={scrollRef} />
