@@ -1,5 +1,3 @@
-import NTIcon from "@/component/common/nt-icon"
-
 type DeatailBoxPT = {
 	content: string
 	title: string
@@ -7,12 +5,11 @@ type DeatailBoxPT = {
 
 export default function DeatailBox({ content, title }: DeatailBoxPT) {
 	return (
-		<div className="w-full border-b border-Gray20">
-			<p className="text-Body02 font-SemiBold text-Gray70">{title}</p>
-			<div className="flex items-center">
-				<NTIcon icon="dot" className="text-Gray30" />
-				<p className="text-Body02 font-Bold text-PB90">{content}</p>
-			</div>
+		<div className="flex min-h-[70px] w-full items-center gap-x-4 border-b border-Gray20 pl-12">
+			<p className="min-w-[5.5rem] text-Body02 font-SemiBold text-Gray80">
+				{title}
+			</p>
+			<div className="text-Body02 font-SemiBold text-PB100">{content}</div>
 		</div>
 	)
 }

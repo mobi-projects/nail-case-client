@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
+import type { FormEvent } from "react"
+import { useEffect, useRef, useState } from "react"
 
-import { NTButton } from "@/component/common/atom/nt-button"
-import { useModal } from "@/component/common/nt-modal/nt-modal.context"
-import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
+import { useMutateConfirmReservation } from "@/hook/use-reservation-controller"
 import { useViewReservationDetail } from "@/util/api-v2/get-reservation-detail"
 import { isUndefined } from "@/util/common/type-guard"
 
-import DeatailBox from "./detail-box"
+import ReservationDetailControlBtn from "./reservation-detail-control-btn"
+import ReservationDetailList from "./reservation-detail-list"
 import ReservationDetailSkeleton from "./reservation-detail-skeleton"
-import { formatTreatmentRequestTime } from "./reservation-detail.util"
-import ReservationRefuseModal from "./reservation-refuse-modal"
+import { validatePriceNEndTime } from "./reservation-detail.util"
+import ReservationPermissionForm from "./reservation-permission-form"
 
 type ReservationDetailPT = {
 	selectedId: number
@@ -20,18 +20,32 @@ export default function ReservationDetail({
 	selectedId,
 	shopId,
 }: ReservationDetailPT) {
-	const { onOpenModal } = useModal()
-
-	const onClickRefuseBtn = () => {
-		onOpenModal({
-			size: "small",
-			isX: false,
-			children: <ReservationRefuseModal />,
-		})
-	}
-	const { data, isLoading } = useViewReservationDetail(shopId, selectedId)
+	// 상태 정의
+	const [isAccepting, setIsAccepting] = useState(false)
+	const [, setIsValid] = useState(false)
 	const [showSkeleton, setShowSkeleton] = useState(false)
 
+	// ref변수 정의
+	const endTimeRef = useRef<number>(-1)
+	const scrollRef = useRef<HTMLDivElement>(null)
+
+	// query 관련
+	const { data, isLoading } = useViewReservationDetail(shopId, selectedId)
+	const { mutate } = useMutateConfirmReservation(shopId, selectedId)
+
+	// submit event handler
+	const onSubmitPermission = (e: FormEvent<HTMLFormElement>) => {
+		const priceValue = e.currentTarget.price.value.replace(/,/g, "")
+		const endTime = endTimeRef.current
+
+		const validate = validatePriceNEndTime(priceValue, endTime)
+		if (!validate) return
+
+		setIsValid(true)
+		mutate({ endTime: endTime, price: priceValue })
+	}
+
+	// useEffect
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
 			if (isLoading) {
@@ -45,6 +59,14 @@ export default function ReservationDetail({
 			setShowSkeleton(false)
 		}
 	}, [isLoading])
+
+	useEffect(() => {
+		if (scrollRef.current && isAccepting) {
+			scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
+		}
+	}, [isAccepting, scrollRef])
+
+	// early return
 	if (isLoading && !showSkeleton)
 		return (
 			<div className="grid h-[610px] max-h-[610px] min-h-[610px] w-full grid-rows-[1fr_6fr_1fr_1fr] rounded-md border border-Gray20 bg-White p-6 shadow-customGray80" />
@@ -53,40 +75,31 @@ export default function ReservationDetail({
 
 	if (isUndefined(data)) return null // 데이터가 없는 경우 처리
 
-	const { customerName, startTime, conditionList, extend, remove, treatment } =
-		data
-	const conditionListArr = conditionList
-		.map((item) => CONDITION_LIST[item.option])
-		.join(" , ")
-
 	return (
-		<div className="relative grid h-[610px] max-h-[610px] min-h-[610px] w-full grid-rows-6 items-center rounded-md border border-Gray20 bg-White p-6 shadow-customGray80 transition-opacity">
-			<p className="absolute right-12 top-6 h-fit w-fit rounded-full bg-PB50 px-2 py-1 text-3xl font-Bold text-White">
-				예약번호 : #{selectedId}
-			</p>
-			<DeatailBox title="이름(예약자)" content={customerName} />
-			<DeatailBox
-				title="시술 내용"
-				content={TREATMENT_LIST[treatment.option]}
+		<form
+			onSubmit={(e: FormEvent<HTMLFormElement>) => {
+				e.preventDefault()
+				if (!isAccepting) {
+					onSubmitPermission(e)
+				}
+			}}
+			className="scrollbar-none flex h-[610px] max-h-[610px] min-h-[610px] w-full flex-col overflow-y-scroll rounded-md border border-Gray20 bg-White shadow-customGray80 transition-opacity"
+		>
+			<ReservationDetailList reservation={data} selectedId={selectedId} />
+			<ReservationPermissionForm
+				reservation={data}
+				isAccepting={isAccepting}
+				selectedId={selectedId}
+				setIsAccepting={setIsAccepting}
+				endTime={endTimeRef}
 			/>
-			<DeatailBox title="제거 유무" content={REMOVE_LIST[remove]} />
-			<DeatailBox
-				title="연장 유무"
-				content={extend ? "연장 필요" : "연장 필요 없음"}
+
+			<ReservationDetailControlBtn
+				isAccepting={isAccepting}
+				setIsAccepting={setIsAccepting}
 			/>
-			<DeatailBox title="컨디션" content={conditionListArr} />
-			<DeatailBox
-				title="시술 시간"
-				content={formatTreatmentRequestTime(startTime)}
-			/>
-			<div className="flex scale-90 items-center justify-end gap-[20px]">
-				<NTButton variant="secondary" size="small">
-					수락
-				</NTButton>
-				<NTButton variant="alert" size="small" onClick={onClickRefuseBtn}>
-					거절
-				</NTButton>
-			</div>
-		</div>
+
+			<div ref={scrollRef} />
+		</form>
 	)
 }
