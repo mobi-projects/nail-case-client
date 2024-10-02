@@ -1,8 +1,10 @@
+import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, type Dispatch, type SetStateAction } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
 import type { TReservationListPagination } from "@/util/api-v2/get-list-reservation"
+import { prefetchResercationDetail } from "@/util/api-v2/get-reservation-detail"
 
 import { getDecomposedDate, getDecomposedTIme } from "./reservation-item.util"
 type ReservationItemPT = {
@@ -10,6 +12,7 @@ type ReservationItemPT = {
 	reservation: TReservationListPagination
 	isClicked: boolean
 	setSelectedId: Dispatch<SetStateAction<number>>
+	shopId: number
 }
 
 export default function ReservationItem({
@@ -17,7 +20,10 @@ export default function ReservationItem({
 	reservation,
 	isClicked,
 	setSelectedId,
+	shopId,
 }: ReservationItemPT) {
+	const queryClient = useQueryClient()
+
 	const { customerName, startTime, reservationId } = reservation
 
 	useEffect(() => {
@@ -27,6 +33,9 @@ export default function ReservationItem({
 	return (
 		<div
 			onClick={() => setSelectedId(reservationId)}
+			onMouseEnter={async () => {
+				await prefetchResercationDetail(queryClient, shopId, reservationId)
+			}}
 			className={cn(
 				"scrollbar relative grid w-full cursor-pointer grid-cols-[1fr_2fr_2fr_2fr] overflow-y-auto border-y border-Gray20 py-3 transition-all",
 				isClicked ? "bg-PB60/10" : "hover:bg-Gray10",
