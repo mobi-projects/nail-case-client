@@ -14,6 +14,7 @@ import ReservationDetailList from "./reservation-detail-list"
 import ReservationDetailSkeleton from "./reservation-detail-skeleton"
 import { validatePriceNEndTime } from "./reservation-detail.util"
 import ReservationPermissionForm from "./reservation-permission-form"
+import RejectReason from "./reservation-reject-reason"
 
 type ReservationDetailPT = {
 	selectedId: number
@@ -112,6 +113,7 @@ export default function ReservationDetail({
 				/>
 			)}
 			<div ref={scrollRef} />
+			{status === "REJECTED" && <RejectReason reservation={data} />}
 		</form>
 	)
 }
