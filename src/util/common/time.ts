@@ -356,3 +356,16 @@ export const getClosest30MinuteInterval = (timestamp: number) => {
 		return currentTime.add(1, "hour").minute(0).second(0).millisecond(0).unix() // 다음 시간의 00분으로 설정
 	}
 }
+
+/** dateStamp 의 "연" "월" "일" 정보와 hourStamp의 "시" "분"을 조합 */
+export const combineTimeStamp = (dateStamp: number, hourStamp: number) => {
+	const { year, month, date } = decomposeStamp(dateStamp)
+	const { hour, min } = decomposeStamp(hourStamp)
+	const combinedStamp = getKSTStamp(year, month, date, hour, min)
+	return combinedStamp
+}
+
+/**  timeStamp에 30분단위로 시간을 추가 */
+export const add30Min = (timeStamp: number, times: number) => {
+	return timeStamp + times * 1800
+}

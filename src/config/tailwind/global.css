@@ -17,6 +17,7 @@
 		@apply rounded-[10px] border-[3px] border-solid border-transparent bg-PB50 bg-clip-padding;
 	}
 }
+
 @layer base {
 	html body {
 		@apply m-0 p-0;
@@ -33,5 +34,11 @@
 	}
 	h4 {
 		@apply text-Caption01;
+	}
+
+	input[type="number"]::-webkit-inner-spin-button,
+	input[type="number"]::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
 	}
 }
