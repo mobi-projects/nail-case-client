@@ -38,6 +38,7 @@ export default function Reservations({ params }: ReservationsPT) {
 					<ReservationDetail
 						selectedId={selectedId}
 						shopId={parseInt(shopId)}
+						status={status}
 					/>
 				</div>
 			</div>

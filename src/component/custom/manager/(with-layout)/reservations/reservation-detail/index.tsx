@@ -7,6 +7,8 @@ import {
 } from "@/hook/use-reservation-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
+import type { TStatusExcludeCanceled } from "../reservations.type"
+
 import ReservationDetailControlBtn from "./reservation-detail-control-btn"
 import ReservationDetailList from "./reservation-detail-list"
 import ReservationDetailSkeleton from "./reservation-detail-skeleton"
@@ -16,11 +18,13 @@ import ReservationPermissionForm from "./reservation-permission-form"
 type ReservationDetailPT = {
 	selectedId: number
 	shopId: number
+	status: TStatusExcludeCanceled
 }
 
 export default function ReservationDetail({
 	selectedId,
 	shopId,
+	status,
 }: ReservationDetailPT) {
 	// 상태 정의
 	const [isAccepting, setIsAccepting] = useState(false)
@@ -87,7 +91,11 @@ export default function ReservationDetail({
 			}}
 			className="scrollbar-none flex h-[610px] max-h-[610px] min-h-[610px] w-full flex-col overflow-y-scroll rounded-md border border-Gray20 bg-White shadow-customGray80 transition-opacity"
 		>
-			<ReservationDetailList reservation={data} selectedId={selectedId} />
+			<ReservationDetailList
+				reservation={data}
+				selectedId={selectedId}
+				status={status}
+			/>
 			<ReservationPermissionForm
 				reservation={data}
 				isAccepting={isAccepting}
@@ -95,14 +103,14 @@ export default function ReservationDetail({
 				setIsAccepting={setIsAccepting}
 				endTime={endTimeRef}
 			/>
-
-			<ReservationDetailControlBtn
-				isAccepting={isAccepting}
-				setIsAccepting={setIsAccepting}
-				shopId={shopId}
-				reservationId={selectedId}
-			/>
-
+			{status === "PENDING" && (
+				<ReservationDetailControlBtn
+					isAccepting={isAccepting}
+					setIsAccepting={setIsAccepting}
+					shopId={shopId}
+					reservationId={selectedId}
+				/>
+			)}
 			<div ref={scrollRef} />
 		</form>
 	)
