@@ -31,6 +31,9 @@ const suit = localFont({
 export const metadata: Metadata = {
 	title: "오늘네일",
 	description: "네일샵 예약 / 관리 서비스",
+	icons: {
+		icon: "/favicon.png",
+	},
 }
 
 export default function RootLayout({
