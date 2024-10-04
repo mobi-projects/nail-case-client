@@ -59,6 +59,7 @@ export default function ReservationItmeList({
 					reservation={reservation}
 					isClicked={selectedId === reservation.reservationId}
 					setSelectedId={setSelectedId}
+					shopId={shopId}
 				/>
 			))}
 		</div>
