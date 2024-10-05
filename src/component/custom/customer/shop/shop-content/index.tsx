@@ -13,8 +13,8 @@ export default function CustomerShopContent({
 	data,
 }: CustomerShopContentPT) {
 	return (
-		<div className="flex w-full flex-col gap-5 pb-10 pt-5">
-			<ShopInformation shopId={shopId} data={data} />
+		<div className="flex w-full flex-col gap-6 pb-10 pt-8">
+			<ShopInformation data={data} />
 			<ButtonList shopId={shopId} phone={data.phone} />
 		</div>
 	)
