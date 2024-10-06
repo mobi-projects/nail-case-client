@@ -29,7 +29,12 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 		}
 	}
 	return (
-		<div className="relative flex h-[586px] w-full px-2 pt-14">
+		<div className="relative flex h-[586px] w-full flex-col gap-8 px-2 pt-14">
+			<div className="flex">
+				<div className="text-Title01 text-PB80">이달의 아트</div>
+				<NTIcon icon="art" className="text-Black" />
+			</div>
+			<hr />
 			<div className="w-full gap-4 overflow-hidden">
 				<div
 					className="flex transform gap-4 transition-transform duration-700 ease-in-out"
@@ -54,8 +59,10 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 			</div>
 			<div
 				className={cn(
-					"absolute left-2 top-56 cursor-pointer rounded-xl bg-Gray10",
-					focusedIdx > 0 ? "opacity-30 hover:opacity-100" : "opacity-0",
+					"absolute bottom-52 left-2 rounded-xl bg-Gray10",
+					focusedIdx > 0
+						? "cursor-pointer opacity-30 hover:opacity-100"
+						: "opacity-0",
 				)}
 			>
 				<NTIcon
@@ -66,9 +73,9 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 			</div>
 			<div
 				className={cn(
-					"absolute right-2 top-56 cursor-pointer rounded-xl bg-Gray10",
+					"absolute bottom-52 right-2 rounded-xl bg-Gray10",
 					focusedIdx < AomDataList.length - 3
-						? "opacity-30 hover:opacity-100"
+						? "cursor-pointer opacity-30 hover:opacity-100"
 						: "opacity-0",
 				)}
 			>
