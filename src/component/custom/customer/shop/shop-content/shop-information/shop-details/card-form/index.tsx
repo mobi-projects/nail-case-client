@@ -1,4 +1,5 @@
 import NTIcon from "@/component/common/nt-icon"
+import { cn } from "@/config/tailwind"
 
 type CardFormPT = {
 	title: string
@@ -6,6 +7,8 @@ type CardFormPT = {
 	showDot?: boolean
 	isClickable?: boolean
 	onClick?: () => void
+	isContentClickable?: boolean
+	contentOnClick?: () => void
 }
 export default function CardForm({
 	title,
@@ -13,6 +16,8 @@ export default function CardForm({
 	showDot = false,
 	isClickable = false,
 	onClick,
+	isContentClickable = false,
+	contentOnClick,
 }: CardFormPT) {
 	return (
 		<div className="flex h-44 w-72 flex-col justify-start rounded-[26px] py-2 pr-5 shadow-customGray70">
@@ -44,7 +49,13 @@ export default function CardForm({
 						{showDot && (
 							<NTIcon icon="dot" className="mr-[-0.5rem] text-Gray40" />
 						)}
-						<div className="whitespace-pre-line break-keep pl-2 pt-[0.375rem] text-Body01">
+						<div
+							className={cn(
+								"whitespace-pre-line break-keep pl-2 pt-[0.375rem] text-Body01",
+								isContentClickable && "hover:cursor-pointer hover:underline",
+							)}
+							onClick={contentOnClick}
+						>
 							{content}
 						</div>
 					</div>

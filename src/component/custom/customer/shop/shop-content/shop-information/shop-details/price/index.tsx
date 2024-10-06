@@ -21,10 +21,12 @@ export default function PriceForm({ priceImages }: PricePT) {
 
 	return (
 		<CardForm
-			title="가격"
+			title="가격표"
 			content={"가격표 확인하기"}
 			isClickable={true}
 			onClick={handleArtClick}
+			isContentClickable={true}
+			contentOnClick={handleArtClick}
 		/>
 	)
 }
