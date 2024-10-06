@@ -1,11 +1,13 @@
-import { useQuery } from "@tanstack/react-query"
+import type { QueryClient } from "@tanstack/react-query"
 
 import type { TStatusExcludeCanceled } from "@/component/custom/manager/(with-layout)/reservations/reservations.type"
 import { axiosInstance } from "@/config/axios"
+import { VIEW_RESERVATION_QUERY } from "@/constant"
 import type { TRemoveOption } from "@/type/union-option/remove-option"
 
 import type { TconditionOption, TTreatmentOption } from "./get-main-page-data"
 
+/** 예약 상세보기 조회 */
 export const getReservationDetail = async (
 	shopId: number,
 	reservationId: number,
@@ -13,19 +15,22 @@ export const getReservationDetail = async (
 	const response = await axiosInstance().get(
 		`/shops/${shopId}/reservations/${reservationId}`,
 	)
-	console.log(response.data.data)
 	return response.data.data
 }
 
-export const useViewReservationDetail = (
+/** 예약 상세보기 prefetch */
+export const prefetchResercationDetail = async (
+	queryClient: QueryClient,
 	shopId: number,
 	reservationId: number,
-) =>
-	useQuery({
-		queryKey: ["예약상세", shopId, reservationId],
+) => {
+	await queryClient.prefetchQuery({
+		queryKey: [VIEW_RESERVATION_QUERY, shopId, reservationId],
 		queryFn: () => getReservationDetail(shopId, reservationId),
-		enabled: reservationId !== -1,
+		staleTime: 0,
+		gcTime: 1000 * 60 * 10, // 보관시간 10분 설정
 	})
+}
 
 export type TResViewReservation = {
 	reservationId: number

@@ -3,7 +3,15 @@ import { ModalBody, ModalHeader } from "@/component/common/nt-modal"
 
 import RefuseReasonForm from "./refuse-reason-form"
 
-export default function ReservationRefuseModal() {
+type ReservationRefuseModalPT = {
+	shopId: number
+	reservationId: number
+}
+
+export default function ReservationRefuseModal({
+	reservationId,
+	shopId,
+}: ReservationRefuseModalPT) {
 	return (
 		<div className="scrollbar grid h-full w-full grid-rows-[auto_1fr_auto]">
 			<ModalHeader className="w-full border-b border-b-Gray20 bg-White pb-4 text-center text-Title01 font-SemiBold text-Gray70">
@@ -32,7 +40,7 @@ export default function ReservationRefuseModal() {
 					<p className="pt-2 text-Title03 font-SemiBold text-Gray70">
 						거절 사유
 					</p>
-					<RefuseReasonForm />
+					<RefuseReasonForm reservationId={reservationId} shopId={shopId} />
 				</div>
 			</ModalBody>
 		</div>
