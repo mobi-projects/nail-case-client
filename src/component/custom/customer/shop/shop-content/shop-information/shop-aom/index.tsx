@@ -2,12 +2,12 @@ import Image from "next/image"
 import { useState } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
-import { cn } from "@/config/tailwind"
 import { useGetMonthlyArtList } from "@/hook/use-aom"
 import { isUndefined } from "@/util/common/type-guard"
 
 import AOMError from "./aom-error"
 import AOMSkelton from "./aom-skelton"
+import NavigationButton from "./navigation-button"
 
 type ShopAOMPT = { shopId: number }
 export default function ShopAom({ shopId }: ShopAOMPT) {
@@ -37,13 +37,13 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 			<hr />
 			<div className="w-full gap-4 overflow-hidden">
 				<div
-					className="flex transform gap-4 transition-transform duration-700 ease-in-out"
-					style={{ transform: `translateX(-${focusedIdx * 33.33}%)` }}
+					className="flex translate-x-[25rem] transform gap-4 transition-transform duration-700 ease-in-out"
+					style={{ transform: `translateX(-${focusedIdx * 25}rem)` }}
 				>
 					{AomDataList.map((data, idx) => (
 						<div
 							key={idx}
-							className="relative h-[26rem] w-[32.33%] flex-shrink-0 rounded-3xl px-2 text-Gray70 shadow-customGray80"
+							className="relative h-[26rem] w-[24rem] flex-shrink-0 rounded-3xl px-2 text-Gray70 shadow-customGray80"
 						>
 							<Image
 								src={data.imageUrl}
@@ -57,36 +57,16 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 					))}
 				</div>
 			</div>
-			<div
-				className={cn(
-					"absolute bottom-52 left-2 rounded-xl bg-Gray10",
-					focusedIdx > 0
-						? "cursor-pointer opacity-30 hover:opacity-80"
-						: "opacity-0",
-				)}
-			>
-				<NTIcon
-					onClick={handlePrevious}
-					className="h-14 w-14 transition"
-					icon="expandLeftLight"
-				></NTIcon>
-			</div>
-			<div
-				className={cn(
-					"absolute bottom-52 right-2 rounded-xl bg-Gray10",
-					focusedIdx < AomDataList.length - 3
-						? "cursor-pointer opacity-30 hover:opacity-80"
-						: "opacity-0",
-				)}
-			>
-				<NTIcon
-					onClick={handleNext}
-					className="h-14 w-14 transition"
-					icon="expandRightLight"
-				>
-					다음
-				</NTIcon>
-			</div>
+			<NavigationButton
+				onclick={handlePrevious}
+				direction="left"
+				isVisible={focusedIdx > 0}
+			/>
+			<NavigationButton
+				onclick={handleNext}
+				direction="right"
+				isVisible={focusedIdx < AomDataList.length - 3}
+			/>
 		</div>
 	)
 }
