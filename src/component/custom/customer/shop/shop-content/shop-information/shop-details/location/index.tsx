@@ -1,9 +1,6 @@
 import type { ShopInformaionPT } from "../.."
-import CardForm from "../card-form"
+import InfoCard from "../info-card"
 
-export default function LoactionForm({ data }: ShopInformaionPT) {
-	const locationFun = (address: string) => {
-		return address.replace(/(동\s)/, "$1\n")
-	}
-	return <CardForm title="Loaction" content={locationFun(data.address)} />
+export default function LoactionCard({ data }: ShopInformaionPT) {
+	return <InfoCard title="가게 위치" content={data.address} />
 }

@@ -3,7 +3,7 @@
 import { useShopById } from "@/hook/use-shop-controller"
 
 import CustomerShopBanner from "../banner"
-import CustomerToolbar from "../custoemr-toolbar"
+import CustomerToolbar from "../customer-toolbar"
 import CustomerShopContent from "../shop-content"
 import ShopError from "../shop-error"
 

@@ -61,13 +61,13 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 				className={cn(
 					"absolute bottom-52 left-2 rounded-xl bg-Gray10",
 					focusedIdx > 0
-						? "cursor-pointer opacity-30 hover:opacity-100"
+						? "cursor-pointer opacity-30 hover:opacity-80"
 						: "opacity-0",
 				)}
 			>
 				<NTIcon
 					onClick={handlePrevious}
-					className="h-14 w-14 transition disabled:opacity-50"
+					className="h-14 w-14 transition"
 					icon="expandLeftLight"
 				></NTIcon>
 			</div>
@@ -75,13 +75,13 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 				className={cn(
 					"absolute bottom-52 right-2 rounded-xl bg-Gray10",
 					focusedIdx < AomDataList.length - 3
-						? "cursor-pointer opacity-30 hover:opacity-100"
+						? "cursor-pointer opacity-30 hover:opacity-80"
 						: "opacity-0",
 				)}
 			>
 				<NTIcon
 					onClick={handleNext}
-					className="h-14 w-14 transition disabled:opacity-50"
+					className="h-14 w-14 transition"
 					icon="expandRightLight"
 				>
 					다음

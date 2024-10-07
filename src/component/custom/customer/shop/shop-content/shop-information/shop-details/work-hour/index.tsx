@@ -1,7 +1,7 @@
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import type { TWorkHour } from "@/util/api-v2/get-shop-by-id"
 
-import CardForm from "../card-form"
+import InfoCard from "../info-card"
 
 import WorkHourModal from "./work-hour-modal"
 import {
@@ -9,10 +9,10 @@ import {
 	getWorkHourSummaryString,
 } from "./work-hour-modal/daily-opening-hours/daily-opening-hours.util"
 
-type WorkHoursFormPT = {
+type WorkHoursCardPT = {
 	workHours: Array<TWorkHour>
 }
-export default function WorkHoursForm({ workHours }: WorkHoursFormPT) {
+export default function WorkHoursCard({ workHours }: WorkHoursCardPT) {
 	const { onOpenModal } = useModal()
 	const handleArtClick = () => {
 		onOpenModal({
@@ -23,7 +23,7 @@ export default function WorkHoursForm({ workHours }: WorkHoursFormPT) {
 	}
 
 	const { todayWorkHour, tomorrowWorkHour } = getWorkHoursSummary(workHours)
-	const workHourSummary: string[] = []
+	const workHourSummary: Array<string> = []
 	if (todayWorkHour && tomorrowWorkHour) {
 		workHourSummary.push(
 			...[
@@ -33,7 +33,7 @@ export default function WorkHoursForm({ workHours }: WorkHoursFormPT) {
 		)
 	}
 	return (
-		<CardForm
+		<InfoCard
 			title="영업시간"
 			content={workHourSummary}
 			showDot={true}

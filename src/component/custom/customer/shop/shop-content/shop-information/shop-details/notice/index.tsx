@@ -1,5 +1,5 @@
-import CardForm from "../card-form"
+import InfoCard from "../info-card"
 
-export default function NoticeForm() {
-	return <CardForm title="안내사항" content={""} />
+export default function NoticeCard() {
+	return <InfoCard title="안내사항" content={""} />
 }

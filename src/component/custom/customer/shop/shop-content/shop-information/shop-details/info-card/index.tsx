@@ -1,16 +1,16 @@
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
 
-type CardFormPT = {
+type InfoCardPT = {
 	title: string
-	content: string | string[]
+	content: string | Array<string>
 	showDot?: boolean
 	isClickable?: boolean
 	onClick?: () => void
 	isContentClickable?: boolean
 	contentOnClick?: () => void
 }
-export default function CardForm({
+export default function InfoCard({
 	title,
 	content,
 	showDot = false,
@@ -18,7 +18,7 @@ export default function CardForm({
 	onClick,
 	isContentClickable = false,
 	contentOnClick,
-}: CardFormPT) {
+}: InfoCardPT) {
 	return (
 		<div className="flex h-44 w-72 flex-col justify-start rounded-[26px] py-2 pr-5 shadow-customGray70">
 			<div className="flex items-center justify-between pl-6">
