@@ -3,6 +3,7 @@
 import { useShopById } from "@/hook/use-shop-controller"
 
 import CustomerShopBanner from "../banner"
+import CustomerToolbar from "../customer-toolbar"
 import CustomerShopContent from "../shop-content"
 import ShopError from "../shop-error"
 
@@ -23,6 +24,7 @@ export function CustomerShopPage({ shopId }: CustomerShopPagePT) {
 				profileImages={profileImages}
 				shopId={shopId}
 			/>
+			<CustomerToolbar />
 			<CustomerShopContent shopId={shopId} data={shopData} />
 		</div>
 	)

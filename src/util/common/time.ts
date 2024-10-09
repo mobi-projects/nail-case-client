@@ -356,6 +356,10 @@ export const getClosest30MinuteInterval = (timestamp: number) => {
 		return currentTime.add(1, "hour").minute(0).second(0).millisecond(0).unix() // 다음 시간의 00분으로 설정
 	}
 }
+/* 현재 날짜 기준 요일을 [일,월,화 ~ 금,토] -> 숫자 0~6 중 idx 에 맞게 반환*/
+export const getThisDayOfWeekToNumber = () => {
+	return new Date().getDay()
+}
 
 /** dateStamp 의 "연" "월" "일" 정보와 hourStamp의 "시" "분"을 조합 */
 export const combineTimeStamp = (dateStamp: number, hourStamp: number) => {

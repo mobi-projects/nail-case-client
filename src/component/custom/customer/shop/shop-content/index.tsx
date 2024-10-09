@@ -2,6 +2,7 @@ import type { TResGetShop } from "@/util/api-v2/get-shop-by-id"
 
 import { ButtonList } from "./button-list/indest"
 import ShopInformation from "./shop-information"
+import ShopAom from "./shop-information/shop-aom"
 
 export type CustomerShopContentPT = {
 	shopId: number
@@ -13,9 +14,10 @@ export default function CustomerShopContent({
 	data,
 }: CustomerShopContentPT) {
 	return (
-		<div className="flex w-full flex-col gap-5 pb-10 pt-5">
-			<ShopInformation shopId={shopId} data={data} />
+		<div className="flex w-full flex-col gap-6 pb-10 pt-8">
+			<ShopInformation data={data} />
 			<ButtonList shopId={shopId} phone={data.phone} shopName={data.shopName} />
+			<ShopAom shopId={shopId} />
 		</div>
 	)
 }
