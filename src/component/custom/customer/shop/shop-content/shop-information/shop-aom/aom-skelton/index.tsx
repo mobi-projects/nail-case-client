@@ -1,18 +1,14 @@
-import AOMImageSingleSkelotn from "./aom-image-single-skeloton"
-
 export default function AOMSkelton() {
 	return (
-		<div className="flex h-full w-[550px] justify-center rounded-[26px] py-12 pl-8 shadow-customGray70">
-			<div className="flex h-[26rem] w-[45rem] animate-pulse items-center justify-center rounded-3xl bg-Gray20 text-Gray70" />
-			<div className="flex h-full w-full flex-col items-center">
-				<div className="relative flex h-full w-full transform items-center gap-x-5 overflow-x-hidden transition-transform duration-300">
-					<div className="absolute top-1 flex w-full transform flex-col items-center gap-y-1 transition-transform duration-1000">
-						{Array.from({ length: 3 }, (_, idx) => (
-							<div key={idx} className="animate-pulse">
-								<AOMImageSingleSkelotn />
-							</div>
-						))}
-					</div>
+		<div className="relative flex h-[586px] w-full px-2 pt-14">
+			<div className="w-full gap-4">
+				<div className="flex gap-4">
+					{[...Array(3)].map((_, idx) => (
+						<div
+							key={idx}
+							className="h-[26rem] w-[32.33%] flex-shrink-0 rounded-3xl px-2 text-Gray70 shadow-customGray80"
+						></div>
+					))}
 				</div>
 			</div>
 		</div>

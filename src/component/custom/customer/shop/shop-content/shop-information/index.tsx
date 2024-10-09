@@ -1,24 +1,18 @@
-import type { CustomerShopContentPT } from ".."
+import type { TResGetShop } from "@/util/api-v2/get-shop-by-id"
 
-import ShopAom from "./shop-aom"
-import ShopDetails from "./shop-details"
+import LoactionCard from "./shop-details/location"
+import NoticeCard from "./shop-details/notice"
+import PriceCard from "./shop-details/price"
+import WorkHoursCard from "./shop-details/work-hour"
 
-export default function ShopInformation({
-	shopId,
-	data,
-}: CustomerShopContentPT) {
+export type ShopInformaionPT = { data: TResGetShop }
+export default function ShopInformation({ data }: ShopInformaionPT) {
 	return (
-		<div>
-			<div className="flex min-h-[586px] w-full justify-between gap-2 px-2 pt-5">
-				<div className="flex w-full flex-col items-center gap-9">
-					<p className="text-Title03 font-SemiBold">내 샵 정보</p>
-					<ShopDetails shopInfoData={data} />
-				</div>
-				<div className="flex w-full flex-col items-center gap-9">
-					<p className="text-Title03 font-SemiBold">이달의 아트</p>
-					<ShopAom shopId={shopId} />
-				</div>
-			</div>
+		<div className="flex w-full justify-between gap-7 px-2 py-8">
+			<WorkHoursCard workHours={data.workHours} />
+			<LoactionCard data={data} />
+			<NoticeCard />
+			<PriceCard priceImages={data.priceImages} />
 		</div>
 	)
 }

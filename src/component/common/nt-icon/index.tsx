@@ -73,4 +73,5 @@ export const ICON_DATA = {
 	completed: "ant-design:file-done-outlined",
 	pending: "iconoir:new-tab",
 	confirmed: "jam:check",
+	art: "mdi:art",
 } as const

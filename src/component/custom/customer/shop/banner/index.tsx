@@ -27,9 +27,9 @@ export default function CustomerShopBanner({
 		setCurrentIndex(idx)
 	}
 	return (
-		<div className="flex h-[22rem] w-full flex-col gap-20 px-20 pt-5">
+		<div className="flex h-[26rem] w-full flex-col gap-16 px-20 pt-10">
 			<NTBannerImageCarousel
-				className="absolute left-0 top-0 h-[22rem] w-full bg-transparent"
+				className="absolute left-0 top-0 h-[26rem] w-full bg-transparent"
 				essentialImagePropArr={imageArray}
 				accessSelected={handleImageSelect}
 			/>
