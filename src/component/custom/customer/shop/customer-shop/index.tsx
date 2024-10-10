@@ -1,5 +1,7 @@
 "use client"
 
+import { useRef } from "react"
+
 import { useShopById } from "@/hook/use-shop-controller"
 
 import CustomerShopBanner from "../banner"
@@ -11,21 +13,35 @@ type CustomerShopPagePT = {
 	shopId: number
 }
 export function CustomerShopPage({ shopId }: CustomerShopPagePT) {
+	const homeRef = useRef<HTMLDivElement>(null)
+	const aomRef = useRef<HTMLDivElement>(null)
 	const { data: shopData } = useShopById(shopId)
 	if (!shopData) return <ShopError />
 
 	const { shopName, address, profileImages } = shopData
 
+	const scrollToHome = () => {
+		homeRef.current?.scrollIntoView({ behavior: "smooth" })
+	}
+
+	const scrollToAom = () => {
+		aomRef.current?.scrollIntoView({ behavior: "smooth" })
+	}
 	return (
-		<div>
+		<div className="h-full">
 			<CustomerShopBanner
 				shopName={shopName}
 				shopAddress={address}
 				profileImages={profileImages}
 				shopId={shopId}
 			/>
-			<CustomerToolbar />
-			<CustomerShopContent shopId={shopId} data={shopData} />
+			<CustomerToolbar scrollToHome={scrollToHome} scrollToAom={scrollToAom} />
+			<CustomerShopContent
+				shopId={shopId}
+				data={shopData}
+				homeRef={homeRef}
+				aomRef={aomRef}
+			/>
 		</div>
 	)
 }

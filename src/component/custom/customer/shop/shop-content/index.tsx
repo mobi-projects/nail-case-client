@@ -7,17 +7,26 @@ import ShopAom from "./shop-information/shop-aom"
 export type CustomerShopContentPT = {
 	shopId: number
 	data: TResGetShop
+	homeRef: React.RefObject<HTMLDivElement>
+	aomRef: React.RefObject<HTMLDivElement>
 }
 
 export default function CustomerShopContent({
 	shopId,
 	data,
+	homeRef,
+	aomRef,
 }: CustomerShopContentPT) {
 	return (
 		<div className="flex w-full flex-col gap-6 pb-10 pt-8">
-			<ShopInformation data={data} />
+			<div ref={homeRef}>
+				<ShopInformation data={data} />
+			</div>
 			<ButtonList shopId={shopId} phone={data.phone} shopName={data.shopName} />
-			<ShopAom shopId={shopId} />
+
+			<div ref={aomRef}>
+				<ShopAom shopId={shopId} />
+			</div>
 		</div>
 	)
 }
