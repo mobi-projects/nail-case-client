@@ -1,6 +1,12 @@
 "use client"
 import { cva } from "class-variance-authority"
-import type { HTMLAttributes, ReactNode, RefObject } from "react"
+import type {
+	Dispatch,
+	HTMLAttributes,
+	ReactNode,
+	RefObject,
+	SetStateAction,
+} from "react"
 import { createContext, useContext, useRef, useState } from "react"
 
 import { cn } from "@/config/tailwind"
@@ -15,6 +21,7 @@ type TNTPulldownContext = {
 	selectIdx: (option: number) => void
 	boxRef: RefObject<HTMLDivElement>
 	triggerRef: RefObject<HTMLDivElement>
+	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 // Pulldown의 상태 및 기능을 제공하는 Context 생성
@@ -73,7 +80,15 @@ export function NTPulldownProvider({ children }: NTPulldownProviderPT) {
 
 	return (
 		<NTPulldownContext.Provider
-			value={{ isOpen, clickedIdx, toggleOpen, selectIdx, boxRef, triggerRef }}
+			value={{
+				isOpen,
+				clickedIdx,
+				toggleOpen,
+				selectIdx,
+				boxRef,
+				triggerRef,
+				setIsOpen,
+			}}
 		>
 			<div className="h-fit w-fit" onBlur={handleBlur} tabIndex={-1}>
 				{children}
@@ -90,11 +105,16 @@ export function NTPulldownProvider({ children }: NTPulldownProviderPT) {
  * @param className - 추가적인 CSS 클래스
  *
  */
-type NTPulldownTriggerPT = { children: ReactNode; className?: string }
+type NTPulldownTriggerPT = {
+	children: ReactNode
+	className?: string
+	hasArrow?: boolean
+}
 
 export function NTPulldownTrigger({
 	children,
 	className,
+	hasArrow = true,
 }: NTPulldownTriggerPT) {
 	const { toggleOpen, triggerRef, isOpen } = useNTPulldown()
 	return (
@@ -109,13 +129,15 @@ export function NTPulldownTrigger({
 			)}
 		>
 			{children}
-			<NTIcon
-				icon="expandDownLight"
-				className={cn(
-					"h-6 w-6 text-Gray40 transition-all duration-75",
-					isOpen ? "-rotate-180" : "",
-				)}
-			/>
+			{hasArrow && (
+				<NTIcon
+					icon="expandDownLight"
+					className={cn(
+						"h-6 w-6 text-Gray40 transition-all duration-75",
+						isOpen ? "-rotate-180" : "",
+					)}
+				/>
+			)}
 		</div>
 	)
 }

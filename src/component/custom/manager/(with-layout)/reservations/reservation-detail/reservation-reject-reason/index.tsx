@@ -10,7 +10,7 @@ export default function RejectReason({ reservation }: RejectReasonPT) {
 				취소 사유
 			</p>
 			<div className="line-clamp-2 text-Body02 font-SemiBold text-red-400">
-				{reservation.cancelReason}
+				{reservation.rejectReason}
 			</div>
 		</div>
 	)

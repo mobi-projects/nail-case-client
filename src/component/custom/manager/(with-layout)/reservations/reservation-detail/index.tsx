@@ -112,8 +112,8 @@ export default function ReservationDetail({
 					reservationId={selectedId}
 				/>
 			)}
-			<div ref={scrollRef} />
 			{status === "REJECTED" && <RejectReason reservation={data} />}
+			<div ref={scrollRef} />
 		</form>
 	)
 }

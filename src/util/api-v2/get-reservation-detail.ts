@@ -54,5 +54,5 @@ export type TResViewReservation = {
 		openTime: number
 		closeTime: number
 	}
-	cancelReason: string | null
+	rejectReason: string | null
 }
