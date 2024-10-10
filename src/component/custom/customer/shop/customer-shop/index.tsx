@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useState } from "react"
 
 import { useShopById } from "@/hook/use-shop-controller"
 
@@ -13,19 +13,13 @@ type CustomerShopPagePT = {
 	shopId: number
 }
 export function CustomerShopPage({ shopId }: CustomerShopPagePT) {
-	const homeRef = useRef<HTMLDivElement>(null)
-	const aomRef = useRef<HTMLDivElement>(null)
+	const [focusedIdx, setFocusedIdx] = useState(0)
 	const { data: shopData } = useShopById(shopId)
 	if (!shopData) return <ShopError />
 
 	const { shopName, address, profileImages } = shopData
-
-	const scrollToHome = () => {
-		homeRef.current?.scrollIntoView({ behavior: "smooth" })
-	}
-
-	const scrollToAom = () => {
-		aomRef.current?.scrollIntoView({ behavior: "smooth" })
+	const handleContentChange = (idx: number) => {
+		setFocusedIdx(idx)
 	}
 	return (
 		<div className="h-full">
@@ -35,12 +29,14 @@ export function CustomerShopPage({ shopId }: CustomerShopPagePT) {
 				profileImages={profileImages}
 				shopId={shopId}
 			/>
-			<CustomerToolbar scrollToHome={scrollToHome} scrollToAom={scrollToAom} />
+			<CustomerToolbar
+				focusedIdx={focusedIdx}
+				onContentChange={handleContentChange}
+			/>
 			<CustomerShopContent
 				shopId={shopId}
 				data={shopData}
-				homeRef={homeRef}
-				aomRef={aomRef}
+				focusedIdx={focusedIdx}
 			/>
 		</div>
 	)
