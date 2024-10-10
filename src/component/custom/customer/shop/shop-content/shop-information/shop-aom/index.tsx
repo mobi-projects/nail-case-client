@@ -29,12 +29,11 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 		}
 	}
 	return (
-		<div className="relative flex h-[586px] w-full flex-col gap-8 px-2 pt-14">
+		<div className="relative flex h-[586px] w-full flex-col gap-8 px-2">
 			<div className="flex">
 				<div className="text-Title01 text-PB80">이달의 아트</div>
 				<NTIcon icon="art" className="text-Black" />
 			</div>
-			<hr />
 			<div className="w-full gap-4 overflow-hidden">
 				<div
 					className="flex translate-x-[25rem] transform gap-4 transition-transform duration-700 ease-in-out"

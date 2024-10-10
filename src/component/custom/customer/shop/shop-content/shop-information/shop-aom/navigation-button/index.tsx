@@ -13,7 +13,7 @@ export default function NavigationButton({
 	return (
 		<div
 			className={cn(
-				"absolute bottom-52 rounded-xl bg-Gray10",
+				"absolute bottom-72 rounded-xl bg-Gray10",
 				isVisible ? "cursor-pointer opacity-30 hover:opacity-80" : "opacity-0",
 				direction === "left" ? "left-2" : "right-2",
 			)}
