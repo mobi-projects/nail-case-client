@@ -1,3 +1,4 @@
+import NTIcon from "@/component/common/nt-icon"
 import type { TResGetShop } from "@/util/api-v2/get-shop-by-id"
 
 import { ButtonList } from "./button-list/indest"
@@ -20,7 +21,11 @@ export default function CustomerShopContent({
 			<ShopInformation data={data} />
 			<ButtonList shopId={shopId} phone={data.phone} shopName={data.shopName} />
 		</div>,
-		<div key="aom" className="flex w-full pt-8">
+		<div key="aom" className="w-full flex-col pt-8">
+			<div className="flex pb-8">
+				<div className="text-Title01 text-PB80">이달의 아트</div>
+				<NTIcon icon="art" className="text-Black" />
+			</div>
 			<ShopAom shopId={shopId} />
 		</div>,
 	]

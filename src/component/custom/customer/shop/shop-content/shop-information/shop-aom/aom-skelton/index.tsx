@@ -1,6 +1,6 @@
 export default function AOMSkelton() {
 	return (
-		<div className="relative flex h-[586px] w-full px-2 pt-14">
+		<div className="relative flex h-[30rem] w-full px-2">
 			<div className="w-full gap-4">
 				<div className="flex gap-4">
 					{[...Array(3)].map((_, idx) => (
