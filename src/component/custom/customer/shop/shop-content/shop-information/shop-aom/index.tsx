@@ -34,8 +34,8 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 	}
 
 	return (
-		<div className="relative flex h-[30rem] w-full flex-col px-2">
-			<div className="w-full gap-4 overflow-hidden">
+		<div className="flex h-[30rem] w-full flex-col px-2">
+			<div className="relative w-full gap-4 overflow-hidden">
 				<div
 					className="flex translate-x-[25rem] transform gap-4 transition-transform duration-700 ease-in-out"
 					style={{ transform: `translateX(-${focusedIdx * 25}rem)` }}
@@ -57,17 +57,17 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 					))}
 					{AomDataList.length <= 2 && <AOMFewItems />}
 				</div>
+				<NavigationButton
+					onclick={handlePrevious}
+					direction="left"
+					isVisible={focusedIdx > 0}
+				/>
+				<NavigationButton
+					onclick={handleNext}
+					direction="right"
+					isVisible={focusedIdx < AomDataList.length - 3}
+				/>
 			</div>
-			<NavigationButton
-				onclick={handlePrevious}
-				direction="left"
-				isVisible={focusedIdx > 0}
-			/>
-			<NavigationButton
-				onclick={handleNext}
-				direction="right"
-				isVisible={focusedIdx < AomDataList.length - 3}
-			/>
 		</div>
 	)
 }

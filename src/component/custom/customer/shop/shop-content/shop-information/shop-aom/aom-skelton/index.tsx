@@ -6,7 +6,7 @@ export default function AOMSkelton() {
 					{[...Array(3)].map((_, idx) => (
 						<div
 							key={idx}
-							className="h-[26rem] w-[32.33%] flex-shrink-0 rounded-3xl px-2 text-Gray70 shadow-customGray80"
+							className="animation-pulse h-[26rem] w-[32.33%] flex-shrink-0 rounded-3xl bg-Gray20 px-2 text-Gray70 shadow-customGray80"
 						></div>
 					))}
 				</div>
