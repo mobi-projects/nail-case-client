@@ -1,11 +1,5 @@
 import dayjs from "dayjs"
 
-export const getBasePath = (pathName: string) => {
-	const pathArr = pathName.split("/")
-	const basePath = [pathArr[1], pathArr[2]].join("/")
-	return basePath
-}
-
 export const changeEngToKor = (arr: Array<string>) => {
 	if (arr.includes("few") && arr.includes("seconds")) {
 		return "방금 전"
