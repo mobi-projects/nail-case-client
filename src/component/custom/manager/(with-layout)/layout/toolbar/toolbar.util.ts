@@ -1,18 +1,24 @@
+import { getCookie } from "cookies-next"
+
 import { MANAGER_BASE, MANAGER_RESERVATIONS } from "@/constant/routing-path"
 
-import type { TStatusExcludeCanceled } from "../../reservations/reservations.type"
+export const getFocusedIdx = (pathName: string, shopId: string) => {
+	const pathNameArr = pathName.split("/")
 
-export const getFocusedIdx = (pathName: string, toolPathArr: string[]) => {
-	return toolPathArr.findIndex((toolPath) => toolPath === pathName)
+	let idx = -1
+	if (pathNameArr.includes("reservations")) {
+		idx = 1
+	}
+	if (pathName === `/manager/${shopId}`) {
+		idx = 0
+	}
+	return idx
 }
 
-export const getToolPathArr = (
-	shopId: string,
-	page: string = "1",
-	status: TStatusExcludeCanceled = "PENDING",
-) => {
+export const getToolPathArr = () => {
+	const shopId = getCookie("shopId")
 	return [
 		`${MANAGER_BASE}/${shopId}`,
-		`${MANAGER_BASE}/${shopId}${MANAGER_RESERVATIONS}/${status}/${page}`,
+		`${MANAGER_BASE}/${shopId}${MANAGER_RESERVATIONS}/PENDING/1`,
 	]
 }
