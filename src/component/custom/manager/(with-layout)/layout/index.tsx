@@ -1,3 +1,5 @@
+import { getCookie } from "cookies-next"
+import { cookies } from "next/headers"
 import Image from "next/image"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
@@ -6,11 +8,12 @@ import HeaderMenu from "./header-menu"
 import ManagerToolbar from "./toolbar"
 
 export default function ManagerBaseHeader() {
+	const shopId = getCookie("shopId", { cookies })
 	return (
 		<div className="flex h-fit w-full flex-col gap-[8.5px] pb-[14px] pt-[68px]">
 			<div className="flex h-fit w-full flex-col gap-[16.5px]">
 				<ManagerLayoutCatalog />
-				<ManagerToolbar />
+				<ManagerToolbar shopId={shopId as string} />
 			</div>
 		</div>
 	)

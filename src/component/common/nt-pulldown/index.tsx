@@ -120,8 +120,8 @@ export function NTPulldownTrigger({
 	return (
 		<div
 			ref={triggerRef}
-			tabIndex={0}
 			onClick={toggleOpen}
+			tabIndex={0}
 			className={cn(
 				"flex cursor-pointer items-center justify-between gap-x-1 rounded-[6px] border-2 border-Gray20 bg-White px-[6px] py-[8px] transition-all duration-500 ease-in-out hover:border-Gray40",
 				isOpen && "border-PB50 hover:border-PB50",
@@ -193,8 +193,8 @@ export function NTPulldownContent({
 			ref={boxRef}
 			className={cn(
 				positionVariants({ position }),
-				"scrollbar-none overflow-y-scroll rounded-xl border-Gray70 ring-2 ring-Gray20 transition-all duration-500 ease-in-out",
-				isOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0",
+				"scrollbar-none overflow-y-scroll rounded-xl border-2 border-Gray10 transition-all duration-500 ease-in-out",
+				isOpen ? "max-h-[300px] opacity-100" : "h-[0px] opacity-0",
 				className,
 			)}
 		>
