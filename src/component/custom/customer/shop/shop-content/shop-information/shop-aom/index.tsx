@@ -1,11 +1,12 @@
 import Image from "next/image"
 import { useState } from "react"
 
-import NTIcon from "@/component/common/nt-icon"
 import { useGetMonthlyArtList } from "@/hook/use-aom"
 import { isUndefined } from "@/util/common/type-guard"
 
 import AOMError from "./aom-error"
+import AOMFewItems from "./aom-few-items"
+import AOMNodata from "./aom-nodata"
 import AOMSkelton from "./aom-skelton"
 import NavigationButton from "./navigation-button"
 
@@ -28,14 +29,13 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 			setFocusedIdx(focusedIdx - 1)
 		}
 	}
+	if (AomDataList.length === 0) {
+		return <AOMNodata />
+	}
+
 	return (
-		<div className="relative flex h-[586px] w-full flex-col gap-8 px-2 pt-14">
-			<div className="flex">
-				<div className="text-Title01 text-PB80">이달의 아트</div>
-				<NTIcon icon="art" className="text-Black" />
-			</div>
-			<hr />
-			<div className="w-full gap-4 overflow-hidden">
+		<div className="flex h-[30rem] w-full flex-col px-2">
+			<div className="relative w-full gap-4 overflow-hidden">
 				<div
 					className="flex translate-x-[25rem] transform gap-4 transition-transform duration-700 ease-in-out"
 					style={{ transform: `translateX(-${focusedIdx * 25}rem)` }}
@@ -55,18 +55,19 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 							/>
 						</div>
 					))}
+					{AomDataList.length <= 2 && <AOMFewItems />}
 				</div>
+				<NavigationButton
+					onclick={handlePrevious}
+					direction="left"
+					isVisible={focusedIdx > 0}
+				/>
+				<NavigationButton
+					onclick={handleNext}
+					direction="right"
+					isVisible={focusedIdx < AomDataList.length - 3}
+				/>
 			</div>
-			<NavigationButton
-				onclick={handlePrevious}
-				direction="left"
-				isVisible={focusedIdx > 0}
-			/>
-			<NavigationButton
-				onclick={handleNext}
-				direction="right"
-				isVisible={focusedIdx < AomDataList.length - 3}
-			/>
 		</div>
 	)
 }

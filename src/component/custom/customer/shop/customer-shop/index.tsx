@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+
 import { useShopById } from "@/hook/use-shop-controller"
 
 import CustomerShopBanner from "../banner"
@@ -11,21 +13,31 @@ type CustomerShopPagePT = {
 	shopId: number
 }
 export function CustomerShopPage({ shopId }: CustomerShopPagePT) {
+	const [focusedIdx, setFocusedIdx] = useState(0)
 	const { data: shopData } = useShopById(shopId)
 	if (!shopData) return <ShopError />
 
 	const { shopName, address, profileImages } = shopData
-
+	const handleContentChange = (idx: number) => {
+		setFocusedIdx(idx)
+	}
 	return (
-		<div>
+		<div className="h-full">
 			<CustomerShopBanner
 				shopName={shopName}
 				shopAddress={address}
 				profileImages={profileImages}
 				shopId={shopId}
 			/>
-			<CustomerToolbar />
-			<CustomerShopContent shopId={shopId} data={shopData} />
+			<CustomerToolbar
+				focusedIdx={focusedIdx}
+				onContentChange={handleContentChange}
+			/>
+			<CustomerShopContent
+				shopId={shopId}
+				data={shopData}
+				focusedIdx={focusedIdx}
+			/>
 		</div>
 	)
 }
