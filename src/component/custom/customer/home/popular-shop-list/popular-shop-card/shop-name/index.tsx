@@ -9,7 +9,7 @@ export function ShopName({ shop }: ShopNamePT) {
 	const router = useRouter()
 	return (
 		<div
-			className="h-fit w-fit cursor-pointer pl-4 text-Callout text-Gray80"
+			className="h-fit w-fit cursor-pointer pl-4 text-Body01 font-SemiBold text-Gray80"
 			onClick={() => {
 				router.push(`shop/${shop.shopId}`)
 			}}
