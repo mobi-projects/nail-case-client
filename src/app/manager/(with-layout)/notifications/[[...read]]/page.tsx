@@ -1,14 +1,13 @@
 "use client"
 import { useRouter } from "next/navigation"
 
+import { NTStyledButton } from "@/component/common/nt-styled-button"
 import { cn } from "@/config/tailwind"
 import { MANAGER_BASE } from "@/constant/routing-path"
 import { useGetNotifications } from "@/hook/use-notifications"
 import type { TResSubscribe } from "@/hook/use-sse"
 import { decomposeStamp } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
-
-import { NTStyledButton } from "@/component/common/nt-styled-button"
 
 type NotificationsPT = { params: { read: undefined | Array<"not-read"> } }
 
