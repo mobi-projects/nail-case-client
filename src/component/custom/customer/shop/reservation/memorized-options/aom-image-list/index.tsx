@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react"
+import { useEffect, type Dispatch, type SetStateAction } from "react"
 
 import { cn } from "@/config/tailwind"
 import { useGetMonthlyArtList } from "@/hook/use-aom"
@@ -11,6 +11,7 @@ type AOMImageListPT = {
 	isSelectedAOM: boolean
 	shopId: number
 	clickedId: number
+	setDisabledIdxArr: Dispatch<SetStateAction<Array<number>>>
 	setClickedId: Dispatch<SetStateAction<number>>
 	setReservationForm: Dispatch<SetStateAction<TReqReservationForm>>
 }
@@ -19,11 +20,17 @@ export default function AOMImageList({
 	isSelectedAOM,
 	shopId,
 	clickedId,
+	setDisabledIdxArr,
 	setClickedId,
 	setReservationForm,
 }: AOMImageListPT) {
 	const { data, isLoading } = useGetMonthlyArtList(shopId)
-	if (isLoading || isUndefined(data)) return
+
+	useEffect(() => {
+		if (data?.dataList.length === 0) return setDisabledIdxArr([0, 3])
+	}, [setDisabledIdxArr, data])
+
+	if (isLoading || isUndefined(data)) return null
 	const delayCss = setTimeout(() => {
 		return isSelectedAOM ? "h-30" : "h-0"
 	}, 200)

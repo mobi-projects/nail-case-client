@@ -26,6 +26,7 @@ function TreatmentNCondition({
 }: TreatmentNConditionPT) {
 	const [isSelectedAOM, setIsSelectedAOM] = useState(false)
 	const [clickedId, setClickedId] = useState(-1)
+	const [disabledIdxArr, setDisabledIdxArr] = useState([3])
 
 	/** 선택된 옵션들의 idx  */
 	const treatmentSelectedIdx = TREATMENT_OPTIONS.valueArr.findIndex(
@@ -98,7 +99,7 @@ function TreatmentNCondition({
 				<SectionTitle title="시술 내용" isEssential={true} />
 				<NTOption
 					optionArr={TREATMENT_OPTIONS.labelArr}
-					disabledIdxArr={[3]}
+					disabledIdxArr={disabledIdxArr}
 					selectedIdxArr={[treatmentSelectedIdx]}
 					onSelect={onClickTreatmentOption}
 				/>
@@ -106,6 +107,7 @@ function TreatmentNCondition({
 			<AOMImageList
 				isSelectedAOM={isSelectedAOM}
 				shopId={shopId}
+				setDisabledIdxArr={setDisabledIdxArr}
 				clickedId={clickedId}
 				setClickedId={setClickedId}
 				setReservationForm={setReservationForm}
