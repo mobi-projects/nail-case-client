@@ -43,7 +43,7 @@ export default function AOMImageList({
 	}
 
 	return (
-		<div className="flex h-full items-center gap-x-8">
+		<div className="flex h-full items-center justify-center gap-x-8 pr-4">
 			<NTIcon
 				icon="expandLeft"
 				className={cn(

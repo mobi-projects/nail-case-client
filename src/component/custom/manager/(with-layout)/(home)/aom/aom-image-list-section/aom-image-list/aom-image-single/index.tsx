@@ -18,7 +18,7 @@ export default function AOMImageSingle({
 }: AOMInageBoxPT) {
 	return (
 		<div
-			className="relative h-24 w-24 min-w-24 cursor-pointer rounded-[26px] bg-White shadow-customGray80 transition-all"
+			className="relative h-24 w-24 min-w-24 cursor-pointer rounded-md bg-White shadow-customGray80 transition-all"
 			onClick={() => setFocusedIdx(() => idx)}
 		>
 			<Image

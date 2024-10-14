@@ -25,31 +25,38 @@ export default function ImageViewerdBox({
 	return (
 		<div
 			className={cn(
-				"relative flex h-80 w-80 min-w-80 flex-col items-center justify-center gap-y-3 rounded-3xl border-[1.5px] bg-BGblue01 text-Gray70",
-				hasAOMImages(aomInfoArr) ? "border-transparent" : "border-PB50",
+				"flex h-full w-full items-center justify-center",
+				hasAOMImages(aomInfoArr) ? "rounded-2xl bg-BGblue01" : "bg-White",
 			)}
 		>
-			{hasAOMImages(aomInfoArr) ? (
-				<Image
-					src={aomInfoArr[focusedIdx].imageUrl}
-					alt="이달의 아트"
-					fill
-					sizes="40vw"
-					priority
-					className="rounded-3xl"
-				/>
-			) : (
-				<>
-					<NTIcon icon="camera" className="h-9 w-9 text-Gray80" />
-					<p className="text-Body01 text-[18px] font-SemiBold">
-						사진을 등록하세요.
-					</p>
-					<p className="text-Body02"> 최대 10장까지 첨부 가능해요.</p>
-					<NTButton flexible={"fit"} onClick={onClickRegisterBtn}>
-						이달의 아트 등록
-					</NTButton>
-				</>
-			)}
+			<div
+				className={cn(
+					"relative flex h-80 w-80 flex-col items-center justify-center gap-y-3 rounded-3xl border-[1.5px] bg-BGblue01 text-Gray70",
+					hasAOMImages(aomInfoArr) ? "border-transparent" : "border-PB50",
+				)}
+			>
+				{hasAOMImages(aomInfoArr) ? (
+					<Image
+						src={aomInfoArr[focusedIdx].imageUrl}
+						alt="이달의 아트"
+						fill
+						sizes="40vw"
+						priority
+						className="rounded-3xl"
+					/>
+				) : (
+					<>
+						<NTIcon icon="camera" className="h-9 w-9 text-Gray80" />
+						<p className="text-Body01 text-[18px] font-SemiBold">
+							사진을 등록하세요.
+						</p>
+						<p className="text-Body02"> 최대 10장까지 첨부 가능해요.</p>
+						<NTButton flexible={"fit"} onClick={onClickRegisterBtn}>
+							이달의 아트 등록
+						</NTButton>
+					</>
+				)}
+			</div>
 		</div>
 	)
 }
