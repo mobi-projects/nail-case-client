@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import NTContent from "@/component/common/nt-content"
 import { QUERY_MAINPAGE_QUERY } from "@/constant"
 import { getMainPageData } from "@/util/api-v2/get-main-page-data"
-import { isUndefined } from "@/util/common/type-guard"
+import { isNull, isUndefined } from "@/util/common/type-guard"
 
 import ReservationSummaryError from "./reservation-summary-error"
 import ReservationSummarySkeleton from "./reservation-summary-skeleton"
@@ -21,6 +21,7 @@ export default function ReservationSummary() {
 
 	if (isLoading) return <ReservationSummarySkeleton />
 	if (isError || isUndefined(data)) return <ReservationSummaryError />
+	if (isNull(data)) return
 	const { details, shop } = data
 	if (isUndefined(details)) return
 
