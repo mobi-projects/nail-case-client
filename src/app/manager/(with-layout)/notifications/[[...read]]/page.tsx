@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation"
 
-import { NTButton } from "@/component/common/atom/nt-button"
+import { NTBorderButton } from "@/component/common/nt-border-button"
 import { cn } from "@/config/tailwind"
 import { MANAGER_BASE } from "@/constant/routing-path"
 import { useGetNotifications } from "@/hook/use-notifications"
@@ -31,29 +31,26 @@ export default function Notifications({ params }: NotificationsPT) {
 
 	return (
 		<div className="flex h-full w-full justify-center">
-			<div className="h-full w-[80%]">
-				<h1 className="pt-3 text-Title01">알림</h1>
-				<div className="h-fit w-full">
-					<div className="flex gap-x-3 py-4">
-						<NTButton
-							size={"exSmall"}
-							variant={isFiltered ? "secondary" : "primary"}
-							onClick={handleClickAllBtn}
-						>
-							전체
-						</NTButton>
-						<NTButton
-							size={"exSmall"}
-							variant={!isFiltered ? "secondary" : "primary"}
-							onClick={handleClickAllNotReadBtn}
-						>
-							읽지 않음
-						</NTButton>
-					</div>
-					<div className="flex flex-col gap-y-5 rounded-md bg-Gray10/40">
-						{list?.length > 0 &&
-							list.map((item, idx) => <NotificationItem {...item} key={idx} />)}
-					</div>
+			<div className="h-fit w-[75%]">
+				<div className="flex gap-6 py-8">
+					<NTBorderButton
+						size={"exSmall"}
+						variant={isFiltered ? "secondary" : "primary"}
+						onClick={handleClickAllBtn}
+					>
+						전체
+					</NTBorderButton>
+					<NTBorderButton
+						size={"exSmall"}
+						variant={!isFiltered ? "secondary" : "primary"}
+						onClick={handleClickAllNotReadBtn}
+					>
+						읽지 않음
+					</NTBorderButton>
+				</div>
+				<div className="flex flex-col gap-y-5 rounded-md bg-Gray10/40">
+					{list?.length > 0 &&
+						list.map((item, idx) => <NotificationItem {...item} key={idx} />)}
 				</div>
 			</div>
 		</div>
@@ -83,7 +80,7 @@ function NotificationItem({
 			<p
 				className={cn(
 					"text-Body01 font-Bold",
-					read ? "text-Gray40" : "text-PB60",
+					read ? "text-Gray40" : "text-Gray80",
 				)}
 			>
 				(희망 시술 시간 : {getReservationReqTime(startTime)})
