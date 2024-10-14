@@ -29,7 +29,7 @@ export default function AOMImageListSection({
 		})
 	}
 	return hasAOMImages(aomInfoArr) ? (
-		<div className="flex h-full w-full flex-col gap-y-2 border-l-2 border-l-Gray20 pl-8">
+		<div className="flex h-full w-full flex-col rounded-r-2xl p-4">
 			<p className="text-Title03 font-SemiBold">등록된 사진</p>
 			<p className="text-Title03 font-SemiBold text-PB100">{`${aomInfoArr.length}개`}</p>
 			<AOMImageList
@@ -37,10 +37,10 @@ export default function AOMImageListSection({
 				focusedIdx={focusedIdx}
 				setFocusedIdx={setFocusedIdx}
 			/>
-
 			<NTButton flexible={"fit"} size={"exSmall"} onClick={onClickEditBtn}>
 				편집하기
 			</NTButton>
+			<div className="flex w-full items-center justify-end pr-4"></div>
 		</div>
 	) : (
 		<div className="flex h-full w-full flex-col items-center justify-center gap-y-3 rounded-3xl bg-White shadow-customGray80">

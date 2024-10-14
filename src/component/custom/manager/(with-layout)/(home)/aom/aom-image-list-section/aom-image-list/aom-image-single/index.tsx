@@ -18,7 +18,10 @@ export default function AOMImageSingle({
 }: AOMInageBoxPT) {
 	return (
 		<div
-			className="relative h-24 w-24 min-w-24 cursor-pointer rounded-[26px] bg-White shadow-customGray80 transition-all"
+			className={cn(
+				"relative h-28 w-28 min-w-28 cursor-pointer overflow-hidden rounded-md bg-white shadow-customGray80 transition-all",
+				isFocused ? "ring-2 ring-PB50" : "ring-transparent",
+			)}
 			onClick={() => setFocusedIdx(() => idx)}
 		>
 			<Image
@@ -27,10 +30,7 @@ export default function AOMImageSingle({
 				fill
 				sizes="30vw"
 				priority
-				className={cn(
-					"rounded-md border-2",
-					isFocused ? "border-PB50" : "border-transparent",
-				)}
+				className="rounded-md transition-all hover:scale-110"
 			/>
 		</div>
 	)
