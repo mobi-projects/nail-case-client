@@ -1,13 +1,14 @@
 "use client"
 import { useRouter } from "next/navigation"
 
-import { NTBorderButton } from "@/component/common/nt-border-button"
 import { cn } from "@/config/tailwind"
 import { MANAGER_BASE } from "@/constant/routing-path"
 import { useGetNotifications } from "@/hook/use-notifications"
 import type { TResSubscribe } from "@/hook/use-sse"
 import { decomposeStamp } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
+
+import { NTStyledButton } from "@/component/common/nt-styled-button"
 
 type NotificationsPT = { params: { read: undefined | Array<"not-read"> } }
 
@@ -33,20 +34,20 @@ export default function Notifications({ params }: NotificationsPT) {
 		<div className="flex h-full w-full justify-center">
 			<div className="h-fit w-[75%]">
 				<div className="flex gap-6 py-8">
-					<NTBorderButton
+					<NTStyledButton
 						size={"exSmall"}
 						variant={isFiltered ? "secondary" : "primary"}
 						onClick={handleClickAllBtn}
 					>
 						전체
-					</NTBorderButton>
-					<NTBorderButton
+					</NTStyledButton>
+					<NTStyledButton
 						size={"exSmall"}
 						variant={!isFiltered ? "secondary" : "primary"}
 						onClick={handleClickAllNotReadBtn}
 					>
 						읽지 않음
-					</NTBorderButton>
+					</NTStyledButton>
 				</div>
 				<div className="flex flex-col gap-y-5 rounded-md bg-Gray10/40">
 					{list?.length > 0 &&
