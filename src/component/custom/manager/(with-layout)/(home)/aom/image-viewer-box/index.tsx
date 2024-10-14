@@ -1,5 +1,3 @@
-import Image from "next/image"
-
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
@@ -8,6 +6,8 @@ import type { TResAOM } from "@/util/api-v2/list-monthly-art"
 
 import AOMHandleModal from "../aom-image-list-section/aom-manage-modal"
 import { hasAOMImages } from "../aom.utils"
+
+import SlideAOMImage from "./slide-aom-image"
 
 type IageUploadBoxPT = {
 	aomInfoArr: TResAOM
@@ -19,9 +19,11 @@ export default function ImageViewerdBox({
 	focusedIdx,
 }: IageUploadBoxPT) {
 	const { onOpenModal } = useModal()
+
 	const onClickRegisterBtn = () => {
 		onOpenModal({ size: "large", isX: true, children: <AOMHandleModal /> })
 	}
+
 	return (
 		<div
 			className={cn(
@@ -31,19 +33,12 @@ export default function ImageViewerdBox({
 		>
 			<div
 				className={cn(
-					"relative flex h-80 w-80 flex-col items-center justify-center gap-y-3 rounded-3xl border-[1.5px] bg-BGblue01 text-Gray70",
+					"scrollbar-none relative flex h-80 w-80 flex-col items-center justify-center gap-y-3 overflow-y-hidden rounded-3xl border-[1.5px] bg-BGblue01 text-Gray70",
 					hasAOMImages(aomInfoArr) ? "border-transparent" : "border-PB50",
 				)}
 			>
 				{hasAOMImages(aomInfoArr) ? (
-					<Image
-						src={aomInfoArr[focusedIdx].imageUrl}
-						alt="이달의 아트"
-						fill
-						sizes="40vw"
-						priority
-						className="rounded-3xl"
-					/>
+					<SlideAOMImage aomInfoArr={aomInfoArr} focusedIdx={focusedIdx} />
 				) : (
 					<>
 						<NTIcon icon="camera" className="h-9 w-9 text-Gray80" />
