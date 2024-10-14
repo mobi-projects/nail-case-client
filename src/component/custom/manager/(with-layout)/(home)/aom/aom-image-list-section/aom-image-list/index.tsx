@@ -43,11 +43,11 @@ export default function AOMImageList({
 	}
 
 	return (
-		<div className="flex h-full items-center justify-center gap-x-8 pr-4">
+		<div className="flex h-full items-center justify-center gap-x-4 pr-4">
 			<NTIcon
 				icon="expandLeft"
 				className={cn(
-					"h-6 w-6 text-Gray50 transition-all hover:text-Gray80",
+					"h-8 w-8 text-Gray50 transition-all hover:text-Gray80",
 					isArrayLengthOver(aomInfoArr, lengthThreshold) &&
 						isFocusedIdxNumberOver(focusedIdx, idxThreshold)
 						? "cursor-pointer opacity-100"
@@ -57,12 +57,12 @@ export default function AOMImageList({
 			/>
 			<div
 				className={cn(
-					"relative flex h-full w-[36rem] transform items-center gap-x-5 overflow-x-hidden transition-transform duration-300",
+					"relative flex h-full w-[40rem] transform items-center gap-x-5 overflow-x-hidden transition-transform duration-300",
 				)}
 			>
 				<div
 					className={cn(
-						"absolute top-1/2 flex w-full -translate-y-1/2 transform items-center gap-x-5 transition-transform duration-1000",
+						"absolute top-1/2 flex w-full -translate-y-1/2 transform items-center gap-x-4 px-2 transition-transform duration-1000",
 						slideCss,
 					)}
 				>
@@ -80,7 +80,7 @@ export default function AOMImageList({
 			<NTIcon
 				icon="expandRight"
 				className={cn(
-					"h-6 w-6 cursor-pointer text-Gray50 transition-all hover:text-Gray80",
+					"h-8 w-8 cursor-pointer text-Gray50 transition-all hover:text-Gray80",
 					isArrayLengthOver(aomInfoArr, lengthThreshold) &&
 						!isFocusedIdxNumberOver(focusedIdx, idxThreshold)
 						? "cursor-pointer opacity-100"
