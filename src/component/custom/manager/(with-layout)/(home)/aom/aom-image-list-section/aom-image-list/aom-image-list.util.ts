@@ -12,5 +12,5 @@ export const isFocusedIdxNumberOver = (
 }
 
 export const getSlideCss = (focusedIdx: number) => {
-	return isFocusedIdxNumberOver(focusedIdx, 4) ? `-translate-x-[36rem]` : ""
+	return isFocusedIdxNumberOver(focusedIdx, 4) ? `-translate-x-[40rem]` : ""
 }
