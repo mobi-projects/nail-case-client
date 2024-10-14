@@ -5,7 +5,7 @@ import { ICON_DATA } from "../nt-icon"
 import { NTStyledButton } from "."
 
 const meta: Meta<typeof NTStyledButton> = {
-	title: "component/common/NTBorderButton",
+	title: "component/common/NTStyledButton",
 	component: NTStyledButton,
 	parameters: {
 		layout: "centered",
