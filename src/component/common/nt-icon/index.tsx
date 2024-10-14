@@ -74,4 +74,5 @@ export const ICON_DATA = {
 	pending: "iconoir:new-tab",
 	confirmed: "jam:check",
 	art: "mdi:art",
+	clock: "tabler:clock",
 } as const

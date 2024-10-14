@@ -1,5 +1,5 @@
 import { RESERVATION_STATUS } from "@/constant/reservation-status"
-import { CONDITION_LIST, REMOVE_LIST } from "@/constant/tagList"
+import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import type { TMainPageDetail } from "@/util/api-v2/get-main-page-data"
 import {
 	getDateFromStamp,
@@ -14,21 +14,22 @@ export const getReservationStatus = (dataList: Array<TMainPageDetail>) => {
 	return RESERVATION_STATUS[dataList[0].status]
 }
 
-export const createReservationOptions = (dataList: Array<TMainPageDetail>) => {
+export const createReservationOptionArr = (
+	dataList: Array<TMainPageDetail>,
+) => {
 	const tags = []
 
 	const removeTagTranslate = REMOVE_LIST[dataList[0].removeOption]
 	if (removeTagTranslate) {
 		tags.push(removeTagTranslate)
 	}
-	const conditionTagTranslate = dataList[0].conditionOptions
-		.map((tag) => CONDITION_LIST[tag])
-		.filter((tag) => tag)
-	tags.push(...conditionTagTranslate)
+	const conditionTagTranslate = CONDITION_LIST[dataList[0].conditionOptions[0]]
 
-	const treatmentTagTranslate = dataList[0].treatmentOption[0]
+	tags.push(conditionTagTranslate)
+
+	const treatmentTagTranslate = TREATMENT_LIST[dataList[0].treatmentOptions[0]]
 	tags.push(treatmentTagTranslate)
-	return tags.join(", ")
+	return tags
 }
 export const transfromStartTimeToString = (startTime: number) => {
 	const month = getMonthFromStamp(startTime)

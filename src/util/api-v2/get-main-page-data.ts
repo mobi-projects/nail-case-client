@@ -1,15 +1,8 @@
 import { axiosInstance } from "@/config/axios"
-import type { TResponseData } from "@/type/response"
 
-export const getMainPageData = async (): Promise<
-	TResponseData<TResMainPageData, "data">
-> => {
+export const getMainPageData = async (): Promise<TReservationInfo> => {
 	const response = await axiosInstance().get("/main")
-	return response.data.data
-}
-
-export type TResMainPageData = {
-	recentReservation: TReservationInfo
+	return response.data.data.recentReservation
 }
 
 export type TReservationInfo = {
@@ -21,16 +14,17 @@ export type TReservationInfo = {
 export type TMainPageShop = {
 	id: number
 	name: string
-	imageSrc: string
+	shopImageUrl: string
 }
 export type TMainPageDetail = {
 	reservationDetailsId: number
 	startTime: number
 	endTime: number | null
-	treatmentOption: Array<TTreatmentOption> // 중복선택 x 배열안에 원소1개로
+	treatmentOptions: Array<TTreatmentOption> // 중복선택 x 배열안에 원소1개로
 	removeOption: TRemoveOption
 	conditionOptions: Array<TconditionOption>
 	status: Tstatus
+	estimatedPrice: string | null
 }
 export type TconditionOption = "REPAIR" | "AS" | "WOUND_CARE" | "CORRECTION"
 export type Tstatus =
