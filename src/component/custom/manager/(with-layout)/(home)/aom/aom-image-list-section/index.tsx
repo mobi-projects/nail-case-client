@@ -40,7 +40,6 @@ export default function AOMImageListSection({
 			<NTButton flexible={"fit"} size={"exSmall"} onClick={onClickEditBtn}>
 				편집하기
 			</NTButton>
-			<div className="flex w-full items-center justify-end pr-4"></div>
 		</div>
 	) : (
 		<div className="flex h-full w-full flex-col items-center justify-center gap-y-3 rounded-3xl bg-White shadow-customGray80">
