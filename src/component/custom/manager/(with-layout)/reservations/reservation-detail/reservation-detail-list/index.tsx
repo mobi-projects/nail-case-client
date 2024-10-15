@@ -8,16 +8,20 @@ import type { TStatusExcludeCanceled } from "../../reservations.type"
 import DeatailBox from "../detail-box"
 import { formatTreatmentRequestTime } from "../reservation-detail.util"
 
+import SelectedAOMImage from "./selected-aom-image"
+
 type ReservationDetailListPT = {
 	reservation: TResViewReservation
 	selectedId: number
 	status: TStatusExcludeCanceled
+	shopId: number
 }
 
 export default function ReservationDetailList({
 	reservation,
 	selectedId,
 	status,
+	shopId,
 }: ReservationDetailListPT) {
 	const { customerName, startTime, conditionList, extend, remove, treatment } =
 		reservation
@@ -36,7 +40,7 @@ export default function ReservationDetailList({
 			},
 		},
 	})
-
+	const isAOM = treatment.option === "AOM"
 	const reservationIdVarinats = cva(
 		"mr-4 h-fit w-fit rounded-full px-3 py-1 text-Body01 font-SemiBold text-White",
 		{
@@ -60,10 +64,18 @@ export default function ReservationDetailList({
 				</p>
 			</div>
 			<DeatailBox title="이름(예약자)" content={customerName} />
-			<DeatailBox
-				title="시술 내용"
-				content={TREATMENT_LIST[treatment.option]}
-			></DeatailBox>
+			<DeatailBox title="시술 내용">
+				<div className="flex items-center gap-x-10">
+					<p>{TREATMENT_LIST[treatment.option]}</p>
+					{isAOM && (
+						<SelectedAOMImage
+							isAOM={isAOM}
+							shopId={shopId}
+							treatment={treatment}
+						/>
+					)}
+				</div>
+			</DeatailBox>
 			<DeatailBox title="제거 유무" content={REMOVE_LIST[remove]} />
 			<DeatailBox
 				title="연장 유무"

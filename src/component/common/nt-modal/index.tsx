@@ -9,7 +9,7 @@ import NTIcon from "../nt-icon"
 
 import { useModal } from "./nt-modal.context"
 
-const ModalVariants = cva(
+export const ModalVariants = cva(
 	"fixed bottom-[50%] left-[50%] right-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[26px] bg-white ",
 	{
 		variants: {

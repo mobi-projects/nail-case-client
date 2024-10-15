@@ -96,6 +96,7 @@ export default function ReservationDetail({
 				reservation={data}
 				selectedId={selectedId}
 				status={status}
+				shopId={shopId}
 			/>
 			<ReservationPermissionForm
 				reservation={data}
