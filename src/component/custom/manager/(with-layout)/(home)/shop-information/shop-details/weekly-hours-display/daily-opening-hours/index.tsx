@@ -12,7 +12,7 @@ export default function DailyOpeningHours({
 }: DailyOpeningHoursPT) {
 	const { dayOfWeek, isOpen } = dailyWorkHours
 	return (
-		<div className="grid grid-cols-[1fr,1fr,10fr] items-center pl-3">
+		<div className="grid grid-cols-[1fr_1fr_10fr] items-center pl-3">
 			<div
 				className={cn(
 					"h-2 w-2 rounded-full ring-2",
@@ -29,7 +29,7 @@ export default function DailyOpeningHours({
 			</p>
 			<div
 				className={cn(
-					"flex items-center text-Body01",
+					"text-Body01 tabular-nums",
 					isOpen ? "text-Black" : "text-Gray40",
 				)}
 			>
