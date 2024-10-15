@@ -48,5 +48,5 @@ export const transformEndTimeToString = (endTime: number | null) => {
 	const hour = getHourFromStamp(endTime)
 	const minute = getMinFromStamp(endTime)
 	const minuteForm = minute.toString().padStart(2, "0")
-	return ` ~ ${hour}:${minuteForm}`
+	return ` ${hour}:${minuteForm}`
 }
