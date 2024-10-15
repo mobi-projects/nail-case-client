@@ -1,5 +1,5 @@
 export default function AOMImageSingleSkelotn() {
 	return (
-		<div className="h-24 w-24 transform animate-pulse rounded-[26px] bg-Gray20" />
+		<div className="h-28 w-28 transform animate-pulse rounded-md bg-Gray20 ring-2 ring-transparent" />
 	)
 }
