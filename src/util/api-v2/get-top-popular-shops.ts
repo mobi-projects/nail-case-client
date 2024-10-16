@@ -1,12 +1,13 @@
-import { axiosInstance } from "@/config/axios"
+import axios from "axios"
+
 import type { TResponseData } from "@/type/response"
 
 export const getTopPopularShops = async (
 	page: number = 0,
 	size: number = 6,
 ): Promise<TResponseData<TResGetPopularShops, "data">> => {
-	const response = await axiosInstance().get(
-		`/main/shopsList?size=${size}&page=${page}`,
+	const response = await axios.get(
+		`${process.env.NEXT_PUBLIC_BACKEND_APP}/main/shopsList?size=${size}&page=${page}`,
 	)
 	return response.data
 }
