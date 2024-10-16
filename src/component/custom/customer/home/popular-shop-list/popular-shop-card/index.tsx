@@ -1,9 +1,12 @@
+import { getCookie } from "cookies-next"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 import PromotionImage from "@/../public/asset/nail-image-01.jpg"
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
+import { REFRESH_TOKEN } from "@/constant/auth-key"
+import { COMMON_SIGN } from "@/constant/routing-path"
 import type { TPopularShop } from "@/util/api-v2/get-top-popular-shops"
 
 import { ShopName } from "./shop-name"
@@ -38,10 +41,17 @@ export function PopularShopCard({ shop }: PopularShopCardPT) {
 }
 
 function ShopHoverInfo({ shop }: PopularShopCardPT) {
+	const isLoggedIn = !!getCookie(REFRESH_TOKEN)
 	const router = useRouter()
 	return (
 		<div
-			onClick={() => router.push(`shop/${shop.shopId}`)}
+			onClick={() => {
+				if (isLoggedIn) {
+					router.push(`shop/${shop.shopId}`)
+				} else {
+					router.push(`${COMMON_SIGN}/member`)
+				}
+			}}
 			className="absolute inset-0 flex flex-col justify-between rounded-[26px] bg-gradient-to-tr from-Black/50 to-Gray30 py-[19px] pl-[29px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 		>
 			<div className="pt-[10]">
