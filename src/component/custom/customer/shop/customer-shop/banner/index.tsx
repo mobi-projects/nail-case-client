@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react"
 
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
@@ -27,14 +28,14 @@ export default function CustomerShopBanner({
 		setCurrentIndex(idx)
 	}
 	return (
-		<div className="flex h-[26rem] w-full flex-col gap-16 px-20 pt-10">
+		<div className="relative flex h-[26rem] w-full flex-col gap-16">
 			<NTBannerImageCarousel
-				className="absolute left-0 top-0 h-[26rem] w-full bg-transparent"
+				className="h-full w-full rounded-b-[40px] bg-transparent"
 				essentialImagePropArr={imageArray}
 				accessSelected={handleImageSelect}
 			/>
 			<BannerButtonList shopId={shopId} />
-			<div className="z-10 flex h-fit w-full justify-between">
+			<div className="absolute top-1/4 flex h-fit w-full justify-between px-14">
 				<BannerTitle shopAddress={shopAddress} shopName={shopName} />
 				<NTContent mode="dark">
 					{`${currentIndex + 1}/${profileImages.length.toString()}`}

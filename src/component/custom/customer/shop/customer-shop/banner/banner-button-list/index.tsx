@@ -17,7 +17,7 @@ export function BannerButtonList({ shopId }: BannerButtonListPT) {
 		})
 	}
 	return (
-		<div className="z-10 flex h-8 w-full justify-between">
+		<div className="absolute top-12 flex h-8 w-full justify-between px-14">
 			<RoutingButtonList />
 			<div className="flex gap-3">
 				<Wishbutton shopId={shopId} />

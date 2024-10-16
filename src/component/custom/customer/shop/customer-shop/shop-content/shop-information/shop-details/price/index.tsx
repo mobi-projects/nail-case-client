@@ -27,6 +27,7 @@ export default function PriceCard({ priceImages }: PriceCardPT) {
 			onClick={handleArtClick}
 			isContentClickable={true}
 			contentOnClick={handleArtClick}
+			showDot={true}
 		/>
 	)
 }

@@ -1,5 +1,4 @@
 "use client"
-
 import { useShopById } from "@/hook/use-shop-controller"
 
 import CustomerShopBanner from "./banner"
