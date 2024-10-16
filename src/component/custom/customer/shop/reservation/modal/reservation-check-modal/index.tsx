@@ -55,10 +55,7 @@ export default function ReservationCheckModal({
 			</ModalHeader>
 
 			<ModalBody className="scrollbar grid h-full w-full grid-cols-1 overflow-y-scroll border-b-Gray20">
-				<TreatmentConfirm
-					treatment={treatment}
-					shopId={reservationForm.shopId}
-				/>
+				<TreatmentConfirm treatment={treatment} />
 				<RemoveConfirm remove={remove} />
 				<ExtensionConfirm extend={extend} />
 				<ConditionListConfirm conditionList={conditionList} />
