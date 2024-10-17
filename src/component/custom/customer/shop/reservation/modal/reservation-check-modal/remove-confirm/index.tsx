@@ -1,6 +1,6 @@
 import NTOption from "@/component/common/nt-option"
 import { REMOVE_LIST } from "@/constant/tagList"
-import { type TRemoveOption } from "@/util/api-v2/get-main-page-data"
+import { type TRemoveOption } from "@/util/api/get-main-page-data"
 
 type RemoveConfirmPT = { remove: TRemoveOption }
 

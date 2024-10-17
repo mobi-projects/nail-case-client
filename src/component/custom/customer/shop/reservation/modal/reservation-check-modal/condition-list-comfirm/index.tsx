@@ -1,6 +1,6 @@
 import NTOption from "@/component/common/nt-option"
 import { CONDITION_LIST } from "@/constant/tagList"
-import { type TconditionOption } from "@/util/api-v2/get-main-page-data"
+import { type TconditionOption } from "@/util/api/get-main-page-data"
 
 type ConditionListConfirmPT = {
 	conditionList: Array<TconditionOption>

@@ -1,6 +1,6 @@
 import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
 import type { TNailTreatment } from "@/type/union-option/nail-treatment"
-import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
+import type { TReqReservationForm } from "@/util/api/post-register-reservation"
 
 import DetailInfo from "../detail-info"
 

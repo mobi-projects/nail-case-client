@@ -3,8 +3,8 @@ import { toast } from "sonner"
 
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { QUERY_MONTHLY_ART_ARR } from "@/constant"
-import { getMonthlyArtList } from "@/util/api-v2/list-monthly-art"
-import { putUpdateAomImages } from "@/util/api-v2/update-images"
+import { getMonthlyArtList } from "@/util/api/list-monthly-art"
+import { putUpdateAomImages } from "@/util/api/update-images"
 /** AOM 목록조회 */
 export const useGetMonthlyArtList = (shopId: number) =>
 	useQuery({

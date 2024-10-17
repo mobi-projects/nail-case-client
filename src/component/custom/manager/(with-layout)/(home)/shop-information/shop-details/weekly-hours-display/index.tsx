@@ -1,4 +1,4 @@
-import type { TWorkHours } from "@/util/api-v2/get-shop-info"
+import type { TWorkHours } from "@/util/api/get-shop-info"
 
 import DailyOpeningHours from "./daily-opening-hours"
 

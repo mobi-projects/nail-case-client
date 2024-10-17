@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
 
-import { getTopPopularShops } from "@/util/api-v2/get-top-popular-shops"
+import { getTopPopularShops } from "@/util/api/get-top-popular-shops"
 
 export const useInfiniteScroll = (size: number = 6) => {
 	const { data, isLoading, fetchNextPage, hasNextPage, isError } =

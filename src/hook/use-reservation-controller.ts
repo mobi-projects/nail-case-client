@@ -8,24 +8,24 @@ import {
 	VIEW_RESERVATION_QUERY,
 } from "@/constant"
 import type { TReqBodyUpdateReservation } from "@/type"
-import { patchUpdateReservation } from "@/util/api/reservation-controller"
 import {
 	getListReservation,
 	type TReqListReservationPT,
-} from "@/util/api-v2/get-list-reservation"
-import { getReservationDetail } from "@/util/api-v2/get-reservation-detail"
+} from "@/util/api/get-list-reservation"
+import { getReservationDetail } from "@/util/api/get-reservation-detail"
 import {
 	patchConfrimReservation,
 	type TReqConfrimReservation,
-} from "@/util/api-v2/patch-confirm-reservation"
+} from "@/util/api/patch-confirm-reservation"
 import {
 	patchRefuseReservation,
 	type TReqRefuseReservation,
-} from "@/util/api-v2/patch-refuse-reservation"
+} from "@/util/api/patch-refuse-reservation"
+import { patchUpdateReservation } from "@/util/api/pathch-update-reservation"
 import {
 	postRegisterReservation,
 	type TReqReservationForm,
-} from "@/util/api-v2/post-register-reservation"
+} from "@/util/api/post-register-reservation"
 
 /** 예약 목록조회 */
 export const useListReservation = ({

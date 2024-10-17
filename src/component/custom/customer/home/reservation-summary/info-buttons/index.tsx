@@ -5,10 +5,7 @@ import { toast } from "sonner"
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useUpdateReservationMutation } from "@/hook/use-reservation-controller"
 import type { TReqBodyUpdateReservation } from "@/type"
-import type {
-	TReservationInfo,
-	Tstatus,
-} from "@/util/api-v2/get-main-page-data"
+import type { TReservationInfo, Tstatus } from "@/util/api/get-main-page-data"
 
 type InfoButtonsPT = { recentReservation: TReservationInfo }
 

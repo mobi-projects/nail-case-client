@@ -4,7 +4,7 @@ import { useState } from "react"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import { getEssestialImageProps } from "@/component/custom/manager/(with-layout)/(home)/banner/banner.util"
-import type { TShopImage } from "@/util/api-v2/get-shop-by-id"
+import type { TShopImage } from "@/util/api/get-shop-by-id"
 
 import { BannerButtonList } from "./banner-button-list"
 import { BannerTitle } from "./banner-tilte"

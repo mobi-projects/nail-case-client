@@ -4,7 +4,7 @@ import {
 	ModalFooter,
 	ModalHeader,
 } from "@/component/common/nt-modal"
-import type { TWorkHour } from "@/util/api-v2/get-shop-by-id"
+import type { TWorkHour } from "@/util/api/get-shop-by-id"
 
 import {
 	getDayOfWeek,

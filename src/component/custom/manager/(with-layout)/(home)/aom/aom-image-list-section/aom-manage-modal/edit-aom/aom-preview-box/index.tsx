@@ -2,7 +2,7 @@ import Image from "next/image"
 import type { Dispatch, SetStateAction } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
-import type { TAOMImage, TResAOM } from "@/util/api-v2/list-monthly-art"
+import type { TAOMImage, TResAOM } from "@/util/api/list-monthly-art"
 
 import {
 	filterImagesByIdx,

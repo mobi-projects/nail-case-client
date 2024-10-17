@@ -1,4 +1,4 @@
-import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
+import type { TReqReservationForm } from "@/util/api/post-register-reservation"
 
 import ContentBody from "./content-body"
 import ContentHeader from "./content-header"

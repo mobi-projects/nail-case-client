@@ -1,6 +1,6 @@
 import { toast } from "sonner"
 
-import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+import type { TResAOM } from "@/util/api/list-monthly-art"
 
 /** 업로드 가능한 최대 이미지 갯수 반환 함수 0~10까지 */
 export const getMaxUploadCnt = (arr: TResAOM, threshold: number) => {

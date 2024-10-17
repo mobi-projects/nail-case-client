@@ -1,5 +1,5 @@
 import { useShopById } from "@/hook/use-shop-controller"
-import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
+import type { TReqReservationForm } from "@/util/api/post-register-reservation"
 import {
 	get12HourFromStamp,
 	getDateFromStamp,

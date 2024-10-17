@@ -11,7 +11,7 @@ import {
 import { COMMON_HOME } from "@/constant/routing-path"
 import type { TSignDataResponse, TRefreshDataResponse } from "@/type"
 
-import { postLogout } from "../api/auth-controller"
+import { postLogout } from "../api/post-logout"
 
 export const initAuthTokens = ({
 	accessToken,

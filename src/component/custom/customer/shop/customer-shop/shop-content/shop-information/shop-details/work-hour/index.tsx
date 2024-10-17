@@ -1,5 +1,5 @@
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
-import type { TWorkHour } from "@/util/api-v2/get-shop-by-id"
+import type { TWorkHour } from "@/util/api/get-shop-by-id"
 
 import InfoCard from "../info-card"
 

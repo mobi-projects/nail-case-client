@@ -1,10 +1,10 @@
 import Reservation from "@/component/custom/customer/shop/reservation"
 import Header from "@/component/custom/customer/shop/reservation/header"
-import { getShopById } from "@/util/api-v2/get-shop-by-id"
+import { getShopById } from "@/util/api/get-shop-by-id"
 
 type CustomerShopPT = {
 	params: {
-		shopId: number
+		shopId: string
 	}
 }
 const serverFetchShopById = async (shopId: number) => {
@@ -25,7 +25,7 @@ const serverFetchShopById = async (shopId: number) => {
 export default async function CustomerShopReservation({
 	params,
 }: CustomerShopPT) {
-	const { shopId } = params
+	const shopId = parseInt(params.shopId)
 	const { shopName, address, category } = await serverFetchShopById(shopId)
 	return (
 		<main className="flex h-fit w-full flex-col gap-[35px] py-[80px]">

@@ -5,7 +5,7 @@ import { useRegisterReservationMutation } from "@/hook/use-reservation-controlle
 import type {
 	TReqReservationForm,
 	TResReservation,
-} from "@/util/api-v2/post-register-reservation"
+} from "@/util/api/post-register-reservation"
 import { isUndefined } from "@/util/common/type-guard"
 
 import BackToButton from "./back-to-button"
@@ -23,7 +23,6 @@ export default function ReservationResponseSheet({
 	const [reservationContents, setReservationContents] = useState<
 		TResReservation | undefined
 	>(undefined)
-	console.log(newReservation)
 	const { mutateAsync, status } = useRegisterReservationMutation()
 	const fetchMutateResponse = useCallback(async () => {
 		try {

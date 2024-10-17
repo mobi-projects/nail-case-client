@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction } from "react"
 
 import NTOption from "@/component/common/nt-option"
-import type { TWorkHour } from "@/util/api-v2/get-shop-by-id"
+import type { TWorkHour } from "@/util/api/get-shop-by-id"
 import { getHourFromStamp } from "@/util/common"
 
 import {

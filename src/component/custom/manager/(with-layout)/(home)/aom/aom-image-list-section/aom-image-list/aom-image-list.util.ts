@@ -1,4 +1,4 @@
-import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+import type { TResAOM } from "@/util/api/list-monthly-art"
 
 export const isArrayLengthOver = (imageArr: TResAOM, threshold: number) => {
 	return imageArr.length > threshold

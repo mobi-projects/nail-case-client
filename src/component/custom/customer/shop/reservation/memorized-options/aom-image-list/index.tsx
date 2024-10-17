@@ -2,7 +2,7 @@ import { useEffect, type Dispatch, type SetStateAction } from "react"
 
 import { cn } from "@/config/tailwind"
 import { useGetMonthlyArtList } from "@/hook/use-aom"
-import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
+import type { TReqReservationForm } from "@/util/api/post-register-reservation"
 import { isUndefined } from "@/util/common/type-guard"
 
 import AOMImageSingle from "./aom-image-single"

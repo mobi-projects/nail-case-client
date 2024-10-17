@@ -3,7 +3,7 @@ import { type CookieValueTypes } from "cookies-next"
 import { jwtDecode } from "jwt-decode"
 
 import type { TRefreshDataResponse } from "@/type"
-import { postResquestNewToken } from "@/util/api/auth-controller"
+import { postRequestNewToken } from "@/util/api/post-request-new-token"
 import { getNowStamp } from "@/util/common"
 import { deleteAllCookies, setAuthTokens } from "@/util/common/auth"
 import { isNull, isUndefined } from "@/util/common/type-guard"
@@ -20,7 +20,7 @@ export const getValidAccessToken = async (token: CookieValueTypes) => {
 
 	if (isNull(refreshPromise)) {
 		try {
-			refreshPromise = postResquestNewToken()
+			refreshPromise = postRequestNewToken()
 			const { data: newTokens } = await refreshPromise
 			setAuthTokens(newTokens) // 새로운 토큰 설정
 			return newTokens.accessToken // 갱신된 액세스 토큰 반환

@@ -1,4 +1,4 @@
-import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+import type { TResAOM } from "@/util/api/list-monthly-art"
 
 /** 기존에 등록된 이미지 인지여부를 판단 */
 export const isOldImages = (id: number, keepIdArr: Array<number>) => {

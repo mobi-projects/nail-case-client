@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react"
 
 import { ModalBody } from "@/component/common/nt-modal"
 import { cn } from "@/config/tailwind"
-import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+import type { TResAOM } from "@/util/api/list-monthly-art"
 
 import {
 	getSlideCss,

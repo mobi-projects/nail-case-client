@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
-import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+import type { TResAOM } from "@/util/api/list-monthly-art"
 
 import { hasAOMImages } from "../aom.utils"
 

@@ -2,7 +2,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 
 import { cn } from "@/config/tailwind"
-import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+import type { TResAOM } from "@/util/api/list-monthly-art"
 
 type SlideAOMImagePT = {
 	aomInfoArr: TResAOM
