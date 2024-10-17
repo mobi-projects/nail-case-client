@@ -1,6 +1,7 @@
 import { BoxShadow, COLORS, fontStyle, fontWeight } from "./src/config/tailwind"
 
 const config = {
+	mode: "jit",
 	content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
 	theme: {
 		extend: {

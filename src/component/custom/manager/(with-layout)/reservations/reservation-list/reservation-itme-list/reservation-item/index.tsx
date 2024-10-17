@@ -38,8 +38,8 @@ export default function ReservationItem({
 				status: {
 					PENDING: "text-PB70",
 					REJECTED: "text-red-300",
-					CONFIRMED: "text-PURPLE",
-					COMPLETED: "text-GREEN",
+					CONFIRMED: "text-PURPLE50",
+					COMPLETED: "text-GREEN50",
 				},
 			},
 		},

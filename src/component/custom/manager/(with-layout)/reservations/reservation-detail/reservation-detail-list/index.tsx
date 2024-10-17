@@ -23,8 +23,15 @@ export default function ReservationDetailList({
 	status,
 	shopId,
 }: ReservationDetailListPT) {
-	const { customerName, startTime, conditionList, extend, remove, treatment } =
-		reservation
+	const {
+		customerName,
+		startTime,
+		conditionList,
+		extend,
+		remove,
+		treatment,
+		endTime,
+	} = reservation
 
 	const conditionListArr = conditionList
 		.map((item) => CONDITION_LIST[item.option])
@@ -35,8 +42,8 @@ export default function ReservationDetailList({
 			status: {
 				PENDING: "text-PB70",
 				REJECTED: "text-red-300",
-				CONFIRMED: "text-PURPLE",
-				COMPLETED: "text-GREEN",
+				CONFIRMED: "text-PURPLE50",
+				COMPLETED: "text-GREEN50",
 			},
 		},
 	})
@@ -48,7 +55,7 @@ export default function ReservationDetailList({
 				status: {
 					PENDING: "bg-PB70",
 					REJECTED: "bg-red-300",
-					CONFIRMED: "bg-PURPLE",
+					CONFIRMED: "bg-PURPLE50",
 					COMPLETED: "bg-GREEN",
 				},
 			},
@@ -89,7 +96,7 @@ export default function ReservationDetailList({
 			<DeatailBox title="컨디션" content={conditionListArr} status={status} />
 			<DeatailBox
 				title="시술 시간"
-				content={formatTreatmentRequestTime(startTime)}
+				content={formatTreatmentRequestTime(startTime, endTime)}
 				status={status}
 			/>
 		</>

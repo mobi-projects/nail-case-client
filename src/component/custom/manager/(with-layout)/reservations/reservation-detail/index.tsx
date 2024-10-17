@@ -9,12 +9,13 @@ import { isUndefined } from "@/util/common/type-guard"
 
 import type { TStatusExcludeCanceled } from "../reservations.type"
 
+import Price from "./price"
+import RejectReason from "./reject-reason"
 import ReservationDetailControlBtn from "./reservation-detail-control-btn"
 import ReservationDetailList from "./reservation-detail-list"
 import ReservationDetailSkeleton from "./reservation-detail-skeleton"
 import { validatePriceNEndTime } from "./reservation-detail.util"
 import ReservationPermissionForm from "./reservation-permission-form"
-import RejectReason from "./reservation-reject-reason"
 
 type ReservationDetailPT = {
 	selectedId: number
@@ -114,6 +115,7 @@ export default function ReservationDetail({
 				/>
 			)}
 			{status === "REJECTED" && <RejectReason reservation={data} />}
+			{status === "CONFIRMED" && <Price reservation={data} />}
 			<div ref={scrollRef} />
 		</form>
 	)

@@ -27,7 +27,7 @@ export const prefetchResercationDetail = async (
 	await queryClient.prefetchQuery({
 		queryKey: [VIEW_RESERVATION_QUERY, shopId, reservationId],
 		queryFn: () => getReservationDetail(shopId, reservationId),
-		staleTime: 0,
+		staleTime: 1000 * 60 * 2,
 		gcTime: 1000 * 60 * 10, // 보관시간 10분 설정
 	})
 }

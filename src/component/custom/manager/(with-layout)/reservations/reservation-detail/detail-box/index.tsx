@@ -21,8 +21,8 @@ export default function DeatailBox({
 			status: {
 				PENDING: "text-PB90",
 				REJECTED: "text-Gray50",
-				CONFIRMED: "text-PURPLE",
-				COMPLETED: "text-GREEN",
+				CONFIRMED: "text-PURPLE50",
+				COMPLETED: "text-GREEN50",
 			},
 		},
 	})
