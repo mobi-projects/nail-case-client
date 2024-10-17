@@ -63,8 +63,8 @@ export default function ReservationDetailList({
 					예약번호 : #{selectedId}
 				</p>
 			</div>
-			<DeatailBox title="이름(예약자)" content={customerName} />
-			<DeatailBox title="시술 내용">
+			<DeatailBox title="이름(예약자)" content={customerName} status={status} />
+			<DeatailBox title="시술 내용" status={status}>
 				<div className="flex items-center gap-x-10">
 					<p>{TREATMENT_LIST[treatment.option]}</p>
 					{isAOM && (
@@ -76,15 +76,21 @@ export default function ReservationDetailList({
 					)}
 				</div>
 			</DeatailBox>
-			<DeatailBox title="제거 유무" content={REMOVE_LIST[remove]} />
+			<DeatailBox
+				title="제거 유무"
+				content={REMOVE_LIST[remove]}
+				status={status}
+			/>
 			<DeatailBox
 				title="연장 유무"
 				content={extend ? "연장 필요" : "연장 필요 없음"}
+				status={status}
 			/>
-			<DeatailBox title="컨디션" content={conditionListArr} />
+			<DeatailBox title="컨디션" content={conditionListArr} status={status} />
 			<DeatailBox
 				title="시술 시간"
 				content={formatTreatmentRequestTime(startTime)}
+				status={status}
 			/>
 		</>
 	)
