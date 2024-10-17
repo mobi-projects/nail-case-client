@@ -36,6 +36,7 @@ export default function SelectedAOMImage({
 	const imageIdx = data.dataList.findIndex(
 		(info) => info.imageId === treatment.imageId,
 	)
+	const hasImageUrl = !!data.dataList[imageIdx]
 
 	const onClickImage = () => {
 		onOpenModal({
@@ -47,9 +48,12 @@ export default function SelectedAOMImage({
 		})
 	}
 
-	return (
+	return hasImageUrl ? (
 		<div
-			className="group relative h-14 w-14 cursor-pointer rounded-lg transition-all hover:scale-110"
+			className={cn(
+				"group relative h-14 w-14 cursor-pointer rounded-lg transition-all",
+				hasImageUrl && "hover:scale-110",
+			)}
 			onClick={onClickImage}
 		>
 			<Image
@@ -63,6 +67,8 @@ export default function SelectedAOMImage({
 				확대
 			</div>
 		</div>
+	) : (
+		<DeletedImageBox />
 	)
 }
 
@@ -76,6 +82,17 @@ function AOMError() {
 	return (
 		<div className="flex h-14 w-14 items-center justify-center rounded-lg bg-PB50/20 text-Callout text-Gray50">
 			<NTIcon icon="rejected" />
+		</div>
+	)
+}
+
+function DeletedImageBox() {
+	return (
+		<div className="flex h-14 w-14 items-center justify-center rounded-lg border bg-Gray10 text-Caption01 font-Bold text-Gray60">
+			<span>
+				삭제된 <br />
+				이미지
+			</span>
 		</div>
 	)
 }
