@@ -18,8 +18,8 @@ const titleVarinats = cva("text-Title02 font-Bold transition-all ", {
 		textColor: {
 			PENDING: "text-PB70",
 			REJECTED: "text-red-300",
-			CONFIRMED: "text-[#7a87f9]",
-			COMPLETED: "text-[#69C893]",
+			CONFIRMED: "text-PURPLE",
+			COMPLETED: "text-GREEN",
 		},
 	},
 })
@@ -28,8 +28,8 @@ const iconVarinats = cva("h-10 w-10 transition-all", {
 		textColor: {
 			PENDING: "text-PB70",
 			REJECTED: "text-red-300",
-			CONFIRMED: "text-[#7a87f9]",
-			COMPLETED: "text-[#69C893]",
+			CONFIRMED: "text-PURPLE",
+			COMPLETED: "text-GREEN",
 		},
 	},
 })
@@ -45,8 +45,8 @@ export default function CategoryBox({ status, isClicked }: CategoryBoxPT) {
 				"flex h-24 w-64 cursor-pointer items-center justify-between gap-x-4 rounded-md bg-White px-4 shadow-customGray80 transition-all",
 				isClicked && status === "PENDING" && "bg-PB70",
 				isClicked && status === "REJECTED" && "bg-red-300",
-				isClicked && status === "CONFIRMED" && "bg-[#7a87f9]",
-				isClicked && status === "COMPLETED" && "bg-[#69C893]",
+				isClicked && status === "CONFIRMED" && "bg-PURPLE",
+				isClicked && status === "COMPLETED" && "bg-GREEN",
 				!isClicked && "hover:bg-Gray10",
 			)}
 			onClick={() =>

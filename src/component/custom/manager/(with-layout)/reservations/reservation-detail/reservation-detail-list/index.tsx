@@ -35,8 +35,8 @@ export default function ReservationDetailList({
 			status: {
 				PENDING: "text-PB70",
 				REJECTED: "text-red-300",
-				CONFIRMED: "text-[#7a87f9]",
-				COMPLETED: "text-[#69C893]",
+				CONFIRMED: "text-PURPLE",
+				COMPLETED: "text-GREEN",
 			},
 		},
 	})
@@ -48,8 +48,8 @@ export default function ReservationDetailList({
 				status: {
 					PENDING: "bg-PB70",
 					REJECTED: "bg-red-300",
-					CONFIRMED: "bg-[#7a87f9]",
-					COMPLETED: "bg-[#69C893]",
+					CONFIRMED: "bg-PURPLE",
+					COMPLETED: "bg-GREEN",
 				},
 			},
 		},

@@ -27,6 +27,8 @@ export const COLORS = {
 	PY50: "#F8FCA9",
 	BGblue01: "#F6FAFC",
 	BGblue02: "#EFFAFF",
+	PURPLE: "#7a87f9",
+	GREEN: "#69C893",
 } as const
 
 export const fontWeight = {
