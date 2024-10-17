@@ -7,7 +7,7 @@ import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
 import { REFRESH_TOKEN } from "@/constant/auth-key"
 import { COMMON_SIGN } from "@/constant/routing-path"
-import type { TPopularShop } from "@/util/api-v2/get-top-popular-shops"
+import type { TPopularShop } from "@/util/api/get-top-popular-shops"
 
 import { ShopName } from "./shop-name"
 

@@ -5,8 +5,8 @@ import { COMMON_HOME, MANAGER_BASE } from "@/constant/routing-path"
 import type { TSignDataResponse } from "@/type"
 import type { TResponseData } from "@/type/response"
 import type { TSignType } from "@/type/union-option/sign-type"
-import { getLogin } from "@/util/api/auth-controller"
-import { getUserInfo } from "@/util/api-v2/get-user-info"
+import { getLogin } from "@/util/api/get-login"
+import { getUserInfo } from "@/util/api/get-user-info"
 import { initAuthTokens } from "@/util/common/auth"
 
 type UseGetAuthTokenPT = { code: string; loginType: TSignType }

@@ -1,4 +1,4 @@
-import type { TResViewReservation } from "@/util/api-v2/get-reservation-detail"
+import type { TResViewReservation } from "@/util/api/get-reservation-detail"
 type RejectReasonPT = {
 	reservation: TResViewReservation
 }

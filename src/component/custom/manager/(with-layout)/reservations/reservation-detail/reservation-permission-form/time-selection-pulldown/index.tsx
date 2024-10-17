@@ -13,7 +13,7 @@ import {
 	generateFromattedTimeOptionArr,
 } from "@/component/custom/customer/shop/reservation/memorized-time-selection/available-times/availale-times.util"
 import { cn } from "@/config/tailwind"
-import type { TWorkHours } from "@/util/api-v2/get-shop-info"
+import type { TWorkHours } from "@/util/api/get-shop-info"
 import { add30Min, combineTimeStamp } from "@/util/common"
 
 type TimeSelectionPulldownPT = {

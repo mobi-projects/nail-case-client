@@ -9,7 +9,7 @@ import {
 } from "@/component/common/nt-modal"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { useSheet } from "@/component/common/nt-sheet/nt-sheet.context"
-import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
+import type { TReqReservationForm } from "@/util/api/post-register-reservation"
 
 import ReservationResponseSheet from "../../rservation-response-sheet"
 

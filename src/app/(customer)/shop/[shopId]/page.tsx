@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { ShopDetail } from "@/component/custom/customer/shop/customer-shop"
 import { getCacheClient } from "@/config/tanstack-query"
 import { QUERY_SHOP_INFO } from "@/constant"
-import { getShopById } from "@/util/api-v2/get-shop-by-id"
+import { getShopById } from "@/util/api/get-shop-by-id"
 
 type CustomerShopPT = {
 	params: {

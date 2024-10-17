@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
-import type { TResAOM } from "@/util/api-v2/list-monthly-art"
+import type { TResAOM } from "@/util/api/list-monthly-art"
 
 import { useUploadAOMImages } from "./aom-add-box.hook"
 

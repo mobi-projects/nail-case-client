@@ -12,7 +12,7 @@ import {
 } from "@/component/common/nt-pulldown"
 import { MANAGER_BASE } from "@/constant/routing-path"
 import type { TResSubscribe } from "@/hook/use-sse"
-import { useMutateReadNotification } from "@/util/api-v2/post-read-notification"
+import { useMutateReadNotification } from "@/util/api/post-read-notification"
 
 import { getTimeDifference } from "./alarm-pulldown.util"
 

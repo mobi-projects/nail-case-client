@@ -3,8 +3,8 @@ import { useEffect, type Dispatch, type SetStateAction } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
-import type { TReservationListPagination } from "@/util/api-v2/get-list-reservation"
-import { prefetchResercationDetail } from "@/util/api-v2/get-reservation-detail"
+import type { TReservationListPagination } from "@/util/api/get-list-reservation"
+import { prefetchResercationDetail } from "@/util/api/get-reservation-detail"
 
 import { getDecomposedDate, getDecomposedTIme } from "./reservation-item.util"
 type ReservationItemPT = {

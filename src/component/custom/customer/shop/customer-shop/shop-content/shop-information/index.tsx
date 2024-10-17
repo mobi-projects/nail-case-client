@@ -1,4 +1,4 @@
-import type { TResGetShop } from "@/util/api-v2/get-shop-by-id"
+import type { TResGetShop } from "@/util/api/get-shop-by-id"
 
 import LoactionCard from "./shop-details/location"
 import NoticeCard from "./shop-details/notice"

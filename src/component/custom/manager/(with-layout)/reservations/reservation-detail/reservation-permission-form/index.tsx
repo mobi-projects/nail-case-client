@@ -3,7 +3,7 @@ import { useEffect } from "react"
 
 import { NTPulldownProvider } from "@/component/common/nt-pulldown"
 import { cn } from "@/config/tailwind"
-import type { TResViewReservation } from "@/util/api-v2/get-reservation-detail"
+import type { TResViewReservation } from "@/util/api/get-reservation-detail"
 import {
 	getHourFromStamp,
 	getMinFromStamp,

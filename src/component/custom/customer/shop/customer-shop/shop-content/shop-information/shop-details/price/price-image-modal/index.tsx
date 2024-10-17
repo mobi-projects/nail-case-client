@@ -8,7 +8,7 @@ import {
 	ModalHeader,
 } from "@/component/common/nt-modal"
 import { cn } from "@/config/tailwind"
-import type { TInfoImages } from "@/util/api-v2/get-shop-info"
+import type { TInfoImages } from "@/util/api/get-shop-info"
 
 import { useModalHook } from "./price-image-modal.hook"
 

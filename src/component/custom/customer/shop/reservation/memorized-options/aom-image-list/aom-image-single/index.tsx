@@ -2,8 +2,8 @@ import Image from "next/image"
 import type { Dispatch, SetStateAction } from "react"
 
 import { cn } from "@/config/tailwind"
-import type { TAOMImage } from "@/util/api-v2/list-monthly-art"
-import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
+import type { TAOMImage } from "@/util/api/list-monthly-art"
+import type { TReqReservationForm } from "@/util/api/post-register-reservation"
 
 type AOMImageSinglePT = {
 	imageInfo: TAOMImage

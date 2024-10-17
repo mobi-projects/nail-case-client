@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import NTContent from "@/component/common/nt-content"
 import { QUERY_MAINPAGE_QUERY } from "@/constant"
-import { getMainPageData } from "@/util/api-v2/get-main-page-data"
+import { getMainPageData } from "@/util/api/get-main-page-data"
 import { isNull, isUndefined } from "@/util/common/type-guard"
 
 import ReservationSummaryError from "./reservation-summary-error"

@@ -1,4 +1,4 @@
-import type { TResGetShopInfo } from "@/util/api-v2/get-shop-info"
+import type { TResGetShopInfo } from "@/util/api/get-shop-info"
 
 type BannerTitlePT = {
 	infoData: TResGetShopInfo

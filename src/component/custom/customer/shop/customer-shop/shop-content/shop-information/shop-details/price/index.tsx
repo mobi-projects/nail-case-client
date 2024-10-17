@@ -1,5 +1,5 @@
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
-import type { TInfoImages } from "@/util/api-v2/get-shop-info"
+import type { TInfoImages } from "@/util/api/get-shop-info"
 
 import InfoCard from "../info-card"
 

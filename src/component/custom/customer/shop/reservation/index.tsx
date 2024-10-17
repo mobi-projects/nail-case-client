@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
 import { useModal } from "@/component/common/nt-modal/nt-modal.context"
-import type { TReqReservationForm } from "@/util/api-v2/post-register-reservation"
+import type { TReqReservationForm } from "@/util/api/post-register-reservation"
 import { getNowStamp } from "@/util/common"
 
 import FocusingCard from "./common/focusing-card"

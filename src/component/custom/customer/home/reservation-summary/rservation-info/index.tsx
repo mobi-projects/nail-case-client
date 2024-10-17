@@ -1,6 +1,6 @@
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
-import type { TReservationInfo } from "@/util/api-v2/get-main-page-data"
+import type { TReservationInfo } from "@/util/api/get-main-page-data"
 
 import {
 	createReservationOptionArr,

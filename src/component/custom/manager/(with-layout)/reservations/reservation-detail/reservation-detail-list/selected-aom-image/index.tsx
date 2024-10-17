@@ -7,7 +7,7 @@ import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import { cn } from "@/config/tailwind"
 import { QUERY_MONTHLY_ART_ARR } from "@/constant"
 import { type TNailTreatment } from "@/type/union-option/nail-treatment"
-import { getMonthlyArtList } from "@/util/api-v2/list-monthly-art"
+import { getMonthlyArtList } from "@/util/api/list-monthly-art"
 import { isUndefined } from "@/util/common/type-guard"
 
 type SelectedAOMImagePT = {

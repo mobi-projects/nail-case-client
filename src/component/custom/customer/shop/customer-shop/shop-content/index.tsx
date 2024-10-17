@@ -1,6 +1,6 @@
 "use client"
 import NTIcon from "@/component/common/nt-icon"
-import type { TResGetShop } from "@/util/api-v2/get-shop-by-id"
+import type { TResGetShop } from "@/util/api/get-shop-by-id"
 
 import { ButtonList } from "./button-list"
 import ShopInformation from "./shop-information"

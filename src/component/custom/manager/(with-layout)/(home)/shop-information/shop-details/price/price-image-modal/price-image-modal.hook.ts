@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import type { TInfoImages } from "@/util/api-v2/get-shop-info"
+import type { TInfoImages } from "@/util/api/get-shop-info"
 
 type UseModalHookPT = { priceImages: Array<TInfoImages> }
 export function useModalHook({ priceImages }: UseModalHookPT) {

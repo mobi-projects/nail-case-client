@@ -1,6 +1,6 @@
 import { RESERVATION_STATUS } from "@/constant/reservation-status"
 import { CONDITION_LIST, REMOVE_LIST, TREATMENT_LIST } from "@/constant/tagList"
-import type { TMainPageDetail } from "@/util/api-v2/get-main-page-data"
+import type { TMainPageDetail } from "@/util/api/get-main-page-data"
 import {
 	getDateFromStamp,
 	getDayDivisionInKor,
