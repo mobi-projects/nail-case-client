@@ -1,6 +1,7 @@
 import { getCookie } from "cookies-next"
 import { cookies } from "next/headers"
 import Image from "next/image"
+import Link from "next/link"
 
 import NTLogo from "@/../public/asset/nt-logo.svg"
 import NTToolbar from "@/component/common/nt-toolbar"
@@ -15,7 +16,16 @@ export default function CustomerHeader() {
 	return (
 		<div className="flex h-fit w-full flex-col gap-[16.5px] pt-10">
 			<div className="flex h-[51px] w-full items-center justify-between">
-				<Image src={NTLogo} alt="brand-logo" width={134} height={38} priority />
+				<Link href={`/`}>
+					<Image
+						src={NTLogo}
+						alt="brand-logo"
+						width={134}
+						height={38}
+						priority
+						className="cursor-pointer"
+					/>
+				</Link>
 				{isLoggedIn ? <UserProfile /> : <LoginButtons />}
 			</div>
 			<div className="mb-[23px] flex w-full flex-col">
