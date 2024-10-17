@@ -39,6 +39,7 @@ export const useSSE = (
 export type TResSubscribe = {
 	notificationId: number
 	reservationId: number
+	nickname: string
 	content: string
 	notificationType: "RESERVATION_REQUEST"
 	senderId: number

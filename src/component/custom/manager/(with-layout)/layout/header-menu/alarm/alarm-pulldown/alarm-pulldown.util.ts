@@ -1,7 +1,10 @@
 import dayjs from "dayjs"
 
 export const changeEngToKor = (arr: Array<string>) => {
-	if (arr.includes("few") && arr.includes("seconds")) {
+	if (
+		(arr.includes("few") && arr.includes("seconds")) ||
+		(arr.includes("a") && arr.includes("minute"))
+	) {
 		return "방금 전"
 	}
 	if (arr.includes("day") && arr.includes("a")) {
