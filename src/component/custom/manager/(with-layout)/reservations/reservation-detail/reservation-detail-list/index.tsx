@@ -23,8 +23,15 @@ export default function ReservationDetailList({
 	status,
 	shopId,
 }: ReservationDetailListPT) {
-	const { customerName, startTime, conditionList, extend, remove, treatment } =
-		reservation
+	const {
+		customerName,
+		startTime,
+		conditionList,
+		extend,
+		remove,
+		treatment,
+		endTime,
+	} = reservation
 
 	const conditionListArr = conditionList
 		.map((item) => CONDITION_LIST[item.option])
@@ -35,8 +42,8 @@ export default function ReservationDetailList({
 			status: {
 				PENDING: "text-PB70",
 				REJECTED: "text-red-300",
-				CONFIRMED: "text-[#7a87f9]",
-				COMPLETED: "text-[#69C893]",
+				CONFIRMED: "text-PURPLE50",
+				COMPLETED: "text-GREEN50",
 			},
 		},
 	})
@@ -48,8 +55,8 @@ export default function ReservationDetailList({
 				status: {
 					PENDING: "bg-PB70",
 					REJECTED: "bg-red-300",
-					CONFIRMED: "bg-[#7a87f9]",
-					COMPLETED: "bg-[#69C893]",
+					CONFIRMED: "bg-PURPLE50",
+					COMPLETED: "bg-GREEN",
 				},
 			},
 		},
@@ -63,8 +70,8 @@ export default function ReservationDetailList({
 					예약번호 : #{selectedId}
 				</p>
 			</div>
-			<DeatailBox title="이름(예약자)" content={customerName} />
-			<DeatailBox title="시술 내용">
+			<DeatailBox title="이름(예약자)" content={customerName} status={status} />
+			<DeatailBox title="시술 내용" status={status}>
 				<div className="flex items-center gap-x-10">
 					<p>{TREATMENT_LIST[treatment.option]}</p>
 					{isAOM && (
@@ -76,15 +83,21 @@ export default function ReservationDetailList({
 					)}
 				</div>
 			</DeatailBox>
-			<DeatailBox title="제거 유무" content={REMOVE_LIST[remove]} />
+			<DeatailBox
+				title="제거 유무"
+				content={REMOVE_LIST[remove]}
+				status={status}
+			/>
 			<DeatailBox
 				title="연장 유무"
 				content={extend ? "연장 필요" : "연장 필요 없음"}
+				status={status}
 			/>
-			<DeatailBox title="컨디션" content={conditionListArr} />
+			<DeatailBox title="컨디션" content={conditionListArr} status={status} />
 			<DeatailBox
 				title="시술 시간"
-				content={formatTreatmentRequestTime(startTime)}
+				content={formatTreatmentRequestTime(startTime, endTime)}
+				status={status}
 			/>
 		</>
 	)

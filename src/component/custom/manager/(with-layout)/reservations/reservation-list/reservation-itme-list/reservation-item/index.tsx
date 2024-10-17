@@ -1,4 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query"
+import { cva } from "class-variance-authority"
 import { useEffect, type Dispatch, type SetStateAction } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
@@ -6,13 +7,17 @@ import { cn } from "@/config/tailwind"
 import type { TReservationListPagination } from "@/util/api/get-list-reservation"
 import { prefetchResercationDetail } from "@/util/api/get-reservation-detail"
 
+import type { TStatusExcludeCanceled } from "../../../reservations.type"
+
 import { getDecomposedDate, getDecomposedTIme } from "./reservation-item.util"
+
 type ReservationItemPT = {
 	order: number
 	reservation: TReservationListPagination
 	isClicked: boolean
 	setSelectedId: Dispatch<SetStateAction<number>>
 	shopId: number
+	status: TStatusExcludeCanceled
 }
 
 export default function ReservationItem({
@@ -21,11 +26,24 @@ export default function ReservationItem({
 	isClicked,
 	setSelectedId,
 	shopId,
+	status,
 }: ReservationItemPT) {
 	const queryClient = useQueryClient()
 
 	const { customerName, startTime, reservationId } = reservation
-
+	const arrowVarinats = cva(
+		"absolute right-2 top-1/2 h-5 w-5 -translate-y-1/2",
+		{
+			variants: {
+				status: {
+					PENDING: "text-PB70",
+					REJECTED: "text-red-300",
+					CONFIRMED: "text-PURPLE50",
+					COMPLETED: "text-GREEN50",
+				},
+			},
+		},
+	)
 	useEffect(() => {
 		if (order % 10 === 1) return setSelectedId(reservationId)
 	}, [order, reservationId, setSelectedId])
@@ -56,8 +74,8 @@ export default function ReservationItem({
 			<NTIcon
 				icon="expandRight"
 				className={cn(
-					"absolute right-2 top-1/2 h-5 w-5 -translate-y-1/2",
-					isClicked ? "text-PB100" : "text-transparent",
+					arrowVarinats({ status }),
+					!isClicked && "text-transparent",
 				)}
 			/>
 		</div>

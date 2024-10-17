@@ -5,17 +5,29 @@ import {
 	get12HourFromStamp,
 	getDayDivisionInKor,
 	getDayOfWeekFromStamp,
+	getMinFromStamp,
 } from "@/util/common"
 import { isUndefined } from "@/util/common/type-guard"
 
-export const formatTreatmentRequestTime = (timeStamp: number) => {
-	const { date, min, month, year } = decomposeStamp(timeStamp)
-
-	const dayOfWeek = getDayOfWeekFromStamp(timeStamp)
-	const dayDivision = getDayDivisionInKor(timeStamp)
-	const formattedHour = get12HourFromStamp(timeStamp)
-	const formattedMin = min === 0 ? "" : "30분"
-	return `${year}년 ${month}월 ${date}일 (${dayOfWeek}요일) ${dayDivision} ${formattedHour}시 ${formattedMin} `
+export const formatTreatmentRequestTime = (
+	startTime: number,
+	endTime: number | null,
+) => {
+	let timeInfoText = ""
+	const { date, min, month, year } = decomposeStamp(startTime)
+	const dayOfWeek = getDayOfWeekFromStamp(startTime)
+	const dayDivision = getDayDivisionInKor(startTime)
+	const formattedStartHour = get12HourFromStamp(startTime)
+	const formattedStartMin = min === 0 ? "" : "30분"
+	if (endTime) {
+		const endMin = getMinFromStamp(endTime)
+		const formattedEndHour = get12HourFromStamp(endTime)
+		const formattedEndMin = endMin === 0 ? "" : "30분"
+		timeInfoText = `${year}년 ${month}월 ${date}일 (${dayOfWeek}요일) ${dayDivision} ${formattedStartHour}시 ${formattedStartMin} ~ ${formattedEndHour}시 ${formattedEndMin} `
+	} else {
+		timeInfoText = `${year}년 ${month}월 ${date}일 (${dayOfWeek}요일) ${dayDivision} ${formattedStartHour}시 ${formattedStartMin}`
+	}
+	return timeInfoText
 }
 
 export const validatePriceNEndTime = (price: string, time: number) => {

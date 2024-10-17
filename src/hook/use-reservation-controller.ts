@@ -129,7 +129,10 @@ export const useMutateRefuseReservation = (
 						(queryKey[3] === "PENDING" || queryKey[3] === "REJECTED")
 					)
 				},
-			})
+			}),
+				queryClient.invalidateQueries({
+					queryKey: [VIEW_RESERVATION_QUERY, shopId, reservationId],
+				})
 		},
 
 		onError: () => {
