@@ -1,20 +1,21 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
 import type { Metadata } from "next"
 
-import { CustomerShopPage } from "@/component/custom/customer/shop/customer-shop"
+import { ShopDetail } from "@/component/custom/customer/shop/customer-shop"
 import { getCacheClient } from "@/config/tanstack-query"
 import { QUERY_SHOP_INFO } from "@/constant"
 import { getShopById } from "@/util/api-v2/get-shop-by-id"
 
 type CustomerShopPT = {
 	params: {
-		shopId: number
+		shopId: string
 	}
 }
 export const generateMetadata = async ({
 	params,
 }: CustomerShopPT): Promise<Metadata> => {
-	const shopData = await getShopById(params.shopId)
+	const shopId = parseInt(params.shopId)
+	const shopData = await getShopById(shopId)
 	const { shopName, address, profileImages } = shopData
 	const imageUrl =
 		profileImages && profileImages.length > 0
@@ -32,17 +33,17 @@ export const generateMetadata = async ({
 }
 export default async function CustomerShop({ params }: CustomerShopPT) {
 	const queryClient = getCacheClient()
-
+	const shopId = parseInt(params.shopId)
 	await queryClient.prefetchQuery({
-		queryKey: [QUERY_SHOP_INFO, params.shopId],
-		queryFn: async () => await getShopById(params.shopId),
+		queryKey: [QUERY_SHOP_INFO, shopId],
+		queryFn: async () => await getShopById(shopId),
 	})
 
 	const dehydratedState = dehydrate(queryClient)
 
 	return (
 		<HydrationBoundary state={dehydratedState}>
-			<CustomerShopPage shopId={params.shopId} />
+			<ShopDetail shopId={shopId} />
 		</HydrationBoundary>
 	)
 }
