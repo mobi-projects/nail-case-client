@@ -8,7 +8,7 @@ type ReservationListPT = {
 }
 export function ButtonList({ shopId, phone, shopName }: ReservationListPT) {
 	return (
-		<div className="flex gap-6">
+		<div className="flex gap-6 pt-4">
 			<ReservationButton shopId={shopId} />
 			<PhoneNumberButton phone={phone} shopName={shopName} />
 		</div>

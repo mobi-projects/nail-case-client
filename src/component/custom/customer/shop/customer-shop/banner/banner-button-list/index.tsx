@@ -1,3 +1,4 @@
+"use client"
 import { toast } from "sonner"
 
 import NTIcon from "@/component/common/nt-icon"
@@ -9,15 +10,15 @@ type BannerButtonListPT = {
 	shopId: number
 }
 export function BannerButtonList({ shopId }: BannerButtonListPT) {
-	const currentUrl = window.location.href
 	const handleShareClick = () => {
+		const currentUrl = window.location.href
 		toast.dismiss()
 		navigator.clipboard.writeText(currentUrl).then(() => {
 			toast.success("주소가 복사되었습니다")
 		})
 	}
 	return (
-		<div className="z-10 flex h-8 w-full justify-between">
+		<div className="absolute top-12 flex h-8 w-full justify-between px-14">
 			<RoutingButtonList />
 			<div className="flex gap-3">
 				<Wishbutton shopId={shopId} />

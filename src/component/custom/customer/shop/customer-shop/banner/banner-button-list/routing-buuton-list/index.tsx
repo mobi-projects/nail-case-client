@@ -17,12 +17,12 @@ export function RoutingButtonList() {
 	return (
 		<div className="flex h-full w-7 gap-2">
 			<NTIcon
-				className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
+				className="mt-[1px] aspect-square w-10 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
 				icon="back"
 				onClick={navigateBack}
 			/>
 			<NTIcon
-				className="aspect-square w-7 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
+				className="aspect-square w-10 text-White drop-shadow-[0_0_1px_rgba(0,0,0,0.9)] hover:cursor-pointer"
 				icon="homeLight"
 				onClick={navigateHome}
 			/>

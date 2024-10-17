@@ -1,26 +1,18 @@
 "use client"
-
-import { useState } from "react"
-
 import { useShopById } from "@/hook/use-shop-controller"
+import { isUndefined } from "@/util/common/type-guard"
 
-import CustomerShopBanner from "../banner"
-import CustomerToolbar from "../customer-toolbar"
-import CustomerShopContent from "../shop-content"
-import ShopError from "../shop-error"
+import CustomerShopBanner from "./banner"
+import CustomerShopContent from "./shop-content"
 
 type CustomerShopPagePT = {
 	shopId: number
 }
-export function CustomerShopPage({ shopId }: CustomerShopPagePT) {
-	const [focusedIdx, setFocusedIdx] = useState(0)
+export function ShopDetail({ shopId }: CustomerShopPagePT) {
 	const { data: shopData } = useShopById(shopId)
-	if (!shopData) return <ShopError />
+	if (isUndefined(shopData)) return null
 
 	const { shopName, address, profileImages } = shopData
-	const handleContentChange = (idx: number) => {
-		setFocusedIdx(idx)
-	}
 	return (
 		<div className="h-full">
 			<CustomerShopBanner
@@ -29,15 +21,7 @@ export function CustomerShopPage({ shopId }: CustomerShopPagePT) {
 				profileImages={profileImages}
 				shopId={shopId}
 			/>
-			<CustomerToolbar
-				focusedIdx={focusedIdx}
-				onContentChange={handleContentChange}
-			/>
-			<CustomerShopContent
-				shopId={shopId}
-				data={shopData}
-				focusedIdx={focusedIdx}
-			/>
+			<CustomerShopContent shopId={shopId} data={shopData} />
 		</div>
 	)
 }
