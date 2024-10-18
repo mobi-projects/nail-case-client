@@ -17,7 +17,7 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	const { data, isLoading } = useShopById(shopId)
 	if (isLoading) {
 		return (
-			<div className="relative h-[432.47px] w-full animate-pulse bg-Gray20 transition-all" />
+			<div className="relative h-[432.47px] w-full animate-pulse rounded-xl bg-Gray20 transition-all" />
 		)
 	}
 	const InfoData = data as TResGetShopInfo
@@ -29,14 +29,17 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	return (
 		<div className="relative h-[432.47px] w-full">
 			<NTBannerImageCarousel
-				className="absolute left-0 h-full w-full bg-transparent"
+				className="absolute left-0 h-full w-full rounded-xl bg-transparent"
 				accessSelected={getSelectedIdx}
 				essentialImagePropArr={imageArray}
 			/>
 			<NTContent mode="dark" className="absolute left-[90px] top-10">
 				미리보기
 			</NTContent>
-			<NTContent mode="dark" className="absolute left-[205px] top-10">
+			<NTContent
+				mode="dark"
+				className="absolute left-[205px] top-10 min-w-[5rem]"
+			>
 				{`${selectedIdx + 1}/${profileImageLength.toString()}`}
 			</NTContent>
 			<BannerTitle infoData={InfoData} />
