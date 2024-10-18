@@ -9,6 +9,7 @@ import { isUndefined } from "@/util/common/type-guard"
 
 import type { TStatusExcludeCanceled } from "../reservations.type"
 
+import HasNoReservationDetail from "./has-no-reservation-detail"
 import Price from "./price"
 import RejectReason from "./reject-reason"
 import ReservationDetailControlBtn from "./reservation-detail-control-btn"
@@ -38,7 +39,10 @@ export default function ReservationDetail({
 	const scrollRef = useRef<HTMLDivElement>(null)
 
 	// query 관련
-	const { data, isLoading } = useViewReservationDetail(shopId, selectedId)
+	const { data, isLoading, isError } = useViewReservationDetail(
+		shopId,
+		selectedId,
+	)
 	const { mutate } = useMutateConfirmReservation(shopId, selectedId)
 
 	// submit event handler
@@ -75,14 +79,12 @@ export default function ReservationDetail({
 	}, [isAccepting, scrollRef])
 
 	// early return
-	if (isLoading && !showSkeleton)
-		return (
-			<div className="grid h-[610px] max-h-[610px] min-h-[610px] w-full grid-rows-[1fr_6fr_1fr_1fr] rounded-md border border-Gray20 bg-White p-6 shadow-customGray80" />
-		)
-	if (showSkeleton && isLoading) return <ReservationDetailSkeleton />
+	if (isLoading && !showSkeleton) return <DefaultSkeleton />
+	if (showSkeleton && isLoading)
+		return <ReservationDetailSkeleton status={status} />
 
-	if (isUndefined(data)) return null // 데이터가 없는 경우 처리
-
+	if (isUndefined(data)) return <HasNoReservationDetail status={status} />
+	if (isError) return <Error />
 	return (
 		<form
 			onSubmit={(e: FormEvent<HTMLFormElement>) => {
@@ -118,5 +120,17 @@ export default function ReservationDetail({
 			{status === "CONFIRMED" && <Price reservation={data} />}
 			<div ref={scrollRef} />
 		</form>
+	)
+}
+
+function Error() {
+	return (
+		<div className="grid h-[610px] max-h-[610px] w-full grid-rows-[auto_1fr_auto] rounded-md border border-Gray20 bg-White shadow-customGray80" />
+	)
+}
+
+function DefaultSkeleton() {
+	return (
+		<div className="grid h-[610px] max-h-[610px] min-h-[610px] w-full grid-rows-[1fr_6fr_1fr_1fr] rounded-md border border-Gray20 bg-White p-6 shadow-customGray80" />
 	)
 }

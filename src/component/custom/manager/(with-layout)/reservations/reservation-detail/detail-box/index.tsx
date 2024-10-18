@@ -7,7 +7,7 @@ type DeatailBoxPT = {
 	content?: string
 	title: string
 	children?: ReactNode
-	status: TStatusExcludeCanceled
+	status?: TStatusExcludeCanceled
 }
 
 export default function DeatailBox({

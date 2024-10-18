@@ -33,22 +33,12 @@ export default function ReservationItmeList({
 		status,
 	})
 
-	if (isLoading)
-		return (
-			<div className="flex h-full w-full items-center justify-center">
-				<NTLoadingSpinner size="small" />
-			</div>
-		)
-	if (isError || isUndefined(data)) return <h1>에러발생</h1> // 추후 수정
+	if (isLoading) return <Loading />
+	if (isError || isUndefined(data)) return <Error />
 
 	const { reservationList, pageSize } = data
 
-	if (reservationList.length === 0)
-		return (
-			<div className="h-full w-full content-center text-center text-Title01 font-Bold">
-				조회 데이터가 없습니다.
-			</div>
-		) // ui수정 pr별도로 올리겠습니다.
+	if (reservationList.length === 0) return <HasNoData />
 
 	return (
 		<div>
@@ -69,3 +59,26 @@ export default function ReservationItmeList({
 
 const getOrderNumber = (page: number, pageSize: number, idx: number) =>
 	page * pageSize + idx + 1
+
+function Loading() {
+	return (
+		<div className="flex h-full w-full items-center justify-center">
+			<NTLoadingSpinner size="small" />
+		</div>
+	)
+}
+function Error() {
+	return (
+		<div className="flex h-full w-full items-center justify-center text-Title01 font-Bold text-Gray50">
+			데이터를 불러오지 못했습니다.
+		</div>
+	)
+}
+
+function HasNoData() {
+	return (
+		<div className="flex h-full w-full items-center justify-center text-Title01 font-Bold text-Gray50">
+			표시할 예약 정보가 없습니다.
+		</div>
+	)
+}

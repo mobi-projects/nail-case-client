@@ -1,11 +1,12 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
-import { IS_MANAGER, REFRESH_TOKEN } from "./constant/auth-key"
+import { IS_MANAGER, REFRESH_TOKEN, SHOP_ID } from "./constant/auth-key"
 
 export function middleware(request: NextRequest) {
 	const token = request.cookies.get(REFRESH_TOKEN)
 	const isManager = request.cookies.get(IS_MANAGER)?.value === "true"
+	const shopId = request.cookies.get(SHOP_ID)
 	const isAuth = !!token
 
 	// 요청 URL을 확인합니다.
@@ -36,7 +37,7 @@ export function middleware(request: NextRequest) {
 	}
 	// 로그인 상테에서 판매자가 사용자 페이지 접근시 판매자 home으로 redirect
 	if (isAuth && isManager && !pathname.startsWith("/manager")) {
-		return NextResponse.redirect(new URL("/manager/base", request.url))
+		return NextResponse.redirect(new URL(`/manager/${shopId}`, request.url))
 	}
 
 	// 로그인 상태에서 모든 페이지 접근 허용
