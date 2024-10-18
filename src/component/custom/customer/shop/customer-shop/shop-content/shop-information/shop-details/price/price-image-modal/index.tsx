@@ -23,9 +23,9 @@ export default function PriceImageModal({ priceImages }: PriceImageModalPT) {
 	return (
 		<div className="flex flex-col justify-center">
 			<ModalContent className="flex-col justify-center">
-				<ModalHeader className="flex w-full items-center justify-center pb-5 text-Title01">
+				<ModalHeader className="flex w-full items-center justify-center pb-2 text-Title01">
 					가격표
-					<NTContent mode="dark" className="absolute right-10">
+					<NTContent mode="dark" className="absolute right-10 min-w-[5rem]">
 						{`${currentIndex + 1}/${imagePropArr.length.toString()}`}
 					</NTContent>
 				</ModalHeader>

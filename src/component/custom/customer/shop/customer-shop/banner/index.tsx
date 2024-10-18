@@ -37,7 +37,7 @@ export default function CustomerShopBanner({
 			<BannerButtonList shopId={shopId} />
 			<div className="absolute top-1/4 flex h-fit w-full justify-between px-14">
 				<BannerTitle shopAddress={shopAddress} shopName={shopName} />
-				<NTContent mode="dark">
+				<NTContent mode="dark" className="min-w-[5rem]">
 					{`${currentIndex + 1}/${profileImages.length.toString()}`}
 				</NTContent>
 			</div>

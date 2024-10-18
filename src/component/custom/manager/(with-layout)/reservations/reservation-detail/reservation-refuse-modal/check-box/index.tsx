@@ -1,6 +1,5 @@
 import type { Dispatch, SetStateAction } from "react"
 
-import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
 
 export default function CheckBox({
@@ -14,7 +13,7 @@ export default function CheckBox({
 }) {
 	const id = parseInt(stringId)
 	return (
-		<div className="relative flex items-center justify-center">
+		<div className="group relative flex items-center justify-center">
 			<input
 				id={stringId}
 				className="h-6 w-6 rounded-full opacity-0"
@@ -25,18 +24,15 @@ export default function CheckBox({
 			/>
 			<label
 				className={cn(
-					"absolute left-0 top-0 h-6 w-6 rounded-full ring-1 ring-Gray50",
-					clickedIdx === id ? "bg-PY90" : "border bg-White",
+					"absolute h-6 w-6 rounded-full ring-2 ring-Gray30 transition-all group-hover:ring-PB70",
+					clickedIdx === id ? "ring-PB70" : "ring-Gray30",
 				)}
 				htmlFor={stringId}
 			/>
-			<NTIcon
-				icon="check"
+			<div
 				className={cn(
-					"absolute left-0 top-0 h-6 w-6 cursor-pointer rounded-full text-PB110 transition-all",
-					clickedIdx === +id
-						? "opacity-100"
-						: "text-transparent hover:bg-PY50 hover:text-PB70",
+					"absolute h-4 w-4 cursor-pointer rounded-full transition-all",
+					clickedIdx === +id ? "bg-PB100 opacity-100" : "group-hover:bg-PB50",
 				)}
 				onClick={() => setClickedIdx(id)}
 			/>
