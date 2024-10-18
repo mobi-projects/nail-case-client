@@ -100,7 +100,10 @@ export const useMutateConfirmReservation = (
 						(queryKey[3] === "PENDING" || queryKey[3] === "CONFIRMED")
 					)
 				},
-			})
+			}),
+				queryClient.invalidateQueries({
+					queryKey: [VIEW_RESERVATION_QUERY, shopId, reservationId],
+				})
 		},
 		onError: () => {
 			toast.error("요청이 실패했습니다. 문제가 지속되면 문의해주세요.")
