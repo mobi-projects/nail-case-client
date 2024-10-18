@@ -9,7 +9,7 @@ type NTContentPT = {
 }
 
 const ContentVaraints = cva(
-	"flex h-fit w-fit items-center justify-center rounded-[35px] border-[0.5px] border-Gray30 px-[28px] py-[7px] text-Callout",
+	"flex h-fit w-fit items-center justify-center rounded-[35px] border-[0.5px] border-Gray30 px-[28px] py-[7px] text-Callout tabular-nums",
 	{
 		variants: {
 			mode: {

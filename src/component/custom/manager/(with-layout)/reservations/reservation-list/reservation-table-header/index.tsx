@@ -18,8 +18,8 @@ export default function ReservationTableHeader({
 				status: {
 					PENDING: "bg-PB70",
 					REJECTED: "bg-red-300",
-					CONFIRMED: "bg-PURPLE",
-					COMPLETED: "bg-GREEN",
+					CONFIRMED: "bg-PURPLE50",
+					COMPLETED: "bg-GREEN50",
 				},
 			},
 		},
