@@ -56,7 +56,7 @@ export default function ReservationDetailList({
 					PENDING: "bg-PB70",
 					REJECTED: "bg-red-300",
 					CONFIRMED: "bg-PURPLE50",
-					COMPLETED: "bg-GREEN",
+					COMPLETED: "bg-GREEN50",
 				},
 			},
 		},
