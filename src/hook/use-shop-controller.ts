@@ -17,7 +17,7 @@ export const useRegisterShop = () => {
 			postRegisterShop(reqForm),
 		onSuccess: ({ data }) => {
 			toast.success("매장이 정상적으로 등록되었습니다.")
-			setCookie("shopId", data.shopIds[0])
+			setCookie("shopId", data.shopIds[0], { maxAge: 86400 })
 			router.replace(`${MANAGER_BASE}/${data.shopIds[0]}`)
 		},
 		onError: () => {

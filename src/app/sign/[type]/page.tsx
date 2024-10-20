@@ -13,12 +13,12 @@ export default function SocialLoginButtonList({
 		return <InvalidAccess />
 	}
 	return (
-		<div className="flex h-dvh flex-col items-center justify-center">
+		<div className="flex h-dvh min-w-[360px] flex-col items-center justify-center max-sm:px-4">
 			<div className="flex h-[70%] w-full flex-col items-center justify-start">
 				<LoginWelcomeMessage loginType={loginType} />
 				<SocialLoginButtons loginType={loginType} />
 				<CheckMessage loginType={loginType} />
-				<hr className="w-[70%] bg-Gray10" />
+				<hr className="w-[80%] bg-Gray10 max-sm:w-full" />
 			</div>
 		</div>
 	)

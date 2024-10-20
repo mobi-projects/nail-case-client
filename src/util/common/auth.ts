@@ -41,6 +41,7 @@ export const deleteAllCookies = () => {
 	deleteCookie(ACCESS_TOKEN)
 	deleteCookie(IS_MANAGER)
 	deleteCookie(REFRESH_TOKEN)
+	deleteCookie(SHOP_ID)
 }
 
 export const handleLogout = async () => {

@@ -92,6 +92,7 @@ export const fontStyle = {
 		},
 	],
 	Body01: [
+		"16px",
 		{
 			fontWeight: 400,
 			lineHeight: "24px",

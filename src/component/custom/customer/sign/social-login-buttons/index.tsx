@@ -38,7 +38,7 @@ function KakaoLoginButton({ loginType }: KakaoLoginButtonPT) {
 				height={20}
 				className="h-5 w-5"
 			/>
-			<p className="text-Black">카카오 로그인</p>
+			<p className="text-Black max-sm:text-[14px]">카카오 로그인</p>
 		</button>
 	)
 }
