@@ -15,12 +15,12 @@ export default function LoginWelcomeMessage({
 		? "NewTips에서 네일 예약 경험을 시작하세요!"
 		: " NewTips에서 당신의 네일 샵을 더 많은 고객에게 알리세요!"
 	return (
-		<div className="flex flex-col items-center">
+		<div className="flex flex-col items-center max-sm:py-4">
 			<Image src={NTLoginImage} alt="로그인 이미지" priority />
 			<p className="pb-8 pt-4 text-center text-Title02 font-SemiBold text-Gray80">
 				{WelcomeMessageMain}
 			</p>
-			<p className="pb-4 text-center text-Body02 text-[18px] font-Regular text-Gray70">
+			<p className="pb-4 text-center text-Body02 text-[18px] font-Regular text-Gray70 max-sm:text-[14px]">
 				{WelcomeMessageSub}
 			</p>
 		</div>
