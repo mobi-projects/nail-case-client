@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority"
 import { cn } from "@/config/tailwind"
 
 const toolbarVariants = cva(
-	"flex h-full w-fit min-w-[70px] cursor-pointer flex-nowrap justify-center gap-[42px] border-transparent px-[2px] text-Gray50 hover:text-PB50 focus:text-PB100 focus-visible:outline-none",
+	"flex h-full w-fit min-w-[70px] max-md:min-w-10 lg:min-w-12 cursor-pointer flex-nowrap justify-center gap-[42px] border-transparent px-[2px] text-Gray50 hover:text-PB50 focus:text-PB100 focus-visible:outline-none",
 	{
 		variants: {
 			size: {
@@ -13,8 +13,8 @@ const toolbarVariants = cva(
 				large: "text-Title03",
 			},
 			position: {
-				bottom: "border-b-[2px] items-end pb-[15px]",
-				top: "border-t-[2px] items-start pt-[15px]",
+				bottom: "border-b-[2px] items-end pb-[15px] max-md:pb-2 lg:pb-3",
+				top: "border-t-[2px] items-start pt-[15px] max-md:pt-2 lg:pt-3",
 			},
 		},
 		defaultVariants: {
@@ -42,7 +42,7 @@ const NTToolbar = ({
 	return (
 		<div
 			className={cn(
-				"flex h-[40px] w-fit flex-nowrap items-center justify-between",
+				"flex h-[40px] w-fit flex-nowrap items-center justify-between max-md:h-[20px]",
 				className,
 			)}
 		>

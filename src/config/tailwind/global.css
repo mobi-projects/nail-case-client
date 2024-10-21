@@ -35,6 +35,12 @@
 	h4 {
 		@apply text-Caption01;
 	}
+	div {
+		@apply break-keep;
+	}
+	p {
+		@apply break-keep;
+	}
 
 	input[type="number"]::-webkit-inner-spin-button,
 	input[type="number"]::-webkit-outer-spin-button {

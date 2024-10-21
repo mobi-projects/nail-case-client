@@ -6,10 +6,15 @@ import ProfileImage from "./profile-image"
 
 export function UserProfile() {
 	return (
-		<div className="flex w-[236px] items-center justify-end gap-[12px] pr-[21px]">
-			<NTIcon className="text-Gray90" icon="bellLight" />
+		<div className="flex w-[236px] items-center justify-end gap-[12px] max-md:gap-2">
+			<NTIcon
+				className="text-Gray90 lg:h-8 lg:w-8 max-md:h-6 max-md:w-6"
+				icon="bellLight"
+			/>
 			<ProfileImage />
-			<button onClick={handleLogout}>로그아웃</button>
+			<button onClick={handleLogout} className="text-Body01">
+				로그아웃
+			</button>
 		</div>
 	)
 }

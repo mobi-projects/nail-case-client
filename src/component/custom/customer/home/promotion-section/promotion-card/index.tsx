@@ -18,7 +18,7 @@ export default function PromotionCard({
 	return (
 		<div
 			className={cn(
-				"relative z-10 flex h-64 w-[500px] min-w-[500px] items-center rounded-3xl",
+				"relative z-10 flex h-64 w-[500px] items-center rounded-3xl lg:h-44 lg:w-80 max-md:h-28 max-md:w-52 max-md:rounded-xl",
 				className,
 			)}
 		>
@@ -30,7 +30,10 @@ export default function PromotionCard({
 				alt="네일 이미지"
 				fill
 				sizes="50vw"
-				className={cn("rounded-3xl", className ? "opacity-15" : "opacity-100")}
+				className={cn(
+					"rounded-3xl max-md:rounded-xl",
+					className ? "opacity-15" : "opacity-100",
+				)}
 			/>
 		</div>
 	)

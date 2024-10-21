@@ -28,18 +28,18 @@ export function PopularShopCard({ shop }: PopularShopCardPT) {
 	return (
 		<div className="flex h-fit w-fit flex-col gap-[13px]">
 			<ShopName shop={shop} handleRouting={handleRouting} />
-			<div className="group relative z-10 h-[264px] w-[384px] cursor-pointer rounded-[26px] bg-Gray40">
+			<div className="group relative z-10 h-64 w-96 cursor-pointer rounded-[26px] bg-Gray40 md:h-[140px] md:w-[210px] lg:h-48 lg:w-[300px] max-sm:h-[100px] max-sm:w-[155px]">
 				<Image
 					src={shop.shopImageUrl || PromotionImage}
 					alt={"추천네일샵 이미지"}
 					fill
-					className="rounded-[26px]"
+					className="rounded-[26px] md:rounded-2xl lg:rounded-2xl max-sm:rounded-lg"
 					sizes="384px"
 				/>
 				<NTIcon
 					icon="like"
 					className={cn(
-						"absolute right-3 top-3 h-6 w-6",
+						"absolute right-3 top-3 h-6 w-6 max-md:right-2 max-md:top-2 max-md:h-4 max-md:w-4",
 						shop.likedByUser ? "text-PY80" : "text-White/80",
 					)}
 				/>
