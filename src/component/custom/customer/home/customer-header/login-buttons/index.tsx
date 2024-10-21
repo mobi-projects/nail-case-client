@@ -10,6 +10,7 @@ export function LoginButtons() {
 	return (
 		<div className="flex items-center justify-center gap-x-7">
 			<button
+				className="text-Body01"
 				onClick={() => {
 					router.push(`${COMMON_SIGN}/member`)
 				}}

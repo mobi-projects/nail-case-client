@@ -15,12 +15,29 @@ const config = {
 				...BoxShadow,
 			},
 			screens: {
-				// 기본 breakpoints에 max- 버전을 추가
-				"max-sm": { max: "639px" }, // sm 이하에서 적용
-				"max-md": { max: "767px" }, // md 이하에서 적용
-				"max-lg": { max: "1023px" }, // lg 이하에서 적용
-				"max-xl": { max: "1279px" }, // xl 이하에서 적용
-				"max-2xl": { max: "1535px" }, // 2xl 이하에서 적용
+				// 최대 639px 이하에서 적용 (max-sm)
+				"max-sm": { max: "639px" },
+
+				// 최대 767px 이하에서 적용 (max-md)
+				"max-md": { max: "767px" },
+
+				// 최대 1023px 이하에서 적용 (max-lg)
+				"max-lg": { max: "1023px" },
+
+				// 최대 1279px 이하에서 적용 (max-xl)
+				"max-xl": { max: "1279px" },
+
+				// 최대 1535px 이하에서 적용 (max-2xl)
+				"max-2xl": { max: "1535px" },
+
+				// md 구간: 640px 이상 767px 이하
+				md: { min: "640px", max: "767px" },
+
+				// lg 구간: 768px 이상 1023px 이하
+				lg: { min: "768px", max: "1023px" },
+
+				// xl 구간: 1024px 이상 1279px 이하
+				xl: { min: "1024px", max: "1279px" },
 			},
 		},
 		fontWeight: {
@@ -38,7 +55,7 @@ const config = {
 		// 커스텀 CSS를 추가하는 플러그인
 		function ({ addUtilities }) {
 			addUtilities({
-				"@media (max-width: 640px)": {
+				"@media (max-width: 767px)": {
 					".text-Title01": {
 						fontSize: "24px",
 					},
@@ -62,6 +79,32 @@ const config = {
 					},
 					".text-Caption01,.text-Caption02": {
 						fontSize: "8px",
+					},
+				},
+				"@media (min-width: 768px) and (max-width: 1024px)": {
+					".text-Title01": {
+						fontSize: "26px",
+					},
+					".text-Title02": {
+						fontSize: "22px",
+					},
+					".text-Title03": {
+						fontSize: "20px",
+					},
+					".text-Headline01": {
+						fontSize: "18px",
+					},
+					".text-Headline02 ": {
+						fontSize: "16px",
+					},
+					".text-Body02, .text-Body01": {
+						fontSize: "14px",
+					},
+					".text-Callout": {
+						fontSize: "12px",
+					},
+					".text-Caption01,.text-Caption02": {
+						fontSize: "10px",
 					},
 				},
 			})

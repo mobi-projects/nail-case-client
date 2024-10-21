@@ -6,7 +6,7 @@ import { cn } from "@/config/tailwind"
 import NTIcon, { type ICON_DATA } from "../../nt-icon"
 
 const ButtonVariants = cva(
-	"flex items-center justify-center drop-shadow border focus-visible:outline-none",
+	"flex items-center justify-center drop-shadow border focus-visible:outline-none max-md:w-16 max-md:h-10 lg:w-18 lg:h-11",
 	{
 		variants: {
 			variant: {
@@ -20,10 +20,10 @@ const ButtonVariants = cva(
 					"bg-[#FFF6F8] text-[#FF2C45] hover:bg-[#FFC3CA] active:text-[#FFF6F8] active:bg-[#FF2C45] disabled:bg-Gray20",
 			},
 			size: {
-				large: `w-[144px] h-[62px] rounded-[14px] px-[20px] py-[16px] text-Title03`,
-				medium: `w-[127px] h-[56px] rounded-[12px] px-[18px] py-[12px] text-Headline01`,
-				small: `w-[110px] h-[50px] rounded-[11px] px-[14px] py-[12px] text-Body01`,
-				exSmall: `w-[91px] h-[56px] rounded-[12px] px-[11px] py-[12px] text-Headline01  font-Bold`,
+				large: `w-[144px] h-[62px] rounded-[14px] px-[20px] py-[16px] text-Title03 `,
+				medium: `w-[127px] h-[56px] rounded-[12px] px-[18px] py-[12px] text-Headline01 `,
+				small: `w-[110px] h-[50px] rounded-[11px] px-[14px] py-[12px] text-Body01 `,
+				exSmall: `w-[91px] h-[56px] rounded-[12px] px-[11px] py-[12px] text-Headline01  font-Bold `,
 			},
 			flexible: {
 				none: "",
