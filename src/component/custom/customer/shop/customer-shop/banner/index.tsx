@@ -28,16 +28,19 @@ export default function CustomerShopBanner({
 		setCurrentIndex(idx)
 	}
 	return (
-		<div className="relative flex h-[26rem] w-full flex-col gap-16">
+		<div className="relative flex h-[26rem] w-full flex-col gap-16 lg:h-[16rem] xl:h-[20rem] max-md:h-[14rem]">
 			<NTBannerImageCarousel
-				className="h-full w-full rounded-b-[40px] bg-transparent"
+				className="h-full w-full rounded-b-[40px] bg-transparent max-xl:rounded-b-[20px]"
 				essentialImagePropArr={imageArray}
 				accessSelected={handleImageSelect}
 			/>
 			<BannerButtonList shopId={shopId} />
-			<div className="absolute top-1/4 flex h-fit w-full justify-between px-14">
+			<div className="absolute top-1/4 flex h-fit w-full justify-between px-14 max-md:px-6">
 				<BannerTitle shopAddress={shopAddress} shopName={shopName} />
-				<NTContent mode="dark" className="min-w-[5rem]">
+				<NTContent
+					mode="dark"
+					className="min-w-[5rem] md:min-w-16 max-sm:min-w-14"
+				>
 					{`${currentIndex + 1}/${profileImages.length.toString()}`}
 				</NTContent>
 			</div>

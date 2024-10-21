@@ -21,7 +21,7 @@ export function ShopDetail({ shopId }: CustomerShopPagePT) {
 				profileImages={profileImages}
 				shopId={shopId}
 			/>
-			<CustomerShopContent shopId={shopId} data={shopData} />
+			{/* <CustomerShopContent shopId={shopId} data={shopData} /> */}
 		</div>
 	)
 }

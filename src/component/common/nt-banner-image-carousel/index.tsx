@@ -79,8 +79,8 @@ function ImageList({ essentialImagePropArr = [], objectFit }: ImageListPT) {
 function WithoutNoImages() {
 	return (
 		<div className="flex h-full">
-			<div className="flex min-w-0 flex-[0_0_100%] flex-col items-center justify-center gap-5 bg-White">
-				<div className="relative h-[70px] w-[200px]">
+			<div className="flex min-w-0 flex-[0_0_100%] flex-col items-center justify-center gap-5 bg-White lg:h-[16rem] xl:h-[20rem] max-md:h-[14rem]">
+				<div className="relative h-[70px] w-[200px] lg:h-[50px] lg:w-[160px] max-md:h-[30px] max-md:w-[130px]">
 					<Image src={NTLogo} alt="brand-logo" fill priority />
 				</div>
 				<p className="text-Body01">
