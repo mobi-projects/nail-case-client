@@ -34,40 +34,39 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 	}
 
 	return (
-		<div className="flex h-[30rem] w-full flex-col px-2">
-			<div className="relative w-full gap-4 overflow-hidden">
-				<div
-					className="flex translate-x-[25rem] transform gap-4 transition-transform duration-700 ease-in-out"
-					style={{ transform: `translateX(-${focusedIdx * 25}rem)` }}
-				>
-					{AomDataList.map((data, idx) => (
-						<div
-							key={idx}
-							className="relative h-[26rem] w-[24rem] flex-shrink-0 rounded-3xl px-2 text-Gray70 shadow-customGray80"
-						>
-							<Image
-								src={data.imageUrl}
-								alt="이달의 아트"
-								fill
-								priority
-								sizes="60vh"
-								className="rounded-3xl"
-							/>
-						</div>
-					))}
-					{AomDataList.length <= 2 && <AOMFewItems />}
-				</div>
-				<NavigationButton
-					onclick={handlePrevious}
-					direction="left"
-					isVisible={focusedIdx > 0}
-				/>
-				<NavigationButton
-					onclick={handleNext}
-					direction="right"
-					isVisible={focusedIdx < AomDataList.length - 3}
-				/>
+		<div className="relative mx-2 mb-10 h-[26rem] w-full gap-4 overflow-x-hidden md:h-[12rem] lg:h-[16rem] xl:h-[18rem] max-sm:h-[8rem]">
+			<div
+				className="absolute flex translate-x-[25rem] transform gap-4 transition-transform duration-700 ease-in-out"
+				style={{ transform: `translateX(-${focusedIdx * 20}%)` }}
+			>
+				{AomDataList.map((data, idx) => (
+					<div
+						key={idx}
+						className="relative h-[26rem] w-[24rem] flex-shrink-0 rounded-3xl px-2 text-Gray70 shadow-customGray80 md:h-[12rem] md:w-[12rem] lg:h-[16rem] lg:w-[16rem] xl:h-[18rem] xl:w-[18rem] max-sm:h-[8rem] max-sm:w-[8rem]"
+					>
+						<Image
+							src={data.imageUrl}
+							alt="이달의 아트"
+							fill
+							priority
+							sizes="60vh"
+							className="rounded-3xl"
+						/>
+					</div>
+				))}
+
+				{AomDataList.length <= 2 && <AOMFewItems />}
 			</div>
+			<NavigationButton
+				onclick={handlePrevious}
+				direction="left"
+				isVisible={focusedIdx > 0}
+			/>
+			<NavigationButton
+				onclick={handleNext}
+				direction="right"
+				isVisible={focusedIdx < AomDataList.length - 3}
+			/>
 		</div>
 	)
 }

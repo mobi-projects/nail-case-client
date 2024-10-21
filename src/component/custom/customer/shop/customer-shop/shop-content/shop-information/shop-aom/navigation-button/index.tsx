@@ -20,7 +20,7 @@ export default function NavigationButton({
 		>
 			<NTIcon
 				onClick={onclick}
-				className="h-14 w-14"
+				className="h-14 w-14 md:h-8 md:w-8 lg:h-10 lg:w-10 xl:h-12 xl:w-12 max-sm:h-6 max-sm:w-6"
 				icon={direction === "left" ? "expandLeftLight" : "expandRightLight"}
 			></NTIcon>
 		</div>
