@@ -6,7 +6,7 @@ import { cn } from "@/config/tailwind"
 import NTIcon, { type ICON_DATA } from "../../nt-icon"
 
 const ButtonVariants = cva(
-	"flex items-center justify-center drop-shadow border focus-visible:outline-none max-md:w-16 max-md:h-10 lg:w-18 lg:h-11",
+	"flex items-center justify-center drop-shadow border focus-visible:outline-none ",
 	{
 		variants: {
 			variant: {
@@ -26,8 +26,8 @@ const ButtonVariants = cva(
 				exSmall: `w-[91px] h-[56px] rounded-[12px] px-[11px] py-[12px] text-Headline01  font-Bold `,
 			},
 			flexible: {
-				none: "",
-				fit: "w-fit",
+				none: "max-md:w-16 max-md:h-10 lg:w-18 lg:h-11",
+				fit: "w-fit max-md:w-16 max-md:h-10 lg:w-18 lg:h-11",
 				full: "w-full",
 			},
 		},

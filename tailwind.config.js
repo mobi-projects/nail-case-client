@@ -58,27 +58,35 @@ const config = {
 				"@media (max-width: 767px)": {
 					".text-Title01": {
 						fontSize: "24px",
+						lineHeight: "28px",
 					},
 					".text-Title02": {
 						fontSize: "20px",
+						lineHeight: "24px",
 					},
 					".text-Title03": {
 						fontSize: "18px",
+						lineHeight: "22px",
 					},
 					".text-Headline01": {
 						fontSize: "16px",
+						lineHeight: "22px",
 					},
 					".text-Headline02 ": {
 						fontSize: "14px",
+						lineHeight: "21px",
 					},
 					".text-Body02, .text-Body01": {
 						fontSize: "12px",
+						lineHeight: "18px",
 					},
 					".text-Callout": {
 						fontSize: "10px",
+						lineHeight: "16px",
 					},
 					".text-Caption01,.text-Caption02": {
 						fontSize: "8px",
+						lineHeight: "10px",
 					},
 				},
 				"@media (min-width: 768px) and (max-width: 1024px)": {

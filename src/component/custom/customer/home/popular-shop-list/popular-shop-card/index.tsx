@@ -28,7 +28,7 @@ export function PopularShopCard({ shop }: PopularShopCardPT) {
 	return (
 		<div className="flex h-fit w-fit flex-col gap-[13px]">
 			<ShopName shop={shop} handleRouting={handleRouting} />
-			<div className="group relative z-10 h-64 w-96 cursor-pointer rounded-[26px] bg-Gray40 md:h-[140px] md:w-[210px] lg:h-48 lg:w-[300px] max-sm:h-[100px] max-sm:w-[155px]">
+			<div className="group relative z-10 h-64 w-96 cursor-pointer rounded-[26px] md:h-[140px] md:w-[210px] md:rounded-2xl lg:h-48 lg:w-[300px] lg:rounded-2xl max-sm:h-[100px] max-sm:w-[155px] max-sm:rounded-lg">
 				<Image
 					src={shop.shopImageUrl || PromotionImage}
 					alt={"추천네일샵 이미지"}
@@ -58,12 +58,14 @@ function ShopHoverInfo({ shop, handleRouting }: ShopHoverInfoPT) {
 	return (
 		<div
 			onClick={handleRouting}
-			className="absolute inset-0 flex flex-col justify-between rounded-[26px] bg-gradient-to-tr from-Black/60 to-Black/10 py-[19px] pl-[29px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+			className="absolute inset-0 flex h-64 w-96 flex-col justify-between rounded-[26px] bg-gradient-to-tr from-Black/60 to-Black/10 py-[19px] pl-[29px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:h-[140px] md:w-[210px] md:rounded-2xl lg:h-48 lg:w-[300px] lg:rounded-2xl max-sm:h-[100px] max-sm:w-[155px] max-sm:rounded-lg"
 		>
 			<div className="pt-[10]">
-				<div className="text-Headline01 text-PY100">{shop.shopName}</div>
+				<div className="text-Headline01 text-PY100 max-md:text-[14px]">
+					{shop.shopName}
+				</div>
 			</div>
-			<div className="hover:text-PY80">{`예약하러가기 >`}</div>
+			<div className="hover:text-PY80 max-md:text-[12px]">{`예약하러가기 >`}</div>
 		</div>
 	)
 }

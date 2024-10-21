@@ -20,13 +20,13 @@ export default function InfoCard({
 	contentOnClick,
 }: InfoCardPT) {
 	return (
-		<div className="flex h-44 w-72 flex-col justify-start rounded-[26px] py-2 pr-5 shadow-customGray70">
+		<div className="flex h-44 w-72 flex-col justify-start rounded-[26px] py-2 pr-5 shadow-customGray70 max-md:h-36 max-md:w-64">
 			<div className="flex items-center justify-between pl-6">
 				<div className="h-fit w-full py-2 text-Headline02">{title}</div>
 				{isClickable && (
 					<NTIcon
 						icon="expandRightLight"
-						className="w-8 cursor-pointer text-Gray40 hover:text-Black"
+						className="w-8 cursor-pointer text-Gray40 hover:text-Black max-md:h-6 max-md:w-6"
 						onClick={onClick}
 					/>
 				)}
