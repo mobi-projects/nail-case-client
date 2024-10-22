@@ -23,15 +23,18 @@ export default function PriceImageModal({ priceImages }: PriceImageModalPT) {
 	return (
 		<div className="flex flex-col justify-center">
 			<ModalContent className="flex-col justify-center">
-				<ModalHeader className="flex w-full items-center justify-center pb-2 text-Title01">
+				<ModalHeader className="flex w-full items-center justify-center pb-2 text-Title01 lg:text-[18px] max-md:text-[16px]">
 					가격표
-					<NTContent mode="dark" className="absolute right-10 min-w-[5rem]">
+					<NTContent
+						mode="dark"
+						className="absolute right-10 min-w-[5rem] md:min-w-16 max-sm:min-w-14 max-lg:right-4"
+					>
 						{`${currentIndex + 1}/${imagePropArr.length.toString()}`}
 					</NTContent>
 				</ModalHeader>
-				<ModalBody className="relative flex h-[650px] w-[490px]">
+				<ModalBody className="relative flex h-[650px] w-[490px] lg:h-[60dvh] xl:h-[67vh] max-md:h-[42dvh] max-xl:w-full">
 					<NTBannerImageCarousel
-						className="h-full w-full rounded-xl"
+						className="h-full w-full rounded-xl max-xl:h-full"
 						essentialImagePropArr={imagePropArr}
 						accessSelected={handleImageSelect}
 					/>
