@@ -28,7 +28,7 @@ export function PopularShopCard({ shop }: PopularShopCardPT) {
 	return (
 		<div className="flex h-fit w-fit flex-col gap-[13px]">
 			<ShopName shop={shop} handleRouting={handleRouting} />
-			<div className="group relative z-10 h-64 w-96 cursor-pointer rounded-[26px] md:h-[140px] md:w-[210px] md:rounded-2xl lg:h-48 lg:w-[300px] lg:rounded-2xl max-sm:h-[100px] max-sm:w-[155px] max-sm:rounded-lg">
+			<div className="group relative z-10 h-64 w-96 cursor-pointer rounded-[26px] md:h-[140px] md:rounded-2xl lg:h-48 lg:rounded-2xl xl:h-[250px] max-sm:h-[100px] max-sm:rounded-lg max-xl:w-[40dvw]">
 				<Image
 					src={shop.shopImageUrl || PromotionImage}
 					alt={"추천네일샵 이미지"}
