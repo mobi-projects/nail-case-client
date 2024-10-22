@@ -24,8 +24,8 @@ function Schedule({ selectedStamp, setSelectedStamp }: SchedulePT) {
 	const printedTime = getPrintedTime(selectedStamp)
 	const [isThisMonth, setIsThisMonth] = useState(true)
 	return (
-		<div className="relative flex h-[500px] w-full flex-col gap-[20px]">
-			<p className="absolute left-2 top-1 w-full text-[22px] font-SemiBold text-Gray100">
+		<div className="relative flex h-[500px] w-full flex-col gap-[20px] max-md:h-[400px]">
+			<p className="absolute left-2 top-1 w-full text-[22px] font-SemiBold text-Gray100 lg:text-[18px] xl:text-[20px] max-md:hidden">
 				{printedTime}
 			</p>
 			<Calendar

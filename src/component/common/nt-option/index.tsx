@@ -6,7 +6,7 @@ import { cva } from "class-variance-authority"
 import { cn } from "@/config/tailwind"
 
 const OptionVariants = cva(
-	" flex items-center justify-center border-[1px] border-transparent px-[24px] text-center text-PB100 focus-visible:outline-none disabled:border-none disabled:bg-Gray10",
+	" flex items-center justify-center border-[1px] border-transparent px-[24px] text-center text-PB100 focus-visible:outline-none disabled:border-none disabled:bg-Gray10 max-sm:px-3 max-sm:py-1 max-sm:h-fit",
 	{
 		variants: {
 			size: {
@@ -63,7 +63,7 @@ export default function NTOption({
 							isPressed: selectedIdxArr.includes(idx),
 						}),
 						onSelect
-							? "cursor-pointer active:border-PB100 active:bg-BGblue02 active:text-PB110 active:shadow-[0_0_16_0_rgba(128,214,248,0.4)]"
+							? "cursor-pointer active:border-PB100 active:bg-BGblue02 active:text-PB110 active:shadow-[0_0_16_0_rgba(128,214,248,0.4)] max-sm:text-[10px]"
 							: "cursor-default",
 						disabledIdxArr.includes(idx) && "cursor-default",
 						optionClassName,

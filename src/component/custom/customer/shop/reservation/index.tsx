@@ -44,7 +44,7 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 		})
 	}
 	return (
-		<div className="flex h-fit w-full flex-col gap-[50px] py-[33px]">
+		<div className="flex h-fit w-full flex-col gap-10 py-[33px] max-md:gap-6 max-md:py-4">
 			<FocusingCard title="시술 세부 내용">
 				<MemorizedOptions
 					shopId={shopId}
@@ -54,7 +54,9 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 			</FocusingCard>
 			<SectionDivider />
 			<div className="flex h-fit w-full flex-col gap-[18px]">
-				<p className="px-[40px] text-[22px] font-SemiBold">날짜 선택</p>
+				<p className="px-[40px] text-[22px] font-SemiBold lg:text-[18px] max-md:px-5 max-md:text-[16px]">
+					날짜 선택
+				</p>
 				<FocusingCard>
 					<MemoizedSchedule
 						selectedStamp={selectedStamp}
@@ -65,7 +67,9 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 			</div>
 			<SectionDivider />
 			<div className="flex h-fit w-full flex-col gap-[18px]">
-				<p className="px-[40px] text-[22px] font-SemiBold">시간 선택</p>
+				<p className="px-[40px] text-[22px] font-SemiBold lg:text-[18px] max-md:px-5 max-md:text-[16px]">
+					시간 선택
+				</p>
 				<FocusingCard>
 					<MemorizedTimeSelection
 						shopId={shopId}
@@ -81,7 +85,7 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 					onClick={onOpenReservationCheckModal}
 					disabled={isButtonDisabled}
 				>
-					예약하기
+					<p className="lg:text-[18px] max-md:text-[14px]">예약하기</p>
 				</NTButton>
 			</div>
 		</div>

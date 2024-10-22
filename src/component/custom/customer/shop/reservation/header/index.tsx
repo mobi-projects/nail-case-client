@@ -22,7 +22,7 @@ export default function Header({
 			<CategoryNAddress {...{ category, address }} />
 			<div className="h-[6px] w-full max-md:h-1" />
 			<ShopName {...{ shopName }} />
-			<div className="h-[10px] w-full max-md:h-1 lg:h-2" />
+			<div className="h-[10px] w-full lg:h-2 max-md:h-1" />
 			<NoticeList />
 		</header>
 	)

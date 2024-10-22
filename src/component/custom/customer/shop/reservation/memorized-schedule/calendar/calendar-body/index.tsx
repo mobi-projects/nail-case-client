@@ -41,7 +41,7 @@ export default function CalendarBody({
 					>
 						<p
 							className={cn(
-								"flex h-9 w-9 cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Gray70 transition-all hover:scale-110 hover:bg-Gray10",
+								"flex h-9 w-9 cursor-pointer items-center justify-center rounded-[3px] border-transparent text-center text-Gray70 transition-all hover:scale-110 hover:bg-Gray10 lg:text-[16px] max-md:text-[12px] max-lg:h-7 max-lg:w-7",
 								isToday && "text-PB100",
 								isFocused && "bg-PY100 hover:bg-PY100",
 								!isInRange &&
