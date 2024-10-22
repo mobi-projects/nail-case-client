@@ -94,7 +94,7 @@ function TreatmentNCondition({
 	}
 
 	return (
-		<div className="flex h-fit w-full flex-col gap-[15px] pt-6">
+		<div className="flex h-fit w-full flex-col gap-[15px] pt-6 lg:gap-3 lg:pt-4 max-md:gap-1 max-md:pt-3">
 			<div className="flex flex-col gap-2">
 				<SectionTitle title="시술 내용" isEssential={true} />
 				<NTOption

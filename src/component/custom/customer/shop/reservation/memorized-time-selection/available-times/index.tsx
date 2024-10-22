@@ -60,30 +60,32 @@ export default function AvailableTimes({
 	}
 
 	return (
-		<div className="grid h-[400px] w-full grid-rows-[1fr_1fr_1fr_3fr] pl-3">
-			<div className="text-Title03 font-SemiBold text-Gray70">오전</div>
+		<div className="grid min-h-[400px] w-full grid-rows-[50px_auto_50px_auto] pl-3">
+			<div className="flex items-center text-Title03 font-SemiBold text-Gray70 lg:text-[18px] max-md:text-[16px]">
+				오전
+			</div>
 			{amOptions.length > 0 ? (
 				<NTOption
 					optionArr={amOptions}
 					onSelect={onClickAM}
 					selectedIdxArr={[selectedIdx]}
 					disabledIdxArr={disabledAMIdxArr}
-					optionClassName="min-w-[6rem]"
-					className="w-[80%]"
+					optionClassName="min-w-[6rem] max-md:min-w-[4rem]"
 				/>
 			) : (
 				<UnavailableTimesMessage />
 			)}
 
-			<div className="text-Title03 font-SemiBold text-Gray70">오후</div>
+			<div className="flex items-center text-Title03 font-SemiBold text-Gray70 lg:text-[18px] max-md:text-[16px]">
+				오후
+			</div>
 			{pmOptions.length > 0 ? (
 				<NTOption
 					optionArr={pmOptions}
 					onSelect={onClickPM}
 					selectedIdxArr={[selectedIdxPM]}
 					disabledIdxArr={disabledPMIdxArr}
-					optionClassName="min-w-[6rem] my-2"
-					className="w-[80%]"
+					optionClassName="min-w-[6rem] my-2  max-md:min-w-[4rem]"
 				/>
 			) : (
 				<UnavailableTimesMessage />

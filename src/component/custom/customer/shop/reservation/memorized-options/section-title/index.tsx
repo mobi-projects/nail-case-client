@@ -13,7 +13,9 @@ export default function SectionTitle({
 }: SectionTitlePT) {
 	return (
 		<div className="flex h-fit w-full gap-[1px]">
-			<p className="text-Headline02 text-Gray80">{title}</p>
+			<p className="text-Headline02 text-Gray80 lg:text-[14px] max-md:text-[12px]">
+				{title}
+			</p>
 			{isEssential && (
 				<NTHoverCard
 					contants="필수 입력사항 입니다."

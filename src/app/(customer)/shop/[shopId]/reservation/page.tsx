@@ -28,9 +28,9 @@ export default async function CustomerShopReservation({
 	const shopId = parseInt(params.shopId)
 	const { shopName, address, category } = await serverFetchShopById(shopId)
 	return (
-		<main className="flex h-fit w-full flex-col gap-[35px] py-[80px]">
+		<main className="flex h-fit w-full max-w-[1200px] flex-col justify-center py-10 lg:px-5 xl:px-10 max-md:px-2">
 			<Header {...{ shopId, shopName, address, category }} />
-			<hr className="h-[1.5px] w-full border-Gray20" />
+			<hr className="mt-8 h-[1.5px] w-full border-Gray20 max-md:mt-4" />
 			<Reservation shopId={shopId} />
 		</main>
 	)

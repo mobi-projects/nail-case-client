@@ -30,7 +30,7 @@ function TimeSelection({
 	if (isLoading) return <div className="h-[400px] w-full" />
 	if (isError || isUndefined(data))
 		return (
-			<div className="flex h-[400px] w-full items-center justify-center text-Title01 text-Gray60">
+			<div className="flex min-h-[400px] w-full items-center justify-center text-Title01 text-Gray60 lg:h-[250px] lg:text-[20px] max-md:h-[150px] max-md:text-[16px]">
 				죄송합니다, 인터넷 문제로 오류가 발생했습니다.
 			</div>
 		)

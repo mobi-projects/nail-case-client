@@ -22,7 +22,7 @@ export default function CalendarHeader({
 		getCalendarHeaderDate(isThisMonth)
 
 	return (
-		<div className="flex h-[28px] w-full items-center justify-center gap-x-3">
+		<div className="flex h-6 w-full items-center justify-center gap-x-3 max-md:gap-x-0">
 			<NTIcon
 				icon="expandLeft"
 				className={cn(
@@ -38,7 +38,7 @@ export default function CalendarHeader({
 				}}
 			/>
 
-			<p className="font-Semibold w-[120px] text-center text-Headline02 text-[18px]">
+			<p className="font-Semibold flex h-6 min-w-[120px] items-center justify-center text-Headline02 text-[18px] lg:min-w-[100px] lg:text-[16px] max-md:min-w-[80px] max-md:text-[14px]">
 				{paddedFocusedYear} 년 {paddedFocusedMonth} 월
 			</p>
 			<NTIcon
