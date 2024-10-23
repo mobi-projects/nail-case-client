@@ -27,11 +27,11 @@ export default function ReservationSummary() {
 
 	const reservationStatus = getReservationStatus(details)
 	return (
-		<div className="relative my-10 h-[18rem] w-2/3 rounded-3xl bg-White px-8 py-4 shadow-customGray80">
-			<div className="py-3 text-Title03 font-SemiBold text-PB100">
+		<div className="relative my-10 h-[18rem] w-2/3 rounded-3xl bg-White px-8 py-4 shadow-customGray80 max-lg:h-fit max-lg:w-full">
+			<div className="py-3 text-Title03 font-SemiBold text-PB100 max-md:text-[16px]">
 				진행 중인 네일
 			</div>
-			<div className="grid grid-cols-[12rem_1fr]">
+			<div className="grid grid-cols-[12rem_1fr] max-md:grid-cols-[8rem_1fr]">
 				<ShopImage imageUrl={shop.shopImageUrl} />
 				<ReservationInfo reservation={data} />
 				<NTContent mode="day" className="absolute right-5 top-3 px-[15.5px]">

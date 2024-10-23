@@ -21,15 +21,20 @@ export default function ReservationInfo({ reservation }: ReservationInfoPT) {
 	const endTImeText = transformEndTimeToString(details[0].endTime)
 
 	return (
-		<div className="grid grid-rows-4">
-			<div className="text-Title01 font-Bold">{shop.name}</div>
+		<div className="grid grid-rows-4 max-md:flex max-md:flex-col max-md:gap-y-2">
+			<div className="text-Title01 font-Bold max-md:text-[16px]">
+				{shop.name}
+			</div>
 			<div className="flex items-center gap-x-2">
-				<NTIcon icon="clock" className="text-Gray50" />
-				<div className="text-xl font-SemiBold text-Gray60">
+				<NTIcon
+					icon="clock"
+					className="text-Gray50 md:h-5 md:w-5 max-sm:hidden"
+				/>
+				<div className="text-xl font-SemiBold text-Gray60 md:text-[16px] max-sm:text-[12px]">
 					{startTimeText} ~ {endTImeText && endTImeText}
 				</div>
 			</div>
-			<div className="flex items-center gap-x-2">
+			<div className="flex items-center gap-2 max-md:flex-wrap">
 				{reservationOptionArr.map((option, idx) => (
 					<Tag option={option} key={idx} />
 				))}
