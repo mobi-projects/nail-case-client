@@ -26,8 +26,8 @@ export default function ContentHeader({ newReservation }: ContentHeaderPT) {
 	].join(" ")
 
 	return (
-		<div className="flex h-[85px] flex-col justify-between">
-			<p className="text-center text-Title01 font-SemiBold text-White">
+		<div className="flex h-[85px] flex-col justify-between max-md:justify-evenly">
+			<p className="text-center text-Title01 font-SemiBold text-White max-md:text-[18px]">
 				{data?.shopName}
 			</p>
 			<p className="text-center text-Body02 font-Regular text-PB100">

@@ -5,7 +5,7 @@ export default function ResponseMessage({ isError }: ResponseMessagePT) {
 		<div className="flex h-fit w-full flex-col items-center gap-[1px]">
 			{isError ? (
 				<>
-					<p className="text-center text-Title01 font-Bold text-red-500/90">
+					<p className="text-center text-Title01 font-Bold text-red-500/90 max-md:text-[18px]">
 						예약 요청 중, 오류가 발생했습니다.
 					</p>
 					<p className="text-center text-Callout font-Light text-red-500/90">
@@ -14,7 +14,7 @@ export default function ResponseMessage({ isError }: ResponseMessagePT) {
 				</>
 			) : (
 				<>
-					<p className="text-center text-Title01 font-Bold">
+					<p className="text-center text-Title01 font-Bold max-md:text-[18px]">
 						예약이 요청되었습니다.
 					</p>
 					<p className="text-center text-Callout font-Light">

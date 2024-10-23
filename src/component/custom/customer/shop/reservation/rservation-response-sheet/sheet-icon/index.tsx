@@ -9,7 +9,7 @@ export default function SheetIcon({ isError }: SheetIconPT) {
 	return (
 		<div
 			className={cn(
-				"flex h-[56px] w-[56px] items-center justify-center overflow-hidden rounded-full",
+				"flex h-[56px] w-[56px] items-center justify-center overflow-hidden rounded-full lg:scale-90 max-md:scale-75",
 				isError ? "bg-PB90" : "bg-gradient-to-t from-PB100 to-PY100 p-0",
 			)}
 		>

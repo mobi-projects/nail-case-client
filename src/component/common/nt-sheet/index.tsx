@@ -32,7 +32,7 @@ export default NTSheet
 function SheetBody({ children }: PropsWithChildren) {
 	return (
 		<div
-			className="fixed bottom-0 left-0 right-0 h-[95%] w-full rounded-t-[26px] bg-gradient-to-t from-[#AFBFC6] to-[#EFFAFF] px-[50px]"
+			className="fixed bottom-0 left-0 right-0 h-[95%] w-full rounded-t-[26px] bg-gradient-to-t from-[#AFBFC6] to-[#EFFAFF] px-[50px] max-md:h-[90%]"
 			onClick={(e) => {
 				e.stopPropagation()
 			}}
