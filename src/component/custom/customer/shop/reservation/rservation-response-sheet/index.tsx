@@ -48,7 +48,7 @@ export default function ReservationResponseSheet({
 
 	const shopId = newReservation.shopId
 	return (
-		<div className="flex h-full w-full flex-col items-center justify-center gap-4">
+		<div className="flex h-full w-full flex-col items-center justify-center gap-4 max-md:gap-2">
 			<SheetIcon isError={isError} />
 			<ResponseMessage isError={isError} />
 			{!isError && <ReservationContent newReservation={newReservation} />}

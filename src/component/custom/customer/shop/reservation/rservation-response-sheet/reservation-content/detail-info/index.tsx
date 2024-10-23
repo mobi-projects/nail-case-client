@@ -5,11 +5,11 @@ type DetailInfoPT = {
 export default function DetailInfo({ title, info }: DetailInfoPT) {
 	return (
 		<div className="grid h-fit w-full grid-cols-[auto_2px_1fr] items-center justify-start">
-			<div className="h-[22px] w-full px-[27px] text-Body02 font-SemiBold text-White">
+			<div className="h-[22px] w-full px-[27px] text-Body02 font-SemiBold text-White max-sm:px-3">
 				{title}
 			</div>
 			<div className="h-[13px] w-full bg-Gray70" />
-			<div className="h-[22px] w-full px-[27px] text-Body02 font-SemiBold text-PB100">
+			<div className="h-[22px] w-full px-[27px] text-Body02 font-SemiBold text-PB100 max-sm:px-3">
 				{info}
 			</div>
 		</div>
