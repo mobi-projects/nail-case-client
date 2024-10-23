@@ -48,13 +48,13 @@ export default function ReservationCheckModal({
 
 	return (
 		<ModalContent>
-			<ModalHeader className="flex w-full items-center justify-center border-b-[1.5px] border-b-Gray20 pb-5">
-				<p className="text-center text-Title02 font-SemiBold text-Gray90">
+			<ModalHeader className="flex w-full items-center justify-center border-b-[1.5px] border-b-Gray20 pb-5 max-lg:pb-2">
+				<p className="text-center text-Title02 font-SemiBold text-Gray90 lg:text-[16px] max-md:text-[14px]">
 					예약 내용 확인
 				</p>
 			</ModalHeader>
 
-			<ModalBody className="scrollbar grid h-full w-full grid-cols-1 overflow-y-scroll border-b-Gray20">
+			<ModalBody className="scrollbar scrollbar-none grid max-h-[500px] w-full grid-rows-5 overflow-y-scroll border-b-Gray20">
 				<TreatmentConfirm treatment={treatment} />
 				<RemoveConfirm remove={remove} />
 				<ExtensionConfirm extend={extend} />
@@ -62,13 +62,14 @@ export default function ReservationCheckModal({
 				<ReseravtionTimeConfirm startTime={startTime} />
 			</ModalBody>
 
-			<ModalFooter className="flex min-h-36 w-full flex-col items-center justify-evenly">
+			<ModalFooter className="flex w-full flex-col items-center justify-evenly gap-4 max-md:gap-1">
 				<ListInfo />
 				<NTButton
 					size="medium"
+					flexible={"fit"}
 					onClick={() => onClickPostReservationButton(reservationForm)}
 				>
-					예약 요청하기
+					<p className="text-Body01 max-md:text-[12px]">예약하기</p>
 				</NTButton>
 			</ModalFooter>
 		</ModalContent>
