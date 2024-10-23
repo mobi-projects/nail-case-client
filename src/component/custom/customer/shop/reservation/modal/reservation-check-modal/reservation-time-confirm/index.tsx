@@ -16,10 +16,12 @@ export default function ReseravtionTimeConfirm({
 	const formattedTime = getFormattedTime(startTime)
 	return (
 		<div className="grid h-full w-full grid-cols-[1fr_3.5fr] items-center">
-			<p className="text-Body02 font-SemiBold text-Gray80">시술 일시</p>
+			<p className="min-w-[4rem] text-Body02 font-SemiBold text-Gray80 max-md:text-[12px]">
+				시술 일시
+			</p>
 			<NTOption
 				optionArr={[formattedTime]}
-				optionClassName="font-Bold text-PB100"
+				optionClassName="font-Bold text-PB100 max-md:text-[12px]  max-md:font-SemiBold"
 			/>
 		</div>
 	)

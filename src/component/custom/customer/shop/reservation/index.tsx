@@ -41,6 +41,7 @@ export default function Reservation({ shopId }: ReservationNewPT) {
 	const onOpenReservationCheckModal = () => {
 		onOpenModal({
 			children: <ReservationCheckModal reservationForm={reqReservationForm} />,
+			isX: false,
 		})
 	}
 	return (

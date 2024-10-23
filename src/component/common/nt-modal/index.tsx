@@ -10,14 +10,14 @@ import NTIcon from "../nt-icon"
 import { useModal } from "./nt-modal.context"
 
 export const ModalVariants = cva(
-	"fixed bottom-[50%] left-[50%] right-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[26px] bg-white ",
+	"fixed bottom-[50%] left-[50%] right-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[26px] bg-white  ",
 	{
 		variants: {
 			size: {
 				exSmall:
-					"h-[50vh] min-w-[400px] max-w-[90dvw] p-4 aspect-[8/11] max-sm:min-w-0 max-sm:w-[80%] ",
+					"h-[50vh] min-w-[400px] max-w-[90dvw] p-4 aspect-[8/11] max-md:min-w-0 max-md:w-[80%] ",
 				small:
-					"h-[80dvh] aspect-[8/11] min-w-[300px] max-w-[90dvw] py-[28px] px-[28px] lg:h-[70dvh] max-md:h-[50dvh] max-lg:py-2 max-lg:px-5 max-lg:min-w-0",
+					"h-[80dvh] aspect-[8/11] min-w-[300px] max-w-[90dvw] py-[28px] px-[28px]  max-md:h-[50dvh] max-lg:py-2 max-lg:px-5 max-lg:min-w-0 max-lg:h-[50%] ",
 				large: "h-[85dvh] aspect-[18/19] min-w-[400px] max-w-[90dvw] p-[46px]",
 			},
 		},

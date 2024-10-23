@@ -12,11 +12,13 @@ export default function ConditionListConfirm({
 	const conditionListArr = conditionList.map((option) => CONDITION_LIST[option])
 	return (
 		<div className="grid h-full w-full grid-cols-[1fr_3.5fr] items-center border-b-[1px] border-b-Gray10">
-			<p className="text-Body02 font-SemiBold text-Gray80">컨디션</p>
+			<p className="text-Body02 font-SemiBold text-Gray80 max-md:text-[12px]">
+				컨디션
+			</p>
 			<NTOption
 				optionArr={conditionListArr}
 				className="gap-y-4"
-				optionClassName="font-Bold text-PB100"
+				optionClassName="font-Bold text-PB100 max-md:text-[12px]  max-md:font-SemiBold"
 			/>
 		</div>
 	)

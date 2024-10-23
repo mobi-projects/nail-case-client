@@ -85,7 +85,7 @@ export default function AvailableTimes({
 					onSelect={onClickPM}
 					selectedIdxArr={[selectedIdxPM]}
 					disabledIdxArr={disabledPMIdxArr}
-					optionClassName="min-w-[6rem] my-2  max-md:min-w-[4rem]"
+					optionClassName="min-w-[6rem]  max-md:min-w-[4rem]"
 				/>
 			) : (
 				<UnavailableTimesMessage />
