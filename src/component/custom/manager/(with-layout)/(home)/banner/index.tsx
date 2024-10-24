@@ -17,7 +17,7 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	const { data, isLoading } = useShopById(shopId)
 	if (isLoading) {
 		return (
-			<div className="relative h-[432.47px] w-full animate-pulse rounded-xl bg-Gray20 transition-all" />
+			<div className="relative h-[432.47px] w-full animate-pulse rounded-xl bg-Gray20 transition-all lg:h-[16rem] xl:h-[20rem] max-md:h-[11rem]" />
 		)
 	}
 	const InfoData = data as TResGetShopInfo
@@ -27,22 +27,26 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	const profileImageLength = InfoData.profileImages.length
 	const imageArray = getEssestialImageProps(InfoData.profileImages)
 	return (
-		<div className="relative h-[432.47px] w-full">
+		<div className="relative h-[432.47px] w-full lg:h-[16rem] xl:h-[20rem] max-md:h-[11rem]">
 			<NTBannerImageCarousel
-				className="absolute left-0 h-full w-full rounded-xl bg-transparent"
+				className="left-0 h-full w-full rounded-xl bg-transparent"
 				accessSelected={getSelectedIdx}
 				essentialImagePropArr={imageArray}
 			/>
-			<NTContent mode="dark" className="absolute left-[90px] top-10">
-				미리보기
-			</NTContent>
-			<NTContent
-				mode="dark"
-				className="absolute left-[205px] top-10 min-w-[5rem]"
-			>
-				{`${selectedIdx + 1}/${profileImageLength.toString()}`}
-			</NTContent>
-			<BannerTitle infoData={InfoData} />
+			<div className="absolute left-24 top-12 flex h-fit w-fit flex-col gap-y-2 lg:left-14 lg:top-8 max-md:left-6 max-md:top-5">
+				<div className="flex items-center gap-x-4">
+					<NTContent mode="dark" className="max-md:px-2">
+						미리보기
+					</NTContent>
+					<NTContent
+						mode="dark"
+						className="min-w-[5rem] md:min-w-16 max-sm:min-w-14"
+					>
+						{`${selectedIdx + 1}/${profileImageLength.toString()}`}
+					</NTContent>
+				</div>
+				<BannerTitle infoData={InfoData} />
+			</div>
 		</div>
 	)
 }
