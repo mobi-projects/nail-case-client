@@ -18,8 +18,8 @@ export default async function Home({ params }: HomePT) {
 	})
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<ManagerBanner shopId={shopId} />
-			<ShopInformaion shopId={shopId} />
+			{/* <ManagerBanner shopId={shopId} />
+			<ShopInformaion shopId={shopId} /> */}
 		</HydrationBoundary>
 	)
 }

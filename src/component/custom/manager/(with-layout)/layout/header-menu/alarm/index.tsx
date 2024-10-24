@@ -25,7 +25,7 @@ export default function Alarm() {
 	useSSE(setMessage, connect, accessToken)
 
 	return (
-		<div className="relative flex h-fit w-fit">
+		<div className="relative flex h-fit w-fit items-center">
 			<button
 				onClick={() => {
 					setConnect((prev) => !prev)
@@ -33,11 +33,15 @@ export default function Alarm() {
 						setMessage([])
 					}
 				}}
+				className="text-center text-Callout"
 			>
 				연결
 			</button>
 			<NTIcon
-				className={cn("text-Gray90", hasNewReservation && "cursor-pointer")}
+				className={cn(
+					"text-Gray90 lg:h-8 lg:w-8 max-md:h-6 max-md:w-6",
+					hasNewReservation && "cursor-pointer",
+				)}
 				icon="bellLight"
 				onClick={() => {
 					if (hasNewReservation) {
