@@ -16,7 +16,7 @@ export default function ShopDetails({ shopId }: ShopDetailsPT) {
 	if (isUndefined(shopInfo)) return
 	const { address, priceImages, workHours } = shopInfo
 	return (
-		<div className="flex h-full w-[550px] flex-col justify-start rounded-[26px] px-5 py-2 shadow-customGray70">
+		<div className="flex h-full w-[550px] flex-col justify-start rounded-[26px] px-5 py-2 shadow-customGray70 lg:w-full lg:min-w-[300px] max-md:w-full">
 			<WeeklyHoursDisplay workHours={workHours} />
 			<Loaction address={address} />
 			<Price priceImages={priceImages} />

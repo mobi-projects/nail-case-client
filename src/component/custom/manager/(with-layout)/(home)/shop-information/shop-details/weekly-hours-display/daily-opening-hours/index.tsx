@@ -15,7 +15,7 @@ export default function DailyOpeningHours({
 		<div className="grid grid-cols-[1fr_1fr_10fr] items-center pl-3">
 			<div
 				className={cn(
-					"h-2 w-2 rounded-full ring-2",
+					"h-2 w-2 rounded-full ring-2 max-md:h-1 max-md:w-1",
 					isOpen ? "bg-PB100 ring-PB50" : "bg-Gray40 ring-Gray20",
 				)}
 			/>

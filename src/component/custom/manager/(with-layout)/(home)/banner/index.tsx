@@ -17,7 +17,7 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	const { data, isLoading } = useShopById(shopId)
 	if (isLoading) {
 		return (
-			<div className="relative h-[432.47px] w-full animate-pulse rounded-xl bg-Gray20 transition-all lg:h-[16rem] xl:h-[20rem] max-md:h-[11rem]" />
+			<div className="relative h-[432.47px] w-full animate-pulse rounded-xl bg-Gray20 transition-all lg:h-[16rem] xl:h-[20rem] max-md:h-[11rem] max-lg:rounded-none" />
 		)
 	}
 	const InfoData = data as TResGetShopInfo
@@ -29,7 +29,7 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	return (
 		<div className="relative h-[432.47px] w-full lg:h-[16rem] xl:h-[20rem] max-md:h-[11rem]">
 			<NTBannerImageCarousel
-				className="left-0 h-full w-full rounded-xl bg-transparent"
+				className="bg-transparen left-0 h-full w-full rounded-xl max-lg:rounded-none"
 				accessSelected={getSelectedIdx}
 				essentialImagePropArr={imageArray}
 			/>

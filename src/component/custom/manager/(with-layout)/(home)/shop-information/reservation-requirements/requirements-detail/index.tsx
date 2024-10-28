@@ -17,7 +17,11 @@ export default function RequirementsDetail({
 			className={cn("py-5", isLastItem ? "" : "border-b-[0.5px] border-Gray10")}
 		>
 			<div className="pb-2 text-Headline02 text-Gray80">{title}</div>
-			<NTOption optionArr={options} size="large" />
+			<NTOption
+				optionArr={options}
+				size="large"
+				optionClassName=" lg:text-[14px] gap-2"
+			/>
 		</div>
 	)
 }
