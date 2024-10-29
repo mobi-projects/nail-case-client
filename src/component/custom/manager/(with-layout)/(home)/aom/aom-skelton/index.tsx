@@ -2,7 +2,7 @@ import AOMImageSingleSkelotn from "./aom-image-single-skeloton"
 
 export default function AOMSkelton() {
 	return (
-		<div className="grid h-[360px] w-full grid-cols-[380px_auto] rounded-2xl bg-White shadow-customGray80">
+		<div className="grid h-[360px] w-full grid-cols-[380px_auto] rounded-2xl bg-White shadow-customGray80 max-lg:hidden">
 			<div className="flex h-full w-full items-center justify-center rounded-2xl bg-BGblue01">
 				<div className="h-80 w-80 min-w-80 transform animate-pulse rounded-3xl bg-Gray20 duration-700" />
 			</div>

@@ -19,7 +19,7 @@ export default function AOMImageSingle({
 	return (
 		<div
 			className={cn(
-				"relative h-28 w-28 min-w-28 cursor-pointer overflow-hidden rounded-md bg-white shadow-customGray80 transition-all",
+				"relative h-28 w-28 min-w-28 cursor-pointer overflow-hidden rounded-md bg-white shadow-customGray80 transition-all max-md:h-[5.5rem] max-md:w-[5.5rem] max-md:min-w-0",
 				isFocused ? "ring-2 ring-PB50" : "ring-transparent",
 			)}
 			onClick={() => setFocusedIdx(() => idx)}

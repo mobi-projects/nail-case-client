@@ -16,7 +16,7 @@ export default function AOM({ shopId }: AOMPT) {
 	if (isLoading) return <AOMSkelton />
 	if (isError || isUndefined(AOMData)) return <AOMError />
 	return (
-		<div className="grid h-[360px] grid-cols-[380px_auto] rounded-2xl bg-White shadow-customGray80">
+		<div className="grid h-[360px] w-full grid-cols-[380px_auto] rounded-3xl bg-White shadow-customGray80 max-lg:flex max-lg:h-fit max-lg:flex-col max-lg:gap-y-5">
 			<ImageViewerdBox aomInfoArr={AOMData.dataList} focusedIdx={foucsedIdx} />
 			<AOMImageList
 				aomInfoArr={AOMData.dataList}

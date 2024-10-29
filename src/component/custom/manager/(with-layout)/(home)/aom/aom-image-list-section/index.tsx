@@ -29,20 +29,22 @@ export default function AOMImageListSection({
 		})
 	}
 	return hasAOMImages(aomInfoArr) ? (
-		<div className="flex h-full w-full flex-col rounded-r-2xl p-4">
-			<p className="text-Title03 font-SemiBold">등록된 사진</p>
-			<p className="text-Title03 font-SemiBold text-PB100">{`${aomInfoArr.length}개`}</p>
+		<div className="flex h-full w-full flex-col rounded-r-2xl p-4 max-md:min-h-[250px] max-lg:gap-y-2">
+			<p className="text-Title03 font-SemiBold md:text-[16px] max-sm:text-[14px]">
+				등록된 사진
+			</p>
+			<p className="text-Title03 font-SemiBold text-PB100 md:text-[16px] max-sm:text-[14px]">{`${aomInfoArr.length}개`}</p>
 			<AOMImageList
 				aomInfoArr={aomInfoArr}
 				focusedIdx={focusedIdx}
 				setFocusedIdx={setFocusedIdx}
 			/>
 			<NTButton flexible={"fit"} size={"exSmall"} onClick={onClickEditBtn}>
-				편집하기
+				<span className="md:text-[16px] max-sm:text-[14px]">편집하기</span>
 			</NTButton>
 		</div>
 	) : (
-		<div className="flex h-full w-full flex-col items-center justify-center gap-y-3 rounded-3xl bg-White shadow-customGray80">
+		<div className="flex h-full min-h-[200px] w-full flex-col items-center justify-center gap-y-3 rounded-2xl bg-White shadow-customGray80 max-md:rounded-b-2xl max-md:rounded-t-md">
 			<p className="text-Title02 font-SemiBold text-Gray70">
 				등록된 이달의 아트가 없어요.
 			</p>

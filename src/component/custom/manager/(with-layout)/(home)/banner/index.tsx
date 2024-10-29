@@ -15,6 +15,7 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 	const [selectedIdx, setSelectedIdx] = useState(0)
 
 	const { data, isLoading } = useShopById(shopId)
+
 	if (isLoading) {
 		return (
 			<div className="relative h-[432.47px] w-full animate-pulse rounded-xl bg-Gray20 transition-all lg:h-[16rem] xl:h-[20rem] max-md:h-[11rem] max-lg:rounded-none" />
