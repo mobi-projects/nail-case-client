@@ -24,7 +24,7 @@ export default function AOMImageListSection({
 	const onClickEditBtn = () => {
 		onOpenModal({
 			size: "large",
-			isX: true,
+			isX: false,
 			children: <AOMManageModal />,
 		})
 	}

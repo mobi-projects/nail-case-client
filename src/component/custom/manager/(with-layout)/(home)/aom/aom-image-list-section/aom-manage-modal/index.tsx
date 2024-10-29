@@ -46,7 +46,7 @@ export default function AOMManageModal() {
 
 	return (
 		<ModalContent className="flex flex-col gap-y-3">
-			<ModalHeader className="flex w-full items-center justify-center text-Title01 font-Bold text-Gray80">
+			<ModalHeader className="flex w-full items-center justify-center text-Title01 font-Bold text-Gray80 max-md:text-[22px]">
 				이달의 아트
 			</ModalHeader>
 			<div className="relative h-full w-full">

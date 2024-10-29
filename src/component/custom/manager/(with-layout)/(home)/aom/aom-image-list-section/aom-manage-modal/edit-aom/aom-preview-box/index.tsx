@@ -27,7 +27,7 @@ export function AOMPreViewBox({
 		handleOldImageRemoval(curIdx, keepIdArr, removeIdArr)
 	}
 	return (
-		<div className="relative h-24 w-24 rounded-lg bg-White shadow-customGray80">
+		<div className="relative h-24 w-24 rounded-lg bg-White shadow-customGray80 max-lg:h-20 max-lg:w-20">
 			<Image
 				alt="미리보기"
 				src={aomInfo.imageUrl}

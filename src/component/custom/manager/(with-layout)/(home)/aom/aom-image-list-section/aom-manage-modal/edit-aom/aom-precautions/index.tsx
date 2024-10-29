@@ -3,7 +3,9 @@ import NTIcon from "@/component/common/nt-icon"
 export default function AOMPrecautions() {
 	return (
 		<div className="flex flex-col gap-y-2">
-			<p className="pt-5 text-Title03 font-SemiBold"> 유의 사항 </p>
+			<p className="pt-5 text-Title03 font-SemiBold max-md:text-[16px]">
+				유의 사항
+			</p>
 			<div className="flex items-center text-Caption01 text-Gray70">
 				<NTIcon icon="dot" className="h-5 w-5" />
 				<NTIcon

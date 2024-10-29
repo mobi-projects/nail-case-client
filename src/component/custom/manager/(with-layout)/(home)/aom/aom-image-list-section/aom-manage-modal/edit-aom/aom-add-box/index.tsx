@@ -13,7 +13,7 @@ type AOMAddBoxPT = {
 export function AOMAddBox({ aomInfoArr, setPreviewImageArr }: AOMAddBoxPT) {
 	const { onChangeAddImageBox } = useUploadAOMImages()
 	return (
-		<div className="relative flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-lg border border-Gray30 bg-White transition-all hover:scale-105 hover:bg-Gray10">
+		<div className="relative flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-lg border border-Gray30 bg-White transition-all hover:scale-105 hover:bg-Gray10 max-lg:h-20 max-lg:w-20">
 			<NTIcon icon="camera" className="h-6 w-6 text-Gray40" />
 			<input
 				type="file"

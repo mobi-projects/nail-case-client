@@ -7,7 +7,7 @@ export default function RegisterBox() {
 	const { onOpenModal } = useModal()
 
 	const onClickRegisterBtn = () => {
-		onOpenModal({ size: "large", isX: true, children: <AOMHandleModal /> })
+		onOpenModal({ size: "large", isX: false, children: <AOMHandleModal /> })
 	}
 
 	return (

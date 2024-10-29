@@ -18,7 +18,8 @@ export const ModalVariants = cva(
 					"h-[50vh] min-w-[400px] max-w-[90dvw] p-4 aspect-[8/11] max-md:min-w-0 max-md:w-[80%] ",
 				small:
 					"h-[80dvh] aspect-[8/11] min-w-[300px] max-w-[90dvw] py-[28px] px-[28px]  max-md:h-[50dvh] max-lg:py-2 max-lg:px-5 max-lg:min-w-0 max-lg:h-[50%] ",
-				large: "h-[85dvh] aspect-[18/19] min-w-[400px] max-w-[90dvw] p-[46px]",
+				large:
+					"h-[85dvh] aspect-[18/19] min-w-[400px] max-w-[90dvw] p-[46px] max-sm:max-w-full max-sm:w-full max-sm:asppect-auto max-sm:min-w-0 max-sm:p-4",
 			},
 		},
 		defaultVariants: {

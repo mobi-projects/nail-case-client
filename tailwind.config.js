@@ -85,8 +85,8 @@ const config = {
 						lineHeight: "16px",
 					},
 					".text-Caption01,.text-Caption02": {
-						fontSize: "8px",
-						lineHeight: "10px",
+						fontSize: "10px",
+						lineHeight: "12px",
 					},
 				},
 				"@media (min-width: 768px) and (max-width: 1024px)": {
@@ -112,7 +112,7 @@ const config = {
 						fontSize: "12px",
 					},
 					".text-Caption01,.text-Caption02": {
-						fontSize: "10px",
+						fontSize: "12px",
 					},
 				},
 			})
