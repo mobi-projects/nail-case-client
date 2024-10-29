@@ -27,7 +27,7 @@ const ButtonVariants = cva(
 			},
 			flexible: {
 				none: "max-md:w-16 max-md:h-10 lg:w-18 lg:h-11",
-				fit: "w-fit max-md:w-16 max-md:h-10 lg:w-18 lg:h-11",
+				fit: "w-fit h-fit",
 				full: "w-full",
 			},
 		},

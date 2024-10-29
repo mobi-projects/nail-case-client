@@ -6,7 +6,7 @@ import { cva } from "class-variance-authority"
 import { cn } from "@/config/tailwind"
 
 const OptionVariants = cva(
-	" flex items-center justify-center border-[1px] border-transparent px-[24px] text-center text-PB100 focus-visible:outline-none disabled:border-none disabled:bg-Gray10 max-md:px-3 max-md:py-1 max-md:h-fit",
+	" flex items-center justify-center border-[1px] border-transparent px-[24px] text-center text-PB100 focus-visible:outline-none disabled:border-none disabled:bg-Gray10 max-lg:px-3 max-lg:py-1 max-lg:h-fit",
 	{
 		variants: {
 			size: {

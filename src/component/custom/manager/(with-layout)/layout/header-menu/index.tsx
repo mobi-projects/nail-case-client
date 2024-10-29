@@ -6,7 +6,7 @@ import ProfileImage from "./profile-image"
 
 export default function HeaderMenu() {
 	return (
-		<div className="flex w-[236px] items-center justify-end gap-[12px] pr-[21px]">
+		<div className="flex w-[236px] items-center justify-end gap-[12px] max-md:gap-2">
 			<NTPulldownProvider>
 				<Alarm />
 			</NTPulldownProvider>

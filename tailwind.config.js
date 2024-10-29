@@ -22,7 +22,7 @@ const config = {
 				"max-md": { max: "767px" },
 
 				// 최대 1023px 이하에서 적용 (max-lg)
-				"max-lg": { max: "1023px" },
+				"max-lg": { max: "1024px" },
 
 				// 최대 1279px 이하에서 적용 (max-xl)
 				"max-xl": { max: "1279px" },
@@ -34,10 +34,10 @@ const config = {
 				md: { min: "640px", max: "767px" },
 
 				// lg 구간: 768px 이상 1023px 이하
-				lg: { min: "768px", max: "1023px" },
+				lg: { min: "768px", max: "1024px" },
 
 				// xl 구간: 1024px 이상 1279px 이하
-				xl: { min: "1024px", max: "1279px" },
+				xl: { min: "1025px", max: "1279px" },
 			},
 		},
 		fontWeight: {
