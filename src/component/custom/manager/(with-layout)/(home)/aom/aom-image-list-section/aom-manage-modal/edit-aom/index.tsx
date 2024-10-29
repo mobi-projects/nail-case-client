@@ -33,12 +33,12 @@ export function EditAOM({
 	return (
 		<ModalBody
 			className={cn(
-				"absolute left-0 top-0 flex w-full transform flex-col justify-start gap-y-2 pt-5",
+				"scrollbar-none absolute left-0 top-0 flex h-full w-full transform flex-col justify-start gap-y-2 pt-5",
 				slideCss,
 			)}
 		>
-			<p className="text-Title03 font-SemiBold"> 사진 등록 </p>
-			<div className="min-h-1/2 flex h-1/2 w-full flex-wrap gap-7 rounded-lg border border-Gray40 bg-Gray10 p-6">
+			<p className="text-Title03 font-SemiBold max-md:text-[16px]">사진 등록</p>
+			<div className="scrollbar-none flex h-fit w-full flex-wrap gap-7 rounded-lg border border-Gray40 bg-Gray10 p-6 md:gap-3 lg:gap-4 max-sm:gap-2">
 				{!isAOMImageArryEmpty(previewImageArr)
 					? previewImageArr.map((info) => (
 							<AOMPreViewBox
