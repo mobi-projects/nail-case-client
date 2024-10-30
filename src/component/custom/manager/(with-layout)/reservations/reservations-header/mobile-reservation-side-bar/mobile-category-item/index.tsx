@@ -26,7 +26,7 @@ export default function MoblieCategoryItem({
 	return (
 		<div
 			className={cn(
-				"flex h-24 w-full items-center gap-x-4 border-b border-b-Gray20 px-4 transition-all",
+				"flex h-20 w-full items-center justify-evenly gap-x-4 border-b border-b-Gray20 px-4 transition-all",
 			)}
 			onClick={() => {
 				router.push(

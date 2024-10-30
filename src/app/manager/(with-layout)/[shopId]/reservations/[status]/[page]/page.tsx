@@ -18,7 +18,7 @@ export default function Reservations({ params }: ReservationsPT) {
 	return (
 		<>
 			<ReservationsHeader status={status} />
-			<div className="mt-6 grid w-full grid-cols-[1.2fr_1fr] gap-x-6 max-lg:flex max-lg:flex-col max-lg:gap-y-5 max-lg:pl-3 max-lg:pr-6">
+			<div className="mt-6 grid w-full grid-cols-[1.2fr_1fr] gap-x-6 max-lg:flex max-lg:flex-col max-lg:gap-y-5 max-lg:px-2">
 				<div>
 					<p className="pb-4 text-Title01 font-SemiBold text-Gray60">
 						{translateStatus(status)}
