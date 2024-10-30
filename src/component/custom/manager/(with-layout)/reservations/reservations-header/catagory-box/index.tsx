@@ -76,7 +76,7 @@ export default function CategoryBox({ status, isClicked }: CategoryBoxPT) {
 	)
 }
 
-const getLowerCasedStatus = (
+export const getLowerCasedStatus = (
 	status: TStatusExcludeCanceled,
 ): "rejected" | "completed" | "pending" | "confirmed" => {
 	const lowerCaseStatus = status.toLowerCase() as
