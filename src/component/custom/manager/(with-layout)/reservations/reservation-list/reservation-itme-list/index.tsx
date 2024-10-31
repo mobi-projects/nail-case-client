@@ -15,6 +15,7 @@ type ReservationItmeListPT = {
 	status: TStatusExcludeCanceled
 	selectedId: number
 	setSelectedId: Dispatch<SetStateAction<number>>
+	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ReservationItmeList({
@@ -23,6 +24,7 @@ export default function ReservationItmeList({
 	status,
 	selectedId,
 	setSelectedId,
+	setIsOpen,
 }: ReservationItmeListPT) {
 	const { endDate, startDate } = createDateRange()
 	const { data, isError, isLoading } = useListReservation({
@@ -51,6 +53,7 @@ export default function ReservationItmeList({
 					setSelectedId={setSelectedId}
 					shopId={shopId}
 					status={status}
+					setIsOpen={setIsOpen}
 				/>
 			))}
 		</div>

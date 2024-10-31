@@ -46,18 +46,18 @@ export default function ReservationPermissionForm({
 					: "h-0 opacity-0 transition-none",
 			)}
 		>
-			<div className="flex h-[70px] w-full items-center gap-x-4 border-b border-Gray20 pl-12">
-				<p className="min-w-[5.5rem] text-Body02 font-SemiBold text-Gray80">
+			<div className="flex h-[70px] w-full items-center gap-x-4 border-b border-Gray20 pl-12 max-md:pl-4">
+				<p className="min-w-[5.5rem] text-Body02 font-SemiBold text-Gray80 max-md:min-w-[4rem]">
 					가격
 				</p>
 				<PriceInput />
 				<p className="text-Callout">원</p>
 			</div>
-			<div className="flex h-[70px] w-full items-center gap-x-4 border-b border-Gray20 pl-12">
-				<p className="min-w-[5.5rem] text-Body02 font-SemiBold text-Gray80">
+			<div className="flex h-[70px] w-full items-center gap-x-4 border-b border-Gray20 pl-12 max-md:pl-4">
+				<p className="min-w-[5.5rem] text-Body02 font-SemiBold text-Gray80 max-md:min-w-[4rem]">
 					시간
 				</p>
-				<p className="font-SemiBold text-PB100">
+				<p className="text-Body02 font-SemiBold text-PB100">
 					{`${startHour} : ${startMin}`} ~{" "}
 				</p>
 				<NTPulldownProvider>

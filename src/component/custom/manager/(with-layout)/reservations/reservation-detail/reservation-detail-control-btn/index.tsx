@@ -43,7 +43,7 @@ export default function ReservationDetailControlBtn({
 				size="small"
 				onClick={onClickPermissionBtn}
 				className={cn(
-					`flex h-[50px] w-[110px] items-center justify-center rounded-[11px] border bg-BGblue01 px-[14px] py-[12px] text-Body01 text-PB100 drop-shadow hover:bg-BGblue02 focus-visible:outline-none active:border-[1.6px] active:border-PB100 active:bg-BGblue01 disabled:bg-BGblue01 disabled:text-PB50`,
+					`lg:w-18 flex h-[50px] w-[110px] items-center justify-center rounded-[11px] border bg-BGblue01 px-[14px] py-[12px] text-Body01 text-PB100 drop-shadow hover:bg-BGblue02 focus-visible:outline-none active:border-[1.6px] active:border-PB100 active:bg-BGblue01 disabled:bg-BGblue01 disabled:text-PB50 lg:h-11 max-md:h-10 max-md:w-16`,
 					isAccepting &&
 						"animate-pulse bg-PB50/20 transition-all duration-1000 hover:animate-none",
 				)}

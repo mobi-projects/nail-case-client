@@ -25,7 +25,7 @@ export default function ReservationTableHeader({
 		},
 	)
 	return (
-		<div className="grid w-full grid-cols-[1fr_2fr_2fr_2fr] py-3">
+		<div className="grid w-full grid-cols-[1fr_2fr_2fr_2fr_20px] py-3">
 			<div className="flex h-fit items-center justify-center">
 				<div className={cn(titleVarinats({ status: focusedStatus }))}>
 					{translateStatusToKor(focusedStatus)}
