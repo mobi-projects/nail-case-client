@@ -1,4 +1,4 @@
-import type { FormEvent } from "react"
+import type { Dispatch, FormEvent, SetStateAction } from "react"
 import { useEffect, useRef, useState } from "react"
 
 import {
@@ -22,12 +22,14 @@ type ReservationDetailPT = {
 	selectedId: number
 	shopId: number
 	status: TStatusExcludeCanceled
+	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ReservationDetail({
 	selectedId,
 	shopId,
 	status,
+	setIsOpen,
 }: ReservationDetailPT) {
 	// 상태 정의
 	const [isAccepting, setIsAccepting] = useState(false)
@@ -91,15 +93,17 @@ export default function ReservationDetail({
 				e.preventDefault()
 				if (!isAccepting) {
 					onSubmitPermission(e)
+					setIsOpen(false)
 				}
 			}}
-			className="scrollbar-none flex h-[610px] max-h-[610px] min-h-[610px] w-full flex-col overflow-y-scroll rounded-md border border-Gray20 bg-White shadow-customGray80 transition-opacity"
+			className="scrollbar-none flex h-[610px] max-h-[610px] min-h-[610px] w-full flex-col overflow-y-scroll rounded-md border border-Gray20 bg-White shadow-customGray80 lg:w-[92dvw] max-md:w-[97dvw] max-lg:h-[80dvh] max-lg:max-h-[80dvh]"
 		>
 			<ReservationDetailList
 				reservation={data}
 				selectedId={selectedId}
 				status={status}
 				shopId={shopId}
+				setIsOpen={setIsOpen}
 			/>
 			<ReservationPermissionForm
 				reservation={data}

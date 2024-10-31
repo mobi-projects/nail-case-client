@@ -123,7 +123,7 @@ export function NTPulldownTrigger({
 			onClick={toggleOpen}
 			tabIndex={0}
 			className={cn(
-				"flex cursor-pointer items-center justify-between gap-x-1 rounded-[6px] border-2 border-Gray20 bg-White px-[6px] py-[8px] transition-all duration-500 ease-in-out hover:border-Gray40",
+				"flex cursor-pointer items-center justify-between gap-x-1 rounded-[6px] border-2 border-Gray20 bg-White px-[6px] py-[8px] transition-all duration-500 ease-in-out hover:border-Gray40 max-md:py-1",
 				isOpen && "border-PB50 hover:border-PB50",
 				className,
 			)}

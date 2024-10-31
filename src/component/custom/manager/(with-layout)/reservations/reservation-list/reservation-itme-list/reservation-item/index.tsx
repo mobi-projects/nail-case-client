@@ -18,6 +18,7 @@ type ReservationItemPT = {
 	setSelectedId: Dispatch<SetStateAction<number>>
 	shopId: number
 	status: TStatusExcludeCanceled
+	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ReservationItem({
@@ -27,12 +28,13 @@ export default function ReservationItem({
 	setSelectedId,
 	shopId,
 	status,
+	setIsOpen,
 }: ReservationItemPT) {
 	const queryClient = useQueryClient()
 
 	const { customerName, startTime, reservationId } = reservation
 	const arrowVarinats = cva(
-		"absolute right-2 top-1/2 h-5 w-5 -translate-y-1/2",
+		"absolute right-2 top-1/2 h-5 w-5 -translate-y-1/2 max-lg:hidden",
 		{
 			variants: {
 				status: {
@@ -50,13 +52,16 @@ export default function ReservationItem({
 	const { division, hour, min } = getDecomposedTIme(startTime)
 	return (
 		<div
-			onClick={() => setSelectedId(reservationId)}
+			onClick={() => {
+				setSelectedId(reservationId)
+				setIsOpen(true)
+			}}
 			onMouseEnter={async () => {
 				await prefetchResercationDetail(queryClient, shopId, reservationId)
 			}}
 			className={cn(
-				"scrollbar relative grid w-full cursor-pointer grid-cols-[1fr_2fr_2fr_2fr] overflow-y-auto border-y border-Gray20 py-3 transition-all",
-				isClicked ? "bg-PB60/10" : "hover:bg-Gray10",
+				"scrollbar relative grid w-full cursor-pointer grid-cols-[1fr_2fr_2fr_2fr_20px] overflow-y-auto border-y border-Gray20 py-3 transition-all",
+				isClicked ? "bg-PB60/10 max-lg:bg-White" : "hover:bg-Gray10",
 			)}
 		>
 			<p className="text-center text-Body01 font-SemiBold text-Gray50">

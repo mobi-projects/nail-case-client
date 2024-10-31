@@ -21,7 +21,7 @@ export default function PriceInput() {
 	return (
 		<input
 			onChange={handleOnChange}
-			className="h-[40px] w-[10rem] appearance-none rounded-lg border-2 border-Gray20 px-3 text-end font-SemiBold text-PB80 transition-all focus:appearance-none focus:border-PB70 focus:outline-none"
+			className="h-[40px] w-[10rem] appearance-none rounded-lg border-2 border-Gray20 px-3 text-end text-Body02 font-SemiBold text-PB80 transition-all focus:appearance-none focus:border-PB70 focus:outline-none max-md:h-[30px]"
 			placeholder="가격을 입력해주세요"
 			name="price"
 			autoComplete="off"
