@@ -26,7 +26,7 @@ export default function Price({ priceImages }: PricePT) {
 					className="cursor-pointer pl-5 text-Gray70 transition-all hover:text-PB70 hover:underline max-md:text-[14px]"
 					onClick={handleArtClick}
 				>
-					가격표 확인하기!
+					가격표 확인하기
 				</p>
 			</div>
 		</div>

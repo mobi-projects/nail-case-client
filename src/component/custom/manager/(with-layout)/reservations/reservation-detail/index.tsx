@@ -118,6 +118,7 @@ export default function ReservationDetail({
 					setIsAccepting={setIsAccepting}
 					shopId={shopId}
 					reservationId={selectedId}
+					setIsOpen={setIsOpen}
 				/>
 			)}
 			{status === "REJECTED" && <RejectReason reservation={data} />}

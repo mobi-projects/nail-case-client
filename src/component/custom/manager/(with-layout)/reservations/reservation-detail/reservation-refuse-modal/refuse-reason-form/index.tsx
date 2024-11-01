@@ -1,4 +1,4 @@
-import type { FormEvent } from "react"
+import type { Dispatch, FormEvent, SetStateAction } from "react"
 import { useState } from "react"
 
 import { NTButton } from "@/component/common/atom/nt-button"
@@ -10,11 +10,13 @@ import CheckBox from "../check-box"
 type RefuseReasonFormPT = {
 	shopId: number
 	reservationId: number
+	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export default function RefuseReasonForm({
 	reservationId,
 	shopId,
+	setIsOpen,
 }: RefuseReasonFormPT) {
 	const [clickedIdx, setClickedIdx] = useState(-1)
 	const [isValid, setIsValid] = useState(true)
@@ -40,6 +42,7 @@ export default function RefuseReasonForm({
 		setIsValid(true)
 		setErrorMessage("")
 		mutate({ rejectReason: message })
+		setIsOpen(false)
 	}
 
 	return (
@@ -49,7 +52,7 @@ export default function RefuseReasonForm({
 				onSubmit(e, clickedIdx)
 			}}
 		>
-			<div className="flex h-full flex-col gap-y-5 pl-10 pt-6">
+			<div className="flex h-full flex-col gap-y-5 pl-5 pt-6 max-lg:pl-3">
 				<div className="flex h-fit items-center gap-x-2 py-2">
 					<CheckBox
 						id="1"
@@ -83,9 +86,9 @@ export default function RefuseReasonForm({
 				<div className="flex flex-col">
 					<textarea
 						className={cn(
-							"scrollbar h-[8rem] w-[24rem] resize-none rounded-md p-2 outline-none ring-2 transition-all",
+							"scrollbar resize-none rounded-md p-2 text-Body01 outline-none ring-2 transition-all",
 							clickedIdx === 3
-								? "h-[8rem] border border-PB60 opacity-100"
+								? "h-[8rem] w-[27rem] border border-PB60 lg:h-[7rem] lg:w-[70dvw] max-md:h-[5rem] max-md:w-[80dvw]"
 								: "h-0 opacity-0",
 						)}
 						placeholder="거절 사유를 입력해주세요 (최대 100자)"
@@ -104,8 +107,8 @@ export default function RefuseReasonForm({
 			<div className="flex h-fit w-full justify-center">
 				<NTButton
 					variant={"alert"}
-					size={"exSmall"}
-					flexible={"fit"}
+					size={"small"}
+					flexible={"none"}
 					type="submit"
 					disabled={clickedIdx === -1}
 				>
