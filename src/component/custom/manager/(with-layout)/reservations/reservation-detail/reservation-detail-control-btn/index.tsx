@@ -11,6 +11,7 @@ type ReservationDetailControlBtnPT = {
 	setIsAccepting: Dispatch<SetStateAction<boolean>>
 	reservationId: number
 	shopId: number
+	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ReservationDetailControlBtn({
@@ -18,6 +19,7 @@ export default function ReservationDetailControlBtn({
 	setIsAccepting,
 	reservationId,
 	shopId,
+	setIsOpen,
 }: ReservationDetailControlBtnPT) {
 	const { onOpenModal } = useModal()
 	const onClickRefuseBtn = () => {
@@ -25,7 +27,11 @@ export default function ReservationDetailControlBtn({
 			size: "small",
 			isX: false,
 			children: (
-				<ReservationRefuseModal reservationId={reservationId} shopId={shopId} />
+				<ReservationRefuseModal
+					reservationId={reservationId}
+					shopId={shopId}
+					setIsOpen={setIsOpen}
+				/>
 			),
 		})
 	}
