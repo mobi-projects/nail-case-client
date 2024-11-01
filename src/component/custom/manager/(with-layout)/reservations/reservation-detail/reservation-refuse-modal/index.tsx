@@ -13,11 +13,11 @@ export default function ReservationRefuseModal({
 	shopId,
 }: ReservationRefuseModalPT) {
 	return (
-		<div className="scrollbar grid h-full w-full grid-rows-[auto_1fr_auto]">
+		<div className="grid h-full w-full grid-rows-[auto_1fr_auto]">
 			<ModalHeader className="w-full border-b border-b-Gray20 bg-White pb-4 text-center text-Title01 font-SemiBold text-Gray70">
 				예약 거절
 			</ModalHeader>
-			<ModalBody className="scrollbar grid h-full w-full grid-rows-[1fr_4fr] overflow-y-auto overflow-x-hidden py-5">
+			<ModalBody className="scrollbar-none grid h-full w-full grid-rows-[1fr_4fr] overflow-y-auto overflow-x-hidden py-5">
 				<div className="grid h-full w-full grid-rows-[1.5fr_1fr_1fr]">
 					<p className="pt-2 text-Title03 font-SemiBold text-Gray70">
 						안내 사항
