@@ -5,7 +5,7 @@ import { useState } from "react"
 import NTBannerImageCarousel from "@/component/common/nt-banner-image-carousel"
 import NTContent from "@/component/common/nt-content"
 import { useShopById } from "@/hook/use-shop-controller"
-import type { TResGetShopInfo } from "@/util/api/get-shop-info"
+import { isUndefined } from "@/util/common/type-guard"
 
 import { BannerTitle } from "./banner-title"
 import { getEssestialImageProps } from "./banner.util"
@@ -16,12 +16,12 @@ export default function ManagerBanner({ shopId }: ManagerBannerPT) {
 
 	const { data, isLoading } = useShopById(shopId)
 
-	if (isLoading) {
+	if (isLoading || isUndefined(data)) {
 		return (
 			<div className="relative h-[432.47px] w-full animate-pulse rounded-xl bg-Gray20 transition-all lg:h-[16rem] xl:h-[20rem] max-md:h-[11rem] max-lg:rounded-none" />
 		)
 	}
-	const InfoData = data as TResGetShopInfo
+	const InfoData = data
 	const getSelectedIdx = (idx: number) => {
 		setSelectedIdx(idx)
 	}

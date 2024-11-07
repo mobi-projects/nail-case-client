@@ -5,9 +5,9 @@ export default function NTToast() {
 		<Toaster
 			toastOptions={{
 				style: {
-					width: "485px",
-					right: "20px",
-					bottom: "20px",
+					width: "22rem",
+					right: "0",
+					bottom: "1rem",
 				},
 			}}
 		/>

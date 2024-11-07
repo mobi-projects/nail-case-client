@@ -75,4 +75,5 @@ export const ICON_DATA = {
 	confirmed: "jam:check",
 	art: "mdi:art",
 	clock: "tabler:clock",
+	chat: "token:chat",
 } as const
