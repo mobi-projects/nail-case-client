@@ -1,4 +1,5 @@
 "use client"
+
 import { useShopById } from "@/hook/use-shop-controller"
 import { isUndefined } from "@/util/common/type-guard"
 
@@ -11,10 +12,9 @@ type CustomerShopPagePT = {
 export function ShopDetail({ shopId }: CustomerShopPagePT) {
 	const { data: shopData } = useShopById(shopId)
 	if (isUndefined(shopData)) return null
-
 	const { shopName, address, profileImages } = shopData
 	return (
-		<div className="h-full">
+		<div className="relative h-full">
 			<CustomerShopBanner
 				shopName={shopName}
 				shopAddress={address}

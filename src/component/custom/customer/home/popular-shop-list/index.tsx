@@ -18,8 +18,8 @@ export default function PopularShopList() {
 		<div className="flex h-fit w-full flex-col gap-[20px] pb-5">
 			<div className="flex w-full flex-wrap items-start justify-center gap-[24px] pt-3 max-sm:gap-[14px]">
 				{data.pages.map((info) =>
-					info.shopList.map((shop) => {
-						return <PopularShopCard key={shop.shopId} shop={shop} />
+					info.shopList.map((shop, idx) => {
+						return <PopularShopCard key={idx} shop={shop} />
 					}),
 				)}
 			</div>
