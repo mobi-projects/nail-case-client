@@ -2,22 +2,21 @@ import { getTimeDifference } from "@/component/custom/manager/(with-layout)/layo
 import { cn } from "@/config/tailwind"
 
 type ChatMessagePT = {
-	isSender?: boolean
 	message: string
 	sentByShop?: boolean
 	timeStamp: number
 }
 export default function ChatMessage({
-	isSender = true,
+	sentByShop,
 	message,
 	timeStamp,
 }: ChatMessagePT) {
 	return (
-		<div className={cn("flex w-full flex-col", isSender && "items-end")}>
+		<div className={cn("flex w-full flex-col", !sentByShop && "items-end")}>
 			<div
 				className={cn(
 					"flex w-fit max-w-[80%] items-end gap-x-1",
-					isSender ? "flex-row" : "flex-row-reverse",
+					sentByShop ? "flex-row-reverse" : "flex-row",
 				)}
 			>
 				<span className="min-w-[2rem] pb-1 text-[10px] text-Gray70">
@@ -26,7 +25,7 @@ export default function ChatMessage({
 				<div
 					className={cn(
 						"h-fit w-fit rounded-2xl p-2 text-Callout",
-						isSender ? "bg-PY70" : "bg-White",
+						sentByShop ? "bg-White" : "bg-PY70",
 					)}
 				>
 					<span className="max-md:text-[12px]">{message}</span>

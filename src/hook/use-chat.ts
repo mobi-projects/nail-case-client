@@ -1,21 +1,19 @@
 import { Client } from "@stomp/stompjs"
+import { useQuery } from "@tanstack/react-query"
 import { getCookie } from "cookies-next"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import SockJS from "sockjs-client"
 
+import { QUERY_PREV_CHAT } from "@/constant"
 import { ACCESS_TOKEN } from "@/constant/auth-key"
 import type { ResCreateRoom } from "@/util/api/create-chat-room"
-import { useCreateRoom } from "@/util/api/create-chat-room"
+import { getPrevChat, type ReqGetPrevChat } from "@/util/api/get-prev-chat"
+import { isNull } from "@/util/common/type-guard"
 
-export const useChat = (shopId: number) => {
+export const useChatMessage = (chatRoomInfo: ResCreateRoom) => {
 	// 전체 채팅 message Arr state
 	const [messageArr, setMessageArr] = useState<Array<TChatMessage>>([])
-
-	// 채팅방 정보 state
-	const [chatRoomInfo, setChatRoomInfo] = useState<ResCreateRoom>()
-
-	const { mutateAsync } = useCreateRoom()
-
+	const messageEndRef = useRef<HTMLDivElement>(null)
 	const stompClient = useMemo(() => {
 		const socketUrl = `http://15.165.15.0/api/v1/chat/inbox`
 		const token = getCookie(ACCESS_TOKEN)
@@ -25,14 +23,9 @@ export const useChat = (shopId: number) => {
 			connectHeaders: {
 				Authorization: `Bearer ${token}`,
 			},
-
-			// 응답메세지 타입
-
-			// 연결 성공 시 호출되는 함수
 			onConnect: () => {
-				// 서버에서 메시지 수신 대기 (구독)
 				stompClient.subscribe(
-					`/exchange/chat.exchange/chat.${chatRoomInfo?.chatRoomId}`,
+					`/exchange/chat.exchange/chat.${chatRoomInfo.chatRoomId}`,
 					(message) => {
 						const response = message.body
 
@@ -43,7 +36,7 @@ export const useChat = (shopId: number) => {
 								...prevArr,
 								{
 									message: newMessage.message,
-									isSender: false,
+									sentByShop: newMessage.sentByShop,
 									timeStamp: newMessage.createdAt,
 								},
 							])
@@ -60,25 +53,24 @@ export const useChat = (shopId: number) => {
 	}, [chatRoomInfo])
 
 	useEffect(() => {
-		const initializeChatRoomInfo = async () => {
-			try {
-				const response = await mutateAsync({
-					shopId: shopId,
-				})
-				setChatRoomInfo(response)
-			} catch (error) {
-				console.error("채팅방 정보를 가져오는 중 오류 발생:", error)
-			}
+		if (!isNull(messageEndRef.current)) {
+			messageEndRef.current.scrollIntoView({ behavior: "smooth" })
 		}
-		initializeChatRoomInfo()
-	}, [shopId, mutateAsync])
-	return { messageArr, setMessageArr, chatRoomInfo, stompClient }
+	}, [messageArr])
+
+	useEffect(() => {
+		if (!isNull(messageEndRef.current)) {
+			messageEndRef.current.scrollIntoView({ behavior: "instant" })
+		}
+	})
+
+	return { messageArr, setMessageArr, stompClient, messageEndRef }
 }
 
 export type TChatMessage = {
 	message: string
 	timeStamp: number
-	isSender: boolean
+	sentByShop: boolean
 }
 
 export type ResMessage = {
@@ -93,3 +85,57 @@ export type ResMessage = {
 	createdAt: number
 	writerNickname: string
 }
+
+export const usePrevChat = ({ roomId, page, size }: ReqGetPrevChat) =>
+	useQuery({
+		queryKey: [QUERY_PREV_CHAT, roomId],
+		queryFn: () => getPrevChat({ roomId, page, size }),
+	})
+
+// export const useChatInfiniteScroll = ({
+// 	roomId,
+// 	page = 0,
+// 	size,
+// }: ReqGetPrevChat) => {
+// 	const { data, isLoading, fetchNextPage, hasNextPage, isError } =
+// 		useInfiniteQuery({
+// 			queryKey: ["gdgd", roomId],
+// 			queryFn: async ({ pageParam }) => {
+// 				const response = await getPrevChat({ roomId, page: pageParam, size })
+// 				console.log(response)
+// 				return response
+// 			},
+// 			initialPageParam: 0,
+// 			getNextPageParam: (lastPage) => {
+// 				const nextPage = lastPage.pageNumber + 1
+// 				return nextPage < lastPage.totalPages ? nextPage : undefined
+// 			},
+// 		})
+
+// 	const spinnerRef = useRef(null)
+// 	// useEffect(() => {
+// 	// 	const options = {
+// 	// 		root: null,
+// 	// 		rootMargin: "0px 0px 15px 0px",
+// 	// 		threshold: 0.3,
+// 	// 	}
+// 	// 	const io = new IntersectionObserver((entries) => {
+// 	// 		if (entries[0].isIntersecting && hasNextPage) {
+// 	// 			fetchNextPage()
+// 	// 		}
+// 	// 	}, options)
+
+// 	// 	const currentRef = spinnerRef.current
+// 	// 	if (currentRef) {
+// 	// 		io.observe(currentRef)
+// 	// 	}
+
+// 	// 	return () => {
+// 	// 		if (currentRef) {
+// 	// 			io.unobserve(currentRef)
+// 	// 		}
+// 	// 	}
+// 	// }, [fetchNextPage, hasNextPage])
+
+// 	return { data, isLoading, hasNextPage, spinnerRef, isError }
+// }
