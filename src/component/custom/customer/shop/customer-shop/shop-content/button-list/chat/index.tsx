@@ -36,7 +36,6 @@ export default function Chat({ shopId }: ChatPT) {
 				<ChatBox
 					chatRoomInfo={chatRoomInfo}
 					isOpen={isOpen}
-					shopId={shopId}
 					setIsOpen={setIsOpen}
 				/>
 			) : (
