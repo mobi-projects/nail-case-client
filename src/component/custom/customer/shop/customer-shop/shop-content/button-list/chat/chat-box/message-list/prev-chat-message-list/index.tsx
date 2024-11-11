@@ -1,5 +1,8 @@
+import { useEffect, useRef } from "react"
+
 import NTLoadingSpinner from "@/component/common/nt-loading-spinner"
-import { usePrevChat } from "@/hook/use-chat"
+import { cn } from "@/config/tailwind"
+import { useChatInfiniteScroll } from "@/hook/use-chat"
 import type { ResCreateRoom } from "@/util/api/create-chat-room"
 import { isUndefined } from "@/util/common/type-guard"
 
@@ -12,25 +15,59 @@ type PrevChatMessageListPT = {
 export default function PrevChatMessageList({
 	chatRoomInfo,
 }: PrevChatMessageListPT) {
-	const { data, isLoading, isError } = usePrevChat({
+	const {
+		data,
+		hasNextPage,
+		isError,
+		isLoading,
+		spinnerRef,
+		isFetchingNextPage,
+		isFetched,
+	} = useChatInfiniteScroll({
 		roomId: chatRoomInfo.chatRoomId,
+		size: 10,
 	})
+	const recentFetchedMessageRef = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		if (recentFetchedMessageRef.current) {
+			recentFetchedMessageRef.current.scrollIntoView({
+				behavior: "instant",
+			})
+		}
+	}, [data, isFetched])
 
 	if (isLoading) return <ChatSpinner />
 	if (isError || isUndefined(data)) return <PrevChatLoadError />
-	const prevChat = data.chatMessageList
-	if (prevChat.length === 0) return <StartChatPrompt />
+	if (data.pages[0].chatMessageList.length === 0) return <StartChatPrompt />
+
 	return (
 		<>
-			{prevChat
-				.map(({ message, createdAt, sentByShop, chatMessageId }) => (
-					<ChatMessage
-						message={message}
-						timeStamp={createdAt}
-						sentByShop={sentByShop}
-						key={chatMessageId}
-					/>
-				))
+			{hasNextPage && (
+				<div
+					ref={spinnerRef}
+					className="flex min-h-[100px] w-full items-center justify-center"
+				>
+					{isFetchingNextPage && <ChatSpinner />}
+				</div>
+			)}
+			<div
+				className={cn("", hasNextPage ? "min-h-[30px]" : "min-h-0")}
+				ref={recentFetchedMessageRef}
+			/>
+			{data.pages
+				.map((chat) =>
+					chat.chatMessageList
+						.map(({ message, createdAt, sentByShop, chatMessageId }) => (
+							<ChatMessage
+								message={message}
+								timeStamp={createdAt}
+								sentByShop={sentByShop}
+								key={chatMessageId}
+							/>
+						))
+						.reverse(),
+				)
 				.reverse()}
 		</>
 	)
@@ -38,7 +75,7 @@ export default function PrevChatMessageList({
 
 function ChatSpinner() {
 	return (
-		<div className="relative flex h-full w-full items-center justify-center">
+		<div className="relative flex h-fit w-full items-center justify-center">
 			<div className="absolute z-20 h-6 w-6 rounded-full ring-4 ring-White/40" />
 			<NTLoadingSpinner size="small" />
 		</div>

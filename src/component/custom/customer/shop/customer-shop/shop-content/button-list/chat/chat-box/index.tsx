@@ -19,19 +19,17 @@ import MessageList from "./message-list"
 type ChatBoxPT = {
 	isOpen: boolean
 	setIsOpen: Dispatch<SetStateAction<boolean>>
-	shopId: number
 	chatRoomInfo: ResCreateRoom
 }
 
 export default function ChatBox({
 	isOpen,
 	chatRoomInfo,
-	shopId,
 	setIsOpen,
 }: ChatBoxPT) {
 	const nowStamp = getNowStamp()
 	const { messageArr, messageEndRef, setMessageArr, stompClient } =
-		useChatMessage(chatRoomInfo)
+		useChatMessage(chatRoomInfo, isOpen)
 	const [message, setMessage] = useState<TChatMessage>({
 		message: "",
 		timeStamp: getNowStamp(),
@@ -61,7 +59,7 @@ export default function ChatBox({
 		sendMessage({
 			chatRommId: chatRoomInfo.chatRoomId,
 			msg: message.message,
-			shopId: shopId,
+			shopId: chatRoomInfo.shopId,
 			memberId: chatRoomInfo.memberId,
 		})
 		setMessageArr((prevArr) => [...prevArr, message])

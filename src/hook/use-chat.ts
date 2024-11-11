@@ -1,5 +1,5 @@
 import { Client } from "@stomp/stompjs"
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { getCookie } from "cookies-next"
 import { useEffect, useMemo, useRef, useState } from "react"
 import SockJS from "sockjs-client"
@@ -10,7 +10,10 @@ import type { ResCreateRoom } from "@/util/api/create-chat-room"
 import { getPrevChat, type ReqGetPrevChat } from "@/util/api/get-prev-chat"
 import { isNull } from "@/util/common/type-guard"
 
-export const useChatMessage = (chatRoomInfo: ResCreateRoom) => {
+export const useChatMessage = (
+	chatRoomInfo: ResCreateRoom,
+	isOpen: boolean,
+) => {
 	// 전체 채팅 message Arr state
 	const [messageArr, setMessageArr] = useState<Array<TChatMessage>>([])
 	const messageEndRef = useRef<HTMLDivElement>(null)
@@ -59,10 +62,10 @@ export const useChatMessage = (chatRoomInfo: ResCreateRoom) => {
 	}, [messageArr])
 
 	useEffect(() => {
-		if (!isNull(messageEndRef.current)) {
+		if (!isNull(messageEndRef.current) && isOpen) {
 			messageEndRef.current.scrollIntoView({ behavior: "instant" })
 		}
-	})
+	}, [isOpen])
 
 	return { messageArr, setMessageArr, stompClient, messageEndRef }
 }
@@ -92,50 +95,61 @@ export const usePrevChat = ({ roomId, page, size }: ReqGetPrevChat) =>
 		queryFn: () => getPrevChat({ roomId, page, size }),
 	})
 
-// export const useChatInfiniteScroll = ({
-// 	roomId,
-// 	page = 0,
-// 	size,
-// }: ReqGetPrevChat) => {
-// 	const { data, isLoading, fetchNextPage, hasNextPage, isError } =
-// 		useInfiniteQuery({
-// 			queryKey: ["gdgd", roomId],
-// 			queryFn: async ({ pageParam }) => {
-// 				const response = await getPrevChat({ roomId, page: pageParam, size })
-// 				console.log(response)
-// 				return response
-// 			},
-// 			initialPageParam: 0,
-// 			getNextPageParam: (lastPage) => {
-// 				const nextPage = lastPage.pageNumber + 1
-// 				return nextPage < lastPage.totalPages ? nextPage : undefined
-// 			},
-// 		})
+export const useChatInfiniteScroll = ({ roomId, size }: ReqGetPrevChat) => {
+	const {
+		data,
+		isLoading,
+		fetchNextPage,
+		hasNextPage,
+		isError,
+		isFetchingNextPage,
+		isFetched,
+	} = useInfiniteQuery({
+		queryKey: ["chat-infinite-scroll", roomId],
+		queryFn: async ({ pageParam }) => {
+			const response = await getPrevChat({ roomId, page: pageParam, size })
+			return response
+		},
+		initialPageParam: 0,
+		getNextPageParam: (lastPage) => {
+			const nextPage = lastPage.pageNumber + 1
+			return nextPage < lastPage.totalPages ? nextPage : undefined
+		},
+	})
 
-// 	const spinnerRef = useRef(null)
-// 	// useEffect(() => {
-// 	// 	const options = {
-// 	// 		root: null,
-// 	// 		rootMargin: "0px 0px 15px 0px",
-// 	// 		threshold: 0.3,
-// 	// 	}
-// 	// 	const io = new IntersectionObserver((entries) => {
-// 	// 		if (entries[0].isIntersecting && hasNextPage) {
-// 	// 			fetchNextPage()
-// 	// 		}
-// 	// 	}, options)
+	const spinnerRef = useRef(null)
 
-// 	// 	const currentRef = spinnerRef.current
-// 	// 	if (currentRef) {
-// 	// 		io.observe(currentRef)
-// 	// 	}
+	useEffect(() => {
+		const options = {
+			root: null,
+			rootMargin: "0px 0px 0px 0px",
+			threshold: 1,
+		}
+		const io = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+				fetchNextPage()
+			}
+		}, options)
 
-// 	// 	return () => {
-// 	// 		if (currentRef) {
-// 	// 			io.unobserve(currentRef)
-// 	// 		}
-// 	// 	}
-// 	// }, [fetchNextPage, hasNextPage])
+		const currentRef = spinnerRef.current
+		if (currentRef) {
+			io.observe(currentRef)
+		}
 
-// 	return { data, isLoading, hasNextPage, spinnerRef, isError }
-// }
+		return () => {
+			if (currentRef) {
+				io.unobserve(currentRef)
+			}
+		}
+	}, [fetchNextPage, hasNextPage, isFetchingNextPage])
+
+	return {
+		data,
+		isLoading,
+		hasNextPage,
+		spinnerRef,
+		isError,
+		isFetchingNextPage,
+		isFetched,
+	}
+}

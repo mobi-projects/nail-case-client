@@ -8,7 +8,6 @@ export const getPrevChat = async ({
 	const response = await axiosInstance().get(
 		`chat/rooms/${roomId}/messages?page=${page}&size=${size}`,
 	)
-	console.log(response.data.data)
 	return response.data.data
 }
 
