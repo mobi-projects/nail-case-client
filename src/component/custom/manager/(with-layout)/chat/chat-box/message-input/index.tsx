@@ -18,7 +18,7 @@ export default function MessageInput({
 		<div className="">
 			<textarea
 				placeholder="메세지 입력"
-				className="scrollbar-none h-[8rem] w-full resize-none bg-White px-4 py-4 text-Body01 focus:border-none focus:outline-none max-md:w-full"
+				className="scrollbar-none h-[8rem] w-full resize-none bg-White px-4 py-4 text-Body01 focus:border-none focus:outline-none max-md:h-[5rem] max-md:w-full"
 				onChange={(e) =>
 					setMessage({
 						message: e.target.value,

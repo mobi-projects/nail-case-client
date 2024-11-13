@@ -45,10 +45,10 @@ export default function ChatUser({
 		>
 			<div className="flex h-full items-center space-x-3 pt-3">
 				<div className="space-x-1">
-					<span className="text-Headline02 font-Bold text-Black">
+					<span className="text-Headline02 font-Bold text-Black max-md:text-[16px]">
 						{userName}
 					</span>
-					<span className="text-[16px] font-SemiBold text-Gray40">
+					<span className="text-[16px] font-SemiBold text-Gray40 max-md:text-[12px]">
 						님의 메세지입니다 • {lastMessageStirng}
 					</span>
 				</div>
