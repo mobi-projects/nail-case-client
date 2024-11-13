@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react"
+import { useState, type Dispatch, type SetStateAction } from "react"
 
 import NTIcon from "@/component/common/nt-icon"
 import { cn } from "@/config/tailwind"
@@ -10,17 +10,21 @@ type ChatUserListPT = {
 	chatRoomArr: Array<ResGetRoomInfo>
 	selectedChatRoomId: number
 	setSelectedChatRoomId: Dispatch<SetStateAction<number>>
-	isSideBarOpen: boolean
-	setIsSideBarOpen: Dispatch<SetStateAction<boolean>>
+	// isSideBarOpen: boolean
+	// setIsSideBarOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ChatUserList({
 	chatRoomArr,
 	setSelectedChatRoomId,
 	selectedChatRoomId,
-	isSideBarOpen,
-	setIsSideBarOpen,
 }: ChatUserListPT) {
+	const [isSideBarOpen, setIsSideBarOpen] = useState(true)
+	const handleSideBar = () => {
+		if (isSideBarOpen) {
+			return setIsSideBarOpen(false)
+		}
+	}
 	return (
 		<div
 			className={cn(
@@ -47,6 +51,7 @@ export default function ChatUserList({
 						chatRoomInfo={roomInfo}
 						isSelected={selectedChatRoomId === roomInfo.chatRoomId}
 						setSelectedChatRoomId={setSelectedChatRoomId}
+						handleSideBar={handleSideBar}
 					/>
 				))}
 			</div>

@@ -17,7 +17,7 @@ export default function Chat({ params }: ChatPT) {
 	const shopId = parseInt(params.shopId)
 
 	const [selectedChatRoomId, setSelectedChatRoomId] = useState(-1)
-	const [isSideBarOpen, setIsSideBarOpen] = useState(true)
+
 	const { data, isLoading, isError } = useGetRoomList(shopId)
 
 	if (isLoading) return <ChatLoading />
@@ -33,8 +33,6 @@ export default function Chat({ params }: ChatPT) {
 					chatRoomArr={data}
 					selectedChatRoomId={selectedChatRoomId}
 					setSelectedChatRoomId={setSelectedChatRoomId}
-					isSideBarOpen={isSideBarOpen}
-					setIsSideBarOpen={setIsSideBarOpen}
 				/>
 				{isSelected ? (
 					<ChatBox chatRoomInfo={selectedChatRoom} />

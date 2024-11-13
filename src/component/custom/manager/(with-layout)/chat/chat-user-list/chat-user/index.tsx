@@ -8,11 +8,13 @@ type ChatUserPT = {
 	chatRoomInfo: ResGetRoomInfo
 	isSelected: boolean
 	setSelectedChatRoomId: Dispatch<SetStateAction<number>>
+	handleSideBar: VoidFunction
 }
 export default function ChatUser({
 	chatRoomInfo,
 	setSelectedChatRoomId,
 	isSelected,
+	handleSideBar,
 }: ChatUserPT) {
 	const { chatRoomId, lastMessage, name, lastMessageTime } = chatRoomInfo
 
@@ -30,6 +32,7 @@ export default function ChatUser({
 
 	const onClickChatUser = () => {
 		setSelectedChatRoomId(chatRoomId)
+		handleSideBar()
 	}
 
 	const lastMessageStirng = getLastMessageString(lastMessageTime as number)
