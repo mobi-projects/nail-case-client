@@ -17,6 +17,7 @@ export default function Chat({ params }: ChatPT) {
 	const shopId = parseInt(params.shopId)
 
 	const [selectedChatRoomId, setSelectedChatRoomId] = useState(-1)
+
 	const { data, isLoading, isError } = useGetRoomList(shopId)
 
 	if (isLoading) return <ChatLoading />
@@ -26,8 +27,8 @@ export default function Chat({ params }: ChatPT) {
 		data[data.findIndex((info) => info.chatRoomId === selectedChatRoomId)]
 	const isSelected = selectedChatRoomId !== -1
 	return (
-		<div className="flex h-full w-full items-center justify-center lg:px-3 xl:px-3 max-md:px-1">
-			<div className="grid h-[80dvh] w-full grid-cols-[1fr_2fr] rounded-lg bg-White shadow-customGray80">
+		<div className="flex h-full w-full items-center justify-center lg:px-3 xl:px-3 max-md:px-2">
+			<div className="relative mt-4 grid h-[80dvh] w-full grid-cols-[1fr_2fr] rounded-lg bg-White shadow-customGray80 max-xl:flex max-xl:h-[86dvh]">
 				<ChatUserList
 					chatRoomArr={data}
 					selectedChatRoomId={selectedChatRoomId}
