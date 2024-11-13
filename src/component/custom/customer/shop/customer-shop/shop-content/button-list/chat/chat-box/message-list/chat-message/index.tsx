@@ -1,4 +1,4 @@
-import { getTimeDifference } from "@/component/custom/manager/(with-layout)/layout/header-menu/alarm/alarm-pulldown/alarm-pulldown.util"
+import { showTime } from "@/component/custom/manager/(with-layout)/layout/header-menu/alarm/alarm-pulldown/alarm-pulldown.util"
 import { cn } from "@/config/tailwind"
 
 type ChatMessagePT = {
@@ -20,7 +20,7 @@ export default function ChatMessage({
 				)}
 			>
 				<span className="min-w-[2rem] pb-1 text-[10px] text-Gray70">
-					{getTimeDifference(timeStamp)}
+					{showTime(timeStamp)}
 				</span>
 				<div
 					className={cn(

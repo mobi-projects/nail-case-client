@@ -1,15 +1,7 @@
-import {
-	type Dispatch,
-	type FormEvent,
-	type KeyboardEvent,
-	type SetStateAction,
-	useEffect,
-	useState,
-} from "react"
+import { type FormEvent, type KeyboardEvent, useState } from "react"
 
-import { cn } from "@/config/tailwind"
-import { type TChatMessage, useChatMessage } from "@/hook/use-chat"
-import type { ResCreateRoom } from "@/util/api/create-chat-room"
+import { type TChatMessage, useManagerChatMessage } from "@/hook/use-chat"
+import type { ResGetRoomInfo } from "@/util/api/get-room-list"
 import { getNowStamp } from "@/util/common"
 
 import ChatHeader from "./chat-header"
@@ -17,41 +9,25 @@ import MessageInput from "./message-input"
 import MessageList from "./message-list"
 
 type ChatBoxPT = {
-	isOpen: boolean
-	setIsOpen: Dispatch<SetStateAction<boolean>>
-	chatRoomInfo: ResCreateRoom
+	chatRoomInfo: ResGetRoomInfo
 }
 
-export default function ChatBox({
-	isOpen,
-	chatRoomInfo,
-	setIsOpen,
-}: ChatBoxPT) {
-	const nowStamp = getNowStamp()
+export default function ChatBox({ chatRoomInfo }: ChatBoxPT) {
 	const { messageArr, messageEndRef, setMessageArr, stompClient } =
-		useChatMessage(chatRoomInfo, isOpen)
+		useManagerChatMessage(chatRoomInfo)
 	const [message, setMessage] = useState<TChatMessage>({
 		message: "",
 		timeStamp: getNowStamp(),
 		sentByShop: false,
 	})
-
-	const handleCloseChat = () => {
-		if (isOpen) {
-			stompClient.deactivate()
-			setIsOpen(false)
-		}
-		initMessage()
-	}
-
+	if (!chatRoomInfo) return null
 	const initMessage = () => {
 		setMessage({
 			message: "",
-			sentByShop: false,
-			timeStamp: nowStamp,
+			sentByShop: true,
+			timeStamp: getNowStamp(),
 		})
 	}
-
 	const onSubmitMessage = (
 		e: KeyboardEvent<HTMLTextAreaElement> | FormEvent<HTMLFormElement>,
 	) => {
@@ -83,7 +59,7 @@ export default function ChatBox({
 					shopId: shopId,
 					chatRoomId: chatRommId,
 					memberId: memberId,
-					shopMessage: false,
+					shopMessage: true,
 					message: msg,
 				}),
 			})
@@ -92,34 +68,21 @@ export default function ChatBox({
 		}
 	}
 
-	useEffect(() => {
-		if (isOpen) stompClient.activate()
-		return () => {
-			stompClient.deactivate()
-		}
-	}, [isOpen, stompClient])
-
 	return (
 		<form
 			onSubmit={onSubmitMessage}
-			className={cn(
-				"scrollbar-none fixed bottom-3 right-32 z-30 flex h-fit w-[25rem] flex-col justify-between overflow-auto rounded-xl border border-Gray20 bg-White shadow-customGray80 transition-all lg:right-2 xl:right-7 max-md:right-1/2 max-md:w-[95%] max-md:translate-x-1/2",
-				isOpen ? "h-[35rem]" : "h-0 border-none",
-			)}
+			className="scrollbar-none flex h-full w-full flex-col justify-between overflow-auto"
 		>
-			<ChatHeader
-				handleCloseChat={handleCloseChat}
-				chatRoomInfo={chatRoomInfo}
-			/>
+			<ChatHeader chatRoomInfo={chatRoomInfo} />
 			<MessageList
-				messageEndRef={messageEndRef}
 				messageArr={messageArr}
+				messageEndRef={messageEndRef}
 				chatRoomInfo={chatRoomInfo}
 			/>
 			<MessageInput
 				message={message}
-				setMessage={setMessage}
 				onSubmitMessage={onSubmitMessage}
+				setMessage={setMessage}
 			/>
 		</form>
 	)

@@ -1,6 +1,14 @@
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 
+import {
+	decomposeStamp,
+	get12HourFromStamp,
+	getDayDivisionInKor,
+	getNowStamp,
+	padStartToPrinting,
+} from "@/util/common"
+
 dayjs.extend(relativeTime)
 
 export const changeEngToKor = (arr: Array<string>) => {
@@ -32,9 +40,31 @@ export const getTimeDifference = (timestamp: number) => {
 	// 현재 시간과 예약 시간의 차이를 상대적으로 표시 (몇 분 전, 몇 시간 전)
 	const now = dayjs()
 	const reservationTime = dayjs.unix(timestamp)
+	console.log(reservationTime.from(now))
 	const timeDifferenceArr = reservationTime.from(now).split(" ")
 	// 영어 단어를 한국어로 변환하는 함수
 
 	// 변환된 결과 반환
 	return changeEngToKor(timeDifferenceArr)
+}
+
+const isToday = (timeStamp: number) => {
+	const { date: stampDate } = decomposeStamp(timeStamp)
+	const { date: todayDate } = decomposeStamp(getNowStamp())
+	return stampDate === todayDate
+}
+
+export const showTime = (timeStamp: number) => {
+	let timeString = ""
+	const { date, hour, min, month } = decomposeStamp(timeStamp)
+	const dayDivision = getDayDivisionInKor(timeStamp)
+	const divisionHour = get12HourFromStamp(timeStamp)
+	const formattedMin = padStartToPrinting("time", min)
+	if (isToday(timeStamp)) {
+		timeString = `${dayDivision} ${divisionHour}:${formattedMin}`
+	} else {
+		timeString = `${month}/${date}  ${hour}:${formattedMin}`
+	}
+
+	return timeString
 }
