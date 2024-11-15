@@ -17,26 +17,14 @@ dayjs.extend(relativeTime)
 
 export default function Alarm() {
 	const [message, setMessage] = useState<Array<TResSubscribe>>([])
-	const [connect, setConnect] = useState(false) // SSE연결을 제어하기위한 임시상태 추후 제거예정
 
 	const { setIsOpen } = useNTPulldown()
 	const accessToken = getCookie(ACCESS_TOKEN)
 	const hasNewReservation = message.length > 0
-	useSSE(setMessage, connect, accessToken)
+	useSSE(setMessage, accessToken)
 
 	return (
 		<div className="relative flex h-fit w-fit items-center">
-			<button
-				onClick={() => {
-					setConnect((prev) => !prev)
-					if (connect) {
-						setMessage([])
-					}
-				}}
-				className="text-center text-Callout"
-			>
-				연결
-			</button>
 			<NTIcon
 				className={cn(
 					"text-Gray90 lg:h-8 lg:w-8 max-md:h-6 max-md:w-6",

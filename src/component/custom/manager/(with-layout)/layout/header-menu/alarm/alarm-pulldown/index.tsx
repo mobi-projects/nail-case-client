@@ -62,17 +62,7 @@ export default function AlarmPulldown({
 				position="centerBottom"
 				className="max-h-[300px] w-[260px]"
 			>
-				<NTPulldownLabel className="h-fit">
-					<div
-						className="flex h-full w-full cursor-pointer justify-end text-Callout text-Gray60 hover:underline"
-						onClick={() => {
-							router.push(`${MANAGER_BASE}/notifications`)
-							setIsOpen(false)
-						}}
-					>
-						전체보기
-					</div>
-				</NTPulldownLabel>
+				<NTPulldownLabel className="flex h-fit px-4">예약 알림</NTPulldownLabel>
 				{message.map((reservation, idx) => (
 					<NTPulldownItem
 						key={idx}

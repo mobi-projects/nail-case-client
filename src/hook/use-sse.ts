@@ -5,7 +5,6 @@ import { useEffect } from "react"
 
 export const useSSE = (
 	setMessage: Dispatch<SetStateAction<Array<TResSubscribe>>>,
-	connect: boolean,
 	token: CookieValueTypes,
 ) => {
 	useEffect(() => {
@@ -17,6 +16,7 @@ export const useSSE = (
 				heartbeatTimeout: 86400000,
 			},
 		)
+
 		sse.addEventListener("notify", (e) => {
 			setMessage((prev) => {
 				const newData = JSON.parse((e as MessageEvent).data)
@@ -27,13 +27,11 @@ export const useSSE = (
 		sse.onerror = (error) => {
 			console.error("SSE 연결에 문제가 발생했습니다:", error)
 		}
-		if (!connect) {
-			sse.close()
-		}
+
 		return () => {
 			sse.close()
 		}
-	}, [connect, token, setMessage])
+	}, [token, setMessage]) // `connect`를 제거하므로 이 의존성 배열만 필요
 }
 
 export type TResSubscribe = {
