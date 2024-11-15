@@ -1,21 +1,8 @@
-import type { TSchedule } from "./schedule"
 import type { TNTTime } from "./time"
 import type { TNailCondition } from "./union-option/nail-condition"
 import type { TNailTreatment } from "./union-option/nail-treatment"
 import type { TRemoveOption } from "./union-option/remove-option"
 import type { TReservationStatus } from "./union-option/resesrvation-status"
-import type { TArtist, TCustomer } from "./user"
-
-export type TReservation = {
-	id: number
-	status: TReservationStatus
-	artistArr: TArtist[]
-	customer: TCustomer
-	schedule: TSchedule
-	companion: number
-	essentialDetailArr: TEssentialForm[]
-	customDetailArr: TCustomForm[]
-}
 
 export type TEssentialForm = {
 	reservationDate: TNTTime
@@ -23,9 +10,6 @@ export type TEssentialForm = {
 	removalReq: TRemoveOption
 	extensionReq: boolean
 	conditionArr: TNailCondition[]
-}
-export type TCustomForm = {
-	// TODO: 추후작성
 }
 
 export type TReqBodyUpdateReservation = {
@@ -198,15 +182,5 @@ export type TReservationDetailList = {
 		modifiedAt: number
 		createdBy: string
 		modifiedBy: string
-	}>
-}
-export type TResGetListAvailableTime = {
-	startTime: number
-	availableSeats: number
-	artists: Array<{
-		id: number
-		nickname: string
-		enable: boolean
-		near: number | null
 	}>
 }

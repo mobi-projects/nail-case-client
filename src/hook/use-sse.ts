@@ -31,7 +31,7 @@ export const useSSE = (
 		return () => {
 			sse.close()
 		}
-	}, [token, setMessage]) // `connect`를 제거하므로 이 의존성 배열만 필요
+	}, [token, setMessage])
 }
 
 export type TResSubscribe = {
