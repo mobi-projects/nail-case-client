@@ -1,5 +1,7 @@
 import { NTButton } from "@/component/common/atom/nt-button"
 import NTIcon from "@/component/common/nt-icon"
+import { useModal } from "@/component/common/nt-modal/nt-modal.context"
+import { useMutateCancelReservation } from "@/hook/use-reservation-controller"
 import type { TReservationInfo } from "@/util/api/get-main-page-data"
 
 import {
@@ -16,10 +18,18 @@ type ReservationInfoPT = {
 
 export default function ReservationInfo({ reservation }: ReservationInfoPT) {
 	const { shop, details } = reservation
+	const { onOpenModal } = useModal()
 	const reservationOptionArr = createReservationOptionArr(details)
 	const startTimeText = transfromStartTimeToString(details[0].startTime)
 	const endTImeText = transformEndTimeToString(details[0].endTime)
 
+	const onClickCancelBtn = () => {
+		onOpenModal({
+			children: <CancelReservationModal reservation={reservation} />,
+			size: "exSmall",
+			isX: false,
+		})
+	}
 	return (
 		<div className="grid grid-rows-4 max-md:flex max-md:flex-col max-md:gap-y-2">
 			<div className="text-Title01 font-Bold max-md:text-[16px]">
@@ -40,8 +50,42 @@ export default function ReservationInfo({ reservation }: ReservationInfoPT) {
 				))}
 			</div>
 			<div className="flex w-full items-center justify-end">
-				<NTButton size={"small"} variant={"alert"}>
+				<NTButton size={"small"} variant={"alert"} onClick={onClickCancelBtn}>
 					예약취소
+				</NTButton>
+			</div>
+		</div>
+	)
+}
+
+type CancelReservationModalPT = {
+	reservation: TReservationInfo
+}
+
+function CancelReservationModal({ reservation }: CancelReservationModalPT) {
+	const { reservationId, shop } = reservation
+	const { mutate } = useMutateCancelReservation(shop.id, reservationId)
+	const { onCloseModal } = useModal()
+
+	return (
+		<div className="grid h-full grid-rows-4 pt-10">
+			<p className="text-center text-Title01 font-Bold">예약 취소</p>
+			<p className="text-center text-Headline01 text-Gray40">
+				정말 예약 취소하시겠습니까?
+			</p>
+			<p className="text-center text-Body01 text-Gray40">
+				취소가 완료되면 모든 예약 정보가 삭제되며, 복구가 불가능하니 신중히
+				결정해주세요.
+			</p>
+			<div className="flex w-full items-center justify-center">
+				<NTButton
+					variant={"alert"}
+					onClick={() => {
+						mutate()
+						onCloseModal()
+					}}
+				>
+					확인
 				</NTButton>
 			</div>
 		</div>

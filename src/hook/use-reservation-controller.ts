@@ -5,6 +5,7 @@ import { useModal } from "@/component/common/nt-modal/nt-modal.context"
 import {
 	LIST_RESERVATION_QUERY,
 	QUERY_LIST_RESERVATIONS,
+	QUERY_MAINPAGE_QUERY,
 	VIEW_RESERVATION_QUERY,
 } from "@/constant"
 import type { TReqBodyUpdateReservation } from "@/type"
@@ -13,6 +14,7 @@ import {
 	type TReqListReservationPT,
 } from "@/util/api/get-list-reservation"
 import { getReservationDetail } from "@/util/api/get-reservation-detail"
+import { patchCancelReservation } from "@/util/api/patch-cancel-reservation"
 import {
 	patchConfrimReservation,
 	type TReqConfrimReservation,
@@ -144,6 +146,24 @@ export const useMutateRefuseReservation = (
 
 		onSettled: () => {
 			onCloseModal()
+		},
+	})
+}
+
+export const useMutateCancelReservation = (
+	shopId: number,
+	reservationId: number,
+) => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		mutationFn: () => patchCancelReservation(shopId, reservationId),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: [QUERY_MAINPAGE_QUERY] })
+			toast.success("예약 취소 요청이 성공적으로 처리되었습니다.")
+		},
+		onError: () => {
+			toast.error("예약 취소에 실패했습니다. 잠시 후 다시 시도해주세요.")
 		},
 	})
 }
