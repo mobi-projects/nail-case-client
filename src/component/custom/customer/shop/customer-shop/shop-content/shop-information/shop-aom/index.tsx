@@ -34,15 +34,15 @@ export default function ShopAom({ shopId }: ShopAOMPT) {
 	}
 
 	return (
-		<div className="relative mx-2 mb-10 h-[24rem] w-full gap-4 overflow-x-hidden lg:h-[16rem] xl:h-[20rem] max-md:h-[10rem]">
+		<div className="relative mx-2 mb-10 h-[24rem] w-full overflow-x-hidden lg:h-[16rem] xl:h-[20rem] max-md:h-[10rem]">
 			<div
-				className="absolute flex translate-x-[25rem] transform gap-8 transition-transform duration-700 ease-in-out"
-				style={{ transform: `translateX(-${focusedIdx * 12.6}%)` }}
+				className="absolute flex translate-x-[25rem] transform gap-5 transition-transform duration-700 ease-in-out"
+				style={{ transform: `translateX(-${focusedIdx * 25}rem)` }}
 			>
 				{AomDataList.map((data, idx) => (
 					<div
 						key={idx}
-						className="relative h-[24rem] w-[22dvw] flex-shrink-0 rounded-3xl px-3 text-Gray70 shadow-customGray80 md:h-[10rem] md:w-[13rem] lg:h-[16rem] lg:w-[29dvw] xl:h-[20rem] xl:w-[29dvw] max-sm:h-[10rem] max-sm:w-[10rem] max-md:px-5"
+						className="relative h-[24rem] w-[24rem] flex-shrink-0 rounded-3xl px-3 text-Gray70 shadow-customGray80 md:h-[10rem] md:w-[13rem] lg:h-[16rem] lg:w-[29dvw] xl:h-[20rem] xl:w-[29dvw] max-sm:h-[10rem] max-sm:w-[10rem] max-md:px-5"
 					>
 						<Image
 							src={data.imageUrl}

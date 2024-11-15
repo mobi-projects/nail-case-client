@@ -33,6 +33,7 @@ export function PopularShopCard({ shop }: PopularShopCardPT) {
 					src={shop.shopImageUrl || PromotionImage}
 					alt={"추천네일샵 이미지"}
 					fill
+					priority
 					className="rounded-[26px] md:rounded-2xl lg:rounded-2xl max-sm:rounded-lg"
 					sizes="384px"
 				/>

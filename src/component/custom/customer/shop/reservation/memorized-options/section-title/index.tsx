@@ -18,7 +18,7 @@ export default function SectionTitle({
 			</p>
 			{isEssential && (
 				<NTHoverCard
-					contants="필수 입력사항 입니다."
+					contants="중복 선택 불가능 합니다."
 					className="w-[170px] text-PB70 ring-1 ring-PB50"
 				>
 					<div className="aspect-square h-[4px] self-start rounded-full bg-PB100" />

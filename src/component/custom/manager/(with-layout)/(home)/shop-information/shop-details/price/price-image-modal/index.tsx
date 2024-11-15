@@ -32,7 +32,7 @@ export default function PriceImageModal({ priceImages }: PriceImageModalPT) {
 						{`${currentIndex + 1}/${imagePropArr.length.toString()}`}
 					</NTContent>
 				</ModalHeader>
-				<ModalBody className="relative flex h-[650px] w-[490px] lg:w-[80dvw] max-lg:h-[70dvh] max-lg:w-full">
+				<ModalBody className="relative flex h-[650px] w-full items-center justify-center lg:w-[80dvw] max-lg:h-[70dvh] max-lg:w-full">
 					<NTBannerImageCarousel
 						className="h-full w-full rounded-xl max-xl:h-full"
 						essentialImagePropArr={imagePropArr}

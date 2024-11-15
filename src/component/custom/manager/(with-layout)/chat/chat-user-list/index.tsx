@@ -10,8 +10,6 @@ type ChatUserListPT = {
 	chatRoomArr: Array<ResGetRoomInfo>
 	selectedChatRoomId: number
 	setSelectedChatRoomId: Dispatch<SetStateAction<number>>
-	// isSideBarOpen: boolean
-	// setIsSideBarOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ChatUserList({
@@ -31,7 +29,7 @@ export default function ChatUserList({
 				"scrollbar h-full w-full overflow-y-auto border bg-BGblue01 transition-all max-xl:absolute max-xl:left-0 max-xl:top-0",
 				isSideBarOpen
 					? "max-xl:w-[20rem]"
-					: "scrollbar-none h-[3.5rem] border-0 max-xl:w-7",
+					: "scrollbar-none max-xl:h-[3.5rem] max-xl:w-7 max-xl:border-0",
 			)}
 		>
 			<MobilSideBarController
@@ -39,10 +37,11 @@ export default function ChatUserList({
 				setIsSideBarOpen={setIsSideBarOpen}
 				selectedChatRoomId={selectedChatRoomId}
 			/>
+
 			<div
 				className={cn(
 					"transition-all duration-200",
-					!isSideBarOpen && "max-h-0 opacity-0",
+					!isSideBarOpen && "max-xl:max-h-0 max-xl:opacity-0",
 				)}
 			>
 				{chatRoomArr.map((roomInfo) => (

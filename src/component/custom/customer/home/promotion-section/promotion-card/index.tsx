@@ -29,6 +29,7 @@ export default function PromotionCard({
 				src={src}
 				alt="네일 이미지"
 				fill
+				priority
 				sizes="50vw"
 				className={cn(
 					"rounded-3xl max-md:rounded-xl",

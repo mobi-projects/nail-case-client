@@ -34,7 +34,7 @@ export default function Calendar({
 	return (
 		<div
 			className={cn(
-				"grid h-full w-full grid-rows-[28px_1fr] gap-10",
+				"grid h-full w-full grid-rows-[28px_1fr] gap-10 rounded-2xl bg-White",
 				className,
 			)}
 		>
