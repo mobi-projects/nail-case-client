@@ -28,7 +28,7 @@ export const useChatMessage = (
 	const [messageArr, setMessageArr] = useState<Array<TChatMessage>>([])
 	const messageEndRef = useRef<HTMLDivElement>(null)
 	const stompClient = useMemo(() => {
-		const socketUrl = `http://15.165.15.0/api/v1/chat/inbox`
+		const socketUrl = `${process.env.NEXT_PUBLIC_BACKEND_APP}/chat/inbox`
 		const token = getCookie(ACCESS_TOKEN)
 		return new Client({
 			webSocketFactory: () => new SockJS(socketUrl),
@@ -85,7 +85,7 @@ export const useManagerChatMessage = (chatRoomInfo: ResGetRoomInfo) => {
 	const [messageArr, setMessageArr] = useState<Array<TChatMessage>>([])
 	const messageEndRef = useRef<HTMLDivElement>(null)
 	const stompClient = useMemo(() => {
-		const socketUrl = `http://15.165.15.0/api/v1/chat/inbox`
+		const socketUrl = `${process.env.NEXT_PUBLIC_BACKEND_APP}/chat/inbox`
 		const token = getCookie(ACCESS_TOKEN)
 		return new Client({
 			webSocketFactory: () => new SockJS(socketUrl),
