@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query"
 
+import DefaultShopImage from "@/../public/asset/default-shop-image.jpg"
 import NTContent from "@/component/common/nt-content"
 import { QUERY_MAINPAGE_QUERY } from "@/constant"
 import { getMainPageData } from "@/util/api/get-main-page-data"
@@ -12,7 +13,6 @@ import ReservationSummarySkeleton from "./reservation-summary-skeleton"
 import { getReservationStatus } from "./reservation-summary.util"
 import ReservationInfo from "./rservation-info"
 import ShopImage from "./shop-image"
-
 export default function ReservationSummary() {
 	const { data, isLoading, isError } = useQuery({
 		queryKey: [QUERY_MAINPAGE_QUERY],
@@ -32,7 +32,9 @@ export default function ReservationSummary() {
 				진행 중인 네일
 			</div>
 			<div className="grid grid-cols-[12rem_1fr] max-md:grid-cols-[8rem_1fr]">
-				<ShopImage imageUrl={shop.shopImageUrl} />
+				<ShopImage
+					imageUrl={shop.shopImageUrl ? shop.shopImageUrl : DefaultShopImage}
+				/>
 				<ReservationInfo reservation={data} />
 				<NTContent mode="day" className="absolute right-5 top-3 px-[15.5px]">
 					{reservationStatus}

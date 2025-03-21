@@ -1,7 +1,8 @@
+import type { StaticImageData } from "next/image"
 import Image from "next/image"
 
 type ShopImagePT = {
-	imageUrl: string
+	imageUrl: string | StaticImageData
 }
 export default function ShopImage({ imageUrl }: ShopImagePT) {
 	return (
