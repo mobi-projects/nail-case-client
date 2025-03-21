@@ -4,6 +4,7 @@ import { axiosInstance } from "@/config/axios"
 
 export const postReadNotification = async (reqBody: TReqReadNotification) => {
 	const response = await axiosInstance().post(`/notification/read`, reqBody)
+	console.log(response)
 	return response
 }
 
