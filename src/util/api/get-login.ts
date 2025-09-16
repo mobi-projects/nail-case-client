@@ -8,6 +8,9 @@ export const getLogin = async (code: string, loginType: TSignType) => {
 		const response = await axios.get(
 			`${process.env.NEXT_PUBLIC_BACKEND_APP}/auth/${loginType}/kakao`,
 			{
+				headers: {
+					"ngrok-skip-browser-warning": "true",
+				},
 				params: { code },
 			},
 		)

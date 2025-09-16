@@ -31,7 +31,11 @@ const setRequestInterceptor = (
 				config.headers.Authorization = `Bearer ${validAccessToken}`
 			}
 
-			config.headers["Content-Type"] = contentType
+			if (config.headers) {
+				config.headers["Content-Type"] = contentType
+				// ✅ ngrok 경고 페이지 건너뛰기
+				config.headers["ngrok-skip-browser-warning"] = "true"
+			}
 			return config
 		},
 		(error) => Promise.reject(error),
